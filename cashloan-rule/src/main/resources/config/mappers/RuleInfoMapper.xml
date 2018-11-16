@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_rule_info表:规则信息模块 -->
+<mapper namespace="com.xindaibao.cashloan.rule.mapper.RuleInfoMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.rule.domain.RuleInfo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="tb_nid" property="tbNid" jdbcType="VARCHAR" />
+        <result column="tb_name" property="tbName" jdbcType="VARCHAR" />
+        <result column="detail" property="detail" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="req_ext" property="reqExt" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,tb_nid,tb_name,detail,state,req_ext,add_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="tbNid !='' and tbNid !=null">
+                and tb_nid like CONCAT("%",#{tbNid,jdbcType=VARCHAR},"%")
+            </if>
+            <if test="tbName !='' and tbName !=null">
+                and tb_name like CONCAT("%",#{tbName,jdbcType=VARCHAR},"%") 
+            </if>
+            <if test="detail !='' and detail !=null">
+                and detail = #{detail,jdbcType=VARCHAR}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt !='' and reqExt !=null">
+                and req_ext = #{reqExt,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rule.domain.RuleInfo">
+        insert into arc_rule_info(tb_nid,tb_name,detail,state,req_ext,add_time )values(#{tbNid,jdbcType=VARCHAR},#{tbName,jdbcType=VARCHAR},#{detail,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{reqExt,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.rule.domain.RuleInfo">
+        update arc_rule_info set 
+            tb_nid = #{tbNid,jdbcType=VARCHAR},
+            tb_name = #{tbName,jdbcType=VARCHAR},
+            detail = #{detail,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            req_ext = #{reqExt,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_rule_info
+          <set>
+            <if test="tbNid != null and tbNid != '' ">        
+                tb_nid = #{tbNid,jdbcType=VARCHAR},                
+            </if>
+            <if test="tbName != null and tbName != '' ">        
+                tb_name = #{tbName,jdbcType=VARCHAR},                
+            </if>
+            <if test="detail != null and detail != '' ">        
+                detail = #{detail,jdbcType=VARCHAR},                
+            </if>
+             <if test="state !='' and state !=null">
+               state = #{state,jdbcType=VARCHAR},
+            </if>
+           <if test="reqExt !='' and reqExt !=null">
+                req_ext = #{reqExt,jdbcType=VARCHAR},
+            </if>
+            <if test="addTime !=null">
+                add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_rule_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_rule_info
+        <include refid="searchBy"/> order  by  state  asc ,add_time desc
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_rule_info
+        <include refid="searchBy"/> order  by  state  asc,add_time desc
+    </select>
+    
+     <delete id="delInfoById"  parameterType="java.util.HashMap">
+        delete   from arc_rule_info  where id = #{id,jdbcType=BIGINT}
+    </delete>
+    
+</mapper>

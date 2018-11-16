@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.SysWayMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.SysWay">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="rtn_url" jdbcType="VARCHAR" property="rtnUrl" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, name, type, url, rtn_url, status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null and type != '' ">
+        and type = #{type,jdbcType=TINYINT}
+      </if>
+      <if test="url != null and url != '' ">
+        and url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="rtnUrl != null and rtnUrl != '' ">
+        and rtnUrl = #{rtn_url,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_sys_way
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.SysWay">
+    insert into k_sys_way (id, code, name, 
+      type, url, rtn_url, 
+      status, created_time, updated_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{url,jdbcType=VARCHAR}, #{rtnUrl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.SysWay">
+    insert into k_sys_way
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="rtnUrl != null">
+        rtn_url,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnUrl != null">
+        #{rtnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.SysWay">
+    update k_sys_way
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnUrl != null">
+        rtn_url = #{rtnUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.SysWay">
+    update k_sys_way
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      url = #{url,jdbcType=VARCHAR},
+      rtn_url = #{rtnUrl,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_sys_way
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_sys_way
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_sys_way
+    <include refid="searchBy"/>
+  </select>
+</mapper>

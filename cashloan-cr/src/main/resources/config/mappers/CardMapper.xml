@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_card表:评分卡模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.CardMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.Card">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="card_name" property="cardName" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,card_name,score,state,add_time,nid,type 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="cardName !='' and cardName !=null">
+                and card_name = #{cardName,jdbcType=VARCHAR}
+            </if>
+            <if test="score !='' and score !=null">
+                and score = #{score,jdbcType=INTEGER}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+            <if test="type !='' and type !=null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.Card">
+        insert into arc_cr_card(card_name,score,state,add_time,nid,type)values(#{cardName,jdbcType=VARCHAR},#{score,jdbcType=INTEGER},#{state,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{nid,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.Card">
+        update arc_cr_card set 
+            card_name = #{cardName,jdbcType=VARCHAR},
+            score = #{score,jdbcType=INTEGER},
+            state = #{state,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP},
+            nid = #{nid,jdbcType=VARCHAR},
+            type = #{type,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_card
+          <set>
+            <if test="cardName != null and cardName != '' ">        
+                card_name = #{cardName,jdbcType=VARCHAR},                
+            </if>
+            <if test="score != null and score != '' or score == 0 ">        
+                score = #{score,jdbcType=INTEGER},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="addTime != null ">        
+                add_time = #{addTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null and type != '' ">        
+                type = #{type,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+    
+    <update id="updateState"  parameterType="java.util.HashMap">
+        UPDATE `arc_cr_card` AS acc
+        SET state = #{state,jdbcType=VARCHAR} 
+        WHERE id = #{id ,jdbcType=INTEGER}
+    </update>
+    
+    <!-- 标记评分卡为已使用状态  -->
+	<update id="updateType"  parameterType="java.lang.Long">
+        UPDATE arc_cr_card  SET type = 10
+        WHERE id = #{id ,jdbcType=BIGINT}
+    </update>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_card
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="findByCardName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_card
+        where card_name = #{cardName,jdbcType=VARCHAR}
+    </select>
+    
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_card
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_card
+        <include refid="searchBy"/>
+        ORDER BY id DESC
+    </select>
+    
+    <select id="findAll" resultMap="BaseResultMap">
+    	select
+        <include refid="Base_Column_List" />
+        from arc_cr_card
+        where state = 10
+    </select>
+    
+</mapper>

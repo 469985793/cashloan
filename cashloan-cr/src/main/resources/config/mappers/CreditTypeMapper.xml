@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_credit_type表:额度类型管理模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.CreditTypeMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.CreditType">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="credit_type_id" property="creditTypeId" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+        <result column="rank_id" property="rankId" jdbcType="VARCHAR" />
+        <result column="borrow_type_id" property="borrowTypeId" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,credit_type_id,name,card_id,rank_id,borrow_type_id,add_time
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="creditTypeId != null">
+                and credit_type_id = #{creditTypeId,jdbcType=VARCHAR}
+            </if>
+            <if test="cardId !='' and cardId !=null">
+                and card_id = #{cardId,jdbcType=VARCHAR}
+            </if>
+            <if test="rankId !='' and rankId !=null">
+                and rank_id = #{rankId,jdbcType=VARCHAR}
+            </if>
+            <if test="borrowTypeId !='' and borrowTypeId !=null">
+                and borrow_type_id = #{borrowTypeId,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.CreditType">
+        insert into arc_cr_credit_type(credit_type_id,name,card_id,rank_id,borrow_type_id,add_time)
+        values(#{creditTypeId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{cardId,jdbcType=VARCHAR},#{rankId,jdbcType=VARCHAR},
+				#{borrowTypeId,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP})
+				
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.CreditType">
+        update arc_cr_credit_type set 
+        	<if test="name !='' and name !=null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            credit_type_id = #{creditTypeId,jdbcType=BIGINT},
+            card_id = #{cardId,jdbcType=VARCHAR},
+            rank_id = #{rankId,jdbcType=VARCHAR},
+            borrow_type_id = #{borrowTypeId,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_credit_type
+          <set>
+            <if test="cardId != null and cardId != '' ">        
+                card_id = #{cardId,jdbcType=VARCHAR},                
+            </if>
+            <if test="rankId != null and rankId != '' ">        
+                rank_id = #{rankId,jdbcType=VARCHAR},                
+            </if>
+            <if test="borrowTypeId != null and borrowTypeId != '' ">        
+                borrow_type_id = #{borrowTypeId,jdbcType=VARCHAR},                
+            </if>
+            <if test="creditTypeId != null and creditTypeId != '' ">        
+                credit_type_id = #{creditTypeId,jdbcType=BIGINT},                
+            </if>
+            <if test="name !='' and name !=null">
+                and name = #{name,jdbcType=VARCHAR},
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_credit_type
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="selectOne" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_credit_type
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_credit_type
+        <include refid="searchBy"/>
+    </select>
+    
+   	<select id="findCreditTypeInfo" parameterType="java.util.HashMap" resultType="com.xindaibao.creditrank.cr.model.CreditTypeModel">
+   		select a.id id,a.card_id cardId,a.rank_id rankId,a.borrow_type_id borrowTypeId,a.name name,a.credit_type_id creditTypeId,
+		(select GROUP_CONCAT(c.card_name) from arc_cr_card c where c.id in (${cardId})) cardName,
+		(select GROUP_CONCAT(r.rank_name) from arc_cr_rank r where r.id in (${rankId})) rankName,
+		(select GROUP_CONCAT(d.item_value) from arc_sys_dict_detail  d where d.id in (#{borrowTypeId})) borrowTypeName
+		from arc_cr_credit_type  a  where a.id = #{id,jdbcType=BIGINT}
+   	</select>
+   	
+   	<select id="findByPrimary" resultType="com.xindaibao.creditrank.cr.model.CreditTypeModel" parameterType="java.lang.Long">
+   		select
+        <include refid="Base_Column_List" />
+        from arc_cr_credit_type
+         where id = #{id,jdbcType=BIGINT}
+   	</select>
+   	
+   	<select id="findUnUsedBorrowType" resultType="java.util.Map">
+   		select id,item_value itemValue from arc_sys_dict_detail where parent_id = (select id from arc_sys_dict where type_code = 'PRODUCT_TYPE')
+  		and  id not in (
+    		select id from arc_sys_dict_detail where parent_id = (select id from arc_sys_dict where type_code = 'PRODUCT_TYPE')
+ 	 		and FIND_IN_SET (id,(select group_concat(borrow_type_id) from arc_cr_credit_type))
+  		)
+   	</select>
+   	
+   	<select id="findEditBorrowType" resultType="com.xindaibao.creditrank.cr.model.CreditRatingModel" parameterType="java.lang.Long">
+   		select * from (
+ 			select id borrowTypeId,item_value borrowTypeName,#{typeId,jdbcType=BIGINT} as type from arc_sys_dict_detail 
+ 			where parent_id = (select id from arc_sys_dict where type_code = 'PRODUCT_TYPE') 
+ 			and FIND_IN_SET(id, (select borrow_type_id from arc_cr_credit_type where id = #{typeId,jdbcType=BIGINT}) )
+		) a UNION
+		(
+			select id borrowTypeId,item_value borrowTypeName,'' as type from arc_sys_dict_detail 
+			where parent_id = (select id from arc_sys_dict where type_code = 'PRODUCT_TYPE')
+  			and  id not in (
+    			select id from arc_sys_dict_detail 
+    			where parent_id = (select id from arc_sys_dict where type_code = 'PRODUCT_TYPE')
+ 	 			and FIND_IN_SET (id,(select group_concat(borrow_type_id) from arc_cr_credit_type))
+ 	 		)
+		)  
+   	</select>
+   	
+   	<select id="findByBorrowTypeId" parameterType="java.lang.Long" resultType="com.xindaibao.creditrank.cr.model.CreditTypeModel">
+   		select id,card_id cardId,rank_id rankId,borrow_type_id borrowTypeId,name name from arc_cr_credit_type where FIND_IN_SET(#{borrowTypeId,jdbcType=BIGINT},borrow_type_id)
+   	</select>
+    
+</mapper>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_shumei_black_list表:数美逾期黑名单模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ClShuMeiBlacklistMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ClShuMeiBlacklist">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="user_id" jdbcType="BIGINT" />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+        <result column="in_black" property="in_black" jdbcType="VARCHAR" />
+        <result column="submit_params" property="submit_params" jdbcType="VARCHAR" />
+        <result column="itfin_loan_overdues" property="itfin_loan_overdues" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdue_duration" property="itfin_loan_overdue_duration" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdues_7d" property="itfin_loan_overdues_7d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdue_duration_7d" property="itfin_loan_overdue_duration_7d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdues_30d" property="itfin_loan_overdues_30d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdue_duration_30d" property="itfin_loan_overdue_duration_30d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdues_60d" property="itfin_loan_overdues_60d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdue_duration_60d" property="itfin_loan_overdue_duration_60d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdues_90d" property="itfin_loan_overdues_90d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdue_duration_90d" property="itfin_loan_overdue_duration_90d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdues_180d" property="itfin_loan_overdues_180d" jdbcType="INTEGER" />
+        <result column="itfin_loan_overdue_duration_180d" property="itfin_loan_overdue_duration_180d" jdbcType="INTEGER" />
+        <result column="requestId" property="requestId" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,create_time,in_black,submit_params,itfin_loan_overdues,itfin_loan_overdue_duration,itfin_loan_overdues_7d,itfin_loan_overdue_duration_7d,itfin_loan_overdues_30d,itfin_loan_overdue_duration_30d,itfin_loan_overdues_60d,itfin_loan_overdue_duration_60d,itfin_loan_overdues_90d,itfin_loan_overdue_duration_90d,itfin_loan_overdues_180d,itfin_loan_overdue_duration_180d,requestId
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="user_id != null and user_id != '' ">
+                and user_id = #{user_id,jdbcType=BIGINT}
+            </if>
+            <if test="create_time != null">
+                and create_time = #{create_time,jdbcType=TIMESTAMP}
+            </if>
+            <if test="in_black != null and in_black != '' ">
+                and in_black = #{in_black,jdbcType=VARCHAR}
+            </if>
+            <if test="submit_params != null and submit_params != '' ">
+                and submit_params = #{submit_params,jdbcType=VARCHAR}
+            </if>
+            <if test="itfin_loan_overdues != null and itfin_loan_overdues != '' ">
+                and itfin_loan_overdues = #{itfin_loan_overdues,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdue_duration != null and itfin_loan_overdue_duration != '' ">
+                and itfin_loan_overdue_duration = #{itfin_loan_overdue_duration,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdues_7d != null and itfin_loan_overdues_7d != '' ">
+                and itfin_loan_overdues_7d = #{itfin_loan_overdues_7d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdue_duration_7d != null and itfin_loan_overdue_duration_7d != '' ">
+                and itfin_loan_overdue_duration_7d = #{itfin_loan_overdue_duration_7d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdues_30d != null and itfin_loan_overdues_30d != '' ">
+                and itfin_loan_overdues_30d = #{itfin_loan_overdues_30d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdue_duration_30d != null and itfin_loan_overdue_duration_30d != '' ">
+                and itfin_loan_overdue_duration_30d = #{itfin_loan_overdue_duration_30d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdues_60d != null and itfin_loan_overdues_60d != '' ">
+                and itfin_loan_overdues_60d = #{itfin_loan_overdues_60d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdue_duration_60d != null and itfin_loan_overdue_duration_60d != '' ">
+                and itfin_loan_overdue_duration_60d = #{itfin_loan_overdue_duration_60d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdues_90d != null and itfin_loan_overdues_90d != '' ">
+                and itfin_loan_overdues_90d = #{itfin_loan_overdues_90d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdue_duration_90d != null and itfin_loan_overdue_duration_90d != '' ">
+                and itfin_loan_overdue_duration_90d = #{itfin_loan_overdue_duration_90d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdues_180d != null and itfin_loan_overdues_180d != '' ">
+                and itfin_loan_overdues_180d = #{itfin_loan_overdues_180d,jdbcType=INTEGER}
+            </if>
+            <if test="itfin_loan_overdue_duration_180d != null and itfin_loan_overdue_duration_180d != '' ">
+                and itfin_loan_overdue_duration_180d = #{itfin_loan_overdue_duration_180d,jdbcType=INTEGER}
+            </if>
+            <if test="requestId != null and requestId != '' ">
+                and requestId = #{requestId,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ClShuMeiBlacklist">
+        insert into cl_shumei_black_list(user_id,create_time,in_black,submit_params,itfin_loan_overdues,itfin_loan_overdue_duration,itfin_loan_overdues_7d,itfin_loan_overdue_duration_7d,itfin_loan_overdues_30d,itfin_loan_overdue_duration_30d,itfin_loan_overdues_60d,itfin_loan_overdue_duration_60d,itfin_loan_overdues_90d,itfin_loan_overdue_duration_90d,itfin_loan_overdues_180d,itfin_loan_overdue_duration_180d,requestId)values(#{user_id,jdbcType=BIGINT},#{create_time,jdbcType=TIMESTAMP},#{in_black,jdbcType=VARCHAR},#{submit_params,jdbcType=VARCHAR},#{itfin_loan_overdues,jdbcType=INTEGER},#{itfin_loan_overdue_duration,jdbcType=INTEGER},#{itfin_loan_overdues_7d,jdbcType=INTEGER},#{itfin_loan_overdue_duration_7d,jdbcType=INTEGER},#{itfin_loan_overdues_30d,jdbcType=INTEGER},#{itfin_loan_overdue_duration_30d,jdbcType=INTEGER},#{itfin_loan_overdues_60d,jdbcType=INTEGER},#{itfin_loan_overdue_duration_60d,jdbcType=INTEGER},#{itfin_loan_overdues_90d,jdbcType=INTEGER},#{itfin_loan_overdue_duration_90d,jdbcType=INTEGER},#{itfin_loan_overdues_180d,jdbcType=INTEGER},#{itfin_loan_overdue_duration_180d,jdbcType=INTEGER},#{requestId,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ClShuMeiBlacklist">
+        update cl_shumei_black_list set 
+            user_id = #{user_id,jdbcType=BIGINT},
+            create_time = #{create_time,jdbcType=TIMESTAMP},
+            in_black = #{in_black,jdbcType=VARCHAR},
+            submit_params = #{submit_params,jdbcType=VARCHAR},
+            itfin_loan_overdues = #{itfin_loan_overdues,jdbcType=INTEGER},
+            itfin_loan_overdue_duration = #{itfin_loan_overdue_duration,jdbcType=INTEGER},
+            itfin_loan_overdues_7d = #{itfin_loan_overdues_7d,jdbcType=INTEGER},
+            itfin_loan_overdue_duration_7d = #{itfin_loan_overdue_duration_7d,jdbcType=INTEGER},
+            itfin_loan_overdues_30d = #{itfin_loan_overdues_30d,jdbcType=INTEGER},
+            itfin_loan_overdue_duration_30d = #{itfin_loan_overdue_duration_30d,jdbcType=INTEGER},
+            itfin_loan_overdues_60d = #{itfin_loan_overdues_60d,jdbcType=INTEGER},
+            itfin_loan_overdue_duration_60d = #{itfin_loan_overdue_duration_60d,jdbcType=INTEGER},
+            itfin_loan_overdues_90d = #{itfin_loan_overdues_90d,jdbcType=INTEGER},
+            itfin_loan_overdue_duration_90d = #{itfin_loan_overdue_duration_90d,jdbcType=INTEGER},
+            itfin_loan_overdues_180d = #{itfin_loan_overdues_180d,jdbcType=INTEGER},
+            itfin_loan_overdue_duration_180d = #{itfin_loan_overdue_duration_180d,jdbcType=INTEGER},
+            requestId = #{requestId,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_shumei_black_list
+          <set>
+            <if test="user_id != null and user_id != '' ">        
+                user_id = #{user_id,jdbcType=BIGINT},                
+            </if>
+            <if test="create_time != null">
+                create_time = #{create_time,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="in_black != null and in_black != '' ">        
+                in_black = #{in_black,jdbcType=VARCHAR},                
+            </if>
+            <if test="submit_params != null and submit_params != '' ">        
+                submit_params = #{submit_params,jdbcType=VARCHAR},                
+            </if>
+            <if test="itfin_loan_overdues != null and itfin_loan_overdues != '' ">        
+                itfin_loan_overdues = #{itfin_loan_overdues,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdue_duration != null and itfin_loan_overdue_duration != '' ">        
+                itfin_loan_overdue_duration = #{itfin_loan_overdue_duration,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdues_7d != null and itfin_loan_overdues_7d != '' ">        
+                itfin_loan_overdues_7d = #{itfin_loan_overdues_7d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdue_duration_7d != null and itfin_loan_overdue_duration_7d != '' ">        
+                itfin_loan_overdue_duration_7d = #{itfin_loan_overdue_duration_7d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdues_30d != null and itfin_loan_overdues_30d != '' ">        
+                itfin_loan_overdues_30d = #{itfin_loan_overdues_30d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdue_duration_30d != null and itfin_loan_overdue_duration_30d != '' ">        
+                itfin_loan_overdue_duration_30d = #{itfin_loan_overdue_duration_30d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdues_60d != null and itfin_loan_overdues_60d != '' ">        
+                itfin_loan_overdues_60d = #{itfin_loan_overdues_60d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdue_duration_60d != null and itfin_loan_overdue_duration_60d != '' ">        
+                itfin_loan_overdue_duration_60d = #{itfin_loan_overdue_duration_60d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdues_90d != null and itfin_loan_overdues_90d != '' ">        
+                itfin_loan_overdues_90d = #{itfin_loan_overdues_90d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdue_duration_90d != null and itfin_loan_overdue_duration_90d != '' ">        
+                itfin_loan_overdue_duration_90d = #{itfin_loan_overdue_duration_90d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdues_180d != null and itfin_loan_overdues_180d != '' ">        
+                itfin_loan_overdues_180d = #{itfin_loan_overdues_180d,jdbcType=INTEGER},                
+            </if>
+            <if test="itfin_loan_overdue_duration_180d != null and itfin_loan_overdue_duration_180d != '' ">
+                itfin_loan_overdue_duration_180d = #{itfin_loan_overdue_duration_180d,jdbcType=INTEGER}
+            </if>
+             <if test="requestId != null and requestId != '' ">
+                 requestId = #{requestId,jdbcType=VARCHAR}
+             </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_shumei_black_list
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_shumei_black_list
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_shumei_black_list
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

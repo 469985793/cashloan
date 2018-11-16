@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.KanyaUserBankaccMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.KanyaUserBankacc">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="bank_card_no" jdbcType="VARCHAR" property="bankCardNo" />
+    <result column="bank_no" jdbcType="VARCHAR" property="bankNo" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, bank_card_no, bank_no, bank_name, mobile, first_name, last_name, status, 
+    created_time, updated_time
+  </sql>
+
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="uid != null and uid != '' ">
+        and uid = #{uid,jdbcType=VARCHAR}
+      </if>
+      <if test="bankCardNo != null and bankCardNo != '' ">
+        and bankCardNo = #{bank_card_no,jdbcType=VARCHAR}
+      </if>
+      <if test="bankNo != null and bankNo != '' ">
+        and bankNo = #{bank_no,jdbcType=VARCHAR}
+      </if>
+      <if test="bankName != null and bankName != '' ">
+        and bankName = #{bank_name,jdbcType=VARCHAR}
+      </if>
+      <if test="mobile != null and mobile != '' ">
+        and mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="firstName != null and firstName != '' ">
+        and firstName = #{first_name,jdbcType=VARCHAR}
+      </if>
+      <if test="lastName != null and lastName != '' ">
+        and lastName = #{last_name,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user_bankacc
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserBankacc">
+    insert into k_user_bankacc (id, uid, bank_card_no, 
+      bank_no, bank_name, mobile, 
+      first_name, last_name, status, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{bankCardNo,jdbcType=VARCHAR}, 
+      #{bankNo,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserBankacc">
+    insert into k_user_bankacc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="bankCardNo != null">
+        bank_card_no,
+      </if>
+      <if test="bankNo != null">
+        bank_no,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="firstName != null">
+        first_name,
+      </if>
+      <if test="lastName != null">
+        last_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="bankCardNo != null">
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserBankacc">
+    update k_user_bankacc
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="bankCardNo != null">
+        bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        bank_no = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserBankacc">
+    update k_user_bankacc
+    set uid = #{uid,jdbcType=BIGINT},
+      bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      bank_no = #{bankNo,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_bankacc
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_bankacc
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_bankacc
+    <include refid="searchBy"/>
+  </select>
+</mapper>

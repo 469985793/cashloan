@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_channel表:渠道信息模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ChannelMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.Channel">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="linker" property="linker" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,code,name,linker,phone,type,state,create_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="code !='' and code !=null">
+                and code = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="name !='' and name !=null">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="linker !='' and linker !=null">
+                and linker = #{linker,jdbcType=VARCHAR}
+            </if>
+            <if test="phone !='' and phone !=null">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="type !='' and type !=null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+      <!-- 基本的模糊sql查询条件公共引用 -->
+    <sql id="searchLikeBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="code !='' and code !=null">
+                 code like  concat("%",#{code,jdbcType=VARCHAR},"%")  
+            </if>
+            <if test="name !='' and name !=null">
+                and name like  concat("%",#{name,jdbcType=VARCHAR},"%")   
+            </if>
+            <if test="linker !='' and linker !=null">
+                and linker  like  concat("%",#{linker,jdbcType=VARCHAR},"%") 
+            </if>
+            <if test="phone !='' and phone !=null">
+                and phone like  concat("%",#{phone,jdbcType=VARCHAR},"%") 
+            </if>
+        </trim>
+    </sql>
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.Channel">
+        insert into cl_channel(code,name,linker,phone,type,state,create_time)values(#{code,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{linker,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.Channel">
+        update cl_channel set 
+            code = #{code,jdbcType=VARCHAR},
+            name = #{name,jdbcType=VARCHAR},
+            linker = #{linker,jdbcType=VARCHAR},
+            phone = #{phone,jdbcType=VARCHAR},
+            type = #{type,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_channel
+          <set>
+            <if test="code != null and code != '' ">        
+                code = #{code,jdbcType=VARCHAR},                
+            </if>
+            <if test="name != null and name != '' ">        
+                name = #{name,jdbcType=VARCHAR},                
+            </if>
+            <if test="linker != null and linker != '' ">        
+                linker = #{linker,jdbcType=VARCHAR},                
+            </if>
+            <if test="phone != null and phone != '' ">        
+                phone = #{phone,jdbcType=VARCHAR},                
+            </if>
+            <if test="type != null and type != '' ">        
+                type = #{type,jdbcType=VARCHAR},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="createTime != null ">        
+                create_time = #{createTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_channel
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findIdSelective" resultType="java.lang.Long" parameterType="java.util.HashMap">
+        select
+        id 
+        from cl_channel
+        <include refid="searchBy"/>
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_channel
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_channel
+        <include refid="searchBy"/>
+    </select>
+
+	<select id="listChannel" resultMap="BaseResultMap">
+		select
+        <include refid="Base_Column_List" />
+        from cl_channel
+	</select>
+	
+	<select id="page" resultType="com.xindaibao.cashloan.cl.model.ChannelModel" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from cl_channel
+		<include refid="searchLikeBy" />
+	</select>
+
+	<select id="listChannelWithoutApp" resultMap="BaseResultMap">
+		select c.id, c.name from cl_channel c where not exists (select DISTINCT
+		a.channel_id from cl_channel_app a where a.channel_id = c.id) and state = 10
+	</select>
+	
+	<select id="channelUserList" resultType="com.xindaibao.cashloan.cl.model.ChannelCountModel" parameterType="java.util.HashMap">
+	  select   `code`,`name`, sum(registerCount) as registerCount ,sum(borrowMember) as borrowMember, sum(borrowCount) as borrowCount,sum(borrowAmout) as borrowAmout,sum(badRate) as badRate ,sum(payCount) as payCount, sum(payAccount) as payAccount,sum(userBorrowCount) AS userBorrowCount from
+	(
+     select   a.cl_channel_id, a.`code`,a.`name`, 0  as  registerCount ,sum(a.borrowMember) as borrowMember ,SUM(a.borrowCount) as borrowCount ,SUM(a.borrowAmout) as borrowAmout, sum(a.badRate) as badRate, sum(a.payCount) as payCount, sum(a.payAccount) as payAccount,sum(a.userBorrowCount) AS userBorrowCount
+       from  (
+        select u.id,c.`code`,c.`name`,c.id as cl_channel_id,0 as registerCount ,b.borrowMember,b.borrowCount ,b.borrowAmout,b.badRate,b.payCount,b.payAccount,b.userBorrowCount
+		     from  cl_channel c   JOIN  cl_user u  on c.id=u.channel_id    join  
+         (select b.user_id,1 as borrowMember, sum(b.amount) as borrowAmout,count(1)  as borrowCount,count(distinct(b.user_id)) as userBorrowCount ,sum(CASE b.state  when 50  THEN 1   when 90  THEN 1  ELSE  0 end ) as badRate,
+          sum(CASE  when  b.state in (30,40,41,50,90)  THEN  1    ELSE  0 end ) as	payCount,sum(CASE  when  b.state in (30,40,41,50,90)  THEN  b.real_amount    ELSE  0 end ) as payAccount  
+          from   cl_borrow  b  group by b.user_id ) b  on u.id=b.user_id
+          
+           <trim prefix="where" prefixOverrides="and|or">
+			 <if test=" beforeTime !=null ">
+			    date_format(u.regist_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP} 
+			 </if>
+			  <if test=" afterTime !=null ">
+			    and  date_format(u.regist_time, '%Y-%m-%d')  &lt;= #{afterTime,jdbcType=TIMESTAMP}
+			 </if>
+			 <if test="name !='' and name !=null">
+	            and c.name like  concat("%",#{name,jdbcType=VARCHAR},"%")   
+	         </if>
+               <if test="linker !='' and linker !=null">
+                   and c.linker like  concat("%",#{linker,jdbcType=VARCHAR},"%")
+               </if>
+		 </trim>
+          ) a  
+		  group by a.cl_channel_id  
+		   
+	     UNION all
+		
+		 select  c.id as cl_channel_id,c.`code`,c.`name`,count(1) as registerCount ,  0 as borrowMember,0 as borrowCount,0 as borrowAmout,0 as badRate,0 as payCount,0 as payAccount,0 as userBorrowCount
+		  from    cl_user u  JOIN   cl_channel c    on c.id=u.channel_id 
+		  
+		    <trim prefix="where" prefixOverrides="and|or">
+			 <if test=" beforeTime !=null ">
+			    date_format(u.regist_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP} 
+			 </if>
+			  <if test=" afterTime !=null ">
+			    and  date_format(u.regist_time, '%Y-%m-%d')  &lt;= #{afterTime,jdbcType=TIMESTAMP}
+			 </if>
+			 <if test="name !='' and name !=null">
+	            and c.name like  concat("%",#{name,jdbcType=VARCHAR},"%")   
+	         </if>
+                <if test="linker !='' and linker !=null">
+                    and c.linker like  concat("%",#{linker,jdbcType=VARCHAR},"%")
+                </if>
+		 </trim>
+		  
+		  
+		  group by c.id 	
+		
+		 ) b
+	 
+	group by  cl_channel_id   
+	</select>
+ 
+</mapper>

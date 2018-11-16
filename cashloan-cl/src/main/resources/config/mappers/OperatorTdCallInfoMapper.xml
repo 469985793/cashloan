@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_td_call_info表:通话记录详单模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorTdCallInfoMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorTdCallInfo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="req_log_id" property="reqLogId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="total_call_time" property="totalCallTime" jdbcType="VARCHAR" />
+        <result column="total_call_count" property="totalCallCount" jdbcType="VARCHAR" />
+        <result column="total_fee" property="totalFee" jdbcType="VARCHAR" />
+        <result column="call_cycle" property="callCycle" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,req_log_id,order_no,total_call_time,total_call_count,total_fee,call_cycle 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="reqLogId != null and reqLogId != '' ">
+                and req_log_id = #{reqLogId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="totalCallTime != null and totalCallTime != '' ">
+                and total_call_time = #{totalCallTime,jdbcType=VARCHAR}
+            </if>
+            <if test="totalCallCount != null and totalCallCount != '' ">
+                and total_call_count = #{totalCallCount,jdbcType=VARCHAR}
+            </if>
+            <if test="totalFee != null and totalFee != '' ">
+                and total_fee = #{totalFee,jdbcType=VARCHAR}
+            </if>
+            <if test="callCycle != null and callCycle != '' ">
+                and call_cycle = #{callCycle,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdCallInfo" keyProperty="id" useGeneratedKeys="true" >
+        insert into cl_operator_td_call_info(user_id,req_log_id,order_no,total_call_time,total_call_count,total_fee,call_cycle)values(#{userId,jdbcType=BIGINT},#{reqLogId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{totalCallTime,jdbcType=VARCHAR},#{totalCallCount,jdbcType=VARCHAR},#{totalFee,jdbcType=VARCHAR},#{callCycle,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdCallInfo">
+        update cl_operator_td_call_info set 
+            user_id = #{userId,jdbcType=BIGINT},
+            req_log_id = #{reqLogId,jdbcType=BIGINT},
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            total_call_time = #{totalCallTime,jdbcType=VARCHAR},
+            total_call_count = #{totalCallCount,jdbcType=VARCHAR},
+            total_fee = #{totalFee,jdbcType=VARCHAR},
+            call_cycle = #{callCycle,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_operator_td_call_info
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="reqLogId != null and reqLogId != '' ">
+                req_log_id = #{reqLogId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="totalCallTime != null and totalCallTime != '' ">        
+                total_call_time = #{totalCallTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="totalCallCount != null and totalCallCount != '' ">        
+                total_call_count = #{totalCallCount,jdbcType=VARCHAR},                
+            </if>
+            <if test="totalFee != null and totalFee != '' ">        
+                total_fee = #{totalFee,jdbcType=VARCHAR},                
+            </if>
+            <if test="callCycle != null and callCycle != '' ">        
+                call_cycle = #{callCycle,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_call_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_call_info
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_call_info
+        <include refid="searchBy"/>
+         group by  id desc
+    </select>
+    
+</mapper>

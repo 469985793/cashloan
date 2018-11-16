@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_user_equipment_info表:用户设备信息表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.UserEquipmentInfoMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.UserEquipmentInfo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="black_box" property="blackBox" jdbcType="VARCHAR" />
+        <result column="operating_system" property="operatingSystem" jdbcType="VARCHAR" />
+        <result column="system_versions" property="systemVersions" jdbcType="VARCHAR" />
+        <result column="phone_type" property="phoneType" jdbcType="VARCHAR" />
+        <result column="phone_brand" property="phoneBrand" jdbcType="VARCHAR" />
+        <result column="phone_mark" property="phoneMark" jdbcType="VARCHAR" />
+        <result column="mac" property="mac" jdbcType="VARCHAR" />
+        <result column="version_name" property="versionName" jdbcType="VARCHAR" />
+        <result column="version_code" property="versionCode" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,black_box,operating_system,system_versions,phone_type,phone_brand,phone_mark,mac,version_name,version_code 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="blackBox != null and blackBox != '' ">
+                and black_box = #{blackBox,jdbcType=VARCHAR}
+            </if>
+            <if test="operatingSystem != null and operatingSystem != '' ">
+                and operating_system = #{operatingSystem,jdbcType=VARCHAR}
+            </if>
+            <if test="systemVersions != null and systemVersions != '' ">
+                and system_versions = #{systemVersions,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneType != null and phoneType != '' ">
+                and phone_type = #{phoneType,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneBrand != null and phoneBrand != '' ">
+                and phone_brand = #{phoneBrand,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneMark != null and phoneMark != '' ">
+                and phone_mark = #{phoneMark,jdbcType=VARCHAR}
+            </if>
+            <if test="mac != null and mac != '' ">
+                and mac = #{mac,jdbcType=VARCHAR}
+            </if>
+            <if test="versionName != null and versionName != '' ">
+                and version_name = #{versionName,jdbcType=VARCHAR}
+            </if>
+            <if test="versionCode != null and versionCode != '' ">
+                and version_code = #{versionCode,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.UserEquipmentInfo">
+        insert into cl_user_equipment_info(user_id,black_box,operating_system,system_versions,phone_type,phone_brand,phone_mark,mac,version_name,version_code)values(#{userId,jdbcType=BIGINT},#{blackBox,jdbcType=VARCHAR},#{operatingSystem,jdbcType=VARCHAR},#{systemVersions,jdbcType=VARCHAR},#{phoneType,jdbcType=VARCHAR},#{phoneBrand,jdbcType=VARCHAR},#{phoneMark,jdbcType=VARCHAR},#{mac,jdbcType=VARCHAR},#{versionName,jdbcType=VARCHAR},#{versionCode,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.UserEquipmentInfo">
+        update cl_user_equipment_info set 
+            user_id = #{userId,jdbcType=BIGINT},
+            black_box = #{blackBox,jdbcType=VARCHAR},
+            operating_system = #{operatingSystem,jdbcType=VARCHAR},
+            system_versions = #{systemVersions,jdbcType=VARCHAR},
+            phone_type = #{phoneType,jdbcType=VARCHAR},
+            phone_brand = #{phoneBrand,jdbcType=VARCHAR},
+            phone_mark = #{phoneMark,jdbcType=VARCHAR},
+            mac = #{mac,jdbcType=VARCHAR},
+            version_name = #{versionName,jdbcType=VARCHAR},
+            version_code = #{versionCode,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_user_equipment_info
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="blackBox != null and blackBox != '' ">        
+                black_box = #{blackBox,jdbcType=VARCHAR},                
+            </if>
+            <if test="operatingSystem != null and operatingSystem != '' ">        
+                operating_system = #{operatingSystem,jdbcType=VARCHAR},                
+            </if>
+            <if test="systemVersions != null and systemVersions != '' ">        
+                system_versions = #{systemVersions,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneType != null and phoneType != '' ">        
+                phone_type = #{phoneType,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneBrand != null and phoneBrand != '' ">        
+                phone_brand = #{phoneBrand,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneMark != null and phoneMark != '' ">        
+                phone_mark = #{phoneMark,jdbcType=VARCHAR},                
+            </if>
+            <if test="mac != null and mac != '' ">        
+                mac = #{mac,jdbcType=VARCHAR},                
+            </if>
+            <if test="versionName != null and versionName != '' ">        
+                version_name = #{versionName,jdbcType=VARCHAR},                
+            </if>
+            <if test="versionCode != null and versionCode != '' ">        
+                version_code = #{versionCode,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_equipment_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_equipment_info
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_equipment_info
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_dhb_user_basic表:贷后邦用户基本信息表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.DhbUserBasicMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.DhbUserBasic">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+        <result column="gender" property="gender" jdbcType="VARCHAR" />
+        <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+        <result column="idcard_validate" property="idcardValidate" jdbcType="INTEGER" />
+        <result column="idcard_province" property="idcardProvince" jdbcType="VARCHAR" />
+        <result column="idcard_city" property="idcardCity" jdbcType="VARCHAR" />
+        <result column="idcard_region" property="idcardRegion" jdbcType="VARCHAR" />
+        <result column="phone_operator" property="phoneOperator" jdbcType="VARCHAR" />
+        <result column="phone_province" property="phoneProvince" jdbcType="VARCHAR" />
+        <result column="phone_city" property="phoneCity" jdbcType="VARCHAR" />
+        <result column="record_idcard_days" property="recordIdcardDays" jdbcType="INTEGER" />
+        <result column="record_phone_days" property="recordPhoneDays" jdbcType="INTEGER" />
+        <result column="last_appear_idcard" property="lastAppearIdcard" jdbcType="VARCHAR" />
+        <result column="last_appear_phone" property="lastAppearPhone" jdbcType="VARCHAR" />
+        <result column="used_idcards_cnt" property="usedIdcardsCnt" jdbcType="INTEGER" />
+        <result column="used_phones_cnt" property="usedPhonesCnt" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,order_no,user_id,age,gender,birthday,idcard_validate,idcard_province,idcard_city,idcard_region,phone_operator,phone_province,phone_city,record_idcard_days,record_phone_days,last_appear_idcard,last_appear_phone,used_idcards_cnt,used_phones_cnt 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="age != null and age != '' ">
+                and age = #{age,jdbcType=INTEGER}
+            </if>
+            <if test="gender != null and gender != '' ">
+                and gender = #{gender,jdbcType=VARCHAR}
+            </if>
+            <if test="birthday != null and birthday != '' ">
+                and birthday = #{birthday,jdbcType=VARCHAR}
+            </if>
+            <if test="idcardValidate != null and idcardValidate != '' ">
+                and idcard_validate = #{idcardValidate,jdbcType=INTEGER}
+            </if>
+            <if test="idcardProvince != null and idcardProvince != '' ">
+                and idcard_province = #{idcardProvince,jdbcType=VARCHAR}
+            </if>
+            <if test="idcardCity != null and idcardCity != '' ">
+                and idcard_city = #{idcardCity,jdbcType=VARCHAR}
+            </if>
+            <if test="idcardRegion != null and idcardRegion != '' ">
+                and idcard_region = #{idcardRegion,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneOperator != null and phoneOperator != '' ">
+                and phone_operator = #{phoneOperator,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneProvince != null and phoneProvince != '' ">
+                and phone_province = #{phoneProvince,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneCity != null and phoneCity != '' ">
+                and phone_city = #{phoneCity,jdbcType=VARCHAR}
+            </if>
+            <if test="recordIdcardDays != null and recordIdcardDays != '' ">
+                and record_idcard_days = #{recordIdcardDays,jdbcType=INTEGER}
+            </if>
+            <if test="recordPhoneDays != null and recordPhoneDays != '' ">
+                and record_phone_days = #{recordPhoneDays,jdbcType=INTEGER}
+            </if>
+            <if test="lastAppearIdcard != null and lastAppearIdcard != '' ">
+                and last_appear_idcard = #{lastAppearIdcard,jdbcType=VARCHAR}
+            </if>
+            <if test="lastAppearPhone != null and lastAppearPhone != '' ">
+                and last_appear_phone = #{lastAppearPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="usedIdcardsCnt != null and usedIdcardsCnt != '' ">
+                and used_idcards_cnt = #{usedIdcardsCnt,jdbcType=INTEGER}
+            </if>
+            <if test="usedPhonesCnt != null and usedPhonesCnt != '' ">
+                and used_phones_cnt = #{usedPhonesCnt,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.DhbUserBasic">
+        insert into cl_rc_dhb_user_basic(order_no,user_id,age,gender,birthday,idcard_validate,idcard_province,idcard_city,idcard_region,phone_operator,phone_province,phone_city,record_idcard_days,record_phone_days,last_appear_idcard,last_appear_phone,used_idcards_cnt,used_phones_cnt)values(#{orderNo,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{age,jdbcType=INTEGER},#{gender,jdbcType=VARCHAR},#{birthday,jdbcType=VARCHAR},#{idcardValidate,jdbcType=INTEGER},#{idcardProvince,jdbcType=VARCHAR},#{idcardCity,jdbcType=VARCHAR},#{idcardRegion,jdbcType=VARCHAR},#{phoneOperator,jdbcType=VARCHAR},#{phoneProvince,jdbcType=VARCHAR},#{phoneCity,jdbcType=VARCHAR},#{recordIdcardDays,jdbcType=INTEGER},#{recordPhoneDays,jdbcType=INTEGER},#{lastAppearIdcard,jdbcType=VARCHAR},#{lastAppearPhone,jdbcType=VARCHAR},#{usedIdcardsCnt,jdbcType=INTEGER},#{usedPhonesCnt,jdbcType=INTEGER})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.DhbUserBasic">
+        update cl_rc_dhb_user_basic set 
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=BIGINT},
+            age = #{age,jdbcType=INTEGER},
+            gender = #{gender,jdbcType=VARCHAR},
+            birthday = #{birthday,jdbcType=VARCHAR},
+            idcard_validate = #{idcardValidate,jdbcType=INTEGER},
+            idcard_province = #{idcardProvince,jdbcType=VARCHAR},
+            idcard_city = #{idcardCity,jdbcType=VARCHAR},
+            idcard_region = #{idcardRegion,jdbcType=VARCHAR},
+            phone_operator = #{phoneOperator,jdbcType=VARCHAR},
+            phone_province = #{phoneProvince,jdbcType=VARCHAR},
+            phone_city = #{phoneCity,jdbcType=VARCHAR},
+            record_idcard_days = #{recordIdcardDays,jdbcType=INTEGER},
+            record_phone_days = #{recordPhoneDays,jdbcType=INTEGER},
+            last_appear_idcard = #{lastAppearIdcard,jdbcType=VARCHAR},
+            last_appear_phone = #{lastAppearPhone,jdbcType=VARCHAR},
+            used_idcards_cnt = #{usedIdcardsCnt,jdbcType=INTEGER},
+            used_phones_cnt = #{usedPhonesCnt,jdbcType=INTEGER}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_dhb_user_basic
+          <set>
+            <if test="orderNo != null and orderNo != '' ">        
+                order_no = #{orderNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="age != null and age != '' ">        
+                age = #{age,jdbcType=INTEGER},                
+            </if>
+            <if test="gender != null and gender != '' ">        
+                gender = #{gender,jdbcType=VARCHAR},                
+            </if>
+            <if test="birthday != null and birthday != '' ">        
+                birthday = #{birthday,jdbcType=VARCHAR},                
+            </if>
+            <if test="idcardValidate != null and idcardValidate != '' ">        
+                idcard_validate = #{idcardValidate,jdbcType=INTEGER},                
+            </if>
+            <if test="idcardProvince != null and idcardProvince != '' ">        
+                idcard_province = #{idcardProvince,jdbcType=VARCHAR},                
+            </if>
+            <if test="idcardCity != null and idcardCity != '' ">        
+                idcard_city = #{idcardCity,jdbcType=VARCHAR},                
+            </if>
+            <if test="idcardRegion != null and idcardRegion != '' ">        
+                idcard_region = #{idcardRegion,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneOperator != null and phoneOperator != '' ">        
+                phone_operator = #{phoneOperator,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneProvince != null and phoneProvince != '' ">        
+                phone_province = #{phoneProvince,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneCity != null and phoneCity != '' ">        
+                phone_city = #{phoneCity,jdbcType=VARCHAR},                
+            </if>
+            <if test="recordIdcardDays != null and recordIdcardDays != '' ">        
+                record_idcard_days = #{recordIdcardDays,jdbcType=INTEGER},                
+            </if>
+            <if test="recordPhoneDays != null and recordPhoneDays != '' ">        
+                record_phone_days = #{recordPhoneDays,jdbcType=INTEGER},                
+            </if>
+            <if test="lastAppearIdcard != null and lastAppearIdcard != '' ">        
+                last_appear_idcard = #{lastAppearIdcard,jdbcType=VARCHAR},                
+            </if>
+            <if test="lastAppearPhone != null and lastAppearPhone != '' ">        
+                last_appear_phone = #{lastAppearPhone,jdbcType=VARCHAR},                
+            </if>
+            <if test="usedIdcardsCnt != null and usedIdcardsCnt != '' ">        
+                used_idcards_cnt = #{usedIdcardsCnt,jdbcType=INTEGER},                
+            </if>
+            <if test="usedPhonesCnt != null and usedPhonesCnt != '' ">        
+                used_phones_cnt = #{usedPhonesCnt,jdbcType=INTEGER}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_user_basic
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_user_basic
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_user_basic
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

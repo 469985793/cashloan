@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_sms_tpl表:短信记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.SmsTplMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.SmsTpl">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+        <result column="tpl" property="tpl" jdbcType="VARCHAR" />
+        <result column="number" property="number" jdbcType="VARCHAR" />
+         <result column="state" property="state" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,type,type_name,tpl,number,state
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null and id !=''">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="type !=null and type !=''">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="typeName !=null and typeName !=''">
+                and type_name = #{typeName,jdbcType=VARCHAR}
+            </if>
+            <if test="tpl !=null and tpl !=''">
+                and tpl = #{tpl,jdbcType=VARCHAR}
+            </if>
+            <if test="number !=null and number !=''">
+                and number = #{number,jdbcType=VARCHAR}
+            </if>
+            <if test="state !=null and state !=''">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.SmsTpl">
+        insert into cl_sms_tpl(type,type_name,tpl,number,state)values(#{type,jdbcType=VARCHAR},#{typeName,jdbcType=VARCHAR},#{tpl,jdbcType=VARCHAR},#{number,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.SmsTpl">
+        update cl_sms_tpl set 
+            type = #{type,jdbcType=VARCHAR},
+            type_name = #{typeName,jdbcType=VARCHAR},
+            tpl = #{tpl,jdbcType=VARCHAR},
+            number = #{number,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_sms_tpl
+          <set>
+            <if test="type != null and type != '' ">        
+                type = #{type,jdbcType=VARCHAR},                
+            </if>
+            <if test="typeName != null and typeName != '' ">        
+                type_name = #{typeName,jdbcType=VARCHAR},                
+            </if>
+            <if test="tpl != null and tpl != '' ">        
+                tpl = #{tpl,jdbcType=VARCHAR},                
+            </if>
+            <if test="number != null and number != '' ">        
+                number = #{number,jdbcType=VARCHAR}                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_sms_tpl
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_sms_tpl
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_sms_tpl
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"   
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+ xmlns:aop="http://www.springframework.org/schema/aop"   
+ xmlns:context="http://www.springframework.org/schema/context"   
+ xmlns:p="http://www.springframework.org/schema/p"   
+ xmlns:tx="http://www.springframework.org/schema/tx"     
+ xmlns:cache="http://www.springframework.org/schema/cache"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans    
+  http://www.springframework.org/schema/beans/spring-beans.xsd   
+  http://www.springframework.org/schema/aop    
+  http://www.springframework.org/schema/aop/spring-aop-4.0.xsd   
+  http://www.springframework.org/schema/context    
+  http://www.springframework.org/schema/context/spring-context-4.0.xsd   
+  http://www.springframework.org/schema/tx    
+  http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"  default-autowire="byName">
+	<!-- mlms-http-request -->
+	<bean id="mlmsAppServerConfig" init-method="init" class="com.xindaibao.cashloan.core.common.model.URLConfig">
+		<property name="host" value="${mlms.app.host}" />
+		<property name="port" value="${mlms.app.port}" /> 
+		<property name="contextPath" value="${mlms.app.contextPath}" />
+	</bean>
+	<bean id="mlmsImageServerConfig" init-method="init" class="com.xindaibao.cashloan.core.common.model.URLConfig">
+		<property name="host" value="${mlms.image.host}" />
+		<property name="port" value="${mlms.image.port}" />
+		<property name="contextPath" value="${mlms.image.contextPath}" />
+	</bean>
+	<bean id="mlmsScriptServerConfig" init-method="init" class="com.xindaibao.cashloan.core.common.model.URLConfig">
+		<property name="host" value="${mlms.script.host}" />
+		<property name="port" value="${mlms.script.port}" />
+		<property name="contextPath" value="${mlms.script.contextPath}" />
+	</bean>
+	<bean id="mlmsStyleServerConfig" init-method="init" class="com.xindaibao.cashloan.core.common.model.URLConfig">
+		<property name="host" value="${mlms.style.host}" />
+		<property name="port" value="${mlms.style.port}" />
+		<property name="contextPath" value="${mlms.style.contextPath}" />
+	</bean>
+</beans>

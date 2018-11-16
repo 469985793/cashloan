@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_borrow_progress表:借款进度表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.BorrowProgressMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.BorrowProgress">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        
+        <result column="audit_remark" property="auditRemark" jdbcType="VARCHAR" />
+        <result column="audit_user" property="audit_user" jdbcType="BIGINT" />
+    </resultMap>
+    
+    <resultMap id="userBorrowMap"  extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageBorrowProgressModel">
+         <result column="real_name" property="realName" jdbcType="VARCHAR" />
+         <result column="phone" property="phone" jdbcType="VARCHAR" />
+    	 <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+         <result column="amount" property="amount" jdbcType="DECIMAL" />
+       
+    </resultMap>
+  
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,borrow_id,state,remark,create_time,audit_remark,audit_user
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="borrowId !='' and borrowId !=null">
+                and borrow_id = #{borrowId,jdbcType=BIGINT}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="remark !='' and remark !=null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+             <if test="auditRemark !='' and auditRemark !=null">
+                and audit_remark = #{auditRemark,jdbcType=VARCHAR}
+            </if>
+            <if test="auditUser !='' and auditUser !=null">
+                and audit_user = #{auditUser,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.BorrowProgress">
+        insert into cl_borrow_progress(user_id,borrow_id,state,remark,create_time,audit_remark,audit_user)values(#{userId,jdbcType=BIGINT},#{borrowId,jdbcType=BIGINT},#{state,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{auditRemark,jdbcType=VARCHAR},#{auditUser,jdbcType=BIGINT})
+    </insert>
+
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.BorrowProgress">
+        update cl_borrow_progress set 
+            user_id = #{userId,jdbcType=BIGINT},
+            borrow_id = #{borrowId,jdbcType=BIGINT},
+            state = #{state,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+	<update id="updateSelective" parameterType="java.util.HashMap">
+		update cl_borrow_progress
+		<set>
+			<if test="userId != null and userId != '' ">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="borrowId != null and borrowId != '' ">
+				borrow_id = #{borrowId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null and state != '' ">
+				state = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark != '' ">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null ">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditRemark !='' and auditRemark !=null">
+                and audit_remark = #{auditRemark,jdbcType=VARCHAR}
+            </if>
+            <if test="auditUser !='' and auditUser !=null">
+                and audit_user = #{auditUser,jdbcType=BIGINT}
+            </if>
+		</set>
+		where id = #{id ,jdbcType=BIGINT}
+	</update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_progress
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_progress
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_progress
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listIndex" resultType="com.xindaibao.cashloan.cl.model.BorrowProgressModel" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_progress
+        <include refid="searchBy"/>
+        ORDER BY state ASC
+    </select>
+    <!--  state <= #{state,jdbcType=VARCHAR} and -->
+    <select id="listProgress" resultType="com.xindaibao.cashloan.cl.model.BorrowProgressModel" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_progress
+        <![CDATA[where borrow_id = #{borrowId,jdbcType=BIGINT}]]> 
+        ORDER BY state ASC
+    </select>
+
+    <select id="listModel" resultMap="userBorrowMap" parameterType="java.util.HashMap">
+		select   p.id,p.user_id,p.borrow_id,p.state,p.remark,p.create_time
+		from cl_borrow_progress p 
+	   
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="state != null and state != '' ">
+				 p.state = #{state,jdbcType=VARCHAR}
+			</if>
+			<if test="borrowIds !=null">
+            	and p.borrow_id  in
+             	<foreach item="item" index="index" collection="borrowIds" open="(" separator="," close=")">  
+			    	#{item}  
+             	</foreach> 
+            </if>
+			
+		</trim>
+		ORDER BY   p.id DESC
+	</select>
+    
+</mapper>

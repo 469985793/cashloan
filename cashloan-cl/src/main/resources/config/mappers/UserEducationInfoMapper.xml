@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_user_education_info表:用户设备信息表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.UserEducationInfoMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.UserEducationInfo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="education_type" property="educationType" jdbcType="VARCHAR" />
+        <result column="profession" property="profession" jdbcType="VARCHAR" />
+        <result column="graduate_school" property="graduateSchool" jdbcType="VARCHAR" />
+        <result column="matriculation_time" property="matriculationTime" jdbcType="VARCHAR" />
+        <result column="graduation_time" property="graduationTime" jdbcType="VARCHAR" />
+        <result column="graduation_conclusion" property="graduationConclusion" jdbcType="VARCHAR" />
+        <result column="education_background" property="educationBackground" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap id="UserEducationInfoModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.UserEducationInfoModel">
+    	
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,education_type,profession,graduate_school,matriculation_time,graduation_time,graduation_conclusion,education_background,state 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="educationType != null and educationType != '' ">
+                and education_type = #{educationType,jdbcType=VARCHAR}
+            </if>
+            <if test="profession != null and profession != '' ">
+                and profession = #{profession,jdbcType=VARCHAR}
+            </if>
+            <if test="graduateSchool != null and graduateSchool != '' ">
+                and graduate_school = #{graduateSchool,jdbcType=VARCHAR}
+            </if>
+            <if test="matriculationTime != null and matriculationTime != '' ">
+                and matriculation_time = #{matriculationTime,jdbcType=VARCHAR}
+            </if>
+            <if test="graduationTime != null and graduationTime != '' ">
+                and graduation_time = #{graduationTime,jdbcType=VARCHAR}
+            </if>
+            <if test="graduationConclusion != null and graduationConclusion != '' ">
+                and graduation_conclusion = #{graduationConclusion,jdbcType=VARCHAR}
+            </if>
+            <if test="educationBackground != null and educationBackground != '' ">
+                and education_background = #{educationBackground,jdbcType=VARCHAR}
+            </if>
+            <if test="state != null and state != '' ">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.UserEducationInfo">
+        insert into cl_user_education_info(user_id,education_type,profession,graduate_school,matriculation_time,graduation_time,graduation_conclusion,education_background,state)values(#{userId,jdbcType=BIGINT},#{educationType,jdbcType=VARCHAR},#{profession,jdbcType=VARCHAR},#{graduateSchool,jdbcType=VARCHAR},#{matriculationTime,jdbcType=VARCHAR},#{graduationTime,jdbcType=VARCHAR},#{graduationConclusion,jdbcType=VARCHAR},#{educationBackground,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR})
+    </insert>
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.UserEducationInfo">
+        update cl_user_education_info set 
+            user_id = #{userId,jdbcType=BIGINT},
+            education_type = #{educationType,jdbcType=VARCHAR},
+            profession = #{profession,jdbcType=VARCHAR},
+            graduate_school = #{graduateSchool,jdbcType=VARCHAR},
+            matriculation_time = #{matriculationTime,jdbcType=VARCHAR},
+            graduation_time = #{graduationTime,jdbcType=VARCHAR},
+            graduation_conclusion = #{graduationConclusion,jdbcType=VARCHAR},
+            education_background = #{educationBackground,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+    
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_user_education_info
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="educationType != null and educationType != '' ">        
+                education_type = #{educationType,jdbcType=VARCHAR},                
+            </if>
+            <if test="profession != null and profession != '' ">        
+                profession = #{profession,jdbcType=VARCHAR},                
+            </if>
+            <if test="graduateSchool != null and graduateSchool != '' ">        
+                graduate_school = #{graduateSchool,jdbcType=VARCHAR},                
+            </if>
+            <if test="matriculationTime != null and matriculationTime != '' ">        
+                matriculation_time = #{matriculationTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="graduationTime != null and graduationTime != '' ">        
+                graduation_time = #{graduationTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="graduationConclusion != null and graduationConclusion != '' ">        
+                graduation_conclusion = #{graduationConclusion,jdbcType=VARCHAR},                
+            </if>
+            <if test="educationBackground != null and educationBackground != '' ">        
+                education_background = #{educationBackground,jdbcType=VARCHAR},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_education_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_education_info
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_education_info
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="page" resultMap="UserEducationInfoModel" parameterType="java.util.HashMap">
+        SELECT cuei.*,cu.login_name AS phone 
+        FROM `cl_user_education_info` AS cuei,cl_user AS cu 
+        WHERE cuei.user_id = cu.id
+        <if test="name != null and name != '' ">
+             AND  cu.login_name like concat("%",#{name,jdbcType=VARCHAR},"%")  
+        </if>
+        <if test="state != null and state != '' ">
+             AND  cuei.state = #{state,jdbcType=BIGINT}
+        </if>
+    </select>
+    
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_td_basic表:同盾运营商认证基本信息表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorTdBasicMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorTdBasic">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="req_log_id" property="reqLogId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+        <result column="channel_src" property="channelSrc" jdbcType="VARCHAR" />
+        <result column="account_balance" property="accountBalance" jdbcType="VARCHAR" />
+        <result column="current_fee" property="currentFee" jdbcType="VARCHAR" />
+        <result column="credit_level" property="creditLevel" jdbcType="VARCHAR" />
+        <result column="mobile_status" property="mobileStatus" jdbcType="VARCHAR" />
+        <result column="net_time" property="netTime" jdbcType="VARCHAR" />
+        <result column="net_age" property="netAge" jdbcType="INTEGER" />
+        <result column="real_info" property="realInfo" jdbcType="VARCHAR" />
+        <result column="credit_point" property="creditPoint" jdbcType="VARCHAR" />
+        <result column="credit_effective_time" property="creditEffectiveTime" jdbcType="VARCHAR" />
+        <result column="credit_score" property="creditScore" jdbcType="VARCHAR" />
+        <result column="land_level" property="landLevel" jdbcType="VARCHAR" />
+        <result column="roam_state" property="roamState" jdbcType="VARCHAR" />
+        <result column="balance_available" property="balanceAvailable" jdbcType="VARCHAR" />
+        <result column="balance_unavailable" property="balanceUnavailable" jdbcType="VARCHAR" />
+        <result column="prepay_available" property="prepayAvailable" jdbcType="VARCHAR" />
+        <result column="prom_available" property="promAvailable" jdbcType="VARCHAR" />
+        <result column="prepay_unavailable" property="prepayUnavailable" jdbcType="VARCHAR" />
+        <result column="prom_unavailable" property="promUnavailable" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,req_log_id,order_no,user_mobile,channel_src,account_balance,current_fee,credit_level,mobile_status,net_time,net_age,real_info,credit_point,credit_effective_time,credit_score,land_level,roam_state,balance_available,balance_unavailable,prepay_available,prom_available,prepay_unavailable,prom_unavailable 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+             <if test="reqLogId != null and reqLogId != '' ">
+                and req_log_id = #{reqLogId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="userMobile != null and userMobile != '' ">
+                and user_mobile = #{userMobile,jdbcType=VARCHAR}
+            </if>
+            <if test="accountBalance != null and accountBalance != '' ">
+                and account_balance = #{accountBalance,jdbcType=VARCHAR}
+            </if>
+            <if test="currentFee != null and currentFee != '' ">
+                and current_fee = #{currentFee,jdbcType=VARCHAR}
+            </if>
+            <if test="creditLevel != null and creditLevel != '' ">
+                and credit_level = #{creditLevel,jdbcType=VARCHAR}
+            </if>
+            <if test="mobileStatus != null and mobileStatus != '' ">
+                and mobile_status = #{mobileStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="netTime != null and netTime != '' ">
+                and net_time = #{netTime,jdbcType=VARCHAR}
+            </if>
+            <if test="netAge != null and netAge != '' ">
+                and net_age = #{netAge,jdbcType=INTEGER}
+            </if>
+            <if test="realInfo != null and realInfo != '' ">
+                and real_info = #{realInfo,jdbcType=VARCHAR}
+            </if>
+            <if test="creditPoint != null and creditPoint != '' ">
+                and credit_point = #{creditPoint,jdbcType=VARCHAR}
+            </if>
+            <if test="creditEffectiveTime != null and creditEffectiveTime != '' ">
+                and credit_effective_time = #{creditEffectiveTime,jdbcType=VARCHAR}
+            </if>
+            <if test="creditScore != null and creditScore != '' ">
+                and credit_score = #{creditScore,jdbcType=VARCHAR}
+            </if>
+            <if test="landLevel != null and landLevel != '' ">
+                and land_level = #{landLevel,jdbcType=VARCHAR}
+            </if>
+            <if test="roamState != null and roamState != '' ">
+                and roam_state = #{roamState,jdbcType=VARCHAR}
+            </if>
+            <if test="balanceAvailable != null and balanceAvailable != '' ">
+                and balance_available = #{balanceAvailable,jdbcType=VARCHAR}
+            </if>
+            <if test="balanceUnavailable != null and balanceUnavailable != '' ">
+                and balance_unavailable = #{balanceUnavailable,jdbcType=VARCHAR}
+            </if>
+            <if test="prepayAvailable != null and prepayAvailable != '' ">
+                and prepay_available = #{prepayAvailable,jdbcType=VARCHAR}
+            </if>
+            <if test="promAvailable != null and promAvailable != '' ">
+                and prom_available = #{promAvailable,jdbcType=VARCHAR}
+            </if>
+            <if test="prepayUnavailable != null and prepayUnavailable != '' ">
+                and prepay_unavailable = #{prepayUnavailable,jdbcType=VARCHAR}
+            </if>
+            <if test="promUnavailable != null and promUnavailable != '' ">
+                and prom_unavailable = #{promUnavailable,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdBasic">
+        insert into cl_operator_td_basic(user_id,req_log_id,order_no,user_mobile,channel_src,account_balance,current_fee,credit_level,mobile_status,net_time,net_age,real_info,credit_point,credit_effective_time,credit_score,land_level,roam_state,balance_available,balance_unavailable,prepay_available,prom_available,prepay_unavailable,prom_unavailable)
+        values(#{userId,jdbcType=BIGINT},#{reqLogId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{userMobile,jdbcType=VARCHAR},#{channelSrc,jdbcType=VARCHAR},#{accountBalance,jdbcType=VARCHAR},#{currentFee,jdbcType=VARCHAR},#{creditLevel,jdbcType=VARCHAR},#{mobileStatus,jdbcType=VARCHAR},#{netTime,jdbcType=VARCHAR},#{netAge,jdbcType=INTEGER},#{realInfo,jdbcType=VARCHAR},#{creditPoint,jdbcType=VARCHAR},#{creditEffectiveTime,jdbcType=VARCHAR},#{creditScore,jdbcType=VARCHAR},#{landLevel,jdbcType=VARCHAR},#{roamState,jdbcType=VARCHAR},#{balanceAvailable,jdbcType=VARCHAR},#{balanceUnavailable,jdbcType=VARCHAR},#{prepayAvailable,jdbcType=VARCHAR},#{promAvailable,jdbcType=VARCHAR},#{prepayUnavailable,jdbcType=VARCHAR},#{promUnavailable,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdBasic">
+        update cl_operator_td_basic set 
+            user_id = #{userId,jdbcType=BIGINT},
+            req_log_id = #{reqLogId,jdbcType=BIGINT},
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            user_mobile = #{userMobile,jdbcType=VARCHAR},
+            channel_src = #{channelSrc,jdbcType=VARCHAR},
+            account_balance = #{accountBalance,jdbcType=VARCHAR},
+            current_fee = #{currentFee,jdbcType=VARCHAR},
+            credit_level = #{creditLevel,jdbcType=VARCHAR},
+            mobile_status = #{mobileStatus,jdbcType=VARCHAR},
+            net_time = #{netTime,jdbcType=VARCHAR},
+            net_age = #{netAge,jdbcType=INTEGER},
+            real_info = #{realInfo,jdbcType=VARCHAR},
+            credit_point = #{creditPoint,jdbcType=VARCHAR},
+            credit_effective_time = #{creditEffectiveTime,jdbcType=VARCHAR},
+            credit_score = #{creditScore,jdbcType=VARCHAR},
+            land_level = #{landLevel,jdbcType=VARCHAR},
+            roam_state = #{roamState,jdbcType=VARCHAR},
+            balance_available = #{balanceAvailable,jdbcType=VARCHAR},
+            balance_unavailable = #{balanceUnavailable,jdbcType=VARCHAR},
+            prepay_available = #{prepayAvailable,jdbcType=VARCHAR},
+            prom_available = #{promAvailable,jdbcType=VARCHAR},
+            prepay_unavailable = #{prepayUnavailable,jdbcType=VARCHAR},
+            prom_unavailable = #{promUnavailable,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_operator_td_basic
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+             <if test="reqLogId != null and reqLogId != '' ">
+                req_log_id = #{reqLogId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="userMobile != null and userMobile != '' ">
+                user_mobile = #{userMobile,jdbcType=VARCHAR}
+            </if>
+            <if test="channelSrc != null and channelSrc != '' ">        
+                channel_src = #{channelSrc,jdbcType=VARCHAR},                
+            </if>
+            <if test="accountBalance != null and accountBalance != '' ">        
+                account_balance = #{accountBalance,jdbcType=VARCHAR},                
+            </if>
+            <if test="currentFee != null and currentFee != '' ">        
+                current_fee = #{currentFee,jdbcType=VARCHAR},                
+            </if>
+            <if test="creditLevel != null and creditLevel != '' ">        
+                credit_level = #{creditLevel,jdbcType=VARCHAR},                
+            </if>
+            <if test="mobileStatus != null and mobileStatus != '' ">        
+                mobile_status = #{mobileStatus,jdbcType=VARCHAR},                
+            </if>
+            <if test="netTime != null and netTime != '' ">        
+                net_time = #{netTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="netAge != null and netAge != '' ">        
+                net_age = #{netAge,jdbcType=INTEGER},                
+            </if>
+            <if test="realInfo != null and realInfo != '' ">        
+                real_info = #{realInfo,jdbcType=VARCHAR},                
+            </if>
+            <if test="creditPoint != null and creditPoint != '' ">        
+                credit_point = #{creditPoint,jdbcType=VARCHAR},                
+            </if>
+            <if test="creditEffectiveTime != null and creditEffectiveTime != '' ">        
+                credit_effective_time = #{creditEffectiveTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="creditScore != null and creditScore != '' ">        
+                credit_score = #{creditScore,jdbcType=VARCHAR},                
+            </if>
+            <if test="landLevel != null and landLevel != '' ">        
+                land_level = #{landLevel,jdbcType=VARCHAR},                
+            </if>
+            <if test="roamState != null and roamState != '' ">        
+                roam_state = #{roamState,jdbcType=VARCHAR},                
+            </if>
+            <if test="balanceAvailable != null and balanceAvailable != '' ">        
+                balance_available = #{balanceAvailable,jdbcType=VARCHAR},                
+            </if>
+            <if test="balanceUnavailable != null and balanceUnavailable != '' ">        
+                balance_unavailable = #{balanceUnavailable,jdbcType=VARCHAR},                
+            </if>
+            <if test="prepayAvailable != null and prepayAvailable != '' ">        
+                prepay_available = #{prepayAvailable,jdbcType=VARCHAR},                
+            </if>
+            <if test="promAvailable != null and promAvailable != '' ">        
+                prom_available = #{promAvailable,jdbcType=VARCHAR},                
+            </if>
+            <if test="prepayUnavailable != null and prepayUnavailable != '' ">        
+                prepay_unavailable = #{prepayUnavailable,jdbcType=VARCHAR},                
+            </if>
+            <if test="promUnavailable != null and promUnavailable != '' ">        
+                prom_unavailable = #{promUnavailable,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_basic
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_basic
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_basic
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

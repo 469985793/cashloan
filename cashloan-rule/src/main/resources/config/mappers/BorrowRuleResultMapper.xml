@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_borrow_rule_result表:规则匹配结果模块 -->
+<mapper namespace="com.xindaibao.cashloan.rule.mapper.BorrowRuleResultMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.rule.domain.BorrowRuleResult">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="borrow_id" property="borrowId" jdbcType="INTEGER" />
+        <result column="rule_id" property="ruleId" jdbcType="INTEGER" />
+        <result column="tb_nid" property="tbNid" jdbcType="VARCHAR" />
+        <result column="tb_name" property="tbName" jdbcType="VARCHAR" />
+        <result column="col_nid" property="colNid" jdbcType="VARCHAR" />
+        <result column="col_name" property="colName" jdbcType="VARCHAR" />
+        <result column="value" property="value" jdbcType="VARCHAR" />
+        <result column="matching" property="matching" jdbcType="VARCHAR" />
+        <result column="rule" property="rule" jdbcType="VARCHAR" />
+        <result column="result" property="result" jdbcType="VARCHAR" />
+        <result column="result_type" property="resultType" jdbcType="VARCHAR" />
+        <result column="req_ext" property="reqExt" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <resultMap id="ManageReviewModel" extends="BaseResultMap" type="com.xindaibao.cashloan.rule.model.ManageReviewModel" >
+    
+    </resultMap>
+    
+    <resultMap id="ManageRuleResultModel" extends="BaseResultMap" type="com.xindaibao.cashloan.rule.model.ManageRuleResultModel" >
+    
+    </resultMap>
+    
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,borrow_id,rule_id,tb_nid,tb_name,col_nid,col_name,value,matching,rule,result,result_type,req_ext,add_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="borrowId !='' and borrowId !=null">
+                and borrow_id = #{borrowId,jdbcType=INTEGER}
+            </if>
+            <if test="ruleId !='' and ruleId !=null">
+                and rule_id = #{ruleId,jdbcType=INTEGER}
+            </if>
+            <if test="tbNid !='' and tbNid !=null">
+                and tb_nid = #{tbNid,jdbcType=VARCHAR}
+            </if>
+            <if test="tbName !='' and tbName !=null">
+                and tb_name = #{tbName,jdbcType=VARCHAR}
+            </if>
+            <if test="colNid !='' and colNid !=null">
+                and col_nid = #{colNid,jdbcType=VARCHAR}
+            </if>
+            <if test="colName !='' and colName !=null">
+                and col_name = #{colName,jdbcType=VARCHAR}
+            </if>
+            <if test="value !='' and value !=null">
+                and value = #{value,jdbcType=VARCHAR}
+            </if>
+            <if test="matching !='' and matching !=null">
+                and matching = #{matching,jdbcType=VARCHAR}
+            </if>
+            <if test="rule !='' and rule !=null">
+                and rule = #{rule,jdbcType=VARCHAR}
+            </if>
+            <if test="result !='' and result !=null">
+                and result = #{result,jdbcType=VARCHAR}
+            </if>
+            <if test="resultType !='' and resultType !=null">
+                and result_type = #{resultType,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt !='' and reqExt !=null">
+                and req_ext = #{reqExt,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rule.domain.BorrowRuleResult">
+        insert into arc_borrow_rule_result
+        	(borrow_id,rule_id,tb_nid,tb_name,col_nid,col_name,value,matching,rule,result,result_type,req_ext,add_time)
+        values 
+        	(#{borrowId,jdbcType=INTEGER},#{ruleId,jdbcType=INTEGER},#{tbNid,jdbcType=VARCHAR},
+        	#{tbName,jdbcType=VARCHAR},#{colNid,jdbcType=VARCHAR},#{colName,jdbcType=VARCHAR},
+        	#{value,jdbcType=VARCHAR},#{matching,jdbcType=VARCHAR},#{rule,jdbcType=VARCHAR},#{result,jdbcType=VARCHAR},
+        	#{resultType,jdbcType=VARCHAR},#{reqExt,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.rule.domain.BorrowRuleResult">
+        update arc_borrow_rule_result set 
+            borrow_id = #{borrowId,jdbcType=INTEGER},
+            rule_id = #{ruleId,jdbcType=INTEGER},
+            tb_nid = #{tbNid,jdbcType=VARCHAR},
+            tb_name = #{tbName,jdbcType=VARCHAR},
+            col_nid = #{colNid,jdbcType=VARCHAR},
+            col_name = #{colName,jdbcType=VARCHAR},
+            value = #{value,jdbcType=VARCHAR},
+            rule = #{rule,jdbcType=VARCHAR},
+            result = #{result,jdbcType=VARCHAR},
+            result_type = #{resultType,jdbcType=VARCHAR},
+            req_ext = #{reqExt,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_borrow_rule_result
+          <set>
+            <if test="borrowId != null and borrowId != '' ">        
+                borrow_id = #{borrowId,jdbcType=INTEGER},                
+            </if>
+            <if test="ruleId != null and ruleId != '' ">        
+                rule_id = #{ruleId,jdbcType=INTEGER},                
+            </if>
+            <if test="tbNid != null and tbNid != '' ">        
+                tb_nid = #{tbNid,jdbcType=VARCHAR},                
+            </if>
+            <if test="tbName != null and tbName != '' ">        
+                tb_name = #{tbName,jdbcType=VARCHAR},                
+            </if>
+            <if test="colNid != null and colNid != '' ">        
+                col_nid = #{colNid,jdbcType=VARCHAR},                
+            </if>
+            <if test="colName != null and colName != '' ">        
+                col_name = #{colName,jdbcType=VARCHAR},                
+            </if>
+            <if test="value != null and value != '' ">        
+                value = #{value,jdbcType=VARCHAR},                
+            </if>
+            <if test="matching !='' and matching !=null">
+                and matching = #{matching,jdbcType=VARCHAR}
+            </if>
+            <if test="rule != null and rule != '' ">        
+                rule = #{rule,jdbcType=VARCHAR},                
+            </if>
+            <if test="result != null and result != '' ">        
+                result = #{result,jdbcType=VARCHAR},                
+            </if>
+            <if test="resultType !='' and resultType !=null">
+                and result_type = #{resultType,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt != null and reqExt != '' ">        
+                req_ext = #{reqExt,jdbcType=VARCHAR},                
+            </if>
+            <if test="addTime != null">        
+                add_time = #{addTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_borrow_rule_result
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_borrow_rule_result
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_borrow_rule_result
+        <include refid="searchBy"/>
+        order by add_time desc
+    </select>
+    
+    <select id="findRuleResult" resultMap="ManageReviewModel" parameterType="java.util.HashMap">
+    	SELECT abr.id,
+		(SELECT `name` FROM arc_rule_engine WHERE id=abr.rule_id) AS ruleName
+		FROM `arc_borrow_rule_result`AS abr
+		WHERE borrow_id = #{borrowId,jdbcType=INTEGER} GROUP BY abr.rule_id
+    </select>
+    
+    <select id="findResult" resultMap="ManageRuleResultModel" parameterType="java.util.HashMap">
+	  select a.id ,a.rule_id,count(1) as total,a.tb_name,
+		(case when sum(a.noPass)>0 then '不通过'   when sum(a.review) >0  then '需人工复审' when sum(a.pass) >0 then '通过' ELSE '需人工复审'  end) as result_type,
+		sum(a.pass) as pass,sum(a.review) as review,sum(a.noPass) as noPass from (
+    	SELECT id,rule_id,0 AS total,tb_name,'' as result_type,
+		(CASE when result_type=30 and  result='Y'  THEN 1   ELSE  0 end) AS pass,
+		(CASE when result_type=20 and  result='Y'   THEN 1   ELSE  0 end) AS review,
+		(CASE when result_type=10 and  result='Y'   THEN 1   ELSE  0 end) AS noPass
+		FROM `arc_borrow_rule_result`  r
+		WHERE borrow_id =#{borrowId,jdbcType=INTEGER} 
+		)	a  GROUP BY rule_id
+ 
+    </select>
+    
+    <select id="findRule" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    	SELECT id,rule_id,tb_name,col_name,rule,`value`,matching,result_type,result
+		FROM `arc_borrow_rule_result`
+		WHERE borrow_id = #{borrowId,jdbcType=INTEGER}
+		AND rule_id = #{ruleId,jdbcType=INTEGER}
+    </select>
+    
+</mapper>

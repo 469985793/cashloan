@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ClMoheInfoMatchMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ClMoheInfoMatch">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+      <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="real_name_check_yys" jdbcType="VARCHAR" property="realNameCheckYys" />
+    <result column="identity_code_check_yys" jdbcType="VARCHAR" property="identityCodeCheckYys" />
+  </resultMap>
+
+
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,task_id,user_id,real_name_check_yys,identity_code_check_yys
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                and task_id = #{taskId,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="realNameCheckYys != null and realNameCheckYys != '' ">
+                and real_name_check_yys = #{realNameCheckYys,jdbcType=VARCHAR}
+            </if>
+            <if test="identityCodeCheckYys != null and identityCodeCheckYys != '' ">
+                and identity_code_check_yys = #{identityCodeCheckYys,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheInfoMatch">
+        insert into cl_mohe_info_match(task_id,user_id,real_name_check_yys,identity_code_check_yys)values(#{taskId,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{realNameCheckYys,jdbcType=VARCHAR},#{identityCodeCheckYys,jdbcType=VARCHAR})
+    </insert>
+
+
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheInfoMatch">
+        update cl_mohe_info_match set
+        task_id = #{taskId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
+        real_name_check_yys = #{realNameCheckYys,jdbcType=VARCHAR},
+        identity_code_check_yys = #{identityCodeCheckYys,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_mohe_info_match
+        <set>
+            <if test="taskId != null and taskId != '' ">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="realNameCheckYys != null and realNameCheckYys != '' ">
+                real_name_check_yys = #{realNameCheckYys,jdbcType=VARCHAR},
+            </if>
+            <if test="identityCodeCheckYys != null and identityCodeCheckYys != '' ">
+                identity_code_check_yys = #{identityCodeCheckYys,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_info_match
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_info_match
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_info_match
+        <include refid="searchBy"/>
+    </select>
+
+
+</mapper>

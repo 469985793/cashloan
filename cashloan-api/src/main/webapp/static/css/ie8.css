@@ -1,0 +1,387 @@
+html, body, body div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, figure, footer, header, menu, nav, section, time, mark, audio, video, details, summary { margin: 0; padding: 0; border: 0; font-size: 100%; font-weight: normal; vertical-align: baseline; background: transparent; }
+
+article, aside, figure, footer, header, nav, section, details, summary { display: block; }
+
+/* Handle box-sizing while better addressing child elements: http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+html { box-sizing: border-box; }
+
+*, *:before, *:after { box-sizing: inherit; }
+
+/* consider resetting the default cursor: https://gist.github.com/murtaugh/5247154 */
+/* Responsive images and other embedded objects */
+/* if you don't have full control over `img` tags (if you have to overcome attributes), consider adding height: auto */
+img, object, embed { max-width: 100%; }
+
+/* Note: keeping IMG here will cause problems if you're using foreground images as sprites. In fact, it *will* cause problems with Google Maps' controls at small size. If this is the case for you, try uncommenting the following: #map img { max-width: none; } */
+/* force a vertical scrollbar to prevent a jumpy page */
+html { overflow-y: scroll; }
+
+/* we use a lot of ULs that aren't bulleted.
+you'll have to restore the bullets within content,
+which is fine because they're probably customized anyway */
+ul { list-style: none; }
+
+blockquote, q { quotes: none; }
+
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
+
+a { margin: 0; padding: 0; font-size: 100%; vertical-align: baseline; background: transparent; }
+
+del { text-decoration: line-through; }
+
+abbr[title], dfn[title] { border-bottom: 1px dotted #000; cursor: help; }
+
+/* tables still need cellspacing="0" in the markup */
+table { border-collapse: separate; border-spacing: 0; }
+
+th { font-weight: bold; vertical-align: bottom; }
+
+td { font-weight: normal; vertical-align: top; }
+
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+
+input, select { vertical-align: middle; }
+
+pre { white-space: pre; /* CSS2 */ white-space: pre-wrap; /* CSS 2.1 */ white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */ word-wrap: break-word; /* IE */ }
+
+input[type="radio"] { vertical-align: text-bottom; }
+
+input[type="checkbox"] { vertical-align: bottom; }
+
+.ie7 input[type="checkbox"] { vertical-align: baseline; }
+
+.ie6 input { vertical-align: text-bottom; }
+
+select, input, textarea { font: 99% sans-serif; }
+
+table { font-size: inherit; font: 100%; }
+
+small { font-size: 85%; }
+
+strong { font-weight: bold; }
+
+td, td img { vertical-align: top; }
+
+/* Make sure sup and sub don't mess with your line-heights http://gist.github.com/413930 */
+sub, sup { font-size: 75%; line-height: 0; position: relative; }
+
+sup { top: -0.5em; }
+
+sub { bottom: -0.25em; }
+
+/* standardize any monospaced elements */
+pre, code, kbd, samp { font-family: monospace, sans-serif; }
+
+/* hand cursor on clickable elements */
+.clickable, label, input[type=button], input[type=submit], input[type=file], button { cursor: pointer; }
+
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button, input, select, textarea { margin: 0; }
+
+/* make buttons play nice in IE */
+button, input[type=button] { width: auto; overflow: visible; }
+
+/* scale images in IE7 more attractively */
+.ie7 img { -ms-interpolation-mode: bicubic; }
+
+/* prevent BG image flicker upon hover (commented out as usage is rare, and the filter syntax messes with some pre-processors) .ie6 html {filter: expression(document.execCommand("BackgroundImageCache", false, true));} */
+/* let's clear some floats */
+.clearfix:after { content: " "; display: block; clear: both; }
+
+* { font-family: Helvetica; }
+
+body.signup-body { background: #48cafb; padding: 20px 20px 0; }
+
+.signup { border-color: #fff; border-style: solid; border-width: 2px 2px 0; width: 750px; margin: 0 auto; }
+
+.signup .logo { background: #48cafb url(../img/logo.jpg) 0 0 no-repeat; background-size: 259px 99px; width: 259px; height: 106px; margin: 0 auto; border-bottom: 2px solid #fff; }
+
+.signup .title { margin-top: 65px; }
+
+.signup .title img { display: block; width: 628px; height: 126px; margin: 0 auto; }
+
+.signup .title p { margin-top: 10px; font-size: 30px; color: #fff; text-align: center; }
+
+.signup .title p span { display: inline-block; *zoom: 1; *display: inline; margin: 0 4px; border-left: 2px solid #ffb93f; border-right: 2px solid #ffb93f; padding: 0 2px; }
+
+.signup .title p i { display: inline-block; *zoom: 1; *display: inline; font-style: normal; background: #ffb93f; padding: 0 6px; }
+
+.signup .bar { display: block; width: 750px; }
+
+.signup .content { background: #ffb93f; padding-top: 54px; }
+
+.signup form { width: 750px; }
+
+.signup form input { display: block; width: 510px; margin: 0 auto 20px; height: 82px; line-height: 82px; border-radius: 15px; padding: 0 20px; font-size: 26px; border: none; }
+
+.signup form button { display: block; background: #48cafb; width: 510px; *width: 554px; border: none; color: #fff; font-size: 34px; line-height: 82px; height: 82px; margin: 0 auto; border-radius: 15px; box-shadow: 3px 2px 8px #333333; -webkit-box-shadow: 4px 2px 8px #333333; -moz-box-shadow: 3px 2px 8px #333333; }
+
+.signup form p.special { width: 510px; *width: 554px; margin: 0 auto 40px; }
+
+.signup form p.special input { width: 294px; float: left; }
+
+.signup form p.special button { font-size: 26px; height: 82px; line-height: 82px; width: 198px; float: right; }
+
+.signup form p.other { width: 510px; *width: 554px; margin: 30px auto 0; }
+
+.signup form p.other input { display: none; }
+
+.signup form p.other input[type='checkbox']:checked + label i { display: block; }
+
+.signup form p.other label { display: block; float: left; color: #fff; padding-left: 40px; position: relative; }
+
+.signup form p.other label:before { content: ''; display: block; width: 28px; height: 28px; background: #d9dbdb; position: absolute; left: 0; top: 50%; margin-top: -14px; border-radius: 5px; }
+
+.signup form p.other label a { float: none; display: inline; }
+
+.signup form p.other label i { width: 28px; height: 28px; position: absolute; left: 0; top: 50%; margin-top: -14px; background: url(../img/yes.png) 0 0 no-repeat; background-size: 28px 28px; display: none; *background: #d9dbdb url(../img/yes.png) 0 0 no-repeat; *display: block; }
+
+.signup form p.other a { display: block; float: right; text-decoration: none; color: #fff; }
+
+.signup p { text-align: center; color: #de8d01; font-size: 22px; margin-top: 75px; padding-bottom: 30px; }
+
+.signup p.cash-bonus { font-size: 26px; color: #fff; margin-top: -40px; letter-spacing: 2px; }
+
+.signup p.cash-bonus span { margin: 0 3px; }
+
+.popup .overlay { width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); position: fixed; top: 0; left: 0; }
+
+.popup .dialog { -webkit-transform: translate3d(0, 0, 0); background: #f2f2f2; width: 502px; height: 232px; position: fixed; top: 50%; left: 50%; margin: -116px -251px; line-height: 3em; text-align: center; border-radius: 6px; }
+
+.popup .dialog h2 { font-size: 28px; height: 155px; line-height: 155px; }
+
+.popup .dialog p { border-top: 1px solid #ccc; height: 77px; line-height: 77px; }
+
+.popup .dialog p a { font-size: 34px; color: #48cafb; text-decoration: none; }
+
+.popup .dialog span.close { display: inline-block; *zoom: 1; *display: inline; position: absolute; right: 20px; top: 20px; width: 40px; height: 40px; cursor: pointer; }
+
+.popup .dialog span.close:before, .popup .dialog span.close:after { content: ''; position: absolute; height: 1px; width: 100%; top: 50%; left: 0; margin-top: -1px; background: #666; }
+
+.popup .dialog span.close:before { -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg); }
+
+.popup .dialog span.close:after { -webkit-transform: rotate(-45deg); -moz-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg); }
+
+.download-button { display: block; background: #48cafb; width: 510px; border: none; color: #fff; font-size: 34px; line-height: 82px; height: 82px; margin: 210px auto; border-radius: 15px; box-shadow: 3px 2px 8px #333333; -webkit-box-shadow: 4px 2px 8px #333333; -moz-box-shadow: 3px 2px 8px #333333; text-decoration: none; text-align: center; }
+
+.reg-agreement { background: #fff; }
+
+.reg-agreement .reg-wrap { line-height: 2em; font-size: 24px; padding: 60px 30px; }
+
+.reg-agreement h1 { font-size: 48px; text-align: center; font-weight: bold; padding-bottom: 24px; }
+
+.reg-agreement h2 { font-weight: bold; font-size: 36px; padding: 24px 0; }
+
+.reg-agreement p { text-indent: 2em; }
+
+.signup-30-body { background: #fb3c4c; }
+
+.signup-30 { width: 750px; }
+
+.signup-30 .bar { width: 750px; height: 630px; }
+
+.signup-30 .content { background: #fb3c4c url(../img/30-content.jpg) 0 0 repeat-y; background-size: 750px 450px; }
+
+.signup-30 .content > p { position: relative; }
+
+.signup-30 .content > p:after { content: ''; display: block; position: absolute; width: 114px; height: 232px; background: transparent url(../img/30-icon.png) 0 0 no-repeat; background-size: 114px 232px; bottom: 0; right: 0; }
+
+.signup-30 form { position: relative; }
+
+.signup-30 form input { border: 5px solid #f22c3c; border-radius: 40px; }
+
+.signup-30 form button { background: #fff; border: 5px solid #f22c3c; border-radius: 40px; color: #eb1115; }
+
+.signup-30 form > button { font-size: 36px; background: #fff url(../img/30-button-02.png) 135px center no-repeat; background-size: 33px 45px; }
+
+.signup-30 form:before { content: ''; display: block; position: absolute; width: 128px; height: 125px; background: transparent url(../img/30-button-01.png) 0 0 no-repeat; background-size: 128px 125px; left: 60px; top: -45px; }
+
+.signup-29-body { background: #252b4f; }
+
+.signup-29 { width: 750px; }
+
+.signup-29 .bar { width: 750px; height: 760px; }
+
+.signup-29 .content { background: #252b4f url(../img/29-content.jpg) 0 0 no-repeat; background-size: 750px 300px; }
+
+.signup-29 form { position: relative; }
+
+.signup-29 form button { background: #fb3c4c; }
+
+.signup-29 form > button { background: #fb3c4c url(../img/29-button.png) 0 0 no-repeat; background-size: 510px 85px; }
+
+.signup-29 form:before { content: ''; display: block; background: transparent url(../img/29-icon.png) 0 0 no-repeat; background-size: 5px 40px; position: absolute; width: 5px; height: 40px; top: 72px; left: 160px; }
+
+.signup-29 form:after { content: ''; display: block; background: transparent url(../img/29-icon.png) 0 0 no-repeat; background-size: 5px 40px; position: absolute; width: 5px; height: 40px; top: 72px; right: 160px; }
+
+.signup-29 form p.special { position: relative; }
+
+.signup-29 form p.special:before { content: ''; display: block; background: transparent url(../img/29-icon.png) 0 0 no-repeat; background-size: 5px 40px; position: absolute; width: 5px; height: 40px; top: -30px; left: 40px; }
+
+.signup-28-body { background: #aa171f; }
+
+.signup-28 { width: 750px; }
+
+.signup-28 .bar { width: 750px; height: 650px; }
+
+.signup-28 .content { background: #aa171f; }
+
+.signup-28 form button { background: #017c68; }
+
+.signup-8, .signup-10, .signup-13, .signup-15, .signup-19, .eight, .ten, .thirteen, .fiveteen, .nineteen { width: 750px; }
+
+.signup-8 .bar, .signup-10 .bar, .signup-13 .bar, .signup-15 .bar, .signup-19 .bar, .eight .bar, .ten .bar, .thirteen .bar, .fiveteen .bar, .nineteen .bar { width: 750px; height: 700px; }
+
+.signup-8 .content, .signup-10 .content, .signup-13 .content, .signup-15 .content, .signup-19 .content, .eight .content, .ten .content, .thirteen .content, .fiveteen .content, .nineteen .content { background: url(../img/eight-content.jpg) 0 0 no-repeat; background-size: 750px 634px; }
+
+.signup-8 form button, .signup-10 form button, .signup-13 form button, .signup-15 form button, .signup-19 form button, .eight form button, .ten form button, .thirteen form button, .fiveteen form button, .nineteen form button { background: #002a68; }
+
+.signup-19 p.cash-bonus, .nineteen p.cash-bonus { font-size: 36.54px; font-weight: bold; color: #594800; }
+
+.signup-19 p.cash-bonus span, .nineteen p.cash-bonus span { color: #cf0b13; font-weight: bold; }
+
+.signup-19 form button, .nineteen form button { background: #e93938; }
+
+.signup-7-body, .signup-12-body, .signup-16-body, .signup-17-body, .signup-18-body, .signup-20-body, .seven-body, .twelve-body, .sixteen-body, .seventeen-body, .eighteen-body, .twenty-body { background: #c51a12; }
+
+.signup-7, .signup-12, .signup-16, .signup-17, .signup-18, .signup-20, .seven, .twelve, .sixteen, .seventeen, .eighteen, .twenty { width: 750px; border: none; }
+
+.signup-7 .bar, .signup-12 .bar, .signup-16 .bar, .signup-17 .bar, .signup-18 .bar, .signup-20 .bar, .seven .bar, .twelve .bar, .sixteen .bar, .seventeen .bar, .eighteen .bar, .twenty .bar { width: 750px; height: 670px; }
+
+.signup-7 .content, .signup-12 .content, .signup-16 .content, .signup-17 .content, .signup-18 .content, .signup-20 .content, .seven .content, .twelve .content, .sixteen .content, .seventeen .content, .eighteen .content, .twenty .content { background: url(../img/seven-content.jpg) 0 0 no-repeat; background-size: 750px 664px; }
+
+.signup-7 form button, .signup-12 form button, .signup-16 form button, .signup-17 form button, .signup-18 form button, .signup-20 form button, .seven form button, .twelve form button, .sixteen form button, .seventeen form button, .eighteen form button, .twenty form button { background: #ffd72b; color: #d32a01; }
+
+.signup-5-body, .five-body { background: #dc0000; }
+
+.signup-5, .signup-4, .signup-6, .five, .four, .six { width: 750px; border: none; }
+
+.signup-5 .bar, .signup-4 .bar, .signup-6 .bar, .five .bar, .four .bar, .six .bar { width: 750px; height: 670px; }
+
+.signup-5 .content, .signup-4 .content, .signup-6 .content, .five .content, .four .content, .six .content { background: #dc0000; }
+
+.signup-5 form button, .signup-4 form button, .signup-6 form button, .five form button, .four form button, .six form button { background: #ffd72b; color: #330000; }
+
+.signup-5 form p.other label i, .signup-4 form p.other label i, .signup-6 form p.other label i, .five form p.other label i, .four form p.other label i, .six form p.other label i { background: url(../img/five-yes.png) 0 0 no-repeat; *background: #d9dbdb; background-size: 28px 28px; }
+
+.signup-3-body, .signup-9-body, .signup-11-body, .signup-14-body, .signup-27-body, .three-body, .nine-body, .eleven-body, .fourteen-body { background: #fef636; }
+
+.signup-3, .signup-9, .signup-11, .signup-14, .signup-27, .three, .nine, .eleven, .fourteen { width: 750px; }
+
+.signup-3 .bar, .signup-9 .bar, .signup-11 .bar, .signup-14 .bar, .signup-27 .bar, .three .bar, .nine .bar, .eleven .bar, .fourteen .bar { width: 750px; height: 700px; }
+
+.signup-3 .content, .signup-9 .content, .signup-11 .content, .signup-14 .content, .signup-27 .content, .three .content, .nine .content, .eleven .content, .fourteen .content { background: #fef636; }
+
+.signup-3 form button, .signup-9 form button, .signup-11 form button, .signup-14 form button, .signup-27 form button, .three form button, .nine form button, .eleven form button, .fourteen form button { background: #e93938; }
+
+.signup-3 form p.other label, .signup-9 form p.other label, .signup-11 form p.other label, .signup-14 form p.other label, .signup-27 form p.other label, .three form p.other label, .nine form p.other label, .eleven form p.other label, .fourteen form p.other label { color: #6c3120; }
+
+.signup-3 form p.other a, .signup-9 form p.other a, .signup-11 form p.other a, .signup-14 form p.other a, .signup-27 form p.other a, .three form p.other a, .nine form p.other a, .eleven form p.other a, .fourteen form p.other a { color: #6c3120; }
+
+.signup-2-body, .signup-8-body, .signup-10-body, .signup-13-body, .signup-15-body, .signup-19-body, .two-body, .eight-body, .ten-body, .thirteen-body, .fiveteen-body, .nineteen-body { background: #ffcf03; }
+
+.signup-2, .signup-1, .two, .one { width: 750px; }
+
+.signup-2 .bar, .signup-1 .bar, .two .bar, .one .bar { width: 750px; height: 670px; }
+
+.signup-2 .content, .signup-1 .content, .two .content, .one .content { background: url(../img/one-content.jpg) 0 0 no-repeat; background-size: 750px 664px; }
+
+.signup-2 form button, .signup-1 form button, .two form button, .one form button { background: #002a68; }
+
+.signup-21-body, .twenty-one-body { background: #fff; }
+
+.signup-21, .twenty-one { width: 750px; }
+
+.signup-21 .bar, .twenty-one .bar { width: 750px; height: 365px; }
+
+.signup-21 .content, .twenty-one .content { background: #fff; }
+
+.signup-21 form input, .twenty-one form input { background-color: #f2f2f2; border: 1px solid #bbbbbb; }
+
+.signup-21 form button, .twenty-one form button { box-shadow: none; -webkit-box-shadow: none; }
+
+.signup-21 form p.other label, .signup-21 form p.other a, .twenty-one form p.other label, .twenty-one form p.other a { color: #333; }
+
+.signup-21 p, .twenty-one p { color: #333; }
+
+.signup-22-body, .signup-24-body, .twenty-two-body, .twenty-four-body { background: #642a90; }
+
+.signup-22, .signup-24, .twenty-two, .twenty-four { width: 750px; }
+
+.signup-22 .bar, .signup-24 .bar, .twenty-two .bar, .twenty-four .bar { width: 750px; height: 850px; }
+
+.signup-22 .content, .signup-24 .content, .twenty-two .content, .twenty-four .content { background: #642a90; }
+
+.signup-22 form button, .signup-24 form button, .twenty-two form button, .twenty-four form button { background-color: #fce002; color: #333; }
+
+.signup-22 form p.special, .signup-24 form p.special, .twenty-two form p.special, .twenty-four form p.special { margin: 0 auto; }
+
+.signup-22 form p.special button, .signup-24 form p.special button, .twenty-two form p.special button, .twenty-four form p.special button { color: #999; }
+
+.signup-22 form p.other label i, .signup-24 form p.other label i, .twenty-two form p.other label i, .twenty-four form p.other label i { background: url(../img/yes-two.png) 0 0 no-repeat; background-size: 28px 28px; }
+
+.signup-23-body, .twenty-three-body, .signup-26-body { background: #48cafb; padding: 20px 20px 0; }
+
+.signup-23, .twenty-three, .signup-26 { width: 710px; }
+
+.signup-23 .bar, .twenty-three .bar, .signup-26 .bar { width: 710px; height: 640px; }
+
+.signup-23 .content, .twenty-three .content, .signup-26 .content { margin: 0 17px 0 18px; }
+
+.signup-23 form button.bonus, .twenty-three form button.bonus, .signup-26 form button.bonus { margin-top: -40px; }
+
+.signup-25-body, .twenty-five-body { background: #fff; }
+
+.signup-25, .twenty-five { width: 750px; position: relative; }
+
+.signup-25 .bar, .twenty-five .bar { width: 750px; height: 1336px; position: absolute; z-index: -1; }
+
+.signup-25 .content, .twenty-five .content { background: none; margin-top: 650px; }
+
+.signup-25 form button, .twenty-five form button { background-color: #fce002; color: #333; box-shadow: none; }
+
+.signup-25 form p.special, .twenty-five form p.special { margin: 0 auto; }
+
+.signup-25 form p.special button, .twenty-five form p.special button { color: #fff; }
+
+.signup-25 form p.other label i, .twenty-five form p.other label i { background: url(../img/yes-two.png) 0 0 no-repeat; background-size: 28px 28px; }
+
+.signup-25 p, .twenty-five p { margin-top: 20px; }
+
+.landing-21, .landing-one { width: 750px; margin: 0 auto; text-align: center; }
+
+.landing-21 .bar, .landing-one .bar { width: 750px; height: 444px; }
+
+.landing-21 .content .header, .landing-one .content .header { border-bottom: 1px solid #e6e6e6; }
+
+.landing-21 .content .header ul, .landing-one .content .header ul { text-align: center; font-size: 0px; height: 145px; }
+
+.landing-21 .content .header ul li, .landing-one .content .header ul li { display: inline-block; *zoom: 1; *display: inline; box-sizing: border-box; width: 33%; font-size: 26px; color: #333; margin-top: 30px; position: relative; }
+
+.landing-21 .content .header ul li b, .landing-one .content .header ul li b { margin-right: 10px; font-size: 42px; }
+
+.landing-21 .content .header ul li span, .landing-one .content .header ul li span { position: absolute; color: #999; top: 50px; left: 70px; }
+
+.landing-21 .content .choose, .landing-one .content .choose { text-align: center; }
+
+.landing-21 .content .choose h3, .landing-one .content .choose h3 { font-size: 32px; color: #999; margin-top: 45px; }
+
+.landing-21 .content .choose .loan-money, .landing-21 .content .choose .loan-day, .landing-one .content .choose .loan-money, .landing-one .content .choose .loan-day { margin-top: 25px; }
+
+.landing-21 .content .choose .loan-money button, .landing-21 .content .choose .loan-day button, .landing-one .content .choose .loan-money button, .landing-one .content .choose .loan-day button { display: inline-block; *zoom: 1; *display: inline; width: 230px; height: 75px; margin: 0 65px 0 65px; font-size: 50px; background-color: #fff; border: 5px solid #4bb6fa; border-radius: 10px; color: #4bb6fa; }
+
+.landing-21 .content .choose .loan-money button.active, .landing-21 .content .choose .loan-day button.active, .landing-one .content .choose .loan-money button.active, .landing-one .content .choose .loan-day button.active { color: #fff; background-color: #4bb6fa; }
+
+.landing-21 .content button, .landing-one .content button { width: 600px; height: 80px; margin-top: 90px; margin-bottom: 30px; font-size: 36px; color: #fff; background-color: #4bb6fa; border-radius: 10px; border: none; }
+
+.landing-21 .content p, .landing-one .content p { text-align: center; color: #de8d01; font-size: 22px; margin-top: 75px; padding-bottom: 30px; }
+
+.landing-2, .landing-two { width: 750px; margin: 0 auto; text-align: center; position: relative; }
+
+.landing-2 img, .landing-two img { width: 750px; height: 1250px; }
+
+.landing-2 p, .landing-two p { color: #333; font-size: 22px; position: absolute; bottom: 30px; left: 250px; }
+
+.landing-three { width: 750px; margin: 0 auto; }
+
+.landing-three img { width: 750px; height: 1334px; }

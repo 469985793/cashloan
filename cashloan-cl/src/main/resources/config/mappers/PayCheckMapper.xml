@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_pay_check表:资金对账记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.PayCheckMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.PayCheck">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="order_amount" property="orderAmount" jdbcType="DECIMAL" />
+		<result column="real_pay_amount" property="realPayAmount" jdbcType="DECIMAL" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="process_result" property="processResult" jdbcType="VARCHAR" />
+        <result column="process_way" property="processWay" jdbcType="VARCHAR" />
+        <result column="process_time" property="processTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,order_no,order_amount,real_pay_amount,type,state,remark,process_result,process_way,process_time,create_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+             <if test="orderAmount != null and orderAmount != '' ">
+                and order_amount = #{orderAmount,jdbcType=DECIMAL}
+            </if>
+             <if test="realPayAmount != null and realPayAmount != '' ">
+                and real_pay_amount = #{realPayAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="type != null and type != '' ">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="state != null and state != '' ">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null and remark != '' ">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="processResult != null and processResult != '' ">
+                and process_result = #{processResult,jdbcType=VARCHAR}
+            </if>
+            <if test="processWay != null and processWay != '' ">
+                and process_way = #{processWay,jdbcType=VARCHAR}
+            </if>
+            <if test="processTime != null">
+                and process_time = #{processTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.PayCheck">
+        insert into cl_pay_check(
+        	order_no,order_amount,real_pay_amount,type,state,remark,process_result,process_way,process_time,create_time
+        )values(
+	        #{orderNo,jdbcType=VARCHAR},#{orderAmount,jdbcType=DECIMAL},#{realPayAmount,jdbcType=DECIMAL},#{type,jdbcType=VARCHAR},
+	        #{state,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{processResult,jdbcType=VARCHAR},#{processWay,jdbcType=VARCHAR},
+	        #{processTime,jdbcType=TIMESTAMP},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.PayCheck">
+        update cl_pay_check set 
+			order_no = #{orderNo,jdbcType=VARCHAR},
+			order_amount = #{orderAmount,jdbcType=DECIMAL},
+			real_pay_amount = #{realPayAmount,jdbcType=DECIMAL},
+			type = #{type,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            process_result = #{processResult,jdbcType=VARCHAR},
+            process_way = #{processWay,jdbcType=VARCHAR},
+            process_time = #{processTime,jdbcType=TIMESTAMP},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_pay_check
+          <set>
+            <if test="orderNo != null and orderNo != '' ">        
+                order_no = #{orderNo,jdbcType=VARCHAR},                
+            </if>
+              <if test="orderAmount != null and orderAmount != '' ">        
+             	order_amount = #{orderAmount,jdbcType=DECIMAL},
+            </if>
+             <if test="realPayAmount != null and realPayAmount != '' ">        
+             	real_pay_amount = #{realPayAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null and type != '' ">        
+                type = #{type,jdbcType=VARCHAR},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="remark != null and remark != '' ">        
+                remark = #{remark,jdbcType=VARCHAR},                
+            </if>
+            <if test="processResult != null and processResult != '' ">        
+                process_result = #{processResult,jdbcType=VARCHAR},                
+            </if>
+            <if test="processWay != null and processWay != '' ">        
+                process_way = #{processWay,jdbcType=VARCHAR},                
+            </if>
+            <if test="processTime != null">
+                process_time = #{processTime,jdbcType=TIMESTAMP},            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_pay_check
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_pay_check
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_pay_check
+        <include refid="searchBy"/>
+    </select>
+
+	<select id="page" resultType="com.xindaibao.cashloan.cl.model.ManagePayCheckModel" parameterType="java.util.HashMap">
+		select
+			payCheck.id, payCheck.order_no, payCheck.order_amount, payCheck.real_pay_amount,
+			payCheck.type, payCheck.state, payCheck.remark,
+			payCheck.process_result, payCheck.process_way, payCheck.process_time,
+			payCheck.create_time, payLog.type as payType, payLog.scenes
+		from cl_pay_check payCheck
+		left join cl_pay_log payLog	on payCheck.order_no = payLog.order_no
+		 <trim prefix="where" prefixOverrides="and|or">
+            <if test="type != null and type != '' ">
+                and payCheck.type = #{type,jdbcType=VARCHAR}
+            </if>
+             <if test="orderNo != null and orderNo != '' ">
+                 payCheck.order_no = #{orderNo,jdbcType=VARCHAR},
+             </if>
+            <if test="state != null and state != '' ">
+                and payCheck.state = #{state,jdbcType=VARCHAR}
+            </if>
+        	<if test="processResult != null and processResult != '' ">
+                and payCheck.process_result = #{processResult,jdbcType=VARCHAR}
+            </if>
+            <if test="processWay != null and processWay != '' ">
+                and payCheck.process_way = #{processWay,jdbcType=VARCHAR}
+            </if>
+             <if test="startTime != null">
+                 and payCheck.create_time &gt;= #{startTime,jdbcType=TIMESTAMP}
+             </if>
+             <if test="endTime  != null">
+                 and payCheck.create_time &lt;= #{endTime,jdbcType=TIMESTAMP}
+             </if>
+        </trim>
+	</select>
+    
+</mapper>

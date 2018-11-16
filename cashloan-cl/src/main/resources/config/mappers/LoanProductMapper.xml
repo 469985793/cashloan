@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.LoanProductMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.LoanProduct">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="fee" jdbcType="INTEGER" property="fee" />
+    <result column="cycle" jdbcType="INTEGER" property="cycle" />
+    <result column="fee_type" jdbcType="INTEGER" property="feeType" />
+    <result column="fee_percent" jdbcType="INTEGER" property="feePercent" />
+    <result column="overdue_percent" jdbcType="INTEGER" property="overduePercent" />
+    <result column="overdue_percent_two" jdbcType="INTEGER" property="overduePercentTwo" />
+    <result column="overdue_percent_max" jdbcType="INTEGER" property="overduePercentMax" />
+    <result column="fast_audit" jdbcType="INTEGER" property="fastAudit" />
+    <result column="account_manage" jdbcType="INTEGER" property="accountManage" />
+    <result column="profit" jdbcType="INTEGER" property="profit" />
+    <result column="zhengxin" jdbcType="INTEGER" property="zhengxin" />
+    <result column="cuohe_fee" jdbcType="INTEGER" property="cuoheFee" />
+    <result column="info_audit" jdbcType="INTEGER" property="infoAudit" />
+    <result column="loanloss_fee" jdbcType="INTEGER" property="loanlossFee" />
+    <result column="use_fee" jdbcType="INTEGER" property="useFee" />
+    <result column="total_fee" jdbcType="INTEGER" property="totalFee" />
+    <result column="coupons_id" jdbcType="INTEGER" property="couponsId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, name, fee, cycle, fee_type, fee_percent, overdue_percent, overdue_percent_two, 
+    overdue_percent_max, fast_audit, account_manage, profit, zhengxin, cuohe_fee, info_audit, 
+    loanloss_fee, use_fee, total_fee, coupons_id, status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="code != null and code != '' ">
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null and name != '' ">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="fee != null and fee != '' ">
+        and fee = #{fee,jdbcType=INTEGER}
+      </if>
+      <if test="cycle != null and cycle != '' ">
+        and cycle = #{cycle,jdbcType=INTEGER}
+      </if>
+      <if test="feeType != null and feeType != '' ">
+        and feeType = #{fee_type,jdbcType=INTEGER}
+      </if>
+      <if test="feePercent != null and feePercent != '' ">
+        and feePercent = #{fee_percent,jdbcType=INTEGER}
+      </if>
+      <if test="overduePercent != null and overduePercent != '' ">
+        and overduePercent = #{overdue_percent,jdbcType=INTEGER}
+      </if>
+      <if test="overduePercentTwo != null and overduePercentTwo != '' ">
+        and overduePercentTwo = #{overdue_percent_two,jdbcType=INTEGER}
+      </if>
+      <if test="overduePercentMax != null and overduePercentMax != '' ">
+        and overduePercentMax = #{overdue_percent_max,jdbcType=INTEGER}
+      </if>
+      <if test="fastAudit != null and fastAudit != '' ">
+        and fastAudit = #{fast_audit,jdbcType=INTEGER}
+      </if>
+      <if test="accountManage != null and accountManage != '' ">
+        and accountManage = #{account_manage,jdbcType=INTEGER}
+      </if>
+      <if test="profit != null and profit != '' ">
+        and profit = #{profit,jdbcType=INTEGER}
+      </if>
+      <if test="zhengxin != null and zhengxin != '' ">
+        and zhengxin = #{zhengxin,jdbcType=INTEGER}
+      </if>
+      <if test="cuoheFee != null and cuoheFee != '' ">
+        and cuoheFee = #{cuohe_fee,jdbcType=INTEGER}
+      </if>
+      <if test="infoAudit != null and infoAudit != '' ">
+        and infoAudit = #{info_audit,jdbcType=INTEGER}
+      </if>
+      <if test="loanlossFee != null and loanlossFee != '' ">
+        and loanlossFee = #{loanloss_fee,jdbcType=INTEGER}
+      </if>
+      <if test="useFee != null and v != '' ">
+        and useFee = #{use_fee,jdbcType=INTEGER}
+      </if>
+      <if test="totalFee != null and totalFee != '' ">
+        and totalFee = #{total_fee,jdbcType=INTEGER}
+      </if>
+      <if test="couponsId != null and couponsId != '' ">
+        and couponsId = #{coupons_id,jdbcType=INTEGER}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_loan_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanProduct">
+    insert into k_loan_product (id, code, name, 
+      fee, cycle, fee_type, 
+      fee_percent, overdue_percent, overdue_percent_two, 
+      overdue_percent_max, fast_audit, account_manage, 
+      profit, zhengxin, cuohe_fee, 
+      info_audit, loanloss_fee, use_fee, 
+      total_fee, coupons_id, status, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{fee,jdbcType=INTEGER}, #{cycle,jdbcType=INTEGER}, #{feeType,jdbcType=INTEGER}, 
+      #{feePercent,jdbcType=INTEGER}, #{overduePercent,jdbcType=INTEGER}, #{overduePercentTwo,jdbcType=INTEGER}, 
+      #{overduePercentMax,jdbcType=INTEGER}, #{fastAudit,jdbcType=INTEGER}, #{accountManage,jdbcType=INTEGER}, 
+      #{profit,jdbcType=INTEGER}, #{zhengxin,jdbcType=INTEGER}, #{cuoheFee,jdbcType=INTEGER}, 
+      #{infoAudit,jdbcType=INTEGER}, #{loanlossFee,jdbcType=INTEGER}, #{useFee,jdbcType=INTEGER}, 
+      #{totalFee,jdbcType=INTEGER}, #{couponsId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanProduct">
+    insert into k_loan_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="fee != null">
+        fee,
+      </if>
+      <if test="cycle != null">
+        cycle,
+      </if>
+      <if test="feeType != null">
+        fee_type,
+      </if>
+      <if test="feePercent != null">
+        fee_percent,
+      </if>
+      <if test="overduePercent != null">
+        overdue_percent,
+      </if>
+      <if test="overduePercentTwo != null">
+        overdue_percent_two,
+      </if>
+      <if test="overduePercentMax != null">
+        overdue_percent_max,
+      </if>
+      <if test="fastAudit != null">
+        fast_audit,
+      </if>
+      <if test="accountManage != null">
+        account_manage,
+      </if>
+      <if test="profit != null">
+        profit,
+      </if>
+      <if test="zhengxin != null">
+        zhengxin,
+      </if>
+      <if test="cuoheFee != null">
+        cuohe_fee,
+      </if>
+      <if test="infoAudit != null">
+        info_audit,
+      </if>
+      <if test="loanlossFee != null">
+        loanloss_fee,
+      </if>
+      <if test="useFee != null">
+        use_fee,
+      </if>
+      <if test="totalFee != null">
+        total_fee,
+      </if>
+      <if test="couponsId != null">
+        coupons_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null">
+        #{fee,jdbcType=INTEGER},
+      </if>
+      <if test="cycle != null">
+        #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null">
+        #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="feePercent != null">
+        #{feePercent,jdbcType=INTEGER},
+      </if>
+      <if test="overduePercent != null">
+        #{overduePercent,jdbcType=INTEGER},
+      </if>
+      <if test="overduePercentTwo != null">
+        #{overduePercentTwo,jdbcType=INTEGER},
+      </if>
+      <if test="overduePercentMax != null">
+        #{overduePercentMax,jdbcType=INTEGER},
+      </if>
+      <if test="fastAudit != null">
+        #{fastAudit,jdbcType=INTEGER},
+      </if>
+      <if test="accountManage != null">
+        #{accountManage,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null">
+        #{profit,jdbcType=INTEGER},
+      </if>
+      <if test="zhengxin != null">
+        #{zhengxin,jdbcType=INTEGER},
+      </if>
+      <if test="cuoheFee != null">
+        #{cuoheFee,jdbcType=INTEGER},
+      </if>
+      <if test="infoAudit != null">
+        #{infoAudit,jdbcType=INTEGER},
+      </if>
+      <if test="loanlossFee != null">
+        #{loanlossFee,jdbcType=INTEGER},
+      </if>
+      <if test="useFee != null">
+        #{useFee,jdbcType=INTEGER},
+      </if>
+      <if test="totalFee != null">
+        #{totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponsId != null">
+        #{couponsId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanProduct">
+    update k_loan_product
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null">
+        fee = #{fee,jdbcType=INTEGER},
+      </if>
+      <if test="cycle != null">
+        cycle = #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null">
+        fee_type = #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="feePercent != null">
+        fee_percent = #{feePercent,jdbcType=INTEGER},
+      </if>
+      <if test="overduePercent != null">
+        overdue_percent = #{overduePercent,jdbcType=INTEGER},
+      </if>
+      <if test="overduePercentTwo != null">
+        overdue_percent_two = #{overduePercentTwo,jdbcType=INTEGER},
+      </if>
+      <if test="overduePercentMax != null">
+        overdue_percent_max = #{overduePercentMax,jdbcType=INTEGER},
+      </if>
+      <if test="fastAudit != null">
+        fast_audit = #{fastAudit,jdbcType=INTEGER},
+      </if>
+      <if test="accountManage != null">
+        account_manage = #{accountManage,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null">
+        profit = #{profit,jdbcType=INTEGER},
+      </if>
+      <if test="zhengxin != null">
+        zhengxin = #{zhengxin,jdbcType=INTEGER},
+      </if>
+      <if test="cuoheFee != null">
+        cuohe_fee = #{cuoheFee,jdbcType=INTEGER},
+      </if>
+      <if test="infoAudit != null">
+        info_audit = #{infoAudit,jdbcType=INTEGER},
+      </if>
+      <if test="loanlossFee != null">
+        loanloss_fee = #{loanlossFee,jdbcType=INTEGER},
+      </if>
+      <if test="useFee != null">
+        use_fee = #{useFee,jdbcType=INTEGER},
+      </if>
+      <if test="totalFee != null">
+        total_fee = #{totalFee,jdbcType=INTEGER},
+      </if>
+      <if test="couponsId != null">
+        coupons_id = #{couponsId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanProduct">
+    update k_loan_product
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      fee = #{fee,jdbcType=INTEGER},
+      cycle = #{cycle,jdbcType=INTEGER},
+      fee_type = #{feeType,jdbcType=INTEGER},
+      fee_percent = #{feePercent,jdbcType=INTEGER},
+      overdue_percent = #{overduePercent,jdbcType=INTEGER},
+      overdue_percent_two = #{overduePercentTwo,jdbcType=INTEGER},
+      overdue_percent_max = #{overduePercentMax,jdbcType=INTEGER},
+      fast_audit = #{fastAudit,jdbcType=INTEGER},
+      account_manage = #{accountManage,jdbcType=INTEGER},
+      profit = #{profit,jdbcType=INTEGER},
+      zhengxin = #{zhengxin,jdbcType=INTEGER},
+      cuohe_fee = #{cuoheFee,jdbcType=INTEGER},
+      info_audit = #{infoAudit,jdbcType=INTEGER},
+      loanloss_fee = #{loanlossFee,jdbcType=INTEGER},
+      use_fee = #{useFee,jdbcType=INTEGER},
+      total_fee = #{totalFee,jdbcType=INTEGER},
+      coupons_id = #{couponsId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_product
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_product
+    <include refid="searchBy"/>
+  </select>
+</mapper>

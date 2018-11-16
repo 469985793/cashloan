@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_sys_config表:系统参数表模块 -->
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysConfigMapper">
+    <!--xml内部引用别名-->
+	<!--返回MAP-->		
+	<resultMap id="SysConfigMap" type="com.xindaibao.cashloan.system.domain.SysConfig">
+			<id column="id" property="id" />
+			<result column="creator" property="creator" />
+			<result column="name" property="name" />
+			<result column="code" property="code" />
+			<result column="value" property="value" />
+			<result column="type" property="type" />
+			<result column="remark" property="remark" />
+			<result column="status" property="status" />
+	</resultMap>
+	
+	<!-- 动态查询 -->
+	<sql id="Select">
+		<trim prefix="where" prefixOverrides="and|or">
+					<if test="id !='' and id !=null">
+                        id in (${id})
+                    </if>
+		            <if test="creator !='' and creator !=null">
+		            	and creator = #{creator}
+		            </if>
+		            <if test="name !='' and name !=null">
+		            	and name like CONCAT('%','${name}','%') 
+		            </if>
+		            <if test="code !='' and code !=null">
+		            	and code = #{code}
+		            </if>
+		            <if test="value !='' and value !=null">
+		            	and value = #{value}
+		            </if>
+		            <if test="type !='' and type !=null">
+		            	and type = #{type}
+		            </if>
+		            <if test="remark !='' and remark !=null">
+		            	and remark = #{remark}
+		            </if>
+		            <if test="status !=null">
+		            	and status = #{status}
+		            </if>
+		</trim>
+	</sql>
+	
+    <!-- 动态插入键 -->
+    <sql id="InsertKey">
+                   <if test="creator !='' and creator != null">		creator		</if>
+                   <if test="name !='' and name != null">		,name		</if>
+                   <if test="code !='' and code != null">		,code		</if>
+                   <if test="value !='' and value != null">		,value		</if>
+                   <if test="type !='' and type != null">		,type		</if>
+                   <if test="remark !='' and remark != null">		,remark		</if>
+                   <if test="status != null">		,status		</if>
+    </sql>
+    
+    <!-- 动态插入值 -->
+    <sql id="InsertValue">
+                   <if test="creator !='' and creator != null" >		#{creator}		</if>
+                   <if test="name !='' and name != null" >		,#{name}		</if>
+                   <if test="code !='' and code != null" >		,#{code}		</if>
+                   <if test="value !='' and value != null" >		,#{value}		</if>
+                   <if test="type !='' and type != null" >		,#{type}		</if>
+                   <if test="remark !='' and remark != null" >		,#{remark}		</if>
+                   <if test="status != null" >		,#{status}		</if>
+    </sql>
+    
+    <!-- 动态更新 -->
+    <sql id="Update">
+       <trim prefix="set" suffixOverrides=",">
+				<if test="id != '' and id!= null">		 id=#{id}		</if>
+            	<if test="creator != '' and creator!= null">		,creator=#{creator}		</if>
+            	<if test="name != '' and name!= null">		,name=#{name}		</if>
+            	<if test="code != '' and code!= null">		,code=#{code}		</if>
+            	<if test="value != '' and value!= null">		,value=#{value}		</if>
+            	<if test="type != '' and type!= null">		,type=#{type}		</if>
+            	<if test="remark != '' and remark!= null">		,remark=#{remark}		</if>
+            	<if test="status!= null">		,status=#{status}		</if>
+       </trim>
+    </sql>
+    
+    <!-- 动态排序 -->
+    <sql id="Sort">
+        <if  test="fields != '' and fields != null">
+            order by ${fields}
+        </if >
+        <if test="rule != '' and rule != null">
+            ${rule}
+        </if>
+    </sql>
+    
+	<!-- 动态的插入,必须要创建时间 -->
+	<insert id="save" parameterType="com.xindaibao.cashloan.system.domain.SysConfig">
+		insert into arc_sys_config
+        (
+        <include refid="InsertKey"/>
+        )values(
+        <include refid="InsertValue"/>
+        )
+       	<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+
+	</insert>
+
+    <!-- 动态更新 -->
+    <update id="update" parameterType="com.xindaibao.cashloan.system.domain.SysConfig">
+        update arc_sys_config
+        <include refid="Update"/>
+        where id = #{id}
+    </update>
+
+    <!-- 动态查询 -->
+    <select id="select" resultMap="SysConfigMap" parameterType="java.util.HashMap" >
+        select * from arc_sys_config 
+        <include refid="Select"/>
+        <include refid="Sort"/>
+    </select>
+    
+    <!-- 根据code查询  -->
+    <select id="selectByCode" resultMap="SysConfigMap"  parameterType="java.lang.String">
+        select * from arc_sys_config where code = #{code}
+    </select>
+    
+    <!-- 返回总数 -->
+    <select id="total" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(*) from arc_sys_config 
+        <include refid="Select"/>
+        <include refid="Sort"/>
+    </select>
+    
+    <!-- 根据code模糊查询  -->
+    <select id="listByCode" resultMap="SysConfigMap" parameterType="String" >
+        select * from arc_sys_config where code like concat('',#{code}, '%')
+    </select>
+    
+    
+    <select id="listSelective" resultMap="SysConfigMap" parameterType="java.util.HashMap" >
+        select * from arc_sys_config 
+        <include refid="Select"/>
+    </select>
+
+    <!--根据ID删除-->
+    <delete id="delete">
+        delete from arc_sys_config
+        where
+        id  = #{id}
+    </delete>
+    
+    <select id="findAll" resultMap="SysConfigMap">
+    	select * from arc_sys_config where status = 1
+    </select>
+    
+    <!-- 动态查询 -->
+	<select id="getList" parameterType="java.util.HashMap"
+		resultMap="SysConfigMap">
+		select * from arc_sys_config
+		<include refid="Select" />
+		<include refid="Sort" />
+	</select>
+</mapper> 

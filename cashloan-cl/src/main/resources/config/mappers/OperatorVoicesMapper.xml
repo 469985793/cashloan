@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_voices表:运营商信息-通话记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorVoicesMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorVoices">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <id column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+        <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+        <result column="voice_place" property="voicePlace" jdbcType="VARCHAR" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+        <result column="voice_duration" property="voiceDuration" jdbcType="INTEGER" />
+        <result column="month" property="month" jdbcType="TIMESTAMP" />
+        <result column="voice_type" property="voiceType" jdbcType="VARCHAR" />
+        <result column="voice_to_number" property="voiceToNumber" jdbcType="VARCHAR" />
+        <result column="voice_date" property="voiceDate" jdbcType="TIMESTAMP" />
+        <result column="voice_status" property="voiceStatus" jdbcType="VARCHAR" />
+        <result column="biz_no" property="bizNo" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,gmt_modified,phone_num,voice_place,gmt_create,voice_duration,month,voice_type,voice_to_number,voice_date,voice_status,biz_no,create_time
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test=" userId !=null">
+                and user_id  = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="gmtModified !=null">
+                and gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="phoneNum !=null and phoneNum !=''">
+                and phone_num = #{phoneNum,jdbcType=VARCHAR}
+            </if>
+            <if test="voicePlace !=null and voicePlace !=''">
+                and voice_place = #{voicePlace,jdbcType=VARCHAR}
+            </if>
+            <if test="gmtCreate !=null">
+                and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="voiceDuration !=null">
+                and voice_duration = #{voiceDuration,jdbcType=INTEGER}
+            </if>
+            <if test="month !=null">
+                and month = #{month,jdbcType=TIMESTAMP}
+            </if>
+            <if test="voiceType !=null and voiceType !=''">
+                and voice_type = #{voiceType,jdbcType=VARCHAR}
+            </if>
+            <if test="voiceToNumber !=null and voiceToNumber !=''">
+                and voice_to_number = #{voiceToNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="voiceDate !=null">
+                and voice_date = #{voiceDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="voiceStatus !=null and voiceStatus !=''">
+                and voice_status = #{voiceStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="bizNo !=null and bizNo !=''">
+                and biz_no = #{bizNo,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    <select id="countTable" resultType="java.lang.Integer" parameterType="java.lang.String">
+    	SELECT COUNT(1) FROM information_schema.TABLES WHERE table_name = #{tableName,jdbcType=VARCHAR}
+    </select>
+    
+    <!-- 创建分表 -->
+    <select id="createTable">
+    	CREATE TABLE ${tableName} (
+		  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+		  `user_id` bigint(20) DEFAULT NULL COMMENT '用户id',
+		  `gmt_modified` datetime DEFAULT NULL COMMENT '修改时间',
+		  `phone_num` varchar(11) DEFAULT '' COMMENT '号码',
+		  `voice_place` varchar(32) DEFAULT '' COMMENT '通话地',
+		  `gmt_create` datetime DEFAULT NULL COMMENT '创建时间',
+		  `voice_duration` bigint(20) DEFAULT NULL COMMENT '通话时长（单位为秒）',
+		  `month` datetime DEFAULT NULL COMMENT '语音账单月份',
+		  `voice_type` varchar(32) DEFAULT '' COMMENT '通话类型',
+		  `voice_to_number` varchar(20) DEFAULT '' COMMENT '对方号码',
+		  `voice_date` datetime DEFAULT NULL COMMENT '时间',
+		  `voice_status` varchar(32) DEFAULT '' COMMENT '通话状态',
+		  `biz_no` varchar(128) DEFAULT NULL COMMENT '业务编号',
+		  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+		  PRIMARY KEY (`id`),
+		  INDEX `user_id` (`user_id`) USING BTREE,
+		  INDEX `phone_num` (`phone_num`) USING BTREE 
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='运营商认证通话记录表';
+    </select>
+    
+    <insert id="saveShard">
+        insert into ${tableName}(
+        	user_id,
+        	gmt_modified,
+        	phone_num,
+        	voice_place,
+        	gmt_create,
+        	voice_duration,
+        	month,
+        	voice_type,
+        	voice_to_number,
+        	voice_date,
+        	voice_status,
+        	biz_no,
+        	create_time
+        )values(
+        	#{item.userId,jdbcType=BIGINT},
+        	#{item.gmtModified,jdbcType=TIMESTAMP},
+        	#{item.phoneNum,jdbcType=VARCHAR},
+        	#{item.voicePlace,jdbcType=VARCHAR},
+        	#{item.gmtCreate,jdbcType=TIMESTAMP},
+        	#{item.voiceDuration,jdbcType=INTEGER},
+        	#{item.month,jdbcType=TIMESTAMP},
+        	#{item.voiceType,jdbcType=VARCHAR},
+        	#{item.voiceToNumber,jdbcType=VARCHAR},
+        	#{item.voiceDate,jdbcType=TIMESTAMP},
+        	#{item.voiceStatus,jdbcType=VARCHAR},
+        	#{item.bizNo,jdbcType=VARCHAR},
+        	#{item.createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <select id="listShardSelective" resultMap="BaseResultMap">
+        select 
+        <include refid="Base_Column_List" />
+        from ${tableName} 
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="params.userId != null">
+                user_id = #{params.userId,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </select>
+    
+</mapper>

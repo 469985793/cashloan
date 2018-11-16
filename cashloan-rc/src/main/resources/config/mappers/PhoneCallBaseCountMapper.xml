@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_phone_call_base_count表:运营商通话信息统计模块 -->
+<mapper namespace="com.xindaibao.cashloan.rc.mapper.PhoneCallBaseCountMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.rc.domain.PhoneCallBaseCount">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="count" property="count" jdbcType="INTEGER" />
+        <result column="name_matching" property="nameMatching" jdbcType="VARCHAR" />
+        <result column="address_matching" property="addressMatching" jdbcType="VARCHAR" />
+        <result column="month_source" property="monthSource" jdbcType="INTEGER" />
+        <result column="count_one" property="countOne" jdbcType="INTEGER" />
+        <result column="count_two" property="countTwo" jdbcType="INTEGER" />
+        <result column="count_three" property="countThree" jdbcType="INTEGER" />
+        <result column="count_four" property="countFour" jdbcType="INTEGER" />
+        <result column="count_five" property="countFive" jdbcType="INTEGER" />
+        <result column="count_six" property="countSix" jdbcType="INTEGER" />
+        <result column="count_seven" property="countSeven" jdbcType="INTEGER" />
+        <result column="count_eight" property="countEight" jdbcType="INTEGER" />
+        <result column="count_nine" property="countNine" jdbcType="INTEGER" />
+        <result column="count_ten" property="countTen" jdbcType="INTEGER" />
+        <result column="count_eleven" property="countEleven" jdbcType="INTEGER" />
+        <result column="count_twelve" property="countTwelve" jdbcType="INTEGER" />
+        <result column="count_thirteen" property="countThirteen" jdbcType="INTEGER" />
+        <result column="count_fourteen" property="countFourteen" jdbcType="INTEGER" />
+        <result column="count_fifteen" property="countFifteen" jdbcType="INTEGER" />
+        <result column="count_sixteen" property="countSixteen" jdbcType="INTEGER" />
+        <result column="count_seventeen" property="countSeventeen" jdbcType="INTEGER" />
+        <result column="count_eighteen" property="countEighteen" jdbcType="INTEGER" />
+        <result column="count_nineteen" property="countNineteen" jdbcType="INTEGER" />
+        <result column="count_twenty" property="countTwenty" jdbcType="INTEGER" />
+        <result column="count_twenty_one" property="countTwentyOne" jdbcType="INTEGER" />
+        <result column="count_twenty_two" property="countTwentyTwo" jdbcType="INTEGER" />
+        <result column="count_twenty_three" property="countTwentyThree" jdbcType="INTEGER" />
+        <result column="count_twenty_four" property="countTwentyFour" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,count,name_matching,address_matching,month_source,count_one,count_two,count_three,count_four,count_five,count_six,count_seven,count_eight,count_nine,count_ten,count_eleven,count_twelve,count_thirteen,count_fourteen,count_fifteen,count_sixteen,count_seventeen,count_eighteen,count_nineteen,count_twenty,count_twenty_one,count_twenty_two,count_twenty_three,count_twenty_four,create_time,update_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="count != null and count != '' ">
+                and count = #{count,jdbcType=INTEGER}
+            </if>
+            <if test="nameMatching != null and nameMatching != '' ">
+                and name_matching = #{nameMatching,jdbcType=VARCHAR}
+            </if>
+            <if test="addressMatching != null and addressMatching != '' ">
+                and address_matching = #{addressMatching,jdbcType=VARCHAR}
+            </if>
+            <if test="monthSource != null and monthSource != '' ">
+                and month_source = #{monthSource,jdbcType=INTEGER}
+            </if>
+            <if test="countOne != null and countOne != '' ">
+                and count_one = #{countOne,jdbcType=INTEGER}
+            </if>
+            <if test="countTwo != null and countTwo != '' ">
+                and count_two = #{countTwo,jdbcType=INTEGER}
+            </if>
+            <if test="countThree != null and countThree != '' ">
+                and count_three = #{countThree,jdbcType=INTEGER}
+            </if>
+            <if test="countFour != null and countFour != '' ">
+                and count_four = #{countFour,jdbcType=INTEGER}
+            </if>
+            <if test="countFive != null and countFive != '' ">
+                and count_five = #{countFive,jdbcType=INTEGER}
+            </if>
+            <if test="countSix != null and countSix != '' ">
+                and count_six = #{countSix,jdbcType=INTEGER}
+            </if>
+            <if test="countSeven != null and countSeven != '' ">
+                and count_seven = #{countSeven,jdbcType=INTEGER}
+            </if>
+            <if test="countEight != null and countEight != '' ">
+                and count_eight = #{countEight,jdbcType=INTEGER}
+            </if>
+            <if test="countNine != null and countNine != '' ">
+                and count_nine = #{countNine,jdbcType=INTEGER}
+            </if>
+            <if test="countTen != null and countTen != '' ">
+                and count_ten = #{countTen,jdbcType=INTEGER}
+            </if>
+            <if test="countEleven != null and countEleven != '' ">
+                and count_eleven = #{countEleven,jdbcType=INTEGER}
+            </if>
+            <if test="countTwelve != null and countTwelve != '' ">
+                and count_twelve = #{countTwelve,jdbcType=INTEGER}
+            </if>
+            <if test="countThirteen != null and countThirteen != '' ">
+                and count_thirteen = #{countThirteen,jdbcType=INTEGER}
+            </if>
+            <if test="countFourteen != null and countFourteen != '' ">
+                and count_fourteen = #{countFourteen,jdbcType=INTEGER}
+            </if>
+            <if test="countFifteen != null and countFifteen != '' ">
+                and count_fifteen = #{countFifteen,jdbcType=INTEGER}
+            </if>
+            <if test="countSixteen != null and countSixteen != '' ">
+                and count_sixteen = #{countSixteen,jdbcType=INTEGER}
+            </if>
+            <if test="countSeventeen != null and countSeventeen != '' ">
+                and count_seventeen = #{countSeventeen,jdbcType=INTEGER}
+            </if>
+            <if test="countEighteen != null and countEighteen != '' ">
+                and count_eighteen = #{countEighteen,jdbcType=INTEGER}
+            </if>
+            <if test="countNineteen != null and countNineteen != '' ">
+                and count_nineteen = #{countNineteen,jdbcType=INTEGER}
+            </if>
+            <if test="countTwenty != null and countTwenty != '' ">
+                and count_twenty = #{countTwenty,jdbcType=INTEGER}
+            </if>
+            <if test="countTwentyOne != null and countTwentyOne != '' ">
+                and count_twenty_one = #{countTwentyOne,jdbcType=INTEGER}
+            </if>
+            <if test="countTwentyTwo != null and countTwentyTwo != '' ">
+                and count_twenty_two = #{countTwentyTwo,jdbcType=INTEGER}
+            </if>
+            <if test="countTwentyThree != null and countTwentyThree != '' ">
+                and count_twenty_three = #{countTwentyThree,jdbcType=INTEGER}
+            </if>
+            <if test="countTwentyFour != null and countTwentyFour != '' ">
+                and count_twenty_four = #{countTwentyFour,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rc.domain.PhoneCallBaseCount" keyProperty="id" useGeneratedKeys="true">
+        insert into cl_rc_phone_call_count(user_id,count,name_matching,address_matching,month_source,count_one,count_two,count_three,count_four,count_five,count_six,count_seven,count_eight,count_nine,count_ten,count_eleven,count_twelve,count_thirteen,count_fourteen,count_fifteen,count_sixteen,count_seventeen,count_eighteen,count_nineteen,count_twenty,count_twenty_one,count_twenty_two,count_twenty_three,count_twenty_four,create_time)values(#{userId,jdbcType=BIGINT},#{count,jdbcType=INTEGER},#{nameMatching,jdbcType=VARCHAR},#{addressMatching,jdbcType=VARCHAR},#{monthSource,jdbcType=INTEGER},#{countOne,jdbcType=INTEGER},#{countTwo,jdbcType=INTEGER},#{countThree,jdbcType=INTEGER},#{countFour,jdbcType=INTEGER},#{countFive,jdbcType=INTEGER},#{countSix,jdbcType=INTEGER},#{countSeven,jdbcType=INTEGER},#{countEight,jdbcType=INTEGER},#{countNine,jdbcType=INTEGER},#{countTen,jdbcType=INTEGER},#{countEleven,jdbcType=INTEGER},#{countTwelve,jdbcType=INTEGER},#{countThirteen,jdbcType=INTEGER},#{countFourteen,jdbcType=INTEGER},#{countFifteen,jdbcType=INTEGER},#{countSixteen,jdbcType=INTEGER},#{countSeventeen,jdbcType=INTEGER},#{countEighteen,jdbcType=INTEGER},#{countNineteen,jdbcType=INTEGER},#{countTwenty,jdbcType=INTEGER},#{countTwentyOne,jdbcType=INTEGER},#{countTwentyTwo,jdbcType=INTEGER},#{countTwentyThree,jdbcType=INTEGER},#{countTwentyFour,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.rc.domain.PhoneCallBaseCount">
+        update cl_rc_phone_call_count set 
+            user_id = #{userId,jdbcType=BIGINT},
+            count = #{count,jdbcType=INTEGER},
+            name_matching = #{nameMatching,jdbcType=VARCHAR},
+            address_matching = #{addressMatching,jdbcType=VARCHAR},
+            month_source = #{monthSource,jdbcType=INTEGER},
+            count_one = #{countOne,jdbcType=INTEGER},
+            count_two = #{countTwo,jdbcType=INTEGER},
+            count_three = #{countThree,jdbcType=INTEGER},
+            count_four = #{countFour,jdbcType=INTEGER},
+            count_five = #{countFive,jdbcType=INTEGER},
+            count_six = #{countSix,jdbcType=INTEGER},
+            count_seven = #{countSeven,jdbcType=INTEGER},
+            count_eight = #{countEight,jdbcType=INTEGER},
+            count_nine = #{countNine,jdbcType=INTEGER},
+            count_ten = #{countTen,jdbcType=INTEGER},
+            count_eleven = #{countEleven,jdbcType=INTEGER},
+            count_twelve = #{countTwelve,jdbcType=INTEGER},
+            count_thirteen = #{countThirteen,jdbcType=INTEGER},
+            count_fourteen = #{countFourteen,jdbcType=INTEGER},
+            count_fifteen = #{countFifteen,jdbcType=INTEGER},
+            count_sixteen = #{countSixteen,jdbcType=INTEGER},
+            count_seventeen = #{countSeventeen,jdbcType=INTEGER},
+            count_eighteen = #{countEighteen,jdbcType=INTEGER},
+            count_nineteen = #{countNineteen,jdbcType=INTEGER},
+            count_twenty = #{countTwenty,jdbcType=INTEGER},
+            count_twenty_one = #{countTwentyOne,jdbcType=INTEGER},
+            count_twenty_two = #{countTwentyTwo,jdbcType=INTEGER},
+            count_twenty_three = #{countTwentyThree,jdbcType=INTEGER},
+            count_twenty_four = #{countTwentyFour,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_phone_call_count
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="count != null and count != '' ">        
+                count = #{count,jdbcType=INTEGER},                
+            </if>
+            <if test="nameMatching != null and nameMatching != '' ">        
+                name_matching = #{nameMatching,jdbcType=VARCHAR},                
+            </if>
+            <if test="addressMatching != null and addressMatching != '' ">        
+                address_matching = #{addressMatching,jdbcType=VARCHAR},                
+            </if>
+            <if test="monthSource != null and monthSource != '' ">        
+                month_source = #{monthSource,jdbcType=INTEGER},                
+            </if>
+            <if test="countOne != null and countOne != '' ">        
+                count_one = #{countOne,jdbcType=INTEGER},                
+            </if>
+            <if test="countTwo != null and countTwo != '' ">        
+                count_two = #{countTwo,jdbcType=INTEGER},                
+            </if>
+            <if test="countThree != null and countThree != '' ">        
+                count_three = #{countThree,jdbcType=INTEGER},                
+            </if>
+            <if test="countFour != null and countFour != '' ">        
+                count_four = #{countFour,jdbcType=INTEGER},                
+            </if>
+            <if test="countFive != null and countFive != '' ">        
+                count_five = #{countFive,jdbcType=INTEGER},                
+            </if>
+            <if test="countSix != null and countSix != '' ">        
+                count_six = #{countSix,jdbcType=INTEGER},                
+            </if>
+            <if test="countSeven != null and countSeven != '' ">        
+                count_seven = #{countSeven,jdbcType=INTEGER},                
+            </if>
+            <if test="countEight != null and countEight != '' ">        
+                count_eight = #{countEight,jdbcType=INTEGER},                
+            </if>
+            <if test="countNine != null and countNine != '' ">        
+                count_nine = #{countNine,jdbcType=INTEGER},                
+            </if>
+            <if test="countTen != null and countTen != '' ">        
+                count_ten = #{countTen,jdbcType=INTEGER},                
+            </if>
+            <if test="countEleven != null and countEleven != '' ">        
+                count_eleven = #{countEleven,jdbcType=INTEGER},                
+            </if>
+            <if test="countTwelve != null and countTwelve != '' ">        
+                count_twelve = #{countTwelve,jdbcType=INTEGER},                
+            </if>
+            <if test="countThirteen != null and countThirteen != '' ">        
+                count_thirteen = #{countThirteen,jdbcType=INTEGER},                
+            </if>
+            <if test="countFourteen != null and countFourteen != '' ">        
+                count_fourteen = #{countFourteen,jdbcType=INTEGER},                
+            </if>
+            <if test="countFifteen != null and countFifteen != '' ">        
+                count_fifteen = #{countFifteen,jdbcType=INTEGER},                
+            </if>
+            <if test="countSixteen != null and countSixteen != '' ">        
+                count_sixteen = #{countSixteen,jdbcType=INTEGER},                
+            </if>
+            <if test="countSeventeen != null and countSeventeen != '' ">        
+                count_seventeen = #{countSeventeen,jdbcType=INTEGER},                
+            </if>
+            <if test="countEighteen != null and countEighteen != '' ">        
+                count_eighteen = #{countEighteen,jdbcType=INTEGER},                
+            </if>
+            <if test="countNineteen != null and countNineteen != '' ">        
+                count_nineteen = #{countNineteen,jdbcType=INTEGER},                
+            </if>
+            <if test="countTwenty != null and countTwenty != '' ">        
+                count_twenty = #{countTwenty,jdbcType=INTEGER},                
+            </if>
+            <if test="countTwentyOne != null and countTwentyOne != '' ">        
+                count_twenty_one = #{countTwentyOne,jdbcType=INTEGER},                
+            </if>
+            <if test="countTwentyTwo != null and countTwentyTwo != '' ">        
+                count_twenty_two = #{countTwentyTwo,jdbcType=INTEGER},                
+            </if>
+            <if test="countTwentyThree != null and countTwentyThree != '' ">        
+                count_twenty_three = #{countTwentyThree,jdbcType=INTEGER},                
+            </if>
+            <if test="countTwentyFour != null and countTwentyFour != '' ">        
+                count_twenty_four = #{countTwentyFour,jdbcType=INTEGER},                
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP}            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_phone_call_count
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_phone_call_count
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_phone_call_count
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

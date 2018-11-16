@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.KanyaUserCreditMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.KanyaUserCredit">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="limits" jdbcType="INTEGER" property="limits" />
+    <result column="total_amount" jdbcType="BIGINT" property="totalAmount" />
+    <result column="total_times" jdbcType="INTEGER" property="totalTimes" />
+    <result column="normal_times" jdbcType="INTEGER" property="normalTimes" />
+    <result column="due_times" jdbcType="INTEGER" property="dueTimes" />
+    <result column="bad_times" jdbcType="TINYINT" property="badTimes" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, limits, total_amount, total_times, normal_times, due_times, bad_times, status, 
+    created_time, updated_time
+  </sql>
+
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="uid != null and uid != '' ">
+        and uid = #{uid,jdbcType=BIGINT}
+      </if>
+      <if test="limits != null and limits != '' ">
+        and limits = #{limits,jdbcType=INTEGER}
+      </if>
+      <if test="totalAmount != null and totalAmount != '' ">
+        and totalAmount = #{total_amount,jdbcType=BIGINT}
+      </if>
+      <if test="totalTimes != null and totalTimes != '' ">
+        and totalTimes = #{total_times,jdbcType=INTEGER}
+      </if>
+      <if test="normalTimes != null and normalTimes != '' ">
+        and normalTimes = #{normal_times,jdbcType=TINYINT}
+      </if>
+      <if test="dueTimes != null and dueTimes != '' ">
+        and dueTimes = #{due_times,jdbcType=INTEGER}
+      </if>
+      <if test="badTimes != null and badTimes != '' ">
+        and badTimes = #{bad_times,jdbcType=TINYINT}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user_credit
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserCredit">
+    insert into k_user_credit (id, uid, limits, 
+      total_amount, total_times, normal_times, 
+      due_times, bad_times, status, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{limits,jdbcType=INTEGER}, 
+      #{totalAmount,jdbcType=BIGINT}, #{totalTimes,jdbcType=INTEGER}, #{normalTimes,jdbcType=INTEGER}, 
+      #{dueTimes,jdbcType=INTEGER}, #{badTimes,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="saveSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserCredit">
+    insert into k_user_credit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="limits != null">
+        limits,
+      </if>
+      <if test="totalAmount != null">
+        total_amount,
+      </if>
+      <if test="totalTimes != null">
+        total_times,
+      </if>
+      <if test="normalTimes != null">
+        normal_times,
+      </if>
+      <if test="dueTimes != null">
+        due_times,
+      </if>
+      <if test="badTimes != null">
+        bad_times,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="limits != null">
+        #{limits,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        #{totalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="totalTimes != null">
+        #{totalTimes,jdbcType=INTEGER},
+      </if>
+      <if test="normalTimes != null">
+        #{normalTimes,jdbcType=INTEGER},
+      </if>
+      <if test="dueTimes != null">
+        #{dueTimes,jdbcType=INTEGER},
+      </if>
+      <if test="badTimes != null">
+        #{badTimes,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserCredit">
+    update k_user_credit
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="limits != null">
+        limits = #{limits,jdbcType=INTEGER},
+      </if>
+      <if test="totalAmount != null">
+        total_amount = #{totalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="totalTimes != null">
+        total_times = #{totalTimes,jdbcType=INTEGER},
+      </if>
+      <if test="normalTimes != null">
+        normal_times = #{normalTimes,jdbcType=INTEGER},
+      </if>
+      <if test="dueTimes != null">
+        due_times = #{dueTimes,jdbcType=INTEGER},
+      </if>
+      <if test="badTimes != null">
+        bad_times = #{badTimes,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserCredit">
+    update k_user_credit
+    set uid = #{uid,jdbcType=BIGINT},
+      limits = #{limits,jdbcType=INTEGER},
+      total_amount = #{totalAmount,jdbcType=BIGINT},
+      total_times = #{totalTimes,jdbcType=INTEGER},
+      normal_times = #{normalTimes,jdbcType=INTEGER},
+      due_times = #{dueTimes,jdbcType=INTEGER},
+      bad_times = #{badTimes,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_credit
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_credit
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_credit
+    <include refid="searchBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ClMoheCallDurationStats2hourMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ClMoheCallDurationStats2hour">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+      <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="time_enum" jdbcType="VARCHAR" property="timeEnum" />
+    <result column="t_0" jdbcType="VARCHAR" property="t0" />
+    <result column="t_1" jdbcType="VARCHAR" property="t1" />
+    <result column="t_2" jdbcType="VARCHAR" property="t2" />
+    <result column="t_3" jdbcType="VARCHAR" property="t3" />
+    <result column="t_4" jdbcType="VARCHAR" property="t4" />
+    <result column="t_5" jdbcType="VARCHAR" property="t5" />
+    <result column="t_6" jdbcType="VARCHAR" property="t6" />
+    <result column="t_7" jdbcType="VARCHAR" property="t7" />
+    <result column="t_8" jdbcType="VARCHAR" property="t8" />
+    <result column="t_9" jdbcType="VARCHAR" property="t9" />
+    <result column="t_10" jdbcType="VARCHAR" property="t10" />
+    <result column="t_11" jdbcType="VARCHAR" property="t11" />
+  </resultMap>
+
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,task_id,time_enum,t_0,t_1,t_2,t_3,t_4,t_5,t_6,t_7,t_8,t_9,t_10,t_11
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                and task_id = #{taskId,jdbcType=VARCHAR}
+            </if>
+            <if test="timeEnum != null and timeEnum != '' ">
+                and time_enum = #{timeEnum,jdbcType=VARCHAR}
+            </if>
+            <if test="t0 != null and t0 != '' ">
+                and t_0 = #{t0,jdbcType=VARCHAR}
+            </if>
+            <if test="t1 != null and t1 != '' ">
+                and t_1 = #{t1,jdbcType=VARCHAR}
+            </if>
+            <if test="t2 != null and t2 != '' ">
+                and t_2 = #{t2,jdbcType=VARCHAR}
+            </if>
+            <if test="t3 != null and t3 != '' ">
+                and t_3 = #{t3,jdbcType=VARCHAR}
+            </if>
+            <if test="t4 != null and t4 != '' ">
+                and t_4 = #{t4,jdbcType=VARCHAR}
+            </if>
+            <if test="t5 != null and t5 != '' ">
+                and t_5 = #{t5,jdbcType=VARCHAR}
+            </if>
+            <if test="t6 != null and t6 != '' ">
+                and t_6 = #{t6,jdbcType=VARCHAR}
+            </if>
+            <if test="t7 != null and t7 != '' ">
+                and t_7 = #{t7,jdbcType=VARCHAR}
+            </if>
+            <if test="t8 != null and t8 != '' ">
+                and t_8 = #{t8,jdbcType=VARCHAR}
+            </if>
+            <if test="t9 != null and t9 != '' ">
+                and t_9 = #{t9,jdbcType=VARCHAR}
+            </if>
+            <if test="t10 != null and t10 != '' ">
+                and t_10 = #{t10,jdbcType=VARCHAR}
+            </if>
+            <if test="t11 != null and t11 != '' ">
+                and t_11 = #{t11,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheCallDurationStats2hour">
+        insert into cl_mohe_call_duration_stats_2hour(user_id,task_id,time_enum,t_0,t_1,t_2,t_3,t_4,t_5,t_6,t_7,t_8,t_9,t_10,t_11)values(#{userId,jdbcType=BIGINT},#{taskId,jdbcType=VARCHAR},#{timeEnum,jdbcType=VARCHAR},#{t0,jdbcType=VARCHAR},#{t1,jdbcType=VARCHAR},#{t2,jdbcType=VARCHAR},#{t3,jdbcType=VARCHAR},#{t4,jdbcType=VARCHAR},#{t5,jdbcType=VARCHAR},#{t6,jdbcType=VARCHAR},#{t7,jdbcType=VARCHAR},#{t8,jdbcType=VARCHAR},#{t9,jdbcType=VARCHAR},#{t10,jdbcType=VARCHAR},#{t11,jdbcType=VARCHAR})
+    </insert>
+
+
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheCallDurationStats2hour">
+        update cl_mohe_call_duration_stats_2hour set
+        user_id = #{userId,jdbcType=BIGINT},
+        task_id = #{taskId,jdbcType=VARCHAR},
+        time_enum = #{timeEnum,jdbcType=VARCHAR},
+        t_0 = #{t0,jdbcType=VARCHAR},
+        t_1 = #{t1,jdbcType=VARCHAR},
+        t_2 = #{t2,jdbcType=VARCHAR},
+        t_3 = #{t3,jdbcType=VARCHAR},
+        t_4 = #{t4,jdbcType=VARCHAR},
+        t_5 = #{t5,jdbcType=VARCHAR},
+        t_6 = #{t6,jdbcType=VARCHAR},
+        t_7 = #{t7,jdbcType=VARCHAR},
+        t_8 = #{t8,jdbcType=VARCHAR},
+        t_9 = #{t9,jdbcType=VARCHAR},
+        t_10 = #{t10,jdbcType=VARCHAR},
+        t_11 = #{t11,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_mohe_call_duration_stats_2hour
+        <set>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="timeEnum != null and timeEnum != '' ">
+                time_enum = #{timeEnum,jdbcType=VARCHAR},
+            </if>
+            <if test="t0 != null and t0 != '' ">
+                t_0 = #{t0,jdbcType=VARCHAR},
+            </if>
+            <if test="t1 != null and t1 != '' ">
+                t_1 = #{t1,jdbcType=VARCHAR},
+            </if>
+            <if test="t2 != null and t2 != '' ">
+                t_2 = #{t2,jdbcType=VARCHAR},
+            </if>
+            <if test="t3 != null and t3 != '' ">
+                t_3 = #{t3,jdbcType=VARCHAR},
+            </if>
+            <if test="t4 != null and t4 != '' ">
+                t_4 = #{t4,jdbcType=VARCHAR},
+            </if>
+            <if test="t5 != null and t5 != '' ">
+                t_5 = #{t5,jdbcType=VARCHAR},
+            </if>
+            <if test="t6 != null and t6 != '' ">
+                t_6 = #{t6,jdbcType=VARCHAR},
+            </if>
+            <if test="t7 != null and t7 != '' ">
+                t_7 = #{t7,jdbcType=VARCHAR},
+            </if>
+            <if test="t8 != null and t8 != '' ">
+                t_8 = #{t8,jdbcType=VARCHAR},
+            </if>
+            <if test="t9 != null and t9 != '' ">
+                t_9 = #{t9,jdbcType=VARCHAR},
+            </if>
+            <if test="t10 != null and t10 != '' ">
+                t_10 = #{t10,jdbcType=VARCHAR},
+            </if>
+            <if test="t11 != null and t11 != '' ">
+                t_11 = #{t11,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_call_duration_stats_2hour
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_call_duration_stats_2hour
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_call_duration_stats_2hour
+        <include refid="searchBy"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_borrow表:借款信息表模块 -->
+<mapper namespace="com.xindaibao.cashloan.core.mapper.BorrowMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.core.domain.Borrow">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="real_amount" property="realAmount" jdbcType="DECIMAL" />
+        <result column="fee" property="fee" jdbcType="DECIMAL" />
+        <result column="time_limit" property="timeLimit" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="card_id" property="cardId" jdbcType="BIGINT" />
+        <result column="service_fee" property="serviceFee" jdbcType="DECIMAL" />
+        <result column="info_auth_fee" property="infoAuthFee" jdbcType="DECIMAL" />
+        <result column="interest" property="interest" jdbcType="DECIMAL" />
+        <result column="original_id" property="originalId" jdbcType="BIGINT" />
+        <result column="original_order_no" property="originalOrderNo" jdbcType="VARCHAR" />
+        <result column="renew_state" property="renewState" jdbcType="VARCHAR" />
+        <result column="renew_mark" property="renewMark" jdbcType="INTEGER" />
+        <result column="renew_amount" property="renewAmount" jdbcType="DECIMAL" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="client" property="client" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="coordinate" property="coordinate" jdbcType="VARCHAR" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,order_no,amount,real_amount,fee,time_limit,state,card_id,service_fee,info_auth_fee,interest,original_id,original_order_no,renew_state,renew_mark,renew_amount,remark,client,address,coordinate,ip,create_time 
+    </sql>
+    
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="amount != null">
+                and amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="realAmount != null">
+                and real_amount = #{realAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="fee != null">
+                and fee = #{fee,jdbcType=DECIMAL}
+            </if>
+            <if test="timeLimit != null and timeLimit != ''">
+                and time_limit = #{timeLimit,jdbcType=VARCHAR}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="cardId != null">
+                and card_id = #{cardId,jdbcType=BIGINT}
+            </if>
+            <if test="serviceFee != null">
+                and service_fee = #{serviceFee,jdbcType=DECIMAL}
+            </if>
+            <if test="infoAuthFee != null">
+                and info_auth_fee = #{infoAuthFee,jdbcType=DECIMAL}
+            </if>
+            <if test="interest != null">
+                and interest = #{interest,jdbcType=DECIMAL}
+            </if>
+            <if test="originalId != null">
+                and original_id = #{originalId,jdbcType=BIGINT}
+            </if>
+            <if test="originalOrderNo != null and originalOrderNo != ''">
+                and original_order_no = #{originalOrderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="renewState != null and renewState != ''">
+                and renew_state = #{renewState,jdbcType=VARCHAR}
+            </if>
+            <if test="renewMark != null">
+                and renew_mark = #{renewMark,jdbcType=INTEGER}
+            </if>
+            <if test="renewAmount != null">
+                and renew_amount = #{renewAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="client != null and client != ''">
+                and client = #{client,jdbcType=VARCHAR}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address,jdbcType=VARCHAR}
+            </if>
+            <if test="coordinate != null and coordinate != ''">
+                and coordinate = #{coordinate,jdbcType=VARCHAR}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+
+	<insert id="save" parameterType="com.xindaibao.cashloan.core.domain.Borrow" keyProperty="id" useGeneratedKeys="true">
+		insert into cl_borrow(user_id,order_no,amount,real_amount,fee,time_limit,state,card_id,service_fee,info_auth_fee,interest,original_id,original_order_no,renew_state,renew_mark,renew_amount,remark,client,address,coordinate,ip,create_time)values(#{userId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{amount,jdbcType=DECIMAL},#{realAmount,jdbcType=DECIMAL},#{fee,jdbcType=DECIMAL},#{timeLimit,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{cardId,jdbcType=BIGINT},#{serviceFee,jdbcType=DECIMAL},#{infoAuthFee,jdbcType=DECIMAL},#{interest,jdbcType=DECIMAL},#{originalId,jdbcType=BIGINT},#{originalOrderNo,jdbcType=VARCHAR},#{renewState,jdbcType=VARCHAR},#{renewMark,jdbcType=INTEGER}, #{renewAmount,jdbcType=DECIMAL},#{remark,jdbcType=VARCHAR},#{client,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{coordinate,jdbcType=VARCHAR},#{ip,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+	</insert>
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.core.domain.Borrow">
+        update cl_borrow set 
+            user_id = #{userId,jdbcType=BIGINT},
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            amount = #{amount,jdbcType=DECIMAL},
+            real_amount = #{realAmount,jdbcType=DECIMAL},
+            fee = #{fee,jdbcType=DECIMAL},
+            time_limit = #{timeLimit,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            card_id = #{cardId,jdbcType=BIGINT},
+            service_fee = #{serviceFee,jdbcType=DECIMAL},
+            info_auth_fee = #{infoAuthFee,jdbcType=DECIMAL},
+            interest = #{interest,jdbcType=DECIMAL},
+            original_id = #{originalId,jdbcType=BIGINT},
+            original_order_no = #{originalOrderNo,jdbcType=VARCHAR},
+            renew_state = #{renewState,jdbcType=VARCHAR},
+            renew_mark = #{renewMark,jdbcType=INTEGER},
+            renew_amount = #{renewAmount,jdbcType=DECIMAL},
+            remark = #{remark,jdbcType=VARCHAR},
+            client = #{client,jdbcType=VARCHAR},
+            address = #{address,jdbcType=VARCHAR},
+            coordinate = #{coordinate,jdbcType=VARCHAR},
+            ip = #{ip,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_borrow
+          <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+                order_no = #{orderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="realAmount != null">
+                real_amount = #{realAmount,jdbcType=DECIMAL},                
+            </if>
+            <if test="fee != null">
+                fee = #{fee,jdbcType=DECIMAL},                
+            </if>
+            <if test="timeLimit != null and timeLimit != ''">
+                time_limit = #{timeLimit,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="cardId != null">
+                card_id = #{cardId,jdbcType=BIGINT},                
+            </if>
+            <if test="serviceFee != null">
+                service_fee = #{serviceFee,jdbcType=DECIMAL},                
+            </if>
+            <if test="infoAuthFee != null">
+                info_auth_fee = #{infoAuthFee,jdbcType=DECIMAL},                
+            </if>
+            <if test="interest != null">
+                interest = #{interest,jdbcType=DECIMAL},                
+            </if>
+            <if test="originalId != null">
+                original_id = #{originalId,jdbcType=BIGINT},                
+            </if>
+            <if test="originalOrderNo != null and originalOrderNo != ''">
+                original_order_no = #{originalOrderNo,jdbcType=VARCHAR},
+            </if>
+            <if test="renewState != null and renewState != ''">
+                renew_state = #{renewState,jdbcType=VARCHAR},
+            </if>
+            <if test="renewMark != null">
+                renew_mark = #{renewMark,jdbcType=INTEGER},                
+            </if>
+             <if test="renewAmount != null">
+                renew_amount = #{renewAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="client != null and client != ''">
+                client = #{client,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="coordinate != null and coordinate != ''">
+                coordinate = #{coordinate,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null and ip != ''">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}  
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        <include refid="searchBy"/>
+    </select>
+   
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchConditions">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != ''">
+				and order_no like CONCAT('%', #{orderNo,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="userName != null and userName != ''">
+				and user_name like CONCAT('%', #{userName,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="realName != null and realName != ''">
+				and real_name like CONCAT('%', #{realName,jdbcType=VARCHAR}, '%')
+			</if>
+			<if test="phone != null and phone != ''">
+				and phone like CONCAT('%', #{phone,jdbcType=VARCHAR}, '%')
+			</if>
+            <if test="state !=null and state != ''">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="remark !=null and remark != ''">
+                and remark like CONCAT('%', #{remark,jdbcType=VARCHAR}, '%')
+            </if>
+            
+        </trim>
+    </sql>
+               
+    <select id="selectByConditions" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        <include refid="searchConditions"/>
+    </select>
+    
+    <select id="findByConsumerAndBorrow" parameterType="java.lang.String" resultMap="BaseResultMap">
+    	select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        where order_no = #{orderNo,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="findValidValue" parameterType="java.lang.String" resultType="java.lang.String">
+    	${statement}
+    </select>
+  
+ 
+</mapper>

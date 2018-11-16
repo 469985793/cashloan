@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.KanyaUserObtainStateMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.KanyaUserObtainState">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="address_book_flag" jdbcType="TINYINT" property="addressBookFlag" />
+    <result column="address_book_time" jdbcType="TIMESTAMP" property="addressBookTime" />
+    <result column="sms_flag" jdbcType="TINYINT" property="smsFlag" />
+    <result column="sms_time" jdbcType="TIMESTAMP" property="smsTime" />
+    <result column="call_flag" jdbcType="TINYINT" property="callFlag" />
+    <result column="call_time" jdbcType="TIMESTAMP" property="callTime" />
+    <result column="location_flag" jdbcType="TINYINT" property="locationFlag" />
+    <result column="location_time" jdbcType="TIMESTAMP" property="locationTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, address_book_flag, address_book_time, sms_flag, sms_time, call_flag, call_time, 
+    location_flag, location_time, status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="uid != null and uid != '' ">
+        and uid = #{uid,jdbcType=BIGINT}
+      </if>
+      <if test="addressBookFlag != null and addressBookFlag != '' ">
+        and addressBookFlag = #{address_book_flag,jdbcType=VARCHAR}
+      </if>
+      <if test="addressBookTime != null and addressBookTime != '' ">
+        and addressBookTime = #{address_book_time,jdbcType=VARCHAR}
+      </if>
+      <if test="smsFlag != null and smsFlag != '' ">
+        and smsFlag = #{sms_flag,jdbcType=VARCHAR}
+      </if>
+      <if test="smsTime != null and smsTime != '' ">
+        and smsTime = #{sms_time,jdbcType=VARCHAR}
+      </if>
+      <if test="callFlag != null and callFlag != '' ">
+        and callFlag = #{call_flag,jdbcType=VARCHAR}
+      </if>
+      <if test="callTime != null and callTime != '' ">
+        and callTime = #{call_time,jdbcType=VARCHAR}
+      </if>
+      <if test="locationFlag != null and locationFlag != '' ">
+        and locationFlag = #{location_flag,jdbcType=VARCHAR}
+      </if>
+      <if test="locationTime != null and locationTime != '' ">
+        and locationTime = #{location_time,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user_obtain_state
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from k_user_obtain_state
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserObtainState">
+    insert into k_user_obtain_state (id, uid, address_book_flag, 
+      address_book_time, sms_flag, sms_time, 
+      call_flag, call_time, location_flag, 
+      location_time, status, created_time, 
+      updated_time)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{addressBookFlag,jdbcType=TINYINT}, 
+      #{addressBookTime,jdbcType=TIMESTAMP}, #{smsFlag,jdbcType=TINYINT}, #{smsTime,jdbcType=TIMESTAMP}, 
+      #{callFlag,jdbcType=TINYINT}, #{callTime,jdbcType=TIMESTAMP}, #{locationFlag,jdbcType=TINYINT}, 
+      #{locationTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserObtainState">
+    insert into k_user_obtain_state
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="addressBookFlag != null">
+        address_book_flag,
+      </if>
+      <if test="addressBookTime != null">
+        address_book_time,
+      </if>
+      <if test="smsFlag != null">
+        sms_flag,
+      </if>
+      <if test="smsTime != null">
+        sms_time,
+      </if>
+      <if test="callFlag != null">
+        call_flag,
+      </if>
+      <if test="callTime != null">
+        call_time,
+      </if>
+      <if test="locationFlag != null">
+        location_flag,
+      </if>
+      <if test="locationTime != null">
+        location_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="addressBookFlag != null">
+        #{addressBookFlag,jdbcType=TINYINT},
+      </if>
+      <if test="addressBookTime != null">
+        #{addressBookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="smsFlag != null">
+        #{smsFlag,jdbcType=TINYINT},
+      </if>
+      <if test="smsTime != null">
+        #{smsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="callFlag != null">
+        #{callFlag,jdbcType=TINYINT},
+      </if>
+      <if test="callTime != null">
+        #{callTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="locationFlag != null">
+        #{locationFlag,jdbcType=TINYINT},
+      </if>
+      <if test="locationTime != null">
+        #{locationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserObtainState">
+    update k_user_obtain_state
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="addressBookFlag != null">
+        address_book_flag = #{addressBookFlag,jdbcType=TINYINT},
+      </if>
+      <if test="addressBookTime != null">
+        address_book_time = #{addressBookTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="smsFlag != null">
+        sms_flag = #{smsFlag,jdbcType=TINYINT},
+      </if>
+      <if test="smsTime != null">
+        sms_time = #{smsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="callFlag != null">
+        call_flag = #{callFlag,jdbcType=TINYINT},
+      </if>
+      <if test="callTime != null">
+        call_time = #{callTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="locationFlag != null">
+        location_flag = #{locationFlag,jdbcType=TINYINT},
+      </if>
+      <if test="locationTime != null">
+        location_time = #{locationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserObtainState">
+    update k_user_obtain_state
+    set uid = #{uid,jdbcType=BIGINT},
+      address_book_flag = #{addressBookFlag,jdbcType=TINYINT},
+      address_book_time = #{addressBookTime,jdbcType=TIMESTAMP},
+      sms_flag = #{smsFlag,jdbcType=TINYINT},
+      sms_time = #{smsTime,jdbcType=TIMESTAMP},
+      call_flag = #{callFlag,jdbcType=TINYINT},
+      call_time = #{callTime,jdbcType=TIMESTAMP},
+      location_flag = #{locationFlag,jdbcType=TINYINT},
+      location_time = #{locationTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_obtain_state
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_obtain_state
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_obtain_state
+    <include refid="searchBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_urge_repay_log表:催款记录表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.UrgeRepayOrderLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.UrgeRepayOrderLog">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="due_id" property="dueId" jdbcType="BIGINT" />
+        <result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="promise_time" property="promiseTime" jdbcType="TIMESTAMP" />
+        <result column="way" property="way" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,due_id,borrow_id,user_id,create_time,state,remark,promise_time,way 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="dueId !='' and dueId !=null">
+                and due_id = #{dueId,jdbcType=BIGINT}
+            </if>
+            <if test="borrowId !='' and borrowId !=null">
+                and borrow_id = #{borrowId,jdbcType=BIGINT}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="remark !='' and remark !=null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+           <if test="promiseTime !=null">
+                and promise_time = #{promiseTime,jdbcType=VARCHAR}
+            </if>
+            <if test="way !='' and way !=null">
+                and way = #{way,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.UrgeRepayOrderLog">
+        insert into cl_urge_repay_log(due_id,borrow_id,user_id,create_time,state,remark,promise_time,way)values(#{dueId,jdbcType=BIGINT},#{borrowId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{createTime,jdbcType=TIMESTAMP},#{state,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},#{promiseTime,jdbcType=VARCHAR},#{way,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.UrgeRepayOrderLog">
+        update cl_urge_repay_log set 
+            due_id = #{dueId,jdbcType=BIGINT},
+            borrow_id = #{borrowId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            state = #{state,jdbcType=VARCHAR},
+            remark = #{remark,jdbcType=VARCHAR},
+            promise_time = #{promiseTime,jdbcType=VARCHAR},
+            way = #{way,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_urge_repay_log
+          <set>
+            <if test="dueId != null and dueId != '' ">        
+                due_id = #{dueId,jdbcType=BIGINT},                
+            </if>
+            <if test="borrowId != null and borrowId != '' ">        
+                borrow_id = #{borrowId,jdbcType=BIGINT},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="createTime != null ">        
+                create_time = #{createTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="remark != null and remark != '' ">        
+                remark = #{remark,jdbcType=VARCHAR}                
+            </if>
+             <if test="promiseTime !=null and promiseTime != '' ">
+                promise_time = #{promiseTime,jdbcType=VARCHAR}
+            </if>
+             <if test="way !='' and way !=null">
+                 way = #{way,jdbcType=VARCHAR}
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_urge_repay_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_urge_repay_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_urge_repay_log
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="countLog" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+    	SELECT count(1) FROM cl_urge_repay_log 
+    	<trim prefix="where" prefixOverrides="and|or">
+            <if test="userId != null and userId != '' and userId != '0' ">
+                user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="startTime != null">
+                and date_format(create_time, '%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime != null">
+                and date_format(create_time, '%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </select>
+    
+</mapper>

@@ -1,0 +1,23 @@
+.a-upload {
+    height: 30px;
+    line-height: 20px;
+    position: relative;
+    color: #888;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.a-upload  input {
+    position: absolute;
+    width: 120px;
+    opacity: 0;
+}
+
+.a-upload:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
+}

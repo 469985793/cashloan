@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_td_bills表:同盾运营商账单信息模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorTdBillsMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorTdBills">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="req_log_id" property="reqLogId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="bill_cycle" property="billCycle" jdbcType="VARCHAR" />
+        <result column="bill_fee" property="billFee" jdbcType="VARCHAR" />
+        <result column="bill_discount" property="billDiscount" jdbcType="VARCHAR" />
+        <result column="bill_total" property="billTotal" jdbcType="VARCHAR" />
+        <result column="breach_amount" property="breachAmount" jdbcType="VARCHAR" />
+        <result column="paid_amount" property="paidAmount" jdbcType="VARCHAR" />
+        <result column="unpaid_amount" property="unpaidAmount" jdbcType="VARCHAR" />
+        <result column="bill_record" property="billRecord" jdbcType="VARCHAR" />
+        <result column="usage_detail" property="usageDetail" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,req_log_id,order_no,bill_cycle,bill_fee,bill_discount,bill_total,breach_amount,paid_amount,unpaid_amount,bill_record,usage_detail 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+             <if test="reqLogId != null and reqLogId != '' ">
+                and req_log_id = #{reqLogId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="billCycle != null and billCycle != '' ">
+                and bill_cycle = #{billCycle,jdbcType=VARCHAR}
+            </if>
+            <if test="billFee != null and billFee != '' ">
+                and bill_fee = #{billFee,jdbcType=VARCHAR}
+            </if>
+            <if test="billDiscount != null and billDiscount != '' ">
+                and bill_discount = #{billDiscount,jdbcType=VARCHAR}
+            </if>
+            <if test="billTotal != null and billTotal != '' ">
+                and bill_total = #{billTotal,jdbcType=VARCHAR}
+            </if>
+            <if test="breachAmount != null and breachAmount != '' ">
+                and breach_amount = #{breachAmount,jdbcType=VARCHAR}
+            </if>
+            <if test="paidAmount != null and paidAmount != '' ">
+                and paid_amount = #{paidAmount,jdbcType=VARCHAR}
+            </if>
+            <if test="unpaidAmount != null and unpaidAmount != '' ">
+                and unpaid_amount = #{unpaidAmount,jdbcType=VARCHAR}
+            </if>
+            <if test="billRecord != null and billRecord != '' ">
+                and bill_record = #{billRecord,jdbcType=VARCHAR}
+            </if>
+            <if test="usageDetail != null and usageDetail != '' ">
+                and usage_detail = #{usageDetail,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdBills">
+        insert into cl_operator_td_bills(user_id,req_log_id,order_no,bill_cycle,bill_fee,bill_discount,bill_total,breach_amount,paid_amount,unpaid_amount,bill_record,usage_detail)values(#{userId,jdbcType=BIGINT},#{reqLogId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{billCycle,jdbcType=VARCHAR},#{billFee,jdbcType=VARCHAR},#{billDiscount,jdbcType=VARCHAR},#{billTotal,jdbcType=VARCHAR},#{breachAmount,jdbcType=VARCHAR},#{paidAmount,jdbcType=VARCHAR},#{unpaidAmount,jdbcType=VARCHAR},#{billRecord,jdbcType=VARCHAR},#{usageDetail,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdBills">
+        update cl_operator_td_bills set 
+            user_id = #{userId,jdbcType=BIGINT},
+            req_log_id = #{reqLogId,jdbcType=BIGINT},
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            bill_cycle = #{billCycle,jdbcType=VARCHAR},
+            bill_fee = #{billFee,jdbcType=VARCHAR},
+            bill_discount = #{billDiscount,jdbcType=VARCHAR},
+            bill_total = #{billTotal,jdbcType=VARCHAR},
+            breach_amount = #{breachAmount,jdbcType=VARCHAR},
+            paid_amount = #{paidAmount,jdbcType=VARCHAR},
+            unpaid_amount = #{unpaidAmount,jdbcType=VARCHAR},
+            bill_record = #{billRecord,jdbcType=VARCHAR},
+            usage_detail = #{usageDetail,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_operator_td_bills
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="reqLogId != null and reqLogId != '' ">
+                req_log_id = #{reqLogId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="billCycle != null and billCycle != '' ">        
+                bill_cycle = #{billCycle,jdbcType=VARCHAR},                
+            </if>
+            <if test="billFee != null and billFee != '' ">        
+                bill_fee = #{billFee,jdbcType=VARCHAR},                
+            </if>
+            <if test="billDiscount != null and billDiscount != '' ">        
+                bill_discount = #{billDiscount,jdbcType=VARCHAR},                
+            </if>
+            <if test="billTotal != null and billTotal != '' ">        
+                bill_total = #{billTotal,jdbcType=VARCHAR},                
+            </if>
+            <if test="breachAmount != null and breachAmount != '' ">        
+                breach_amount = #{breachAmount,jdbcType=VARCHAR},                
+            </if>
+            <if test="paidAmount != null and paidAmount != '' ">        
+                paid_amount = #{paidAmount,jdbcType=VARCHAR},                
+            </if>
+            <if test="unpaidAmount != null and unpaidAmount != '' ">        
+                unpaid_amount = #{unpaidAmount,jdbcType=VARCHAR},                
+            </if>
+            <if test="billRecord != null and billRecord != '' ">        
+                bill_record = #{billRecord,jdbcType=VARCHAR},                
+            </if>
+            <if test="usageDetail != null and usageDetail != '' ">        
+                usage_detail = #{usageDetail,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_bills
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_bills
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_bills
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

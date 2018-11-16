@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_factor表:评分因子模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.FactorMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.Factor">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="factor_name" property="factorName" jdbcType="VARCHAR" />
+        <result column="item_id" property="itemId" jdbcType="INTEGER" />
+        <result column="factor_score" property="factorScore" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="nnid" property="nnid" jdbcType="VARCHAR" />
+        <result column="ctable" property="ctable" jdbcType="VARCHAR" />
+        <result column="ctable_name" property="ctableName" jdbcType="VARCHAR" />
+        <result column="ccolumn" property="ccolumn" jdbcType="VARCHAR" />
+        <result column="ccolumn_name" property="ccolumnName" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="card_id" property="cardId" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <resultMap id="resultModel" extends="BaseResultMap" type="com.xindaibao.creditrank.cr.model.FactorModel">
+    	
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,factor_name,item_id,factor_score,state,add_time,type,nnid,card_id,ctable,ctable_name,ccolumn,ccolumn_name,nid,ctype 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="itemId !='' and itemId !=null">
+                and item_id = #{itemId,jdbcType=INTEGER}
+            </if>
+            <if test="factorName !='' and factorName !=null">
+                and factor_name = #{factorName,jdbcType=VARCHAR}
+            </if>
+            <if test="factorScore !='' and factorScore !=null">
+                and factor_score = #{factorScore,jdbcType=INTEGER}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="type !='' and type !=null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="nnid !='' and nnid !=null">
+                and nnid = #{nnid,jdbcType=VARCHAR}
+            </if>
+            <if test="ctable !='' and ctable !=null">
+                and ctable = #{ctable,jdbcType=VARCHAR}
+            </if>
+            <if test="ctableName !='' and ctableName !=null">
+                and ctable_name = #{ctableName,jdbcType=VARCHAR}
+            </if>
+            <if test="ccolumn !='' and ccolumn !=null">
+                and ccolumn = #{ccolumn,jdbcType=VARCHAR}
+            </if>
+            <if test="ccolumnName !='' and ccolumnName !=null">
+                and ccolumn_name = #{ccolumnName,jdbcType=VARCHAR}
+            </if>
+            <if test="ctype !='' and ctype !=null">
+                and ctype = #{ctype,jdbcType=VARCHAR}
+            </if>
+            <if test="cardId !='' and cardId !=null">
+                and card_id = #{cardId,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.Factor">
+    	<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+        insert into arc_cr_factor(factor_name,item_id,factor_score,state,add_time,type,nnid,ctable,ctable_name,ccolumn,ccolumn_name,ctype,nid,card_id)values(#{factorName,jdbcType=VARCHAR},#{itemId,jdbcType=INTEGER},#{factorScore,jdbcType=INTEGER},#{state,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{type,jdbcType=VARCHAR},#{nnid,jdbcType=VARCHAR},#{ctable,jdbcType=VARCHAR},#{ctableName,jdbcType=VARCHAR},#{ccolumn,jdbcType=VARCHAR},#{ccolumnName,jdbcType=VARCHAR},#{ctype,jdbcType=VARCHAR},#{nid,jdbcType=VARCHAR},#{cardId,jdbcType=INTEGER})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.Factor">
+        update arc_cr_factor set 
+            factor_name = #{factorName,jdbcType=VARCHAR},
+            item_id = #{itemId,jdbcType=INTEGER},
+            factor_score = #{factorScore,jdbcType=INTEGER},
+            state = #{state,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP},
+            type = #{type,jdbcType=VARCHAR},
+            nnid = #{nid,jdbcType=VARCHAR},
+            ctable = #{ctable,jdbcType=VARCHAR},
+            ctable_name = #{ctableName,jdbcType=VARCHAR},
+            ccolumn = #{ccolumn,jdbcType=VARCHAR},
+            ccolumn_name = #{ccolumnName,jdbcType=VARCHAR},
+            ctype = #{ctype,jdbcType=VARCHAR},
+            nid = #{nid,jdbcType=VARCHAR},
+            card_id = #{cardId,jdbcType=INTEGER}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_factor 
+        <set>
+        	<if test="itemId!=null">
+        		item_id = #{itemId,jdbcType=BIGINT},   
+        	</if>
+        	<if test="factorName !='' and factorName !=null">
+                factor_name = #{factorName,jdbcType=VARCHAR},
+            </if>
+        	<if test="factorScore!=null">
+        		factor_score = #{factorScore,jdbcType=VARCHAR},   
+        	</if>
+        	<if test="state!=null and state!=''">
+        		state = #{state,jdbcType=VARCHAR}
+        	</if>
+        	<if test="type !='' and type !=null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="nnid !='' and nnid !=null">
+                nnid = #{nnid,jdbcType=VARCHAR},
+            </if>
+            <if test="nid !='' and nid !=null">
+                nid = #{nid,jdbcType=VARCHAR},
+            </if>
+        	<if test="ctable!=null and ctable!=''">
+        		ctable = #{ctable,jdbcType=VARCHAR},   
+        	</if>
+        	<if test="ctableName!=null and ctableName!=''">
+        		ctable_name = #{ctableName,jdbcType=VARCHAR},   
+        	</if>
+        	<if test="ccolumn!=null and ccolumn!=''">
+        		ccolumn = #{ccolumn,jdbcType=VARCHAR},   
+        	</if>
+        	<if test="ccolumnName!=null and ccolumnName!=''">
+        		ccolumn_name = #{ccolumnName,jdbcType=VARCHAR},   
+        	</if>
+        	<if test="ctype!=null and ctype!=''">
+        		ctype = #{ctype,jdbcType=VARCHAR},
+        	</if>
+        	<if test="cardId !='' and cardId !=null">
+                card_id = #{cardId,jdbcType=INTEGER}
+            </if>
+        </set>  
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+	
+	<delete id="deleteSelective" parameterType="java.lang.Long">
+		delete
+		from arc_cr_factor
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_factor
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="findByFactorName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_factor
+        where factor_name = #{factorName,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="findByItemId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        FROM arc_cr_factor 
+        where item_id = #{itemId,jdbcType=INTEGER}
+        AND state = '10'
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_factor
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_factor
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listFactorModel" resultMap="resultModel" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_factor
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listSelect" resultMap="resultModel" parameterType="java.util.HashMap">
+        SELECT acf.*,acc.id AS cardName,aci.item_name AS itemName
+        FROM arc_cr_factor AS acf LEFT JOIN arc_cr_card AS acc ON acf.card_id = acc.id
+		LEFT JOIN arc_cr_item AS aci ON acf.item_id = aci.id
+        WHERE acf.id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="findSumScore" resultType="java.lang.Integer" parameterType="java.lang.Long">
+    	SELECT SUM(factor_score) AS score 
+    	from `arc_cr_factor`
+    	where item_id = #{itemId,jdbcType=INTEGER}
+    </select>
+    
+</mapper>

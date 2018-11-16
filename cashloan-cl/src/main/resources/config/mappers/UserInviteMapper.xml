@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_user_invite表:邀请记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.UserInviteMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.UserInvite">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="invite_time" property="inviteTime" jdbcType="TIMESTAMP" />
+        <result column="invite_id" property="inviteId" jdbcType="INTEGER" />
+        <result column="invite_name" property="inviteName" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    </resultMap>
+ 
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,invite_time,invite_id,invite_name,user_id,user_name 
+    </sql>
+    
+    <resultMap id="ManageProfitModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageProfitModel">
+    	
+    </resultMap>
+    
+    <resultMap id="ManageAgentModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageAgentModel">
+    	
+    </resultMap>
+    
+    <resultMap id="InviteBorrowModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.InviteBorrowModel">
+    	
+    </resultMap>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="inviteTime !=null">
+                and invite_time = #{inviteTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="inviteId !='' and inviteId !=null">
+                and invite_id = #{inviteId,jdbcType=INTEGER}
+            </if>
+            <if test="inviteName !='' and inviteName !=null">
+                and invite_name = #{inviteName,jdbcType=VARCHAR}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userName !='' and userName !=null">
+                and user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.UserInvite">
+        insert into cl_user_invite(invite_time,invite_id,invite_name,user_id,user_name)values(#{inviteTime,jdbcType=TIMESTAMP},#{inviteId,jdbcType=INTEGER},#{inviteName,jdbcType=VARCHAR},#{userId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.UserInvite">
+        update cl_user_invite set 
+            invite_time = #{inviteTime,jdbcType=TIMESTAMP},
+            invite_id = #{inviteId,jdbcType=INTEGER},
+            invite_name = #{inviteName,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=INTEGER},
+            user_name = #{userName,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_user_invite
+          <set>
+            <if test="inviteTime != null ">        
+                invite_time = #{inviteTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="inviteId != null and inviteId != '' ">        
+                invite_id = #{inviteId,jdbcType=INTEGER},                
+            </if>
+            <if test="inviteName != null and inviteName != '' ">        
+                invite_name = #{inviteName,jdbcType=VARCHAR},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="userName != null and userName != '' ">        
+                user_name = #{userName,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_invite
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_invite
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_invite
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findAgent" resultMap="ManageProfitModel" parameterType="java.util.HashMap">
+    	SELECT 
+    		cui.id, cui.user_id, cui.invite_id, cui.user_name, cui.invite_name ,cui.invite_time AS addTime,user.level,
+    		case when agent.rate>0 then agent.rate*100 else 0 end as rate
+		FROM `cl_user_invite` AS cui 
+		left join cl_profit_agent agent on agent.`user_id` = cui.`invite_id` and agent.`is_use` =10
+		left join cl_user user on user.id  = cui.`invite_id`
+		WHERE cui.user_id  =  #{userId,jdbcType=INTEGER} AND user.level !=1
+		<if test="userName != null and userName != '' ">        
+           AND cui.invite_name LIKE #{userName,jdbcType=VARCHAR}                
+        </if>
+        ORDER BY cui.id DESC
+    </select>
+    
+    <select id="findSysAgent" resultMap="ManageAgentModel" parameterType="java.util.HashMap">
+    	SELECT id, user_id, user_name,invite_name,invite_time,
+		(SELECT `level` FROM cl_user WHERE id = user_id)AS level
+		FROM `cl_user_invite`
+		WHERE user_id IN (SELECT user_id FROM cl_profit_agent)
+		<if test="userName != null and userName != '' ">        
+              and  user_name LIKE #{userName,jdbcType=VARCHAR}            
+        </if>
+        ORDER BY id DESC
+    </select>
+    
+    <select id="count" resultType="java.lang.Long" parameterType="java.lang.Long">
+        SELECT count(*) AS count
+        FROM `cl_profit_agent` 
+        WHERE leader_id = #{leaderId,jdbcType=INTEGER}
+    </select>
+    
+    <select id="listInviteBorrow" resultMap="InviteBorrowModel" parameterType="java.util.HashMap">
+        SELECT cui.id,cui.invite_id, cui.invite_name,cui.invite_time,
+		(SELECT SUM(amount) FROM cl_borrow WHERE user_id = cui.invite_id)AS borrowAmout,
+		(SELECT SUM(penalty_amout) FROM cl_borrow_repay WHERE user_id = cui.invite_id) AS penaltyAmout,
+		(SELECT SUM(amount) FROM cl_borrow_repay_log WHERE user_id = cui.invite_id) AS repayAmount,
+		(SELECT SUM(amount) FROM cl_profit_log WHERE agent_id = cui.invite_id) AS agentAmount
+		FROM `cl_user_invite` AS cui
+		WHERE cui.user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    
+</mapper>

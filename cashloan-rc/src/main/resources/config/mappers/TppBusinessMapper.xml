@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_tpp_business表:第三方征信接口信息模块 -->
+<mapper namespace="com.xindaibao.cashloan.rc.mapper.TppBusinessMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.rc.domain.TppBusiness">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="tpp_id" property="tppId" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="extend" property="extend" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="test_url" property="testUrl" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <resultMap id="ModelResultMap" type="com.xindaibao.cashloan.rc.model.TppBusinessModel" extends="BaseResultMap">
+    	<result column="tpp_nid" property="tppNid" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,tpp_id,name,nid,state,extend,url,test_url,add_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="tppId !='' and tppId !=null">
+                and tpp_id = #{tppId,jdbcType=BIGINT}
+            </if>
+            <if test="name !='' and name !=null">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="extend !='' and extend !=null">
+                and extend = #{extend,jdbcType=VARCHAR}
+            </if>
+            <if test="url !='' and url !=null">
+                and url = #{url,jdbcType=VARCHAR}
+            </if>
+            <if test="testUrl !='' and testUrl !=null">
+                and test_url = #{testUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rc.domain.TppBusiness">
+        insert into cl_rc_tpp_business(tpp_id,name,nid,state,extend,url,test_url,add_time)
+        values(#{tppId,jdbcType=BIGINT},#{name,jdbcType=VARCHAR},#{nid,jdbcType=VARCHAR},
+        #{state,jdbcType=VARCHAR},#{extend,jdbcType=VARCHAR},#{url,jdbcType=VARCHAR},
+        #{testUrl,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.rc.domain.TppBusiness">
+        update cl_rc_tpp_business set 
+            tpp_id = #{tppId,jdbcType=BIGINT},
+            name = #{name,jdbcType=VARCHAR},
+            nid = #{nid,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            extend = #{extend,jdbcType=VARCHAR},
+            url = #{url,jdbcType=VARCHAR},
+            test_url = #{testUrl,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_tpp_business
+          <set>
+            <if test="tppId != null and tppId != '' ">        
+                tpp_id = #{tppId,jdbcType=BIGINT},                
+            </if>
+            <if test="name != null and name != '' ">        
+                name = #{name,jdbcType=VARCHAR},                
+            </if>
+            <if test="nid != null and nid != '' ">        
+                nid = #{nid,jdbcType=VARCHAR},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="extend != null and extend != '' ">        
+                extend = #{extend,jdbcType=VARCHAR},                
+            </if>
+            <if test="url != null and url != '' ">        
+                url = #{url,jdbcType=VARCHAR},                
+            </if>
+            <if test="testUrl != null and testUrl != '' ">        
+                test_url = #{testUrl,jdbcType=VARCHAR},                
+            </if>
+            <if test="addTime != null">        
+                add_time = #{addTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_tpp_business
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_tpp_business
+        <include refid="searchBy"/> 
+        limit 0,1
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_tpp_business
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listAll" resultType="com.xindaibao.cashloan.rc.model.TppBusinessModel" >
+		SELECT
+			business.*, tpp.nid as tpp_nid
+		FROM
+			cl_rc_tpp AS tpp,
+			cl_rc_tpp_business AS business
+		WHERE
+			business.tpp_id = tpp.id 
+		GROUP BY business.id;
+	</select>
+
+	<!-- 后台管理列表查询  -->
+	<select id="list" resultType="com.xindaibao.cashloan.rc.model.ManageTppBusinessModel" parameterType="java.util.HashMap">
+		select
+			<include refid="Base_Column_List" />
+		from cl_rc_tpp_business
+			<include refid="searchBy"/>
+	</select>
+	
+	<select id="findByTppId" resultType="com.xindaibao.cashloan.rc.model.ManageTppBusinessModel" parameterType="java.lang.Long">
+		select
+			<include refid="Base_Column_List" />
+		from cl_rc_tpp_business
+		where tpp_id = #{tppId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="findByNid" parameterType="com.xindaibao.cashloan.rc.domain.TppBusiness" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from cl_rc_tpp_business
+		where tpp_id = #{tppId,jdbcType=BIGINT} and nid = #{nid,jdbcType=VARCHAR}
+	</select>
+	
+</mapper>

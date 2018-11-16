@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_zhima表:芝麻信用模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.Rong360GradeMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.Rong360Grade">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="tag" property="tag" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,createTime,user_id,score,remark,tag
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="remark !='' and remark !=null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="tag !='' and tag !=null">
+                and tag = #{tag,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime !=null">
+                and createTime = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="score !='' and score !=null">
+                and score = #{score,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </sql>
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.Rong360Grade">
+        insert into cl_rong360_grade(
+          createTime,user_id,score,remark,tag
+        )
+        values(
+        #{createTime,jdbcType=TIMESTAMP},
+        #{userId,jdbcType=INTEGER},
+        #{score,jdbcType=INTEGER},
+        #{remark,jdbcType=VARCHAR},
+        #{tag,jdbcType=VARCHAR}
+        )
+    </insert>
+
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rong360_grade
+        <include refid="searchBy"/>
+    </select>
+
+</mapper>

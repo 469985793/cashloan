@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF8">
+    <title></title>
+    <style type="text/css">
+        #container {
+            margin: 8px;
+        }
+
+        .param-table {
+            background: #E6E6E6;
+            border: 1px solid #FFF;
+            margin: 12px 0;
+            border-collapse: collapse;
+        }
+
+        .param-table th {
+            background: gray;
+            color: #FFF;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid #FFF;
+            padding: 5px;
+        }
+
+        .param-table td {
+            border-collapse: collapse;
+            border: 1px solid #FFF;
+            font-size: 12px;
+            padding: 5px;
+        }
+
+        .param-table .th-name {
+            min-width: 140px;
+        }
+
+        .param-table .th-identifier {
+            min-width: 140px;
+        }
+
+        .param-table .th-type {
+            min-width: 100px;
+        }
+
+        .param-table .th-remark {
+            min-width: 200px;
+        }
+
+        .param-table .td-name {}
+
+        .param-table .td-identifier {}
+
+        .param-table .td-type   { color: #990000; }
+
+        .param-table .td-remark { color: #666; }
+
+        .param-table .tr-level-1 { background: #F5F5F5; }
+        .param-table .tr-level-1 .td-identifier { padding-left: 5px; }
+
+        .param-table .tr-level-2 { background: #E6E6E6; }
+        .param-table .tr-level-2 .td-identifier { padding-left: 15px; }
+
+        .param-table .tr-level-3 { background: #CCCCCC; }
+        .param-table .tr-level-3 .td-identifier { padding-left: 25px; }
+
+        .param-table .tr-level-4 { background: #E6E6E6; }
+        .param-table .tr-level-4 .td-identifier { padding-left: 35px; }
+
+        .param-table .tr-level-5 { background: #CCCCCC; }
+        .param-table .tr-level-5 .td-identifier { padding-left: 45px; }
+
+        .param-table .tr-level-6 { background: #E6E6E6; }
+        .param-table .tr-level-6 .td-identifier { padding-left: 55px; }
+
+        .param-table .tr-level-7 { background: #CCCCCC; }
+        .param-table .tr-level-7 .td-identifier { padding-left: 65px; }
+
+        .param-table .tr-level-8 { background: #E6E6E6; }
+        .param-table .tr-level-8 .td-identifier { padding-left: 75px; }
+
+        .param-table .tr-level-9 { background: #CCCCCC; }
+        .param-table .tr-level-9 .td-identifier { padding-left: 85px; }
+
+        .param-table .tr-level-10 { background: #E6E6E6; }
+        .param-table .tr-level-10 .td-identifier { padding-left: 95px; }
+
+        .param-table .tr-level-11 {
+            background: #CCCCCC;
+        }
+        .param-table .tr-level-11 .td-identifier { padding-left: 105px; }
+
+        .param-table .tr-level-12 {
+            background: #E6E6E6;
+        }
+        .param-table .tr-level-12 .td-identifier { padding-left: 115px; }
+
+        .param-table .tr-level-13 {
+            background: #CCCCCC;
+        }
+        .param-table .tr-level-13 .td-identifier { padding-left: 125px; }
+    </style>
+</head>
+<body>
+<div id="container">
+            <div class="module">
+            <h1>1&nbsp;某页面</h1>
+                            <div class="page">
+                    <h2>1.1&nbsp;还款</h2>
+                                            <div class="action">
+                            <h3>1.1.1&nbsp;获取平台收款账号信息</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/borrow/repay/collectionInfo.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div>还款登记时，展示平台收款账号信息</div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">还款方式，10银行卡，20支付宝</td><td class="td-identifier">type</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---收款行</td><td class="td-identifier">bank</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=招商银行</td></tr><tr class="tr-level-2"><td class="td-name">---银行卡</td><td class="td-identifier">bankCard</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=622222222222</td></tr><tr class="tr-level-2"><td class="td-name">---收款人</td><td class="td-identifier">name</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=张三</td></tr><tr class="tr-level-2"><td class="td-name">---支付宝账号</td><td class="td-identifier">alipayAccount</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=123123</td></tr><tr class="tr-level-2"><td class="td-name">---还款方式，10银行卡，20支付宝</td><td class="td-identifier">type</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                    </div>
+                    </div>
+    </div>
+</body>
+</html>

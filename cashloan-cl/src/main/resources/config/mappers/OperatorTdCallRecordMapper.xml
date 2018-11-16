@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_td_call_record表:通话记录具体详细模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorTdCallRecordMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorTdCallRecord">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="info_id" property="infoId" jdbcType="BIGINT" />
+        <result column="call_start_time" property="callStartTime" jdbcType="VARCHAR" />
+        <result column="call_address" property="callAddress" jdbcType="VARCHAR" />
+        <result column="call_type_name" property="callTypeName" jdbcType="VARCHAR" />
+        <result column="call_other_number" property="callOtherNumber" jdbcType="VARCHAR" />
+        <result column="call_time" property="callTime" jdbcType="VARCHAR" />
+        <result column="call_land_type" property="callLandType" jdbcType="VARCHAR" />
+        <result column="call_roam_cost" property="callRoamCost" jdbcType="VARCHAR" />
+        <result column="call_long_distance" property="callLongDistance" jdbcType="VARCHAR" />
+        <result column="call_discount" property="callDiscount" jdbcType="VARCHAR" />
+        <result column="call_cost" property="callCost" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,info_id,call_start_time,call_address,call_type_name,call_other_number,call_time,call_land_type,call_roam_cost,call_long_distance,call_discount,call_cost 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="infoId != null and infoId != '' ">
+                and info_id = #{infoId,jdbcType=BIGINT}
+            </if>
+            <if test="callStartTime != null and callStartTime != '' ">
+                and call_start_time = #{callStartTime,jdbcType=VARCHAR}
+            </if>
+            <if test="callAddress != null and callAddress != '' ">
+                and call_address = #{callAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="callTypeName != null and callTypeName != '' ">
+                and call_type_name = #{callTypeName,jdbcType=VARCHAR}
+            </if>
+            <if test="callOtherNumber != null and callOtherNumber != '' ">
+                and call_other_number = #{callOtherNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="callTime != null and callTime != '' ">
+                and call_time = #{callTime,jdbcType=VARCHAR}
+            </if>
+            <if test="callLandType != null and callLandType != '' ">
+                and call_land_type = #{callLandType,jdbcType=VARCHAR}
+            </if>
+            <if test="callRoamCost != null and callRoamCost != '' ">
+                and call_roam_cost = #{callRoamCost,jdbcType=VARCHAR}
+            </if>
+            <if test="callLongDistance != null and callLongDistance != '' ">
+                and call_long_distance = #{callLongDistance,jdbcType=VARCHAR}
+            </if>
+            <if test="callDiscount != null and callDiscount != '' ">
+                and call_discount = #{callDiscount,jdbcType=VARCHAR}
+            </if>
+            <if test="callCost != null and callCost != '' ">
+                and call_cost = #{callCost,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdCallRecord">
+        insert into cl_operator_td_call_record(info_id,call_start_time,call_address,call_type_name,call_other_number,call_time,call_land_type,call_roam_cost,call_long_distance,call_discount,call_cost)values(#{infoId,jdbcType=BIGINT},#{callStartTime,jdbcType=VARCHAR},#{callAddress,jdbcType=VARCHAR},#{callTypeName,jdbcType=VARCHAR},#{callOtherNumber,jdbcType=VARCHAR},#{callTime,jdbcType=VARCHAR},#{callLandType,jdbcType=VARCHAR},#{callRoamCost,jdbcType=VARCHAR},#{callLongDistance,jdbcType=VARCHAR},#{callDiscount,jdbcType=VARCHAR},#{callCost,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdCallRecord">
+        update cl_operator_td_call_record set 
+            info_id = #{infoId,jdbcType=BIGINT},
+            call_start_time = #{callStartTime,jdbcType=VARCHAR},
+            call_address = #{callAddress,jdbcType=VARCHAR},
+            call_type_name = #{callTypeName,jdbcType=VARCHAR},
+            call_other_number = #{callOtherNumber,jdbcType=VARCHAR},
+            call_time = #{callTime,jdbcType=VARCHAR},
+            call_land_type = #{callLandType,jdbcType=VARCHAR},
+            call_roam_cost = #{callRoamCost,jdbcType=VARCHAR},
+            call_long_distance = #{callLongDistance,jdbcType=VARCHAR},
+            call_discount = #{callDiscount,jdbcType=VARCHAR},
+            call_cost = #{callCost,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_operator_td_call_record
+          <set>
+            <if test="infoId != null and infoId != '' ">        
+                info_id = #{infoId,jdbcType=BIGINT},                
+            </if>
+            <if test="callStartTime != null and callStartTime != '' ">        
+                call_start_time = #{callStartTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="callAddress != null and callAddress != '' ">        
+                call_address = #{callAddress,jdbcType=VARCHAR},                
+            </if>
+            <if test="callTypeName != null and callTypeName != '' ">        
+                call_type_name = #{callTypeName,jdbcType=VARCHAR},                
+            </if>
+            <if test="callOtherNumber != null and callOtherNumber != '' ">        
+                call_other_number = #{callOtherNumber,jdbcType=VARCHAR},                
+            </if>
+            <if test="callTime != null and callTime != '' ">        
+                call_time = #{callTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="callLandType != null and callLandType != '' ">        
+                call_land_type = #{callLandType,jdbcType=VARCHAR},                
+            </if>
+            <if test="callRoamCost != null and callRoamCost != '' ">        
+                call_roam_cost = #{callRoamCost,jdbcType=VARCHAR},                
+            </if>
+            <if test="callLongDistance != null and callLongDistance != '' ">        
+                call_long_distance = #{callLongDistance,jdbcType=VARCHAR},                
+            </if>
+            <if test="callDiscount != null and callDiscount != '' ">        
+                call_discount = #{callDiscount,jdbcType=VARCHAR},                
+            </if>
+            <if test="callCost != null and callCost != '' ">        
+                call_cost = #{callCost,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_call_record
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_call_record
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_call_record
+        <include refid="searchBy"/>
+    </select>
+    
+    <resultMap id="operatorVoicesMap"  type="com.xindaibao.cashloan.cl.model.OperatorTdCallModel">
+    </resultMap>
+    
+    <select id="listOperatorVoicesModel" resultMap="operatorVoicesMap" parameterType="java.util.HashMap">
+        select  b.user_mobile as userMobile ,d.call_other_number as callOtherNumber ,d.call_start_time as  callStartTime ,d.call_time as callTime,
+        d.call_address as callAddress,d.call_land_type as callLandType,d.call_type_name as callTypeName
+        from cl_operator_td_basic b LEFT JOIN cl_operator_td_call_info i  on b.req_log_id= i.req_log_id 
+        LEFT JOIN cl_operator_td_call_record d on i.id=d.info_id 
+ 		where i.req_log_id=#{reqLogId,jdbcType=BIGINT}  order by  d.call_start_time desc
+    </select>
+    
+    
+    
+</mapper>

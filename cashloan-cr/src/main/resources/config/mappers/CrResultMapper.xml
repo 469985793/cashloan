@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_result表:评分结果模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.CrResultMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.CrResult">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="consumer_no" property="consumerNo" jdbcType="BIGINT" />
+        <result column="credit_type_id" property="creditTypeId" jdbcType="BIGINT" />
+        <result column="total_score" property="totalScore" jdbcType="INTEGER" />
+        <result column="total_amount" property="totalAmount" jdbcType="DECIMAL" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,consumer_no,total_score,credit_type_id,total_amount,add_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="creditTypeId !=null">
+                and credit_type_id = #{creditTypeId,jdbcType=BIGINT}
+            </if>
+            <if test="consumerNo !=null and consumerNo != ''">
+                and consumer_no = #{consumerNo,jdbcType=BIGINT}
+            </if>
+            <if test="totalScore !=null">
+                and total_score = #{totalScore,jdbcType=INTEGER}
+            </if>
+            <if test="totalAmount !=null">
+                and total_amount = #{totalAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="saveRecord" parameterType="com.xindaibao.creditrank.cr.domain.CrResult" useGeneratedKeys="true" keyProperty="id">
+        insert into arc_cr_result(
+        	consumer_no,
+        	credit_type_id,
+        	total_score,
+        	total_amount,
+        	add_time
+        )values(
+        	#{consumerNo,jdbcType=BIGINT},
+        	#{creditTypeId,jdbcType=BIGINT},
+        	#{totalScore,jdbcType=INTEGER},
+        	#{totalAmount,jdbcType=DECIMAL},
+        	#{addTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.CrResult">
+        insert into arc_cr_result(
+        	consumer_no,
+        	credit_type_id,
+        	total_score,
+        	total_amount,
+        	add_time
+        )values(
+        	#{consumerNo,jdbcType=BIGINT},
+        	#{creditTypeId,jdbcType=BIGINT},
+        	#{totalScore,jdbcType=INTEGER},
+        	#{totalAmount,jdbcType=DECIMAL},
+        	#{addTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.CrResult">
+        update arc_cr_result set 
+            consumer_no = #{consumerNo,jdbcType=BIGINT},
+            credit_type_id = #{creditTypeId,jdbcType=BIGINT},
+            total_score = #{totalScore,jdbcType=INTEGER},
+            total_amount = #{totalAmount,jdbcType=DECIMAL}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_result
+          <set>
+            <if test="consumerNo != null and consumerNo != ''">        
+                consumer_no = #{consumerNo,jdbcType=BIGINT},                
+            </if>
+            <if test="creditTypeId !=null">
+                and credit_type_id = #{creditTypeId,jdbcType=BIGINT}
+            </if>
+            <if test="totalScore != null">        
+                total_score = #{totalScore,jdbcType=INTEGER},                
+            </if>
+            <if test="totalAmount != null">        
+                total_amount = #{totalAmount,jdbcType=DECIMAL},                
+            </if>
+            <if test="addTime != null">        
+                add_time = #{addTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_result
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+               
+    <select id="selectList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_result
+        <include refid="searchBy"/>
+    </select>
+    
+    <resultMap id="creditRating" type="com.xindaibao.creditrank.cr.model.CreditRatingModel">
+    	<result column="credit_type_id" property="creditTypeId" jdbcType="BIGINT" />
+    	<result column="credit_type_name" property="creditTypeName" jdbcType="VARCHAR" />
+        <result column="card_id" property="cardId" jdbcType="BIGINT" />
+        <result column="card_score" property="cardScore" jdbcType="INTEGER" />
+        <result column="item_id" property="itemId" jdbcType="BIGINT" />
+        <result column="item_score" property="itemScore" jdbcType="INTEGER" />
+        <result column="factor_id" property="factorId" jdbcType="BIGINT" />
+        <result column="factor_score" property="factorScore" jdbcType="INTEGER" />
+        <result column="param_id" property="paramId" jdbcType="BIGINT" />
+        <result column="param_score" property="paramScore" jdbcType="INTEGER" />
+        <result column="ctable" property="tabName" jdbcType="VARCHAR" />
+        <result column="ccolumn" property="colName" jdbcType="VARCHAR" />
+        <result column="ctype" property="type" jdbcType="VARCHAR" />
+        <result column="formula" property="formula" jdbcType="VARCHAR" />
+        <result column="cvalue" property="range" jdbcType="VARCHAR" />
+        
+    </resultMap>
+    <select id="queryCreditRating" resultMap="creditRating">
+     	select ct.credit_type_id,ct.`name` credit_type_name,
+			c.id card_id,c.score card_score,
+			i.id item_id,i.score item_score,
+			f.id factor_id,i.score factor_score,
+			fp.id param_id,fp.param_score,f.ctable,f.ccolumn,f.ctype,
+			fp.formula,fp.cvalue
+			from arc_cr_credit_type  ct 
+		RIGHT JOIN arc_cr_card c  on c.id  in (ct.card_id)
+		RIGHT JOIN arc_cr_item i  on i.card_id in (ct.card_id)
+		RIGHT JOIN arc_cr_factor f on f.item_id = i.id
+		RIGHT JOIN arc_cr_factor_param fp on fp.factor_id = f.id
+		where FIND_IN_SET(#{borrowTypeId,jdbcType=BIGINT},ct.borrow_type_id) 
+		and f.type = #{type,jdbcType=INTEGER}
+    </select>
+     
+    <select id="findByConsumerNo" parameterType="java.lang.String" resultType="com.xindaibao.creditrank.cr.domain.CrResult">
+    	select
+        <include refid="Base_Column_List" />
+        from arc_cr_result where consumer_no = #{consumerNo,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="findUserResult" resultType="java.util.Map" parameterType="java.lang.Long">
+    	select a.consumer_no,sum(a.total_amount) total_amount, sum(a.total_score) from arc_cr_result a RIGHT JOIN (select max(add_time) add_time,credit_type_id from arc_cr_result  GROUP BY credit_type_id) b
+		on a.credit_type_id = b.credit_type_id and a.add_time = b.add_time 
+		where a.consumer_no = #{consumerNo,jdbcType=VARCHAR} 
+    </select>
+    
+    <select id="findAllBorrowTypeResult" parameterType="java.lang.Long" resultType="com.xindaibao.creditrank.cr.domain.CrResult">
+    	select a.id,a.consumer_no,a.credit_type_id,a.total_amount,a.total_score,a.add_time from arc_cr_result a RIGHT JOIN (select max(add_time) add_time,credit_type_id from arc_cr_result  GROUP BY credit_type_id) b
+		on a.credit_type_id = b.credit_type_id and a.add_time = b.add_time 
+		where a.consumer_no = #{consumerNo,jdbcType=VARCHAR}  
+    </select>
+    
+    <select id="findCreditTypeResult" resultType="com.xindaibao.creditrank.cr.domain.CrResult">
+		select a.consumer_no,a.total_amount total_amount, a.total_score total_score from arc_cr_result a RIGHT JOIN
+		(select max(add_time) add_time,credit_type_id from arc_cr_result where consumer_no = #{consumerNo,jdbcType=VARCHAR}  and credit_type_id = #{creditTypeId,jdbcType=BIGINT} GROUP BY credit_type_id) b
+		on a.credit_type_id = b.credit_type_id and a.add_time = b.add_time 
+    </select>
+    
+    <select id="findValidValue" parameterType="java.lang.String" resultType="java.lang.String">
+    	${statement}
+    </select>
+</mapper>

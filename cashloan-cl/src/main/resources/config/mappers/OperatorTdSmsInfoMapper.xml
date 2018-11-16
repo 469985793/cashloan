@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_td_sms_info表:短信详单模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorTdSmsInfoMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorTdSmsInfo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="req_log_id" property="reqLogId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="total_msg_cost" property="totalMsgCost" jdbcType="VARCHAR" />
+        <result column="total_msg_count" property="totalMsgCount" jdbcType="VARCHAR" />
+        <result column="msg_cycle" property="msgCycle" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,req_log_id,order_no,total_msg_cost,total_msg_count,msg_cycle 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="reqLogId != null and reqLogId != '' ">
+                and req_log_id = #{reqLogId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="totalMsgCost != null and totalMsgCost != '' ">
+                and total_msg_cost = #{totalMsgCost,jdbcType=VARCHAR}
+            </if>
+            <if test="totalMsgCount != null and totalMsgCount != '' ">
+                and total_msg_count = #{totalMsgCount,jdbcType=VARCHAR}
+            </if>
+            <if test="msgCycle != null and msgCycle != '' ">
+                and msg_cycle = #{msgCycle,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdSmsInfo" keyProperty="id" useGeneratedKeys="true">
+        insert into cl_operator_td_sms_info(user_id,req_log_id,order_no,total_msg_cost,total_msg_count,msg_cycle)values(#{userId,jdbcType=BIGINT},#{reqLogId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{totalMsgCost,jdbcType=VARCHAR},#{totalMsgCount,jdbcType=VARCHAR},#{msgCycle,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdSmsInfo">
+        update cl_operator_td_sms_info set 
+            user_id = #{userId,jdbcType=BIGINT},
+            req_log_id = #{reqLogId,jdbcType=BIGINT},
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            total_msg_cost = #{totalMsgCost,jdbcType=VARCHAR},
+            total_msg_count = #{totalMsgCount,jdbcType=VARCHAR},
+            msg_cycle = #{msgCycle,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_operator_td_sms_info
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="reqLogId != null and reqLogId != '' ">
+                req_log_id = #{reqLogId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="totalMsgCost != null and totalMsgCost != '' ">        
+                total_msg_cost = #{totalMsgCost,jdbcType=VARCHAR},                
+            </if>
+            <if test="totalMsgCount != null and totalMsgCount != '' ">        
+                total_msg_count = #{totalMsgCount,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgCycle != null and msgCycle != '' ">        
+                msg_cycle = #{msgCycle,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_sms_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_sms_info
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_sms_info
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

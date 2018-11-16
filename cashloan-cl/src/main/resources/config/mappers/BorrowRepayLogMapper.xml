@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_borrow_repay_log表:还款计录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.BorrowRepayLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.BorrowRepayLog">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="repay_id" property="repayId" jdbcType="BIGINT" />
+        <result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="repay_time" property="repayTime" jdbcType="TIMESTAMP" />
+        <result column="penalty_amout" property="penaltyAmout" jdbcType="DECIMAL" />
+        <result column="penalty_day" property="penaltyDay" jdbcType="VARCHAR" />
+        <result column="repay_way" property="repayWay" jdbcType="VARCHAR" />
+        <result column="repay_account" property="repayAccount" jdbcType="VARCHAR" />
+        <result column="refund_deduction" property="refundDeduction" jdbcType="DECIMAL" />
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap id="BorrowRepayLogModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.BorrowRepayLogModel" >
+    
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,repay_id,borrow_id,user_id,amount,repay_time,penalty_amout,penalty_day,repay_way,repay_account,refund_deduction,pay_time,create_time,serial_number
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null and id != ''">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="repayId != null and repayId != ''">
+                and repay_id = #{repayId,jdbcType=BIGINT}
+            </if>
+            <if test="borrowId != null and borrowId != ''">
+                and borrow_id = #{borrowId,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="amount != null and amount != ''">
+                and amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="repayTime !=null">
+                and repay_time = #{repayTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="penaltyAmout != null and penaltyAmout != ''">
+                and penalty_amout = #{penaltyAmout,jdbcType=DECIMAL}
+            </if>
+            <if test="penaltyDay != null  and penaltyDay != ''">
+                and penalty_day = #{penaltyDay,jdbcType=VARCHAR}
+            </if>
+           <if test="repayWay !=null and repayWay != ''">
+                and repay_way = #{repayWay,jdbcType=VARCHAR}
+            </if>
+            <if test="repayAccount != null and repayAccount != ''">
+                and repay_account = #{repayAccount,jdbcType=VARCHAR}
+            </if>
+            <if test="refundDeduction != null and refundDeduction != ''">
+                and refund_deduction = #{refundDeduction,jdbcType=VARCHAR}
+            </if>
+             <if test="payTime !=null">
+                and pay_time = #{payTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+             <if test="serialNumber !=null and serialNumber != ''">
+                and serial_number = #{serialNumber,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.BorrowRepayLog">
+		insert into
+			cl_borrow_repay_log(repay_id,borrow_id,user_id,amount,repay_time,penalty_amout,penalty_day,repay_way,repay_account,refund_deduction,pay_time,create_time,serial_number)
+		values(
+			#{repayId,jdbcType=BIGINT},#{borrowId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{amount,jdbcType=DECIMAL},#{repayTime,jdbcType=TIMESTAMP},
+			#{penaltyAmout,jdbcType=DECIMAL},#{penaltyDay,jdbcType=VARCHAR},#{repayWay,jdbcType=VARCHAR},
+			#{repayAccount,jdbcType=VARCHAR},#{refundDeduction,jdbcType=VARCHAR},#{payTime,jdbcType=TIMESTAMP},#{createTime,jdbcType=TIMESTAMP},#{serialNumber,jdbcType=VARCHAR})
+	</insert>
+
+    
+    <update id="updateSelective" parameterType="java.util.HashMap">
+        update cl_borrow_repay_log
+          <set>
+            <if test="repayId != null and repayId != '' ">        
+                repay_id = #{repayId,jdbcType=BIGINT},                
+            </if>
+            <if test="borrowId != null and borrowId != '' ">        
+                borrow_id = #{borrowId,jdbcType=BIGINT},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="amount != null and amount != '' ">        
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="repayTime != null ">        
+                repay_time = #{repayTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="penaltyAmout != null and penaltyAmout != '' ">        
+                penalty_amout = #{penaltyAmout,jdbcType=DECIMAL},             
+            </if>
+            <if test="penaltyDay !='' and penaltyDay !=null">
+                 penalty_day = #{penaltyDay,jdbcType=VARCHAR},
+            </if>
+             <if test="repayWay !='' and repayWay !=null">
+                 repay_way = #{repayWay,jdbcType=VARCHAR},
+            </if>
+            <if test="repayAccount !='' and repayAccount !=null">
+                 repay_account = #{repayAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="refundDeduction != null and refundDeduction != ''">
+                refund_deduction = #{refundDeduction,jdbcType=VARCHAR},
+            </if>
+             <if test="payTime !=null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime !=null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+             <if test="serialNumber !=null and serialNumber != ''">
+                serial_number = #{serialNumber,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+    
+    
+    <update id="refundDeduction" parameterType="java.util.HashMap">
+        update cl_borrow_repay_log
+          <set>
+            <if test="refundDeduction != null and refundDeduction != ''">
+                refund_deduction = refund_deduction + #{refundDeduction,jdbcType=VARCHAR},
+            </if>
+             <if test="payTime !=null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP}
+             </if>
+        </set>
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay_log
+        <include refid="searchBy"/>
+    </select>
+    
+     <select id="findLast" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay_log
+        <include refid="searchBy"/> 
+        order by id desc limit 0,1 
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay_log
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listSelModel" resultMap="BorrowRepayLogModel" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay_log
+        <include refid="searchBy"/>
+        ORDER BY id DESC
+    </select>
+    
+    <resultMap id="borrowRaylogMap"  extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageBRepayLogModel">
+    	 <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+         <result column="borrow_amount" property="borrowAmount" jdbcType="DECIMAL" />
+         <result column="repay_amount" property="repayAmount" jdbcType="DECIMAL" />
+         <result column="repay_log_amount" property="repayLogAmount" jdbcType="DECIMAL" />
+         <result column="state" property="state" jdbcType="VARCHAR" />
+         <result column="repay_plan_time" property="repayPlanTime" jdbcType="TIMESTAMP" />
+         <result column="repay_penalty" property="repayPenalty" jdbcType="DECIMAL" />
+         <result column="real_name" property="realName" jdbcType="VARCHAR" />
+         <result column="phone" property="phone" jdbcType="VARCHAR" />
+         <result column="fee" property="fee" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="listModel" resultMap="borrowRaylogMap" parameterType="java.util.HashMap">
+		select
+			b.order_no,b.amount as borrow_amount,b.fee,
+			r.amount as repay_amount,r.penalty_amout as repay_penalty,
+			r.state,l.id,l.user_id,l.borrow_id,l.amount as repay_log_amount,r.repay_time as	repay_plan_time,
+			l.repay_time,l.penalty_amout,l.penalty_day,l.repay_way,l.repay_account,l.serial_number,l.refund_deduction,
+			baseInfo.real_name,baseInfo.phone
+		from cl_borrow b
+		join cl_borrow_repay r on r.borrow_id=b.id
+		join cl_borrow_repay_log l on l.repay_id=r.id
+		join cl_user_base_info baseInfo ON b.user_id = baseInfo.user_id
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="orderNo != null and orderNo != ''">
+				and b.order_no like concat("%",#{orderNo,jdbcType=VARCHAR},"%")
+			</if>
+			<if test="repayWay != null and repayWay != ''">
+				and l.repay_way = #{repayWay,jdbcType=VARCHAR}
+			</if>
+			<if test="repayAccount != null and repayAccount != ''">
+				and l.repay_account like
+				concat("%",#{repayAccount,jdbcType=VARCHAR},"%")
+			</if>
+			<if test="serialNumber != null and serialNumber != ''">
+				and l.serial_number like
+				concat("%",#{serialNumber,jdbcType=VARCHAR},"%")
+			</if>
+			<if test="type != null and type != ''">
+				<if test="type =='10' ">
+					and r.amount != l.amount
+				</if>
+				<if test="type =='20' ">
+					and r.amount = l.amount
+				</if>
+			</if>
+			and r.state=10
+		</trim>
+        ORDER BY l.repay_time DESC
+    </select>
+    
+</mapper>

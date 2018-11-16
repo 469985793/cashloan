@@ -1,0 +1,13 @@
+.ruleReport{
+    border: 1px solid #ddd;
+    margin-left: 25px;
+    margin-top: 25px;
+}
+
+.tbTitle{
+    line-height: 22px;
+    padding: 10px 15px;
+}
+.border-top{
+    border-top: 1px solid #ddd;
+}

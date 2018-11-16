@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_dhb_req_log表:贷后邦贷后邦反欺诈请求记录表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.DhbReqLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.DhbReqLog">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="resp_code" property="respCode" jdbcType="VARCHAR" />
+        <result column="resp_params" property="respParams" jdbcType="VARCHAR" />
+        <result column="resp_time" property="respTime" jdbcType="TIMESTAMP" />
+        <result column="resp_order_no" property="respOrderNo" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,order_no,borrow_id,user_id,create_time,resp_code,resp_params,resp_time,resp_order_no 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="borrowId != null and borrowId != '' ">
+                and borrow_id = #{borrowId,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="respCode != null and respCode != '' ">
+                and resp_code = #{respCode,jdbcType=VARCHAR}
+            </if>
+            <if test="respParams != null and respParams != '' ">
+                and resp_params = #{respParams,jdbcType=VARCHAR}
+            </if>
+            <if test="respTime != null">
+                and resp_time = #{respTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="respOrderNo != null and respOrderNo != '' ">
+                and resp_order_no = #{respOrderNo,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.DhbReqLog">
+        insert into cl_rc_dhb_req_log(order_no,borrow_id,user_id,create_time,resp_code,resp_params,resp_time,resp_order_no)values(#{orderNo,jdbcType=VARCHAR},#{borrowId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{createTime,jdbcType=TIMESTAMP},#{respCode,jdbcType=VARCHAR},#{respParams,jdbcType=VARCHAR},#{respTime,jdbcType=TIMESTAMP},#{respOrderNo,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.DhbReqLog">
+        update cl_rc_dhb_req_log set 
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            borrow_id = #{borrowId,jdbcType=BIGINT},
+            user_id = #{userId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            resp_code = #{respCode,jdbcType=VARCHAR},
+            resp_params = #{respParams,jdbcType=VARCHAR},
+            resp_time = #{respTime,jdbcType=TIMESTAMP},
+            resp_order_no = #{respOrderNo,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_dhb_req_log
+          <set>
+            <if test="orderNo != null and orderNo != '' ">        
+                order_no = #{orderNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="borrowId != null and borrowId != '' ">        
+                borrow_id = #{borrowId,jdbcType=BIGINT},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="respCode != null and respCode != '' ">        
+                resp_code = #{respCode,jdbcType=VARCHAR},                
+            </if>
+            <if test="respParams != null and respParams != '' ">        
+                resp_params = #{respParams,jdbcType=VARCHAR},                
+            </if>
+            <if test="respTime != null">
+                resp_time = #{respTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="respOrderNo != null and respOrderNo != '' ">        
+                resp_order_no = #{respOrderNo,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_req_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_req_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_req_log
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

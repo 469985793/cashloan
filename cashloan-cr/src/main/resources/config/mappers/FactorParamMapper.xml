@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_factor_param表:评分因子参数模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.FactorParamMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.FactorParam">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="factor_id" property="factorId" jdbcType="INTEGER" />
+        <result column="param_score" property="paramScore" jdbcType="INTEGER" />
+        <result column="formula" property="formula" jdbcType="VARCHAR" />
+        <result column="cvalue" property="cvalue" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="req_ext" property="reqExt" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap id="resultModel" extends="BaseResultMap" type="com.xindaibao.creditrank.cr.model.FactorParamModel">
+    	
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,factor_id,param_score,formula,cvalue,add_time,state,nid,req_ext 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="factorId !='' and factorId !=null">
+                and factor_id = #{factorId,jdbcType=INTEGER}
+            </if>
+            <if test="paramScore !='' and paramScore !=null">
+                and param_score = #{paramScore,jdbcType=INTEGER}
+            </if>
+            <if test="formula !='' and formula !=null">
+                and formula = #{formula,jdbcType=VARCHAR}
+            </if>
+            <if test="cvalue !='' and cvalue !=null">
+                and cvalue = #{cvalue,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt !='' and reqExt !=null">
+                and req_ext = #{reqExt,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.FactorParam">
+        insert into arc_cr_factor_param(factor_id,param_score,formula,cvalue,add_time,state,nid,req_ext)values(#{factorId,jdbcType=INTEGER},#{paramScore,jdbcType=INTEGER},#{formula,jdbcType=VARCHAR},#{cvalue,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{state,jdbcType=VARCHAR},#{nid,jdbcType=VARCHAR},#{reqExt,jdbcType=VARCHAR})
+    </insert>
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.FactorParam">
+        update arc_cr_factor_param set 
+            factor_id = #{factorId,jdbcType=INTEGER},
+            param_score = #{paramScore,jdbcType=INTEGER},
+            formula = #{formula,jdbcType=VARCHAR},
+            cvalue = #{cvalue,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP},
+            state = #{state,jdbcType=VARCHAR},
+            nid = #{type,jdbcType=VARCHAR},
+            req_ext = #{reqExt,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_factor_param
+          <set>
+            <if test="factorId != null and factorId != '' ">        
+                factor_id = #{factorId,jdbcType=INTEGER},                
+            </if>
+            <if test="paramScore != null and paramScore != '' ">        
+                param_score = #{paramScore,jdbcType=INTEGER},                
+            </if>
+            <if test="formula != null and formula != '' ">        
+                formula = #{formula,jdbcType=VARCHAR},                
+            </if>
+            <if test="cvalue != null and cvalue != '' ">        
+                cvalue = #{cvalue,jdbcType=VARCHAR},                
+            </if>
+            <if test="addTime != null ">        
+                add_time = #{addTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt != null and reqExt != '' ">        
+                req_ext = #{reqExt,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+	<delete id="deleteSelective" parameterType="java.lang.Long">
+		delete 
+		from arc_cr_factor_param
+		WHERE id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_factor_param
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_factor_param
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_factor_param
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listSelect" resultMap="resultModel" parameterType="java.util.HashMap">
+        select
+        id,factor_id,param_score,formula,cvalue,add_time,state,nid
+        from arc_cr_factor_param
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findMaxScore" resultType="java.lang.Integer" parameterType="java.lang.Long">
+    	SELECT MAX(param_score) AS score 
+    	from `arc_cr_factor_param`
+    	where factor_id = #{factorId,jdbcType=INTEGER}
+    </select>
+    
+</mapper>

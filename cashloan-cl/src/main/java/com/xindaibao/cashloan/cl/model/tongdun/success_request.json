@@ -1,0 +1,89 @@
+{
+  "body": {
+    "account_mobile": [
+      "15221828172"
+    ],
+    "account_name": [
+      "姜迪"
+    ],
+    "black_box": [
+      "eyJvcyI6ImFuZHJvaWQiLCJ2ZXJzaW9uIjoiMy4xLjEiLCJwYWNrYWdlcyI6ImNvbS56dW9saS53YWxsZXRfMS4wIiwicHJvZmlsZV90aW1lIjo5NSwiaW50ZXJ2YWxfdGltZSI6MTYzNzAsInRva2VuX2lkIjoiZmhsWnV1RFJiVU4yTCtSaDZvRTRLSU1PTTZKXC9ybEFsS3dPeHVYaVFMSkRUWVM4eTJKRHl6K3lmeHUxakthakFhdFZsK0xQZEZJVWV4TWgzcVwvYXVSUT09In0="
+    ],
+    "card_number": [
+      "6227004228780201915"
+    ],
+    "contact1_mobile": [
+      "18261918033"
+    ],
+    "contact1_name": [
+      "珊珊"
+    ],
+    "contact1_relation": [
+      "child"
+    ],
+    "contact2_mobile": [
+      "13162767229"
+    ],
+    "contact2_name": [
+      "什么鬼"
+    ],
+    "contact2_relation": [
+      "coworker"
+    ],
+    "diploma": [
+      ""
+    ],
+    "home_address": [
+      "上海市虹口区中信广场"
+    ],
+    "id_number": [
+      "610125199105046214"
+    ],
+    "ip_address": [
+      "192.168.168.146"
+    ],
+    "is_id_checked": [
+      "true"
+    ],
+    "loan_amount": [
+      "1000.0"
+    ],
+    "loan_date": [
+      "2017-11-01"
+    ],
+    "loan_term": [
+      "14"
+    ],
+    "loan_term_unit": [
+      "DAY"
+    ],
+    "marriage": [
+      ""
+    ],
+    "registered_address": [
+      "西安市户县秦波镇新农村9号"
+    ],
+    "work_phone": [
+      ""
+    ]
+  },
+  "headerMap": {
+    "Content-Type": [
+      "application/x-www-form-urlencoded"
+    ],
+    "Accept-Charset": [
+      "utf-8"
+    ],
+    "Accept": [
+      "application/json"
+    ]
+  },
+  "httpMethod": "POST",
+  "paramMap": {
+    "body": "{\"account_mobile\":\"15221828172\",\"account_name\":\"姜迪\",\"black_box\":\"eyJvcyI6ImFuZHJvaWQiLCJ2ZXJzaW9uIjoiMy4xLjEiLCJwYWNrYWdlcyI6ImNvbS56dW9saS53YWxsZXRfMS4wIiwicHJvZmlsZV90aW1lIjo5NSwiaW50ZXJ2YWxfdGltZSI6MTYzNzAsInRva2VuX2lkIjoiZmhsWnV1RFJiVU4yTCtSaDZvRTRLSU1PTTZKXC9ybEFsS3dPeHVYaVFMSkRUWVM4eTJKRHl6K3lmeHUxakthakFhdFZsK0xQZEZJVWV4TWgzcVwvYXVSUT09In0=\",\"card_number\":\"6227004228780201915\",\"contact1_mobile\":\"18261918033\",\"contact1_name\":\"珊珊\",\"contact1_relation\":\"child\",\"contact2_mobile\":\"13162767229\",\"contact2_name\":\"什么鬼\",\"contact2_relation\":\"coworker\",\"diploma\":\"\",\"home_address\":\"上海市虹口区中信广场\",\"id_number\":\"610125199105046214\",\"ip_address\":\"192.168.168.146\",\"is_id_checked\":true,\"loan_amount\":1000.0,\"loan_date\":\"2017-11-01\",\"loan_term\":14,\"loan_term_unit\":\"DAY\",\"marriage\":\"\",\"registered_address\":\"西安市户县秦波镇新农村9号\",\"work_phone\":\"\"}"
+  },
+  "requestBody": "{\"account_mobile\":\"15221828172\",\"account_name\":\"姜迪\",\"black_box\":\"eyJvcyI6ImFuZHJvaWQiLCJ2ZXJzaW9uIjoiMy4xLjEiLCJwYWNrYWdlcyI6ImNvbS56dW9saS53YWxsZXRfMS4wIiwicHJvZmlsZV90aW1lIjo5NSwiaW50ZXJ2YWxfdGltZSI6MTYzNzAsInRva2VuX2lkIjoiZmhsWnV1RFJiVU4yTCtSaDZvRTRLSU1PTTZKXC9ybEFsS3dPeHVYaVFMSkRUWVM4eTJKRHl6K3lmeHUxakthakFhdFZsK0xQZEZJVWV4TWgzcVwvYXVSUT09In0=\",\"card_number\":\"6227004228780201915\",\"contact1_mobile\":\"18261918033\",\"contact1_name\":\"珊珊\",\"contact1_relation\":\"child\",\"contact2_mobile\":\"13162767229\",\"contact2_name\":\"什么鬼\",\"contact2_relation\":\"coworker\",\"diploma\":\"\",\"home_address\":\"上海市虹口区中信广场\",\"id_number\":\"610125199105046214\",\"ip_address\":\"192.168.168.146\",\"is_id_checked\":true,\"loan_amount\":1000.0,\"loan_date\":\"2017-11-01\",\"loan_term\":14,\"loan_term_unit\":\"DAY\",\"marriage\":\"\",\"registered_address\":\"西安市户县秦波镇新农村9号\",\"work_phone\":\"\"}",
+  "responseClass": "com.xindaibao.cashloan.cl.model.tongdun.sdk.PreloanResponse",
+  "serverHost": "https://api.tongdun.cn/credit/event/v3",
+  "urlParam": "partner_key=a966c2afdc2b44ecbd3a934ccfb1a011&partner_code=changna&app_name=llqb_and&event_type=loan&version=v1"
+}

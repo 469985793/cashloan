@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_result_detail表:评分结果模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.CrResultDetailMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.CrResultDetail">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="result_id" property="resultId" jdbcType="BIGINT" />
+        <result column="card_id" property="cardId" jdbcType="BIGINT" />
+        <result column="item_id" property="itemId" jdbcType="BIGINT" />
+        <result column="factor_id" property="factorId" jdbcType="BIGINT" />
+        <result column="param_id" property="paramId" jdbcType="BIGINT" />
+        <result column="param_name" property="paramName" jdbcType="VARCHAR" />
+        <result column="param_score" property="paramScore" jdbcType="INTEGER" />
+        <result column="formula" property="formula" jdbcType="VARCHAR" />
+        <result column="cvalue" property="cvalue" jdbcType="VARCHAR" />
+        <result column="value" property="value" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,result_id,card_id,item_id,factor_id,param_id,param_name,param_score,formula,cvalue,value,level,score,amount,add_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="resultId !=null">
+                and result_id = #{resultId,jdbcType=BIGINT}
+            </if>
+            <if test="cardId !=null">
+                and card_id = #{cardId,jdbcType=BIGINT}
+            </if>
+            <if test="itemId !=null">
+                and item_id = #{itemId,jdbcType=BIGINT}
+            </if>
+            <if test="factorId !=null">
+                and factor_id = #{factorId,jdbcType=BIGINT}
+            </if>
+            <if test="paramId !=null">
+                and param_id = #{paramId,jdbcType=BIGINT}
+            </if>
+            <if test="paramName !='' and paramName !=null">
+                and param_name = #{paramName,jdbcType=VARCHAR}
+            </if>
+            <if test="paramScore !=null">
+                and param_score = #{paramScore,jdbcType=INTEGER}
+            </if>
+            <if test="formula !='' and formula !=null">
+                and formula = #{formula,jdbcType=VARCHAR}
+            </if>
+            <if test="cvalue !='' and cvalue !=null">
+                and cvalue = #{cvalue,jdbcType=VARCHAR}
+            </if>
+            <if test="value !='' and value !=null">
+                and value = #{value,jdbcType=VARCHAR}
+            </if>
+            <if test="level !='' and level !=null">
+                and level = #{level,jdbcType=VARCHAR}
+            </if>
+            <if test="score !=null">
+                and score = #{score,jdbcType=INTEGER}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.CrResultDetail">
+        insert into arc_cr_result_detail(
+            result_id,
+        	card_id,
+        	item_id,
+        	factor_id,
+        	param_id,
+        	param_name,
+        	param_score,
+        	formula,
+        	cvalue,
+        	value,
+        	level,
+        	score,
+        	amount,
+        	add_time
+        ) values ( 
+            #{resultId,jdbcType=BIGINT},
+        	#{cardId,jdbcType=BIGINT},
+        	#{itemId,jdbcType=BIGINT},
+        	#{factorId,jdbcType=BIGINT},
+        	#{paramId,jdbcType=BIGINT},
+        	#{paramName,jdbcType=VARCHAR},
+        	#{paramScore,jdbcType=INTEGER},
+        	#{formula,jdbcType=VARCHAR},
+        	#{cvalue,jdbcType=VARCHAR},
+        	#{value,jdbcType=VARCHAR},
+        	#{level,jdbcType=VARCHAR},
+        	#{score,jdbcType=INTEGER},
+        	#{amount,jdbcType=DECIMAL},
+        	#{addTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.CrResultDetail">
+        update arc_cr_result_detail set 
+            result_id = #{resultId,jdbcType=BIGINT},
+            card_id = #{cardId,jdbcType=BIGINT},
+            item_id = #{itemId,jdbcType=BIGINT},
+            factor_id = #{factorId,jdbcType=BIGINT},
+            param_id = #{paramId,jdbcType=BIGINT},
+            param_name = #{paramName,jdbcType=VARCHAR},
+            param_score = #{paramScore,jdbcType=INTEGER},
+            formula = #{formula,jdbcType=VARCHAR},
+            cvalue = #{cvalue,jdbcType=VARCHAR},
+            value = #{value,jdbcType=VARCHAR},
+            level = #{level,jdbcType=VARCHAR},
+            score = #{score,jdbcType=INTEGER},
+            amount = #{amount,jdbcType=DECIMAL}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_result_detail
+          <set>
+           <if test="resultId !=null">
+                and result_id = #{resultId,jdbcType=BIGINT}
+            </if>
+            <if test="cardId != null ">        
+                card_id = #{cardId,jdbcType=BIGINT},                
+            </if>
+            <if test="itemId != null">        
+                item_id = #{itemId,jdbcType=BIGINT},                
+            </if>
+            <if test="factorId != null">        
+                factor_id = #{factorId,jdbcType=BIGINT},                
+            </if>
+            <if test="paramId != null">        
+                param_id = #{paramId,jdbcType=BIGINT},                
+            </if>
+            <if test="paramName != null and paramName != '' ">        
+                param_name = #{paramName,jdbcType=VARCHAR},                
+            </if>
+            <if test="paramScore != null">        
+                param_score = #{paramScore,jdbcType=INTEGER},                
+            </if>
+            <if test="formula != null and formula != '' ">        
+                formula = #{formula,jdbcType=VARCHAR},                
+            </if>
+            <if test="cvalue != null and cvalue != '' ">        
+                cvalue = #{cvalue,jdbcType=VARCHAR},                
+            </if>
+            <if test="value != null and value != '' ">        
+                value = #{value,jdbcType=VARCHAR},                
+            </if>
+            <if test="level != null and level != '' ">        
+                level = #{level,jdbcType=VARCHAR},                
+            </if>
+            <if test="score != null">        
+                score = #{score,jdbcType=INTEGER},                
+            </if>
+            <if test="amount!=null">
+            	amount = #{amount,jdbcType=DECIMAL}
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="selectByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_result_detail
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="selectOne" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_result_detail
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_result_detail
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listResultDetail" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+         from arc_cr_result_detail   where result_id in ( select id from arc_cr_result where user_id=#{userId,jdbcType=BIGINT})  and level=#{level,jdbcType=BIGINT}
+    </select>
+    
+    
+    <!-- 统计因子得分 -->
+    <select id="countFactorScore" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    	select result_id,card_id,item_id,factor_id,param_name,SUM(score) score,30 level,add_time from arc_cr_result_detail where result_id = #{resultId,jdbcType=INTEGER}
+		GROUP BY result_id,card_id,item_id,factor_id,param_name
+    </select>
+    
+    <!-- 统计评分项目得分 -->
+    <select id="countItemScore" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    	select result_id,card_id,item_id,SUM(score) score,20 level,add_time from arc_cr_result_detail where result_id = #{resultId,jdbcType=INTEGER}
+		GROUP BY result_id,card_id,item_id
+    </select>
+    
+    <!-- 统计评分卡得分 -->
+    <select id="countCardScore" parameterType="java.lang.Long" resultMap="BaseResultMap">
+	    select result_id,card_id,SUM(score) score,10 level,add_time  from arc_cr_result_detail where result_id = #{resultId,jdbcType=INTEGER}
+		GROUP BY result_id,card_id
+    </select>
+    
+    <!-- 保存统计分数 -->
+    <insert id="saveCountScore" parameterType="java.util.List">
+    	insert into arc_cr_result_detail(
+            result_id,
+        	card_id,
+        	item_id,
+        	factor_id,
+        	param_id,
+        	param_name,
+        	param_score,
+        	formula,
+        	cvalue,
+        	value,
+        	level,
+        	score,
+        	amount,
+        	add_time
+        ) values 
+        <foreach collection="list" item="item" index="index" separator=",">
+        ( 
+            #{item.resultId,jdbcType=BIGINT},
+        	#{item.cardId,jdbcType=BIGINT},
+        	#{item.itemId,jdbcType=BIGINT},
+        	#{item.factorId,jdbcType=BIGINT},
+        	#{item.paramId,jdbcType=BIGINT},
+        	#{item.paramName,jdbcType=VARCHAR},
+        	#{item.paramScore,jdbcType=INTEGER},
+        	#{item.formula,jdbcType=VARCHAR},
+        	#{item.cvalue,jdbcType=VARCHAR},
+        	#{item.value,jdbcType=VARCHAR},
+        	#{item.level,jdbcType=VARCHAR},
+        	#{item.score,jdbcType=INTEGER},
+        	#{item.amount,jdbcType=DECIMAL},
+        	#{item.addTime,jdbcType=TIMESTAMP}
+        )
+        </foreach>
+    </insert>
+    
+    <!--返回Map-->        
+    <resultMap id="detailMap" type="com.xindaibao.creditrank.cr.model.CrResultDetailModel">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="result_id" property="resultId" jdbcType="BIGINT" />
+        <result column="card_id" property="cardId" jdbcType="BIGINT" />
+        <result column="item_id" property="itemId" jdbcType="BIGINT" />
+        <result column="factor_id" property="factorId" jdbcType="BIGINT" />
+        <result column="param_id" property="paramId" jdbcType="BIGINT" />
+        <result column="param_name" property="paramName" jdbcType="VARCHAR" />
+        <result column="param_score" property="paramScore" jdbcType="INTEGER" />
+        <result column="formula" property="formula" jdbcType="VARCHAR" />
+        <result column="cvalue" property="cvalue" jdbcType="VARCHAR" />
+        <result column="value" property="value" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <sql id="detailSql">
+    	select
+        <include refid="Base_Column_List" />
+        from arc_cr_result_detail 
+        where result_id = #{resultId} 
+        and level = #{level}
+    </sql>
+    
+    <select id="findDetail" resultMap="detailMap" >
+    	<include refid="detailSql"></include>
+    </select>
+    
+    <!--返回Map-->        
+    <resultMap id="factorDetailMap" type="com.xindaibao.creditrank.cr.model.CrResultFactorDetail">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="result_id" property="resultId" jdbcType="BIGINT" />
+        <result column="card_id" property="cardId" jdbcType="BIGINT" />
+        <result column="item_id" property="itemId" jdbcType="BIGINT" />
+        <result column="factor_id" property="factorId" jdbcType="BIGINT" />
+        <result column="param_id" property="paramId" jdbcType="BIGINT" />
+        <result column="param_name" property="paramName" jdbcType="VARCHAR" />
+        <result column="param_score" property="paramScore" jdbcType="INTEGER" />
+        <result column="formula" property="formula" jdbcType="VARCHAR" />
+        <result column="cvalue" property="cvalue" jdbcType="VARCHAR" />
+        <result column="value" property="value" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="findFactorDetail" resultMap="factorDetailMap" >
+    	<include refid="detailSql"></include>
+    </select>
+    
+    <!--返回Map-->        
+    <resultMap id="itemDetailMap" type="com.xindaibao.creditrank.cr.model.CrResultItemDetail">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="result_id" property="resultId" jdbcType="BIGINT" />
+        <result column="card_id" property="cardId" jdbcType="BIGINT" />
+        <result column="item_id" property="itemId" jdbcType="BIGINT" />
+        <result column="factor_id" property="factorId" jdbcType="BIGINT" />
+        <result column="param_id" property="paramId" jdbcType="BIGINT" />
+        <result column="param_name" property="paramName" jdbcType="VARCHAR" />
+        <result column="param_score" property="paramScore" jdbcType="INTEGER" />
+        <result column="formula" property="formula" jdbcType="VARCHAR" />
+        <result column="cvalue" property="cvalue" jdbcType="VARCHAR" />
+        <result column="value" property="value" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="findItemDetail" resultMap="itemDetailMap" >
+    	<include refid="detailSql"></include>
+    </select>
+    
+</mapper>

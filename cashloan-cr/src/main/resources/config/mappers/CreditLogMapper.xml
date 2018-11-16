@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_credit_log表:授信额度记录模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.CreditLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.CreditLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="consumer_no" property="consumerNo" jdbcType="VARCHAR" />
+        <result column="pre" property="pre" jdbcType="DECIMAL" />
+        <result column="now" property="now" jdbcType="DECIMAL" />
+        <result column="modify_total" property="modifyTotal" jdbcType="DECIMAL" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="credit_type" property="creditType" jdbcType="INTEGER" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="req_ext" property="reqExt" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,consumer_no,pre,now,modify_total,modify_time,modify_user,type,credit_type,remark,req_ext 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="consumerNo !='' and consumerNo !=null">
+                and consumer_no = #{consumerNo,jdbcType=VARCHAR}
+            </if>
+            <if test="pre !='' and pre !=null">
+                and pre = #{pre,jdbcType=DECIMAL}
+            </if>
+            <if test="now !='' and now !=null">
+                and now = #{now,jdbcType=DECIMAL}
+            </if>
+            <if test="modifyTotal !='' and modifyTotal !=null">
+                and modify_total = #{modifyTotal,jdbcType=DECIMAL}
+            </if>
+            <if test="modifyTime !=null">
+                and modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="modifyUser !='' and modifyUser !=null">
+                and modify_user = #{modifyUser,jdbcType=VARCHAR}
+            </if>
+            <if test="type !='' and type !=null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="creditType !='' and creditType !=null">
+                and credit_type = #{creditType,jdbcType=INTEGER}
+            </if>
+            <if test="remark !='' and remark !=null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt !='' and reqExt !=null">
+                and req_ext = #{reqExt,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.CreditLog">
+        insert into arc_credit_log(consumer_no,pre,now,modify_total,modify_time,modify_user,type,credit_type,remark,req_ext)values(#{consumerNo,jdbcType=VARCHAR},#{pre,jdbcType=DECIMAL},#{now,jdbcType=DECIMAL},#{modifyTotal,jdbcType=DECIMAL},#{modifyTime,jdbcType=TIMESTAMP},#{modifyUser,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},#{creditType,jdbcType=INTEGER},#{remark,jdbcType=VARCHAR},#{reqExt,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.CreditLog">
+        update arc_credit_log set 
+            consumer_no = #{consumerNo,jdbcType=VARCHAR},
+            pre = #{pre,jdbcType=DECIMAL},
+            now = #{now,jdbcType=DECIMAL},
+            modify_total = #{modifyTotal,jdbcType=DECIMAL},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            modify_user = #{modifyUser,jdbcType=VARCHAR},
+            type = #{type,jdbcType=VARCHAR},
+            credit_type = #{creditType,jdbcType=INTEGER},
+            remark = #{remark,jdbcType=VARCHAR},
+            req_ext = #{reqExt,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_credit_log
+          <set>
+            <if test="consumerNo != null and consumerNo != '' ">        
+                consumer_no = #{consumerNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="pre != null and pre != '' ">        
+                pre = #{pre,jdbcType=DECIMAL},                
+            </if>
+            <if test="now != null and now != '' ">        
+                now = #{now,jdbcType=DECIMAL},                
+            </if>
+            <if test="modifyTotal != null and modifyTotal != '' ">        
+                modify_total = #{modifyTotal,jdbcType=DECIMAL},                
+            </if>
+            <if test="modifyTime != null ">        
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="modifyUser != null and modifyUser != '' ">        
+                modify_user = #{modifyUser,jdbcType=VARCHAR},                
+            </if>
+            <if test="type != null and type != '' ">        
+                type = #{type,jdbcType=VARCHAR},                
+            </if>
+            <if test="creditType != null and creditType != '' ">        
+                credit_type = #{creditType,jdbcType=INTEGER},                
+            </if>
+            <if test="remark != null and remark != '' ">        
+                remark = #{remark,jdbcType=VARCHAR},                
+            </if>
+            <if test="reqExt != null and reqExt != '' ">        
+                req_ext = #{reqExt,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_credit_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_credit_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_credit_log
+        <include refid="searchBy"/>
+    </select>
+    
+    <resultMap id="resultModel" extends="BaseResultMap" type="com.xindaibao.creditrank.cr.model.CreditLogModel">
+    	<result column="real_name" property="realName" jdbcType="VARCHAR" />
+    	<result column="phone" property="phone" jdbcType="VARCHAR" />
+    	<result column="id_no" property="idNo" jdbcType="VARCHAR" />
+    	<result column="unuse" property="unuse" jdbcType="VARCHAR" />
+    	<result column="credit_name" property="creditName" jdbcType="VARCHAR" />
+    </resultMap>
+    
+   <!--该查询语句待定 -->
+   <!--  <select id="findLog" resultMap="resultModel" parameterType="java.util.HashMap">
+    	SELECT al.id,al.modify_time,al.type,al.modify_total,al.remark,al.now,
+		(SELECT real_name FROM arc_sys_user WHERE consumer_no=al.consumer_no) AS real_name,
+		(SELECT id_no FROM arc_sys_user WHERE consumer_no=al.consumer_no) AS id_no,
+		(SELECT SUM(unuse) FROM arc_credit WHERE consumer_no=al.consumer_no AND state=10) AS unuse,
+		(SELECT item_value FROM arc_sys_dict_detail WHERE id=al.credit_type) as creditName
+		FROM `arc_credit_log` AS al WHERE al.consumer_no=#{consumerNo,jdbcType=VARCHAR}
+    </select> -->
+    
+    <select id="findLog" resultMap="resultModel" parameterType="java.util.HashMap">
+    	SELECT al.id,al.modify_time,al.type,al.modify_total,al.remark,al.now,u.real_name,
+    	u.id_no,ac.unuse,dd.item_value as credit_name FROM arc_credit_log al left join cl_user_base_info u
+    	on al.consumer_no = u.user_id left join arc_credit ac
+    	on al.consumer_no = ac.consumer_no left join arc_sys_dict_detail dd 
+    	on al.credit_type = dd.id
+    	WHERE al.consumer_no=#{consumerNo,jdbcType=VARCHAR}
+    </select>
+    
+</mapper>

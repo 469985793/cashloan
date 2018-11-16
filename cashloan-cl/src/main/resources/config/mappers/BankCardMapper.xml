@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_bank_card表:银行卡模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.BankCardMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.BankCard">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+        <result column="bind_time" property="bindTime" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="bank" property="bank" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="agree_no" property="agreeNo" jdbcType="VARCHAR" />
+        
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,card_no,bind_time,user_id,bank,phone,agree_no 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null and id != ''">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="cardNo != null and cardNo != ''">
+                and card_no = #{cardNo,jdbcType=VARCHAR}
+            </if>
+            <if test="bindTime !=null">
+                and bind_time = #{bindTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="bank != null and bank != ''">
+                and bank = #{bank,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="agreeNo != null and agreeNo != ''">
+                and agree_no = #{agreeNo,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.BankCard">
+        insert into cl_bank_card(card_no,bind_time,user_id,bank,phone,agree_no)values(#{cardNo,jdbcType=VARCHAR},#{bindTime,jdbcType=TIMESTAMP},#{userId,jdbcType=INTEGER},#{bank,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{agreeNo,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.BankCard">
+        update cl_bank_card set 
+            card_no = #{cardNo,jdbcType=VARCHAR},
+            bind_time = #{bindTime,jdbcType=TIMESTAMP},
+            user_id = #{userId,jdbcType=INTEGER},
+            bank = #{bank,jdbcType=VARCHAR},
+            phone = #{phone,jdbcType=VARCHAR},
+            agree_no = #{agreeNo,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_bank_card
+          <set>
+            <if test="cardNo != null and cardNo != '' ">        
+                card_no = #{cardNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="bindTime != null ">        
+                bind_time = #{bindTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="bank != null and bank != '' ">        
+                bank = #{bank,jdbcType=VARCHAR},                
+            </if>
+            <if test="phone != null and phone != '' ">        
+                phone = #{phone,jdbcType=VARCHAR},           
+            </if>
+            <if test="agreeNo != null and agreeNo != ''">
+                agree_no = #{agreeNo,jdbcType=VARCHAR}
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_bank_card
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_bank_card
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_bank_card
+        <include refid="searchBy"/>
+    </select>
+    
+      <select id="findByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_bank_card
+      	where  user_id = #{userId,jdbcType=INTEGER}
+    </select>
+    
+</mapper>

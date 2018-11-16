@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ClMoheTravelTrackAnalysisPerCityMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ClMoheTravelTrackAnalysisPerCity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+      <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="leave_city" jdbcType="VARCHAR" property="leaveCity" />
+    <result column="leave_day" jdbcType="VARCHAR" property="leaveDay" />
+    <result column="leave_day_type" jdbcType="VARCHAR" property="leaveDayType" />
+    <result column="arrive_city" jdbcType="VARCHAR" property="arriveCity" />
+    <result column="arrive_day" jdbcType="VARCHAR" property="arriveDay" />
+    <result column="arrive_day_type" jdbcType="VARCHAR" property="arriveDayType" />
+  </resultMap>
+
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,task_id,leave_city,leave_day,leave_day_type,arrive_city,arrive_day,arrive_day_type
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                and task_id = #{taskId,jdbcType=VARCHAR}
+            </if>
+            <if test="leaveCity != null and leaveCity != '' ">
+                and leave_city = #{leaveCity,jdbcType=VARCHAR}
+            </if>
+            <if test="leaveDay != null and leaveDay != '' ">
+                and leave_day = #{leaveDay,jdbcType=VARCHAR}
+            </if>
+            <if test="leaveDayType != null and leaveDayType != '' ">
+                and leave_day_type = #{leaveDayType,jdbcType=VARCHAR}
+            </if>
+            <if test="arriveCity != null and arriveCity != '' ">
+                and arrive_city = #{arriveCity,jdbcType=VARCHAR}
+            </if>
+            <if test="arriveDay != null and arriveDay != '' ">
+                and arrive_day = #{arriveDay,jdbcType=VARCHAR}
+            </if>
+            <if test="arriveDayType != null and arriveDayType != '' ">
+                and arrive_day_type = #{arriveDayType,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheTravelTrackAnalysisPerCity">
+        insert into cl_mohe_travel_track_analysis_per_city(user_id,task_id,leave_city,leave_day,leave_day_type,arrive_city,arrive_day,arrive_day_type)values(#{userId,jdbcType=BIGINT},#{taskId,jdbcType=VARCHAR},#{leaveCity,jdbcType=VARCHAR},#{leaveDay,jdbcType=VARCHAR},#{leaveDayType,jdbcType=VARCHAR},#{arriveCity,jdbcType=VARCHAR},#{arriveDay,jdbcType=VARCHAR},#{arriveDayType,jdbcType=VARCHAR})
+    </insert>
+
+
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheTravelTrackAnalysisPerCity">
+        update cl_mohe_travel_track_analysis_per_city set
+        user_id = #{userId,jdbcType=BIGINT},
+        task_id = #{taskId,jdbcType=VARCHAR},
+        leave_city = #{leaveCity,jdbcType=VARCHAR},
+        leave_day = #{leaveDay,jdbcType=VARCHAR},
+        leave_day_type = #{leaveDayType,jdbcType=VARCHAR},
+        arrive_city = #{arriveCity,jdbcType=VARCHAR},
+        arrive_day = #{arriveDay,jdbcType=VARCHAR},
+        arrive_day_type = #{arriveDayType,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_mohe_travel_track_analysis_per_city
+        <set>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="leaveCity != null and leaveCity != '' ">
+                leave_city = #{leaveCity,jdbcType=VARCHAR},
+            </if>
+            <if test="leaveDay != null and leaveDay != '' ">
+                leave_day = #{leaveDay,jdbcType=VARCHAR},
+            </if>
+            <if test="leaveDayType != null and leaveDayType != '' ">
+                leave_day_type = #{leaveDayType,jdbcType=VARCHAR},
+            </if>
+            <if test="arriveCity != null and arriveCity != '' ">
+                arrive_city = #{arriveCity,jdbcType=VARCHAR},
+            </if>
+            <if test="arriveDay != null and arriveDay != '' ">
+                arrive_day = #{arriveDay,jdbcType=VARCHAR},
+            </if>
+            <if test="arriveDayType != null and arriveDayType != '' ">
+                arrive_day_type = #{arriveDayType,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_travel_track_analysis_per_city
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_travel_track_analysis_per_city
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_travel_track_analysis_per_city
+        <include refid="searchBy"/>
+    </select>
+
+</mapper>

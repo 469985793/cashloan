@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_dhb_risk_blacklist表:贷后邦黑名单模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.DhbRiskBlacklistMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.DhbRiskBlacklist">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="idcard_in_blacklist" property="idcardInBlacklist" jdbcType="VARCHAR" />
+        <result column="phone_in_blacklist" property="phoneInBlacklist" jdbcType="VARCHAR" />
+        <result column="in_court_blacklist" property="inCourtBlacklist" jdbcType="VARCHAR" />
+        <result column="in_p2p_blacklist" property="inP2pBlacklist" jdbcType="VARCHAR" />
+        <result column="in_bank_blacklist" property="inBankBlacklist" jdbcType="VARCHAR" />
+        <result column="last_appear_idcard_in_blacklist" property="lastAppearIdcardInBlacklist" jdbcType="VARCHAR" />
+        <result column="last_appear_phone_in_blacklist" property="lastAppearPhoneInBlacklist" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,order_no,user_id,idcard_in_blacklist,phone_in_blacklist,in_court_blacklist,in_p2p_blacklist,in_bank_blacklist,last_appear_idcard_in_blacklist,last_appear_phone_in_blacklist 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="idcardInBlacklist != null and idcardInBlacklist != '' ">
+                and idcard_in_blacklist = #{idcardInBlacklist,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneInBlacklist != null and phoneInBlacklist != '' ">
+                and phone_in_blacklist = #{phoneInBlacklist,jdbcType=VARCHAR}
+            </if>
+            <if test="inCourtBlacklist != null and inCourtBlacklist != '' ">
+                and in_court_blacklist = #{inCourtBlacklist,jdbcType=VARCHAR}
+            </if>
+            <if test="inP2pBlacklist != null and inP2pBlacklist != '' ">
+                and in_p2p_blacklist = #{inP2pBlacklist,jdbcType=VARCHAR}
+            </if>
+            <if test="inBankBlacklist != null and inBankBlacklist != '' ">
+                and in_bank_blacklist = #{inBankBlacklist,jdbcType=VARCHAR}
+            </if>
+            <if test="lastAppearIdcardInBlacklist != null and lastAppearIdcardInBlacklist != '' ">
+                and last_appear_idcard_in_blacklist = #{lastAppearIdcardInBlacklist,jdbcType=VARCHAR}
+            </if>
+            <if test="lastAppearPhoneInBlacklist != null and lastAppearPhoneInBlacklist != '' ">
+                and last_appear_phone_in_blacklist = #{lastAppearPhoneInBlacklist,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.DhbRiskBlacklist">
+        insert into cl_rc_dhb_risk_blacklist(order_no,user_id,idcard_in_blacklist,phone_in_blacklist,in_court_blacklist,in_p2p_blacklist,in_bank_blacklist,last_appear_idcard_in_blacklist,last_appear_phone_in_blacklist)values(#{orderNo,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{idcardInBlacklist,jdbcType=VARCHAR},#{phoneInBlacklist,jdbcType=VARCHAR},#{inCourtBlacklist,jdbcType=VARCHAR},#{inP2pBlacklist,jdbcType=VARCHAR},#{inBankBlacklist,jdbcType=VARCHAR},#{lastAppearIdcardInBlacklist,jdbcType=VARCHAR},#{lastAppearPhoneInBlacklist,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.DhbRiskBlacklist">
+        update cl_rc_dhb_risk_blacklist set 
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=BIGINT},
+            idcard_in_blacklist = #{idcardInBlacklist,jdbcType=VARCHAR},
+            phone_in_blacklist = #{phoneInBlacklist,jdbcType=VARCHAR},
+            in_court_blacklist = #{inCourtBlacklist,jdbcType=VARCHAR},
+            in_p2p_blacklist = #{inP2pBlacklist,jdbcType=VARCHAR},
+            in_bank_blacklist = #{inBankBlacklist,jdbcType=VARCHAR},
+            last_appear_idcard_in_blacklist = #{lastAppearIdcardInBlacklist,jdbcType=VARCHAR},
+            last_appear_phone_in_blacklist = #{lastAppearPhoneInBlacklist,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_dhb_risk_blacklist
+          <set>
+            <if test="orderNo != null and orderNo != '' ">        
+                order_no = #{orderNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="idcardInBlacklist != null and idcardInBlacklist != '' ">        
+                idcard_in_blacklist = #{idcardInBlacklist,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneInBlacklist != null and phoneInBlacklist != '' ">        
+                phone_in_blacklist = #{phoneInBlacklist,jdbcType=VARCHAR},                
+            </if>
+            <if test="inCourtBlacklist != null and inCourtBlacklist != '' ">        
+                in_court_blacklist = #{inCourtBlacklist,jdbcType=VARCHAR},                
+            </if>
+            <if test="inP2pBlacklist != null and inP2pBlacklist != '' ">        
+                in_p2p_blacklist = #{inP2pBlacklist,jdbcType=VARCHAR},                
+            </if>
+            <if test="inBankBlacklist != null and inBankBlacklist != '' ">        
+                in_bank_blacklist = #{inBankBlacklist,jdbcType=VARCHAR},                
+            </if>
+            <if test="lastAppearIdcardInBlacklist != null and lastAppearIdcardInBlacklist != '' ">        
+                last_appear_idcard_in_blacklist = #{lastAppearIdcardInBlacklist,jdbcType=VARCHAR},                
+            </if>
+            <if test="lastAppearPhoneInBlacklist != null and lastAppearPhoneInBlacklist != '' ">        
+                last_appear_phone_in_blacklist = #{lastAppearPhoneInBlacklist,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_risk_blacklist
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_risk_blacklist
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_risk_blacklist
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

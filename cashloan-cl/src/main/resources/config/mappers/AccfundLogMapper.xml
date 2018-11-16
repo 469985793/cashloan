@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_accfund_log表:公积金详细信息表(流水)模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.AccfundLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.AccfundLog">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="account_no" property="accountNo" jdbcType="VARCHAR" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="amount_balance" property="amountBalance" jdbcType="DECIMAL" />
+        <result column="biz_no" property="bizNo" jdbcType="VARCHAR" />
+        <result column="biz_time" property="bizTime" jdbcType="TIMESTAMP" />
+        <result column="digest" property="digest" jdbcType="VARCHAR" />
+        <result column="fund_flow" property="fundFlow" jdbcType="VARCHAR" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+        <result column="house_accumulation_fund_id" property="houseAccumulationFundId" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,account_no,amount,amount_balance,biz_no,biz_time,digest,fund_flow,gmt_create,gmt_modified,house_accumulation_fund_id,user_id,create_time
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="accountNo != null and accountNo != '' ">
+                and account_no = #{accountNo,jdbcType=VARCHAR}
+            </if>
+            <if test="amount != null and amount != '' ">
+                and amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="amountBalance != null and amountBalance != '' ">
+                and amount_balance = #{amountBalance,jdbcType=DECIMAL}
+            </if>
+            <if test="bizNo != null and bizNo != '' ">
+                and biz_no = #{bizNo,jdbcType=VARCHAR}
+            </if>
+            <if test="bizTime != null">
+                and biz_time = #{bizTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="digest != null and digest != '' ">
+                and digest = #{digest,jdbcType=VARCHAR}
+            </if>
+            <if test="fundFlow != null and fundFlow != '' ">
+                and fund_flow = #{fundFlow,jdbcType=VARCHAR}
+            </if>
+            <if test="gmtCreate != null">
+                and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="gmtModified != null">
+                and gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="houseAccumulationFundId != null and houseAccumulationFundId != '' ">
+                and house_accumulation_fund_id = #{houseAccumulationFundId,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.AccfundLog">
+        insert into cl_accfund_log(account_no,amount,amount_balance,biz_no,biz_time,digest,fund_flow,gmt_create,gmt_modified,house_accumulation_fund_id,user_id,create_time)values(#{accountNo,jdbcType=VARCHAR},#{amount,jdbcType=DECIMAL},#{amountBalance,jdbcType=DECIMAL},#{bizNo,jdbcType=VARCHAR},#{bizTime,jdbcType=TIMESTAMP},#{digest,jdbcType=VARCHAR},#{fundFlow,jdbcType=VARCHAR},#{gmtCreate,jdbcType=TIMESTAMP},#{gmtModified,jdbcType=TIMESTAMP},#{houseAccumulationFundId,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.AccfundLog">
+        update cl_accfund_log set 
+            account_no = #{accountNo,jdbcType=VARCHAR},
+            amount = #{amount,jdbcType=DECIMAL},
+            amount_balance = #{amountBalance,jdbcType=DECIMAL},
+            biz_no = #{bizNo,jdbcType=VARCHAR},
+            biz_time = #{bizTime,jdbcType=TIMESTAMP},
+            digest = #{digest,jdbcType=VARCHAR},
+            fund_flow = #{fundFlow,jdbcType=VARCHAR},
+            gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            house_accumulation_fund_id = #{houseAccumulationFundId,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=BIGINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_accfund_log
+          <set>
+            <if test="accountNo != null and accountNo != '' ">        
+                account_no = #{accountNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="amount != null and amount != '' ">        
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="amountBalance != null and amountBalance != '' ">        
+                amount_balance = #{amountBalance,jdbcType=DECIMAL},                
+            </if>
+            <if test="bizNo != null and bizNo != '' ">        
+                biz_no = #{bizNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="bizTime != null">
+                biz_time = #{bizTime,jdbcType=TIMESTAMP},            
+            </if>
+            <if test="digest != null and digest != '' ">        
+                digest = #{digest,jdbcType=VARCHAR},                
+            </if>
+            <if test="fundFlow != null and fundFlow != '' ">        
+                fund_flow = #{fundFlow,jdbcType=VARCHAR},                
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},            
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},            
+            </if>
+            <if test="houseAccumulationFundId != null and houseAccumulationFundId != '' ">        
+                house_accumulation_fund_id = #{houseAccumulationFundId,jdbcType=VARCHAR},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},               
+            </if>
+            <if test="createTime != null and createTime != '' ">
+                create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_accfund_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_accfund_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_accfund_log
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

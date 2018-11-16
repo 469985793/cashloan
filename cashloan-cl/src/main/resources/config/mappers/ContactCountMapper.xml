@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_contact_count表:通讯录统计模块 -->
+<mapper namespace="com.xindaibao.cashloan.rc.mapper.ContactCountMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.rc.domain.ContactCount">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="count" property="count" jdbcType="INTEGER" />
+        <result column="count_one" property="countOne" jdbcType="INTEGER" />
+        <result column="count_two" property="countTwo" jdbcType="INTEGER" />
+        <result column="count_three" property="countThree" jdbcType="INTEGER" />
+        <result column="count_four" property="countFour" jdbcType="INTEGER" />
+        <result column="count_five" property="countFive" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,count,count_one,count_two,count_three,count_four,count_five,create_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null and id !=''">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId !=null and userId !=''">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="count !=null and count !=''">
+                and count = #{count,jdbcType=INTEGER}
+            </if>
+            <if test="countOne !=null and countOne !=''">
+                and count_one = #{countOne,jdbcType=INTEGER}
+            </if>
+            <if test="countTwo !=null and countTwo !=''">
+                and count_two = #{countTwo,jdbcType=INTEGER}
+            </if>
+            <if test="countThree !=null and countThree !=''">
+                and count_three = #{countThree,jdbcType=INTEGER}
+            </if>
+            <if test="countFour !=null and countFour !=''">
+                and count_four = #{countFour,jdbcType=INTEGER}
+            </if>
+            <if test="countFive !=null and countFive !=''">
+                and count_five = #{countFive,jdbcType=INTEGER}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rc.domain.ContactCount">
+        insert into cl_rc_contact_count(user_id,count,count_one,count_two,count_three,count_four,count_five,create_time)values(#{userId,jdbcType=INTEGER},#{count,jdbcType=INTEGER},#{countOne,jdbcType=INTEGER},#{countTwo,jdbcType=INTEGER},#{countThree,jdbcType=INTEGER},#{countFour,jdbcType=INTEGER},#{countFive,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_contact_count
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="count != null and count != '' ">        
+                count = #{count,jdbcType=INTEGER},                
+            </if>
+            <if test="countOne != null and countOne != '' ">        
+                count_one = #{countOne,jdbcType=INTEGER},                
+            </if>
+            <if test="countTwo != null and countTwo != '' ">        
+                count_two = #{countTwo,jdbcType=INTEGER},                
+            </if>
+            <if test="countThree != null and countThree != '' ">        
+                count_three = #{countThree,jdbcType=INTEGER},                
+            </if>
+            <if test="countFour != null and countFour != '' ">        
+                count_four = #{countFour,jdbcType=INTEGER},                
+            </if>
+            <if test="countFive != null and countFive != '' ">        
+                count_five = #{countFive,jdbcType=INTEGER},                
+            </if>
+            <if test="createTime != null ">        
+                create_time = #{createTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_contact_count
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_contact_count
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_contact_count
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

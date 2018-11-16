@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_tpp表:第三方征信信息模块 -->
+<mapper namespace="com.xindaibao.cashloan.rc.mapper.TppMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.rc.domain.Tpp">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="mer_no" property="merNo" jdbcType="VARCHAR" />
+        <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+        <result column="key" property="key" jdbcType="VARCHAR" />
+        <result column="extend" property="extend" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <resultMap type="com.xindaibao.cashloan.rc.model.TppModel" id="ModelResultMap">
+    	<id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="mer_no" property="merNo" jdbcType="VARCHAR" />
+        <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+        <result column="key" property="key" jdbcType="VARCHAR" />
+        <result column="extend" property="extend" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    	<collection property="businessList" ofType="com.xindaibao.cashloan.rc.domain.TppBusiness">
+    		<id column="business_id" property="id" jdbcType="INTEGER" />
+	        <result column="tpp_id" property="tppId" jdbcType="INTEGER" />
+	        <result column="business_name" property="name" jdbcType="VARCHAR" />
+	        <result column="business_nid" property="nid" jdbcType="VARCHAR" />
+	        <result column="business_state" property="state" jdbcType="VARCHAR" />
+	        <result column="business_url" property="url" jdbcType="VARCHAR" />
+	        <result column="business_test_url" property="testUrl" jdbcType="VARCHAR" />
+	        <result column="business_add_time" property="addTime" jdbcType="TIMESTAMP" />
+    	</collection>
+    </resultMap>
+    
+    <resultMap id="BaseModelMap" type="com.xindaibao.cashloan.rc.model.TppModel">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="mer_no" property="merNo" jdbcType="VARCHAR" />
+        <result column="sign_type" property="signType" jdbcType="VARCHAR" />
+        <result column="key" property="key" jdbcType="VARCHAR" />
+        <result column="extend" property="extend" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,`name`,nid,mer_no,sign_type,`key`,extend,state,add_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="name !='' and name !=null">
+                and `name` = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+            <if test="merNo !='' and merNo !=null">
+                and mer_no = #{merNo,jdbcType=VARCHAR}
+            </if>
+            <if test="signType !='' and signType !=null">
+                and sign_type = #{signType,jdbcType=VARCHAR}
+            </if>
+            <if test="key !='' and key !=null">
+                and `key` = #{key,jdbcType=VARCHAR}
+            </if>
+            <if test="extend !='' and extend !=null">
+                and extend = #{extend,jdbcType=VARCHAR}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rc.domain.Tpp">
+        insert into cl_rc_tpp(`name`,nid,mer_no,sign_type,`key`,extend,state,add_time)
+        values(#{name,jdbcType=VARCHAR},#{nid,jdbcType=VARCHAR},#{merNo,jdbcType=VARCHAR},
+        #{signType,jdbcType=VARCHAR},#{key,jdbcType=VARCHAR},#{extend,jdbcType=VARCHAR},
+        #{state,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.rc.domain.Tpp">
+        update cl_rc_tpp set 
+            `name` = #{name,jdbcType=VARCHAR},
+            nid = #{nid,jdbcType=VARCHAR},
+            mer_no = #{merNo,jdbcType=VARCHAR},
+            sign_type = #{signType,jdbcType=VARCHAR},
+            `key` = #{key,jdbcType=VARCHAR},
+            extend = #{extend,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_tpp
+          <set>
+            <if test="name != null and name != '' ">        
+                `name` = #{name,jdbcType=VARCHAR},                
+            </if>
+            <if test="nid != null and nid != '' ">        
+                nid = #{nid,jdbcType=VARCHAR},                
+            </if>
+            <if test="merNo != null and merNo != '' ">        
+                mer_no = #{merNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="signType != null and signType != '' ">        
+                sign_type = #{signType,jdbcType=VARCHAR},                
+            </if>
+            <if test="key != null and key != '' ">        
+                `key` = #{key,jdbcType=VARCHAR},                
+            </if>
+            <if test="extend != null and extend != '' ">        
+                extend = #{extend,jdbcType=VARCHAR},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="addTime != null">        
+                add_time = #{addTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_tpp
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_tpp
+        <include refid="searchBy"/>
+        limit 0,1
+    </select>
+    
+	<select id="listAll" resultMap="BaseModelMap">
+		select
+		<include refid="Base_Column_List" />
+		from cl_rc_tpp
+	</select>
+
+	<select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from cl_rc_tpp
+		<include refid="searchBy" />
+	</select>
+
+	<!-- 后台管理列表查询 -->
+	<select id="list" resultType="com.xindaibao.cashloan.rc.model.ManageTppModel" parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from cl_rc_tpp
+		<include refid="searchBy" />
+	</select>
+    
+    <select id="listAllWithBusiness" resultMap="ModelResultMap" parameterType="java.util.HashMap">
+		SELECT 
+			t.id, t.`name`, t.nid, t.mer_no, t.sign_type, t.`key`, t.extend, t.state, 
+			b.id AS business_id, b.`name` AS business_name, b.nid AS business_nid, b.state AS business_state 
+		FROM cl_rc_tpp t 
+		LEFT JOIN cl_rc_tpp_business b ON t.id = b.tpp_id where t.state=10 and  b.state=10
+    </select>
+  
+</mapper>

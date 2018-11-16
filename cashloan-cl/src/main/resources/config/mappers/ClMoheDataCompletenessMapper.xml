@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ClMoheDataCompletenessMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ClMoheDataCompleteness">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+      <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="is_call_data_complete_1month" jdbcType="VARCHAR" property="isCallDataComplete1month" />
+    <result column="is_call_data_complete_3month" jdbcType="VARCHAR" property="isCallDataComplete3month" />
+    <result column="is_call_data_complete_6month" jdbcType="VARCHAR" property="isCallDataComplete6month" />
+    <result column="is_msg_data_complete_1month" jdbcType="VARCHAR" property="isMsgDataComplete1month" />
+    <result column="is_msg_data_complete_3month" jdbcType="VARCHAR" property="isMsgDataComplete3month" />
+    <result column="is_msg_data_complete_6month" jdbcType="VARCHAR" property="isMsgDataComplete6month" />
+    <result column="is_consume_data_complete_1month" jdbcType="VARCHAR" property="isConsumeDataComplete1month" />
+    <result column="is_consume_data_complete_3month" jdbcType="VARCHAR" property="isConsumeDataComplete3month" />
+    <result column="is_consume_data_complete_6month" jdbcType="VARCHAR" property="isConsumeDataComplete6month" />
+    <result column="data_completeness_per_month" jdbcType="VARCHAR" property="dataCompletenessPerMonth" />
+    <result column="month" jdbcType="VARCHAR" property="month" />
+    <result column="is_call_data_complete" jdbcType="VARCHAR" property="isCallDataComplete" />
+    <result column="is_msg_data_complete" jdbcType="VARCHAR" property="isMsgDataComplete" />
+    <result column="is_consume_data_complete" jdbcType="VARCHAR" property="isConsumeDataComplete" />
+  </resultMap>
+
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,task_id,user_id,is_call_data_complete_1month,is_call_data_complete_3month,is_call_data_complete_6month,is_msg_data_complete_1month,is_msg_data_complete_3month,is_msg_data_complete_6month,is_consume_data_complete_1month,is_consume_data_complete_3month,is_consume_data_complete_6month,data_completeness_per_month,month,is_call_data_complete,is_msg_data_complete,is_consume_data_complete
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                and task_id = #{taskId,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="isCallDataComplete1month != null and isCallDataComplete1month != '' ">
+                and is_call_data_complete_1month = #{isCallDataComplete1month,jdbcType=VARCHAR}
+            </if>
+            <if test="isCallDataComplete3month != null and isCallDataComplete3month != '' ">
+                and is_call_data_complete_3month = #{isCallDataComplete3month,jdbcType=VARCHAR}
+            </if>
+            <if test="isCallDataComplete6month != null and isCallDataComplete6month != '' ">
+                and is_call_data_complete_6month = #{isCallDataComplete6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isMsgDataComplete1month != null and isMsgDataComplete1month != '' ">
+                and is_msg_data_complete_1month = #{isMsgDataComplete1month,jdbcType=VARCHAR}
+            </if>
+            <if test="isMsgDataComplete3month != null and isMsgDataComplete3month != '' ">
+                and is_msg_data_complete_3month = #{isMsgDataComplete3month,jdbcType=VARCHAR}
+            </if>
+            <if test="isMsgDataComplete6month != null and isMsgDataComplete6month != '' ">
+                and is_msg_data_complete_6month = #{isMsgDataComplete6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isConsumeDataComplete1month != null and isConsumeDataComplete1month != '' ">
+                and is_consume_data_complete_1month = #{isConsumeDataComplete1month,jdbcType=VARCHAR}
+            </if>
+            <if test="isConsumeDataComplete3month != null and isConsumeDataComplete3month != '' ">
+                and is_consume_data_complete_3month = #{isConsumeDataComplete3month,jdbcType=VARCHAR}
+            </if>
+            <if test="isConsumeDataComplete6month != null and isConsumeDataComplete6month != '' ">
+                and is_consume_data_complete_6month = #{isConsumeDataComplete6month,jdbcType=VARCHAR}
+            </if>
+            <if test="dataCompletenessPerMonth != null and dataCompletenessPerMonth != '' ">
+                and data_completeness_per_month = #{dataCompletenessPerMonth,jdbcType=VARCHAR}
+            </if>
+            <if test="month != null and month != '' ">
+                and month = #{month,jdbcType=VARCHAR}
+            </if>
+            <if test="isCallDataComplete != null and isCallDataComplete != '' ">
+                and is_call_data_complete = #{isCallDataComplete,jdbcType=VARCHAR}
+            </if>
+            <if test="isMsgDataComplete != null and isMsgDataComplete != '' ">
+                and is_msg_data_complete = #{isMsgDataComplete,jdbcType=VARCHAR}
+            </if>
+            <if test="isConsumeDataComplete != null and isConsumeDataComplete != '' ">
+                and is_consume_data_complete = #{isConsumeDataComplete,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheDataCompleteness">
+        insert into cl_mohe_data_completeness(task_id,user_id,is_call_data_complete_1month,is_call_data_complete_3month,is_call_data_complete_6month,is_msg_data_complete_1month,is_msg_data_complete_3month,is_msg_data_complete_6month,is_consume_data_complete_1month,is_consume_data_complete_3month,is_consume_data_complete_6month,data_completeness_per_month,month,is_call_data_complete,is_msg_data_complete,is_consume_data_complete)values(#{taskId,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{isCallDataComplete1month,jdbcType=VARCHAR},#{isCallDataComplete3month,jdbcType=VARCHAR},#{isCallDataComplete6month,jdbcType=VARCHAR},#{isMsgDataComplete1month,jdbcType=VARCHAR},#{isMsgDataComplete3month,jdbcType=VARCHAR},#{isMsgDataComplete6month,jdbcType=VARCHAR},#{isConsumeDataComplete1month,jdbcType=VARCHAR},#{isConsumeDataComplete3month,jdbcType=VARCHAR},#{isConsumeDataComplete6month,jdbcType=VARCHAR},#{dataCompletenessPerMonth,jdbcType=VARCHAR},#{month,jdbcType=VARCHAR},#{isCallDataComplete,jdbcType=VARCHAR},#{isMsgDataComplete,jdbcType=VARCHAR},#{isConsumeDataComplete,jdbcType=VARCHAR})
+    </insert>
+
+
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheDataCompleteness">
+        update cl_mohe_data_completeness set
+        task_id = #{taskId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
+        is_call_data_complete_1month = #{isCallDataComplete1month,jdbcType=VARCHAR},
+        is_call_data_complete_3month = #{isCallDataComplete3month,jdbcType=VARCHAR},
+        is_call_data_complete_6month = #{isCallDataComplete6month,jdbcType=VARCHAR},
+        is_msg_data_complete_1month = #{isMsgDataComplete1month,jdbcType=VARCHAR},
+        is_msg_data_complete_3month = #{isMsgDataComplete3month,jdbcType=VARCHAR},
+        is_msg_data_complete_6month = #{isMsgDataComplete6month,jdbcType=VARCHAR},
+        is_consume_data_complete_1month = #{isConsumeDataComplete1month,jdbcType=VARCHAR},
+        is_consume_data_complete_3month = #{isConsumeDataComplete3month,jdbcType=VARCHAR},
+        is_consume_data_complete_6month = #{isConsumeDataComplete6month,jdbcType=VARCHAR},
+        data_completeness_per_month = #{dataCompletenessPerMonth,jdbcType=VARCHAR},
+        month = #{month,jdbcType=VARCHAR},
+        is_call_data_complete = #{isCallDataComplete,jdbcType=VARCHAR},
+        is_msg_data_complete = #{isMsgDataComplete,jdbcType=VARCHAR},
+        is_consume_data_complete = #{isConsumeDataComplete,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_mohe_data_completeness
+        <set>
+            <if test="taskId != null and taskId != '' ">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="isCallDataComplete1month != null and isCallDataComplete1month != '' ">
+                is_call_data_complete_1month = #{isCallDataComplete1month,jdbcType=VARCHAR},
+            </if>
+            <if test="isCallDataComplete3month != null and isCallDataComplete3month != '' ">
+                is_call_data_complete_3month = #{isCallDataComplete3month,jdbcType=VARCHAR},
+            </if>
+            <if test="isCallDataComplete6month != null and isCallDataComplete6month != '' ">
+                is_call_data_complete_6month = #{isCallDataComplete6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isMsgDataComplete1month != null and isMsgDataComplete1month != '' ">
+                is_msg_data_complete_1month = #{isMsgDataComplete1month,jdbcType=VARCHAR},
+            </if>
+            <if test="isMsgDataComplete3month != null and isMsgDataComplete3month != '' ">
+                is_msg_data_complete_3month = #{isMsgDataComplete3month,jdbcType=VARCHAR},
+            </if>
+            <if test="isMsgDataComplete6month != null and isMsgDataComplete6month != '' ">
+                is_msg_data_complete_6month = #{isMsgDataComplete6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isConsumeDataComplete1month != null and isConsumeDataComplete1month != '' ">
+                is_consume_data_complete_1month = #{isConsumeDataComplete1month,jdbcType=VARCHAR},
+            </if>
+            <if test="isConsumeDataComplete3month != null and isConsumeDataComplete3month != '' ">
+                is_consume_data_complete_3month = #{isConsumeDataComplete3month,jdbcType=VARCHAR},
+            </if>
+            <if test="isConsumeDataComplete6month != null and isConsumeDataComplete6month != '' ">
+                is_consume_data_complete_6month = #{isConsumeDataComplete6month,jdbcType=VARCHAR},
+            </if>
+            <if test="dataCompletenessPerMonth != null and dataCompletenessPerMonth != '' ">
+                data_completeness_per_month = #{dataCompletenessPerMonth,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null and month != '' ">
+                month = #{month,jdbcType=VARCHAR},
+            </if>
+            <if test="isCallDataComplete != null and isCallDataComplete != '' ">
+                is_call_data_complete = #{isCallDataComplete,jdbcType=VARCHAR},
+            </if>
+            <if test="isMsgDataComplete != null and isMsgDataComplete != '' ">
+                is_msg_data_complete = #{isMsgDataComplete,jdbcType=VARCHAR},
+            </if>
+            <if test="isConsumeDataComplete != null and isConsumeDataComplete != '' ">
+                is_consume_data_complete = #{isConsumeDataComplete,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_data_completeness
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_data_completeness
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_data_completeness
+        <include refid="searchBy"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ClMoheCallAreaStatsPerCityMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ClMoheCallAreaStatsPerCity">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+      <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="call_area_city" jdbcType="VARCHAR" property="callAreaCity" />
+    <result column="call_area_seq_no" jdbcType="VARCHAR" property="callAreaSeqNo" />
+    <result column="active_day_1call_1month" jdbcType="VARCHAR" property="activeDay1call1month" />
+    <result column="active_day_1call_active_1month" jdbcType="VARCHAR" property="activeDay1callActive1month" />
+    <result column="active_day_1call_3month" jdbcType="VARCHAR" property="activeDay1call3month" />
+    <result column="active_day_1call_active_3month" jdbcType="VARCHAR" property="activeDay1callActive3month" />
+    <result column="active_day_1call_6month" jdbcType="VARCHAR" property="activeDay1call6month" />
+    <result column="active_day_1call_active_6month" jdbcType="VARCHAR" property="activeDay1callActive6month" />
+    <result column="call_count_1month" jdbcType="VARCHAR" property="callCount1month" />
+    <result column="call_count_3month" jdbcType="VARCHAR" property="callCount3month" />
+    <result column="call_count_active_3month" jdbcType="VARCHAR" property="callCountActive3month" />
+    <result column="call_count_passive_3month" jdbcType="VARCHAR" property="callCountPassive3month" />
+    <result column="call_count_workday_3month" jdbcType="VARCHAR" property="callCountWorkday3month" />
+    <result column="call_count_holiday_3month" jdbcType="VARCHAR" property="callCountHoliday3month" />
+    <result column="call_count_6month" jdbcType="VARCHAR" property="callCount6month" />
+    <result column="call_count_active_6month" jdbcType="VARCHAR" property="callCountActive6month" />
+    <result column="call_count_passive_6month" jdbcType="VARCHAR" property="callCountPassive6month" />
+    <result column="call_count_workday_6month" jdbcType="VARCHAR" property="callCountWorkday6month" />
+    <result column="call_count_holiday_6month" jdbcType="VARCHAR" property="callCountHoliday6month" />
+    <result column="call_time_1month" jdbcType="VARCHAR" property="callTime1month" />
+    <result column="call_time_3month" jdbcType="VARCHAR" property="callTime3month" />
+    <result column="call_time_active_3month" jdbcType="VARCHAR" property="callTimeActive3month" />
+    <result column="call_time_passive_3month" jdbcType="VARCHAR" property="callTimePassive3month" />
+    <result column="call_time_6month" jdbcType="VARCHAR" property="callTime6month" />
+    <result column="call_time_active_6month" jdbcType="VARCHAR" property="callTimeActive6month" />
+    <result column="call_time_passive_6month" jdbcType="VARCHAR" property="callTimePassive6month" />
+    <result column="continue_active_day_over1_1call_1month" jdbcType="VARCHAR" property="continueActiveDayOver11call1month" />
+    <result column="continue_active_day_over3_1call_1month" jdbcType="VARCHAR" property="continueActiveDayOver31call1month" />
+    <result column="continue_active_day_over1_1call_3month" jdbcType="VARCHAR" property="continueActiveDayOver11call3month" />
+    <result column="continue_active_day_over3_1call_3month" jdbcType="VARCHAR" property="continueActiveDayOver31call3month" />
+    <result column="continue_active_day_over1_1call_6month" jdbcType="VARCHAR" property="continueActiveDayOver11call6month" />
+    <result column="continue_active_day_over3_1call_6month" jdbcType="VARCHAR" property="continueActiveDayOver31call6month" />
+    <result column="max_continue_active_day_1call_1month" jdbcType="VARCHAR" property="maxContinueActiveDay1call1month" />
+    <result column="max_continue_active_day_1call_3month" jdbcType="VARCHAR" property="maxContinueActiveDay1call3month" />
+    <result column="max_continue_active_day_1call_6month" jdbcType="VARCHAR" property="maxContinueActiveDay1call6month" />
+  </resultMap>
+
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,task_id,call_area_city,call_area_seq_no,active_day_1call_1month,active_day_1call_active_1month,active_day_1call_3month,active_day_1call_active_3month,active_day_1call_6month,active_day_1call_active_6month,call_count_1month,call_count_3month,call_count_active_3month,call_count_passive_3month,call_count_workday_3month,call_count_holiday_3month,call_count_6month,call_count_active_6month,call_count_passive_6month,call_count_workday_6month,call_count_holiday_6month,call_time_1month,call_time_3month,call_time_active_3month,call_time_passive_3month,call_time_6month,call_time_active_6month,call_time_passive_6month,continue_active_day_over1_1call_1month,continue_active_day_over3_1call_1month,continue_active_day_over1_1call_3month,continue_active_day_over3_1call_3month,continue_active_day_over1_1call_6month,continue_active_day_over3_1call_6month,max_continue_active_day_1call_1month,max_continue_active_day_1call_3month,max_continue_active_day_1call_6month
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                and task_id = #{taskId,jdbcType=VARCHAR}
+            </if>
+            <if test="callAreaCity != null and callAreaCity != '' ">
+                and call_area_city = #{callAreaCity,jdbcType=VARCHAR}
+            </if>
+            <if test="callAreaSeqNo != null and callAreaSeqNo != '' ">
+                and call_area_seq_no = #{callAreaSeqNo,jdbcType=VARCHAR}
+            </if>
+            <if test="activeDay1call1month != null and activeDay1call1month != '' ">
+                and active_day_1call_1month = #{activeDay1call1month,jdbcType=VARCHAR}
+            </if>
+            <if test="activeDay1callActive1month != null and activeDay1callActive1month != '' ">
+                and active_day_1call_active_1month = #{activeDay1callActive1month,jdbcType=VARCHAR}
+            </if>
+            <if test="activeDay1call3month != null and activeDay1call3month != '' ">
+                and active_day_1call_3month = #{activeDay1call3month,jdbcType=VARCHAR}
+            </if>
+            <if test="activeDay1callActive3month != null and activeDay1callActive3month != '' ">
+                and active_day_1call_active_3month = #{activeDay1callActive3month,jdbcType=VARCHAR}
+            </if>
+            <if test="activeDay1call6month != null and activeDay1call6month != '' ">
+                and active_day_1call_6month = #{activeDay1call6month,jdbcType=VARCHAR}
+            </if>
+            <if test="activeDay1callActive6month != null and activeDay1callActive6month != '' ">
+                and active_day_1call_active_6month = #{activeDay1callActive6month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCount1month != null and callCount1month != '' ">
+                and call_count_1month = #{callCount1month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCount3month != null and callCount3month != '' ">
+                and call_count_3month = #{callCount3month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCountActive3month != null and callCountActive3month != '' ">
+                and call_count_active_3month = #{callCountActive3month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCountPassive3month != null and callCountPassive3month != '' ">
+                and call_count_passive_3month = #{callCountPassive3month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCountWorkday3month != null and callCountWorkday3month != '' ">
+                and call_count_workday_3month = #{callCountWorkday3month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCountHoliday3month != null and callCountHoliday3month != '' ">
+                and call_count_holiday_3month = #{callCountHoliday3month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCount6month != null and callCount6month != '' ">
+                and call_count_6month = #{callCount6month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCountActive6month != null and callCountActive6month != '' ">
+                and call_count_active_6month = #{callCountActive6month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCountPassive6month != null and callCountPassive6month != '' ">
+                and call_count_passive_6month = #{callCountPassive6month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCountWorkday6month != null and callCountWorkday6month != '' ">
+                and call_count_workday_6month = #{callCountWorkday6month,jdbcType=VARCHAR}
+            </if>
+            <if test="callCountHoliday6month != null and callCountHoliday6month != '' ">
+                and call_count_holiday_6month = #{callCountHoliday6month,jdbcType=VARCHAR}
+            </if>
+            <if test="callTime1month != null and callTime1month != '' ">
+                and call_time_1month = #{callTime1month,jdbcType=VARCHAR}
+            </if>
+            <if test="callTime3month != null and callTime3month != '' ">
+                and call_time_3month = #{callTime3month,jdbcType=VARCHAR}
+            </if>
+            <if test="callTimeActive3month != null and callTimeActive3month != '' ">
+                and call_time_active_3month = #{callTimeActive3month,jdbcType=VARCHAR}
+            </if>
+            <if test="callTimePassive3month != null and callTimePassive3month != '' ">
+                and call_time_passive_3month = #{callTimePassive3month,jdbcType=VARCHAR}
+            </if>
+            <if test="callTime6month != null and callTime6month != '' ">
+                and call_time_6month = #{callTime6month,jdbcType=VARCHAR}
+            </if>
+            <if test="callTimeActive6month != null and callTimeActive6month != '' ">
+                and call_time_active_6month = #{callTimeActive6month,jdbcType=VARCHAR}
+            </if>
+            <if test="callTimePassive6month != null and callTimePassive6month != '' ">
+                and call_time_passive_6month = #{callTimePassive6month,jdbcType=VARCHAR}
+            </if>
+            <if test="continueActiveDayOver11call1month != null and continueActiveDayOver11call1month != '' ">
+                and continue_active_day_over1_1call_1month = #{continueActiveDayOver11call1month,jdbcType=VARCHAR}
+            </if>
+            <if test="continueActiveDayOver31call1month != null and continueActiveDayOver31call1month != '' ">
+                and continue_active_day_over3_1call_1month = #{continueActiveDayOver31call1month,jdbcType=VARCHAR}
+            </if>
+            <if test="continueActiveDayOver11call3month != null and continueActiveDayOver11call3month != '' ">
+                and continue_active_day_over1_1call_3month = #{continueActiveDayOver11call3month,jdbcType=VARCHAR}
+            </if>
+            <if test="continueActiveDayOver31call3month != null and continueActiveDayOver31call3month != '' ">
+                and continue_active_day_over3_1call_3month = #{continueActiveDayOver31call3month,jdbcType=VARCHAR}
+            </if>
+            <if test="continueActiveDayOver11call6month != null and continueActiveDayOver11call6month != '' ">
+                and continue_active_day_over1_1call_6month = #{continueActiveDayOver11call6month,jdbcType=VARCHAR}
+            </if>
+            <if test="continueActiveDayOver31call6month != null and continueActiveDayOver31call6month != '' ">
+                and continue_active_day_over3_1call_6month = #{continueActiveDayOver31call6month,jdbcType=VARCHAR}
+            </if>
+            <if test="maxContinueActiveDay1call1month != null and maxContinueActiveDay1call1month != '' ">
+                and max_continue_active_day_1call_1month = #{maxContinueActiveDay1call1month,jdbcType=VARCHAR}
+            </if>
+            <if test="maxContinueActiveDay1call3month != null and maxContinueActiveDay1call3month != '' ">
+                and max_continue_active_day_1call_3month = #{maxContinueActiveDay1call3month,jdbcType=VARCHAR}
+            </if>
+            <if test="maxContinueActiveDay1call6month != null and maxContinueActiveDay1call6month != '' ">
+                and max_continue_active_day_1call_6month = #{maxContinueActiveDay1call6month,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheCallAreaStatsPerCity">
+        insert into cl_mohe_call_area_stats_per_city(user_id,task_id,call_area_city,call_area_seq_no,active_day_1call_1month,active_day_1call_active_1month,active_day_1call_3month,active_day_1call_active_3month,active_day_1call_6month,active_day_1call_active_6month,call_count_1month,call_count_3month,call_count_active_3month,call_count_passive_3month,call_count_workday_3month,call_count_holiday_3month,call_count_6month,call_count_active_6month,call_count_passive_6month,call_count_workday_6month,call_count_holiday_6month,call_time_1month,call_time_3month,call_time_active_3month,call_time_passive_3month,call_time_6month,call_time_active_6month,call_time_passive_6month,continue_active_day_over1_1call_1month,continue_active_day_over3_1call_1month,continue_active_day_over1_1call_3month,continue_active_day_over3_1call_3month,continue_active_day_over1_1call_6month,continue_active_day_over3_1call_6month,max_continue_active_day_1call_1month,max_continue_active_day_1call_3month,max_continue_active_day_1call_6month)values(#{userId,jdbcType=BIGINT},#{taskId,jdbcType=VARCHAR},#{callAreaCity,jdbcType=VARCHAR},#{callAreaSeqNo,jdbcType=VARCHAR},#{activeDay1call1month,jdbcType=VARCHAR},#{activeDay1callActive1month,jdbcType=VARCHAR},#{activeDay1call3month,jdbcType=VARCHAR},#{activeDay1callActive3month,jdbcType=VARCHAR},#{activeDay1call6month,jdbcType=VARCHAR},#{activeDay1callActive6month,jdbcType=VARCHAR},#{callCount1month,jdbcType=VARCHAR},#{callCount3month,jdbcType=VARCHAR},#{callCountActive3month,jdbcType=VARCHAR},#{callCountPassive3month,jdbcType=VARCHAR},#{callCountWorkday3month,jdbcType=VARCHAR},#{callCountHoliday3month,jdbcType=VARCHAR},#{callCount6month,jdbcType=VARCHAR},#{callCountActive6month,jdbcType=VARCHAR},#{callCountPassive6month,jdbcType=VARCHAR},#{callCountWorkday6month,jdbcType=VARCHAR},#{callCountHoliday6month,jdbcType=VARCHAR},#{callTime1month,jdbcType=VARCHAR},#{callTime3month,jdbcType=VARCHAR},#{callTimeActive3month,jdbcType=VARCHAR},#{callTimePassive3month,jdbcType=VARCHAR},#{callTime6month,jdbcType=VARCHAR},#{callTimeActive6month,jdbcType=VARCHAR},#{callTimePassive6month,jdbcType=VARCHAR},#{continueActiveDayOver11call1month,jdbcType=VARCHAR},#{continueActiveDayOver31call1month,jdbcType=VARCHAR},#{continueActiveDayOver11call3month,jdbcType=VARCHAR},#{continueActiveDayOver31call3month,jdbcType=VARCHAR},#{continueActiveDayOver11call6month,jdbcType=VARCHAR},#{continueActiveDayOver31call6month,jdbcType=VARCHAR},#{maxContinueActiveDay1call1month,jdbcType=VARCHAR},#{maxContinueActiveDay1call3month,jdbcType=VARCHAR},#{maxContinueActiveDay1call6month,jdbcType=VARCHAR})
+    </insert>
+
+
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheCallAreaStatsPerCity">
+        update cl_mohe_call_area_stats_per_city set
+        user_id = #{userId,jdbcType=BIGINT},
+        task_id = #{taskId,jdbcType=VARCHAR},
+        call_area_city = #{callAreaCity,jdbcType=VARCHAR},
+        call_area_seq_no = #{callAreaSeqNo,jdbcType=VARCHAR},
+        active_day_1call_1month = #{activeDay1call1month,jdbcType=VARCHAR},
+        active_day_1call_active_1month = #{activeDay1callActive1month,jdbcType=VARCHAR},
+        active_day_1call_3month = #{activeDay1call3month,jdbcType=VARCHAR},
+        active_day_1call_active_3month = #{activeDay1callActive3month,jdbcType=VARCHAR},
+        active_day_1call_6month = #{activeDay1call6month,jdbcType=VARCHAR},
+        active_day_1call_active_6month = #{activeDay1callActive6month,jdbcType=VARCHAR},
+        call_count_1month = #{callCount1month,jdbcType=VARCHAR},
+        call_count_3month = #{callCount3month,jdbcType=VARCHAR},
+        call_count_active_3month = #{callCountActive3month,jdbcType=VARCHAR},
+        call_count_passive_3month = #{callCountPassive3month,jdbcType=VARCHAR},
+        call_count_workday_3month = #{callCountWorkday3month,jdbcType=VARCHAR},
+        call_count_holiday_3month = #{callCountHoliday3month,jdbcType=VARCHAR},
+        call_count_6month = #{callCount6month,jdbcType=VARCHAR},
+        call_count_active_6month = #{callCountActive6month,jdbcType=VARCHAR},
+        call_count_passive_6month = #{callCountPassive6month,jdbcType=VARCHAR},
+        call_count_workday_6month = #{callCountWorkday6month,jdbcType=VARCHAR},
+        call_count_holiday_6month = #{callCountHoliday6month,jdbcType=VARCHAR},
+        call_time_1month = #{callTime1month,jdbcType=VARCHAR},
+        call_time_3month = #{callTime3month,jdbcType=VARCHAR},
+        call_time_active_3month = #{callTimeActive3month,jdbcType=VARCHAR},
+        call_time_passive_3month = #{callTimePassive3month,jdbcType=VARCHAR},
+        call_time_6month = #{callTime6month,jdbcType=VARCHAR},
+        call_time_active_6month = #{callTimeActive6month,jdbcType=VARCHAR},
+        call_time_passive_6month = #{callTimePassive6month,jdbcType=VARCHAR},
+        continue_active_day_over1_1call_1month = #{continueActiveDayOver11call1month,jdbcType=VARCHAR},
+        continue_active_day_over3_1call_1month = #{continueActiveDayOver31call1month,jdbcType=VARCHAR},
+        continue_active_day_over1_1call_3month = #{continueActiveDayOver11call3month,jdbcType=VARCHAR},
+        continue_active_day_over3_1call_3month = #{continueActiveDayOver31call3month,jdbcType=VARCHAR},
+        continue_active_day_over1_1call_6month = #{continueActiveDayOver11call6month,jdbcType=VARCHAR},
+        continue_active_day_over3_1call_6month = #{continueActiveDayOver31call6month,jdbcType=VARCHAR},
+        max_continue_active_day_1call_1month = #{maxContinueActiveDay1call1month,jdbcType=VARCHAR},
+        max_continue_active_day_1call_3month = #{maxContinueActiveDay1call3month,jdbcType=VARCHAR},
+        max_continue_active_day_1call_6month = #{maxContinueActiveDay1call6month,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_mohe_call_area_stats_per_city
+        <set>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="callAreaCity != null and callAreaCity != '' ">
+                call_area_city = #{callAreaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="callAreaSeqNo != null and callAreaSeqNo != '' ">
+                call_area_seq_no = #{callAreaSeqNo,jdbcType=VARCHAR},
+            </if>
+            <if test="activeDay1call1month != null and activeDay1call1month != '' ">
+                active_day_1call_1month = #{activeDay1call1month,jdbcType=VARCHAR},
+            </if>
+            <if test="activeDay1callActive1month != null and activeDay1callActive1month != '' ">
+                active_day_1call_active_1month = #{activeDay1callActive1month,jdbcType=VARCHAR},
+            </if>
+            <if test="activeDay1call3month != null and activeDay1call3month != '' ">
+                active_day_1call_3month = #{activeDay1call3month,jdbcType=VARCHAR},
+            </if>
+            <if test="activeDay1callActive3month != null and activeDay1callActive3month != '' ">
+                active_day_1call_active_3month = #{activeDay1callActive3month,jdbcType=VARCHAR},
+            </if>
+            <if test="activeDay1call6month != null and activeDay1call6month != '' ">
+                active_day_1call_6month = #{activeDay1call6month,jdbcType=VARCHAR},
+            </if>
+            <if test="activeDay1callActive6month != null and activeDay1callActive6month != '' ">
+                active_day_1call_active_6month = #{activeDay1callActive6month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCount1month != null and callCount1month != '' ">
+                call_count_1month = #{callCount1month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCount3month != null and callCount3month != '' ">
+                call_count_3month = #{callCount3month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCountActive3month != null and callCountActive3month != '' ">
+                call_count_active_3month = #{callCountActive3month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCountPassive3month != null and callCountPassive3month != '' ">
+                call_count_passive_3month = #{callCountPassive3month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCountWorkday3month != null and callCountWorkday3month != '' ">
+                call_count_workday_3month = #{callCountWorkday3month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCountHoliday3month != null and callCountHoliday3month != '' ">
+                call_count_holiday_3month = #{callCountHoliday3month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCount6month != null and callCount6month != '' ">
+                call_count_6month = #{callCount6month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCountActive6month != null and callCountActive6month != '' ">
+                call_count_active_6month = #{callCountActive6month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCountPassive6month != null and callCountPassive6month != '' ">
+                call_count_passive_6month = #{callCountPassive6month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCountWorkday6month != null and callCountWorkday6month != '' ">
+                call_count_workday_6month = #{callCountWorkday6month,jdbcType=VARCHAR},
+            </if>
+            <if test="callCountHoliday6month != null and callCountHoliday6month != '' ">
+                call_count_holiday_6month = #{callCountHoliday6month,jdbcType=VARCHAR},
+            </if>
+            <if test="callTime1month != null and callTime1month != '' ">
+                call_time_1month = #{callTime1month,jdbcType=VARCHAR},
+            </if>
+            <if test="callTime3month != null and callTime3month != '' ">
+                call_time_3month = #{callTime3month,jdbcType=VARCHAR},
+            </if>
+            <if test="callTimeActive3month != null and callTimeActive3month != '' ">
+                call_time_active_3month = #{callTimeActive3month,jdbcType=VARCHAR},
+            </if>
+            <if test="callTimePassive3month != null and callTimePassive3month != '' ">
+                call_time_passive_3month = #{callTimePassive3month,jdbcType=VARCHAR},
+            </if>
+            <if test="callTime6month != null and callTime6month != '' ">
+                call_time_6month = #{callTime6month,jdbcType=VARCHAR},
+            </if>
+            <if test="callTimeActive6month != null and callTimeActive6month != '' ">
+                call_time_active_6month = #{callTimeActive6month,jdbcType=VARCHAR},
+            </if>
+            <if test="callTimePassive6month != null and callTimePassive6month != '' ">
+                call_time_passive_6month = #{callTimePassive6month,jdbcType=VARCHAR},
+            </if>
+            <if test="continueActiveDayOver11call1month != null and continueActiveDayOver11call1month != '' ">
+                continue_active_day_over1_1call_1month = #{continueActiveDayOver11call1month,jdbcType=VARCHAR},
+            </if>
+            <if test="continueActiveDayOver31call1month != null and continueActiveDayOver31call1month != '' ">
+                continue_active_day_over3_1call_1month = #{continueActiveDayOver31call1month,jdbcType=VARCHAR},
+            </if>
+            <if test="continueActiveDayOver11call3month != null and continueActiveDayOver11call3month != '' ">
+                continue_active_day_over1_1call_3month = #{continueActiveDayOver11call3month,jdbcType=VARCHAR},
+            </if>
+            <if test="continueActiveDayOver31call3month != null and continueActiveDayOver31call3month != '' ">
+                continue_active_day_over3_1call_3month = #{continueActiveDayOver31call3month,jdbcType=VARCHAR},
+            </if>
+            <if test="continueActiveDayOver11call6month != null and continueActiveDayOver11call6month != '' ">
+                continue_active_day_over1_1call_6month = #{continueActiveDayOver11call6month,jdbcType=VARCHAR},
+            </if>
+            <if test="continueActiveDayOver31call6month != null and continueActiveDayOver31call6month != '' ">
+                continue_active_day_over3_1call_6month = #{continueActiveDayOver31call6month,jdbcType=VARCHAR},
+            </if>
+            <if test="maxContinueActiveDay1call1month != null and maxContinueActiveDay1call1month != '' ">
+                max_continue_active_day_1call_1month = #{maxContinueActiveDay1call1month,jdbcType=VARCHAR},
+            </if>
+            <if test="maxContinueActiveDay1call3month != null and maxContinueActiveDay1call3month != '' ">
+                max_continue_active_day_1call_3month = #{maxContinueActiveDay1call3month,jdbcType=VARCHAR},
+            </if>
+            <if test="maxContinueActiveDay1call6month != null and maxContinueActiveDay1call6month != '' ">
+                max_continue_active_day_1call_6month = #{maxContinueActiveDay1call6month,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_call_area_stats_per_city
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_call_area_stats_per_city
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_call_area_stats_per_city
+        <include refid="searchBy"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 统计管理 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.StatisticManageMapper">
+	<!-- 每日收入 -->
+	<sql id="income">
+		select sum(amount) income,repay_time time from (select  amount,DATE_FORMAT(repay_time,'%Y-%m-%d') repay_time from cl_borrow_repay_log ) t GROUP BY repay_time
+		ORDER BY repay_time DESC
+	</sql>
+	<!-- 每日支出 -->
+	<sql id="expend">
+		select sum(t.real_amount) expend,t.create_time time from (select b.real_amount,DATE_FORMAT(bp.create_time,'%Y-%m-%d') create_time from cl_borrow_progress bp LEFT JOIN cl_borrow b on bp.borrow_id = b.id where bp.state = '30' ) t  GROUP BY t.create_time
+		ORDER BY create_time DESC
+	</sql>
+	
+	<!-- 每日收支统计 -->
+	<select id="repayIncomeAndExpend" resultType="com.xindaibao.cashloan.cl.model.IncomeAndExpendModel" parameterType="java.util.Map">
+		select DISTINCT(p.time) date,
+			case when p2.income is null then 0 else p2.income end income,
+			case when p3.expend is null then 0 else p3.expend end expend
+		from (
+			(<include refid="income"></include>) UNION
+			(<include refid="expend"></include>) 
+		) p 
+		LEFT JOIN (<include refid="income"></include>) p2 on p.time = p2.time
+		LEFT JOIN (<include refid="expend"></include>) p3 on p.time = p3.time
+		<where>
+			<if test="startDate!=null and startDate!=''">
+				and p.time >= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				<![CDATA[ and p.time <= #{endDate,jdbcType=VARCHAR} ]]> 
+			</if>
+		</where>
+		ORDER BY p.time DESC
+	</select>
+	
+	<!-- 每日未还本金 -->
+	<select id="dayNeedAmount" resultType="com.xindaibao.cashloan.cl.model.DayNeedAmountModel" parameterType="java.util.Map">
+		select sum(amount) amount,sum(penalty_amout) penaltyAmount,repay_time date from (select amount,penalty_amout, DATE_FORMAT(repay_time,'%Y-%m-%d') repay_time from cl_borrow_repay where penalty_day > 0) t 
+		<where>
+			<if test="startDate!=null and startDate!=''">
+				and repay_time >= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				<![CDATA[ and repay_time <= #{endDate,jdbcType=VARCHAR} ]]> 
+			</if>
+		</where>
+		GROUP BY repay_time
+		ORDER BY repay_time DESC
+	</select>
+	
+	<sql id="incomeSql">
+		select  u.real_name realName,br.amount,DATE_FORMAT(br.repay_time,'%Y-%m-%d %T') date from cl_borrow_repay_log br LEFT JOIN cl_user_base_info u on br.user_id = u.user_id
+		<where>
+			<if test="startDate!=null and startDate!=''">
+				and DATE_FORMAT(br.repay_time,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				<![CDATA[ and DATE_FORMAT(br.repay_time,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR} ]]> 
+			</if>
+		</where>
+		ORDER BY br.repay_time DESC
+	</sql>
+	
+	<!-- 收入明细 -->
+	<select id="incomeDetail" resultType="com.xindaibao.cashloan.cl.model.IncomeDetailModel" parameterType="java.util.Map">
+		<include refid="incomeSql"></include>
+	</select>
+	<!-- 收入总额 -->
+	<select id="incomeSum" resultType="java.lang.Double" parameterType="java.util.Map">
+		select sum(amount) amount from (<include refid="incomeSql"></include>) t
+	</select>
+	
+	
+	<sql id="expendSql">
+		select u.real_name realName,DATE_FORMAT(bp.create_time,'%Y-%m-%d  %T') date,b.real_amount amount from cl_borrow_progress bp 
+		LEFT JOIN cl_borrow b on bp.borrow_id = b.id
+		LEFT JOIN cl_user_base_info u on u.user_id = bp.user_id
+		<where>
+			bp.state = '30'
+			<if test="startDate!=null and startDate!=''">
+				and DATE_FORMAT(bp.create_time,'%Y-%m-%d') >= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				<![CDATA[ and DATE_FORMAT(bp.create_time,'%Y-%m-%d') <= #{endDate,jdbcType=VARCHAR} ]]> 
+			</if>
+		</where>
+		ORDER BY bp.create_time DESC
+	</sql>
+	<!-- 支出明细 -->
+	<select id="expendDetail" resultType="com.xindaibao.cashloan.cl.model.ExpendDetailModel" parameterType="java.util.Map">
+		<include refid="expendSql"></include>
+	</select>
+	<!-- 支出总额 -->
+	<select id="expendSum" resultType="java.lang.Double" parameterType="java.util.Map">
+		select sum(amount) amount from (<include refid="expendSql"></include>) t
+	</select>
+</mapper>

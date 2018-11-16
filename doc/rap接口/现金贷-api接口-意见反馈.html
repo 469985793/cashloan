@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF8">
+    <title></title>
+    <style type="text/css">
+        #container {
+            margin: 8px;
+        }
+
+        .param-table {
+            background: #E6E6E6;
+            border: 1px solid #FFF;
+            margin: 12px 0;
+            border-collapse: collapse;
+        }
+
+        .param-table th {
+            background: gray;
+            color: #FFF;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid #FFF;
+            padding: 5px;
+        }
+
+        .param-table td {
+            border-collapse: collapse;
+            border: 1px solid #FFF;
+            font-size: 12px;
+            padding: 5px;
+        }
+
+        .param-table .th-name {
+            min-width: 140px;
+        }
+
+        .param-table .th-identifier {
+            min-width: 140px;
+        }
+
+        .param-table .th-type {
+            min-width: 100px;
+        }
+
+        .param-table .th-remark {
+            min-width: 200px;
+        }
+
+        .param-table .td-name {}
+
+        .param-table .td-identifier {}
+
+        .param-table .td-type   { color: #990000; }
+
+        .param-table .td-remark { color: #666; }
+
+        .param-table .tr-level-1 { background: #F5F5F5; }
+        .param-table .tr-level-1 .td-identifier { padding-left: 5px; }
+
+        .param-table .tr-level-2 { background: #E6E6E6; }
+        .param-table .tr-level-2 .td-identifier { padding-left: 15px; }
+
+        .param-table .tr-level-3 { background: #CCCCCC; }
+        .param-table .tr-level-3 .td-identifier { padding-left: 25px; }
+
+        .param-table .tr-level-4 { background: #E6E6E6; }
+        .param-table .tr-level-4 .td-identifier { padding-left: 35px; }
+
+        .param-table .tr-level-5 { background: #CCCCCC; }
+        .param-table .tr-level-5 .td-identifier { padding-left: 45px; }
+
+        .param-table .tr-level-6 { background: #E6E6E6; }
+        .param-table .tr-level-6 .td-identifier { padding-left: 55px; }
+
+        .param-table .tr-level-7 { background: #CCCCCC; }
+        .param-table .tr-level-7 .td-identifier { padding-left: 65px; }
+
+        .param-table .tr-level-8 { background: #E6E6E6; }
+        .param-table .tr-level-8 .td-identifier { padding-left: 75px; }
+
+        .param-table .tr-level-9 { background: #CCCCCC; }
+        .param-table .tr-level-9 .td-identifier { padding-left: 85px; }
+
+        .param-table .tr-level-10 { background: #E6E6E6; }
+        .param-table .tr-level-10 .td-identifier { padding-left: 95px; }
+
+        .param-table .tr-level-11 {
+            background: #CCCCCC;
+        }
+        .param-table .tr-level-11 .td-identifier { padding-left: 105px; }
+
+        .param-table .tr-level-12 {
+            background: #E6E6E6;
+        }
+        .param-table .tr-level-12 .td-identifier { padding-left: 115px; }
+
+        .param-table .tr-level-13 {
+            background: #CCCCCC;
+        }
+        .param-table .tr-level-13 .td-identifier { padding-left: 125px; }
+    </style>
+</head>
+<body>
+<div id="container">
+            <div class="module">
+            <h1>1&nbsp;某模块（点击编辑后双击修改）</h1>
+                            <div class="page">
+                    <h2>1.1&nbsp;意见反馈</h2>
+                                            <div class="action">
+                            <h3>1.1.1&nbsp;保存意见</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/opinion/submit.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">意见</td><td class="td-identifier">feedback</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=提交成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.2&nbsp;获取提交过的意见</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/opinion/page.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=7</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list|7</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------用户意见</td><td class="td-identifier">feedback</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;1&#39;,&#39;1&#39;,&#39;1&#39;,&#39;1&#39;,&#39;1&#39;,&#39;1&#39;,&#39;1&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------用户id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(2,2,2,2,2,2,2)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(1,2,3,4,5,6,7)</td></tr><tr class="tr-level-3"><td class="td-name">------添加时间</td><td class="td-identifier">createTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;Thu Feb 16 09:57:50 CST 2017&#39;,&#39;2017-02-16 10:26:59&#39;,&#39;2017-02-16 10:27:16&#39;,&#39;2017-02-16 10:47:39&#39;,&#39;2017-02-16 10:47:43&#39;,&#39;2017-02-16 11:23:22&#39;,&#39;2017-02-18 14:07:43&#39;)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                    </div>
+                    </div>
+    </div>
+</body>
+</html>

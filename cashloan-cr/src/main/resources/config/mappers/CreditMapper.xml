@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_credit表:授信额度管理模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.CreditMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.Credit">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="consumer_no" property="consumerNo" jdbcType="VARCHAR" />
+        <result column="total" property="total" jdbcType="DECIMAL" />
+        <result column="credit_type" property="creditType" jdbcType="INTEGER" />
+        <result column="grade" property="grade" jdbcType="VARCHAR" />
+        <result column="used" property="used" jdbcType="DECIMAL" />
+        <result column="unuse" property="unuse" jdbcType="DECIMAL" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="req_ext" property="reqExt" jdbcType="VARCHAR" />
+        <result column="count" property="count" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap id="resultModel" extends="BaseResultMap" type="com.xindaibao.creditrank.cr.model.CreditModel">
+    	<result column="real_name" property="realName" jdbcType="VARCHAR" />
+    	<result column="phone" property="phone" jdbcType="VARCHAR" />
+    	<result column="id_no" property="idNo" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,consumer_no,total,credit_type,grade,used,unuse,state,req_ext,count 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="consumerNo !='' and consumerNo !=null">
+                and consumer_no = #{consumerNo,jdbcType=VARCHAR}
+            </if>
+            <if test="total !='' and total !=null">
+                and total = #{total,jdbcType=DECIMAL}
+            </if>
+            <if test="creditType !='' and creditType !=null">
+                and credit_type = #{creditType,jdbcType=INTEGER}
+            </if>
+            <if test="grade !='' and grade !=null">
+                and grade = #{grade,jdbcType=VARCHAR}
+            </if>
+            <if test="used !='' and used !=null">
+                and used = #{used,jdbcType=DECIMAL}
+            </if>
+            <if test="unuse !='' and unuse !=null">
+                and unuse = #{unuse,jdbcType=DECIMAL}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt !='' and reqExt !=null">
+                and req_ext = #{reqExt,jdbcType=VARCHAR}
+            </if>
+            <if test="count !='' and count !=null">
+                and count = #{count,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.Credit" useGeneratedKeys="true" keyProperty="id">
+        insert into arc_credit(consumer_no,total,credit_type,grade,used,unuse,state,req_ext) values(#{consumerNo,jdbcType=VARCHAR},#{total,jdbcType=DECIMAL},#{creditType,jdbcType=INTEGER},#{grade,jdbcType=VARCHAR},#{used,jdbcType=DECIMAL},#{unuse,jdbcType=DECIMAL},#{state,jdbcType=VARCHAR},#{reqExt,jdbcType=VARCHAR},#{count,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.Credit">
+        update arc_credit set 
+            consumer_no = #{consumerNo,jdbcType=VARCHAR},
+            total = #{total,jdbcType=DECIMAL},
+            credit_type = #{creditType,jdbcType=INTEGER},
+            grade = #{grade,jdbcType=VARCHAR},
+            used = #{used,jdbcType=DECIMAL},
+            unuse = #{unuse,jdbcType=DECIMAL},
+            state = #{state,jdbcType=VARCHAR},
+            req_ext = #{reqExt,jdbcType=VARCHAR},
+            count = #{count,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+	<update id="updateAmount" parameterType="java.util.HashMap">
+        update arc_credit set 
+            used = used + #{used,jdbcType=DECIMAL},
+            unuse = unuse + #{unuse,jdbcType=DECIMAL} 
+        where id = #{id ,jdbcType=INTEGER} and used + #{used,jdbcType=DECIMAL} >= 0 and unuse + #{unuse,jdbcType=DECIMAL} >= 0
+    </update>
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_credit
+          <set>
+            <if test="consumerNo != null and consumerNo != '' ">        
+                consumer_no = #{consumerNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="total != null and total != '' ">        
+                total = #{total,jdbcType=DECIMAL},                
+            </if>
+            <if test="creditType != null and creditType != '' ">        
+                credit_type = #{creditType,jdbcType=INTEGER},                
+            </if>
+            <if test="grade !='' and grade !=null">
+                grade = #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="used != null and used != '' ">        
+                used = #{used,jdbcType=DECIMAL},                
+            </if>
+            <if test="unuse != null and unuse != '' or unuse == 0 ">        
+                unuse = #{unuse,jdbcType=DECIMAL},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="reqExt != null and reqExt != '' ">        
+                req_ext = #{reqExt,jdbcType=VARCHAR},                
+            </if>
+             <if test="count != null and count != '' ">        
+                count = #{count,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_credit
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_credit
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_credit
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listAll" resultMap="resultModel" parameterType="java.util.HashMap">
+        SELECT ac.id,ac.consumer_no,ac.grade,ac.total,ac.unuse,ac.state,asdd.item_value AS creditName
+		FROM arc_credit AS ac LEFT JOIN arc_sys_dict_detail as asdd ON ac.credit_type = asdd.id
+		WHERE ac.consumer_no = #{consumerNo,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="page" resultMap="resultModel" parameterType="java.util.HashMap">
+        SELECT au.user_id as consumer_no,au.real_name,au.id_no,au.phone,ac.id,
+        SUM(ac.total) AS total,SUM(CASE WHEN ac.state=10 THEN ac.unuse ELSE 0 END) AS unuse,ac.state
+		FROM `arc_credit` AS ac LEFT JOIN cl_user_base_info AS au ON au.user_id = ac.consumer_no
+		<where>
+        	<if test="realName !='' and realName !=null">
+                au.real_name = #{realName,jdbcType=VARCHAR}
+            </if>
+            <if test="idNo !='' and idNo !=null">
+                and  au.id_no = #{idNo,jdbcType=VARCHAR}
+            </if>
+            <if test="consumerNo !='' and consumerNo !=null">
+                and  au.user_id = #{consumerNo,jdbcType=VARCHAR}
+            </if>
+            <if test="state !='' and state !=null">
+                and  ac.state = #{state,jdbcType=VARCHAR}
+            </if>
+        </where>
+        GROUP BY au.user_id
+    </select>
+    
+    <select id="creditList" resultMap="resultModel" parameterType="java.util.HashMap">
+         select  au.id,au.user_id,au.state,au.real_name, au.phone, au.id_no,  ac.total, ac.unuse, ac.used 
+          from cl_user_base_info  AS au left join arc_credit AS ac on au.user_id = ac.consumer_no
+        <where>
+        <if test="realName != null and realName != '' ">        
+             and au.real_name like concat("%",#{realName},"%") 
+        </if>
+        <if test="phone != null and phone != '' ">        
+             and au.phone like  concat("%",#{phone},"%")    
+        </if>
+        <if test="idNo != null and idNo != '' ">        
+             and au.id_no like concat("%", #{idNo},"%")   
+        </if>
+        <if test="state != null and state != '' ">        
+             and au.state = #{state}             
+        </if> 
+        </where>
+    </select> 
+    
+    <!--用户认证完成后，根据评分结果，更新额度 -->
+     <update id="updateByAuth"  parameterType="java.util.HashMap">
+        update arc_credit t,arc_cr_result r,arc_cr_credit_type ct
+		set t.total = r.total_amount,
+		t.credit_type=ct.credit_type_id,
+		t.unuse = r.total_amount,
+		t.used = #{used,jdbcType=DECIMAL},
+		t.state = #{state,jdbcType=DECIMAL}
+		where t.consumer_no = r.consumer_no and r.credit_type_id=ct.id
+		and t.consumer_no =#{consumerNo,jdbcType=VARCHAR};
+    </update>
+    
+    <!--根据userId修改额度，提额/逾期恢复到原额度 -->
+     <update id="updateByUserId"  parameterType="java.util.HashMap">
+        update arc_credit
+        <set>
+            <if test="consumerNo != null and consumerNo != '' ">        
+                consumer_no = #{consumerNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="total != null and total != '' ">        
+                total = #{total,jdbcType=DECIMAL},                
+            </if>
+            <if test="creditType != null and creditType != '' ">        
+                credit_type = #{creditType,jdbcType=INTEGER},                
+            </if>
+            <if test="grade !='' and grade !=null">
+                grade = #{grade,jdbcType=VARCHAR},
+            </if>
+            <if test="used != null and used != '' ">        
+                used = #{used,jdbcType=DECIMAL},                
+            </if>
+            <if test="unuse != null and unuse != '' or unuse == 0 ">        
+                unuse = #{unuse,jdbcType=DECIMAL},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="reqExt != null and reqExt != '' ">        
+                req_ext = #{reqExt,jdbcType=VARCHAR},                
+            </if>
+             <if test="count != null and count != '' ">        
+                count = #{count,jdbcType=VARCHAR}                
+            </if>
+        </set>                    
+        where consumer_no = #{consumerNo,jdbcType=VARCHAR}
+    </update>
+    
+     <select id="findByConsumerNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        id,consumer_no,total,credit_type,grade,used,unuse,state,req_ext,count 
+        from arc_credit
+        where consumer_no = #{consumerNo,jdbcType=VARCHAR}
+    </select>
+    
+</mapper>

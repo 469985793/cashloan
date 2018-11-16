@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_profit_amount表:分润资金模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ProfitAmountMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ProfitAmount">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="total" property="total" jdbcType="DECIMAL" />
+        <result column="no_cashed" property="noCashed" jdbcType="DECIMAL" />
+        <result column="cashed" property="cashed" jdbcType="DECIMAL" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,total,no_cashed,cashed,state 
+    </sql>
+    
+    <resultMap id="ManageProfitAmountModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageProfitAmountModel">
+    	
+    </resultMap>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="total !='' and total !=null">
+                and total = #{total,jdbcType=DECIMAL}
+            </if>
+            <if test="noCashed !='' and noCashed !=null">
+                and no_cashed = #{noCashed,jdbcType=DECIMAL}
+            </if>
+            <if test="cashed !='' and cashed !=null">
+                and cashed = #{cashed,jdbcType=DECIMAL}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ProfitAmount">
+        insert into cl_profit_amount(user_id,total,no_cashed,cashed,state)values(#{userId,jdbcType=INTEGER},#{total,jdbcType=DECIMAL},#{noCashed,jdbcType=DECIMAL},#{cashed,jdbcType=DECIMAL},#{state,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ProfitAmount">
+        update cl_profit_amount set 
+            user_id = #{userId,jdbcType=INTEGER},
+            total = #{total,jdbcType=DECIMAL},
+            no_cashed = #{noCashed,jdbcType=DECIMAL},
+            cashed = #{cashed,jdbcType=DECIMAL},
+            state = #{state,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_profit_amount
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="total != null and total != '' ">        
+                total = #{total,jdbcType=DECIMAL},                
+            </if>
+            <if test="noCashed != null and noCashed != '' ">        
+                no_cashed = #{noCashed,jdbcType=DECIMAL},                
+            </if>
+            <if test="cashed != null and cashed != '' ">        
+                cashed = #{cashed,jdbcType=DECIMAL},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+    
+    <update id="cash"  parameterType="java.util.HashMap">
+        update cl_profit_amount
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="total != null and total != '' ">        
+                total = #{total,jdbcType=DECIMAL},                
+            </if>
+            <if test="noCashed != null and noCashed != '' ">        
+                no_cashed = #{noCashed,jdbcType=DECIMAL},                
+            </if>
+            <if test="cashed != null and cashed != '' ">        
+                cashed = #{cashed,jdbcType=DECIMAL},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_amount
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_amount
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_amount
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findAmount" resultMap="ManageProfitAmountModel" parameterType="java.util.HashMap">
+        SELECT cpa.id,user_id,
+		(SELECT login_name FROM cl_user WHERE id=cpa.user_id)AS userName,
+		(SELECT real_name FROM cl_user_base_info WHERE user_id = cpa.user_id)AS realName,
+		total,no_cashed,cashed
+		FROM `cl_profit_amount`AS cpa
+		WHERE (user_id IN ((SELECT user_id FROM cl_profit_agent WHERE leader_id = #{id,jdbcType=INTEGER}))
+		OR user_id = #{id,jdbcType=INTEGER})
+		<if test="userName != null and userName != '' ">
+			AND (SELECT login_name FROM cl_user WHERE id=cpa.user_id) LIKE #{userName,jdbcType=VARCHAR}
+		</if>
+		ORDER BY cpa.id DESC
+    </select>
+    
+    <select id="findSysAmount" resultMap="ManageProfitAmountModel " parameterType="java.util.HashMap">
+		SELECT cpa.id, login_name AS userName,cpa.total,cpa.no_cashed,cpa.cashed,cpa.user_id,
+		(SELECT real_name FROM cl_user_base_info WHERE user_id = cu.id)AS realName
+		FROM cl_user AS cu,cl_profit_amount AS cpa
+		WHERE cu.id = cpa.user_id 
+		<if test="userName !=null">
+             AND cu.login_name LIKE #{userName,jdbcType=INTEGER}
+        </if>
+        ORDER BY cpa.id DESC
+    </select>
+    
+    
+    <select id="listNoCash" resultMap="BaseResultMap">
+    	select 
+	    	<include refid="Base_Column_List" />
+        from cl_profit_amount
+        where no_cashed &gt; 0
+    </select>
+    
+    <!-- 更新未打款记录 -->
+    <update id="addNocashedAmount" parameterType="java.util.HashMap">
+    	update cl_profit_amount set total = total + #{amount,jdbcType=DECIMAL} , no_cashed = no_cashed + #{amount,jdbcType=DECIMAL} where user_id = #{userId,jdbcType=BIGINT}
+    </update>
+</mapper>

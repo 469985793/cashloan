@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_basic表:运营商信息-基础信息模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorBasicMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorBasic">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+        <result column="basic_expenditure" property="basicExpenditure" jdbcType="DECIMAL" />
+        <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+        <result column="extend_join_dt" property="extendJoinDt" jdbcType="TIMESTAMP" />
+        <result column="basic_all_bonus" property="basicAllBonus" jdbcType="INTEGER" />
+        <result column="extend_certifed_status" property="extendCertifedStatus" jdbcType="VARCHAR" />
+        <result column="basic_balance" property="basicBalance" jdbcType="DECIMAL" />
+        <result column="basic_phone_num" property="basicPhoneNum" jdbcType="VARCHAR" />
+        <result column="extend_belongto" property="extendBelongto" jdbcType="VARCHAR" />
+        <result column="extend_contact_addr" property="extendContactAddr" jdbcType="VARCHAR" />
+        <result column="extend_phone_age" property="extendPhoneAge" jdbcType="VARCHAR" />
+        <result column="biz_no" property="bizNo" jdbcType="VARCHAR" />
+        <result column="basic_user_name" property="basicUserName" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,gmt_modified,basic_expenditure,gmt_create,extend_join_dt,basic_all_bonus,extend_certifed_status,
+        basic_balance,basic_phone_num,extend_belongto,extend_contact_addr,extend_phone_age,biz_no,basic_user_name,create_time
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test=" userId !=null">
+                and user_id  = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="gmtModified !=null">
+                and gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+            </if>
+            <if test="basicExpenditure !=null">
+                and basic_expenditure = #{basicExpenditure,jdbcType=DECIMAL}
+            </if>
+            <if test="gmtCreate !=null">
+                and gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="extendJoinDt !=null">
+                and extend_join_dt = #{extendJoinDt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="basicAllBonus !=null">
+                and basic_all_bonus = #{basicAllBonus,jdbcType=INTEGER}
+            </if>
+            <if test="extendCertifedStatus !=null and extendCertifedStatus !=''">
+                and extend_certifed_status = #{extendCertifedStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="basicBalance !=null">
+                and basic_balance = #{basicBalance,jdbcType=DECIMAL}
+            </if>
+            <if test="basicPhoneNum !=null and basicPhoneNum !=''">
+                and basic_phone_num = #{basicPhoneNum,jdbcType=VARCHAR}
+            </if>
+            <if test="extendBelongto !=null and extendBelongto !=''">
+                and extend_belongto = #{extendBelongto,jdbcType=VARCHAR}
+            </if>
+            <if test="extendContactAddr !=null and extendContactAddr !=''">
+                and extend_contact_addr = #{extendContactAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="extendPhoneAge !=null and extendPhoneAge !=''">
+                and extend_phone_age = #{extendPhoneAge,jdbcType=VARCHAR}
+            </if>
+            <if test="bizNo !=null and bizNo !=''">
+                and biz_no = #{bizNo,jdbcType=VARCHAR}
+            </if>
+            <if test="basicUserName !=null and basicUserName !=''">
+                and basic_user_name = #{basicUserName,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.OperatorBasic">
+        insert into cl_operator_basic(
+        	user_id,
+        	gmt_modified,
+        	basic_expenditure,
+        	gmt_create,
+        	extend_join_dt,
+        	basic_all_bonus,
+        	extend_certifed_status,
+        	basic_balance,
+        	basic_phone_num,
+        	extend_belongto,
+        	extend_contact_addr,
+        	extend_phone_age,
+        	biz_no,
+        	basic_user_name,
+        	create_time
+        )values(
+        	#{userId,jdbcType=BIGINT},
+        	#{gmtModified,jdbcType=TIMESTAMP},
+        	#{basicExpenditure,jdbcType=DECIMAL},
+        	#{gmtCreate,jdbcType=TIMESTAMP},
+        	#{extendJoinDt,jdbcType=TIMESTAMP},
+        	#{basicAllBonus,jdbcType=INTEGER},
+        	#{extendCertifedStatus,jdbcType=VARCHAR},
+        	#{basicBalance,jdbcType=DECIMAL},
+        	#{basicPhoneNum,jdbcType=VARCHAR},
+        	#{extendBelongto,jdbcType=VARCHAR},
+        	#{extendContactAddr,jdbcType=VARCHAR},
+        	#{extendPhoneAge,jdbcType=VARCHAR},
+        	#{bizNo,jdbcType=VARCHAR},
+        	#{basicUserName,jdbcType=VARCHAR},
+        	#{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.OperatorBasic">
+        update cl_operator_basic set 
+        	<if test=" userId !=null">
+                user_id  = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="gmtModified != null">        
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="basicExpenditure != null">        
+                basic_expenditure = #{basicExpenditure,jdbcType=DECIMAL},                
+            </if>
+            <if test="gmtCreate != null">        
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="extendJoinDt != null">        
+                extend_join_dt = #{extendJoinDt,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="basicAllBonus != null">        
+                basic_all_bonus = #{basicAllBonus,jdbcType=INTEGER},                
+            </if>
+            <if test="extendCertifedStatus != null and extendCertifedStatus != '' ">        
+                extend_certifed_status = #{extendCertifedStatus,jdbcType=VARCHAR},                
+            </if>
+            <if test="basicBalance != null">        
+                basic_balance = #{basicBalance,jdbcType=DECIMAL},                
+            </if>
+            <if test="basicPhoneNum != null and basicPhoneNum != '' ">        
+                basic_phone_num = #{basicPhoneNum,jdbcType=VARCHAR},                
+            </if>
+            <if test="extendBelongto != null and extendBelongto != '' ">        
+                extend_belongto = #{extendBelongto,jdbcType=VARCHAR},                
+            </if>
+            <if test="extendContactAddr != null and extendContactAddr != '' ">        
+                extend_contact_addr = #{extendContactAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="extendPhoneAge != null and extendPhoneAge != '' ">        
+                extend_phone_age = #{extendPhoneAge,jdbcType=VARCHAR},                
+            </if>
+            <if test="bizNo != null and bizNo != '' ">        
+                biz_no = #{bizNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="basicUserName != null and basicUserName != '' ">        
+                basic_user_name = #{basicUserName,jdbcType=VARCHAR},              
+            </if>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_operator_basic
+          <set>
+          	<if test=" userId !=null">
+                user_id  = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="gmtModified != null">        
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="basicExpenditure != null">        
+                basic_expenditure = #{basicExpenditure,jdbcType=DECIMAL},                
+            </if>
+            <if test="gmtCreate != null">        
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="extendJoinDt != null">        
+                extend_join_dt = #{extendJoinDt,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="basicAllBonus != null">        
+                basic_all_bonus = #{basicAllBonus,jdbcType=INTEGER},                
+            </if>
+            <if test="extendCertifedStatus != null and extendCertifedStatus != '' ">        
+                extend_certifed_status = #{extendCertifedStatus,jdbcType=VARCHAR},                
+            </if>
+            <if test="basicBalance != null">        
+                basic_balance = #{basicBalance,jdbcType=DECIMAL},                
+            </if>
+            <if test="basicPhoneNum != null and basicPhoneNum != '' ">        
+                basic_phone_num = #{basicPhoneNum,jdbcType=VARCHAR},                
+            </if>
+            <if test="extendBelongto != null and extendBelongto != '' ">        
+                extend_belongto = #{extendBelongto,jdbcType=VARCHAR},                
+            </if>
+            <if test="extendContactAddr != null and extendContactAddr != '' ">        
+                extend_contact_addr = #{extendContactAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="extendPhoneAge != null and extendPhoneAge != '' ">        
+                extend_phone_age = #{extendPhoneAge,jdbcType=VARCHAR},                
+            </if>
+            <if test="bizNo != null and bizNo != '' ">        
+                biz_no = #{bizNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="basicUserName != null and basicUserName != '' ">        
+                basic_user_name = #{basicUserName,jdbcType=VARCHAR},              
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_basic
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_basic
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_basic
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysUserMapper">
+	<resultMap type="com.xindaibao.cashloan.system.domain.SysUser"
+		id="sysUserResult">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="user_name" property="userName" />
+		<result column="password" property="password" />
+		<result column="job_num" property="jobNumber" />
+		<result column="company_id" property="companyId" />
+		<result column="office_id" property="officeId" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="mobile" property="mobile" />
+		<result column="status" property="status" />
+		<result column="login_ip" property="loginIp" />
+		<result column="login_time" property="loginTime" />
+		<result column="add_time" property="addTime" />
+		<result column="add_user" property="addUser" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_user" property="updateUser" />
+		<result column="remark" property="remark" />
+		<result column="position" property="position" />
+		<result column="office_over" property="officeOver" />
+	</resultMap>
+
+	<resultMap type="java.util.HashMap" id="userInfo">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="userName" column="userName" />
+		<result property="officeId" column="officeId" />
+		<result property="officeName" column="officeName" />
+		<result property="status" column="status" />
+		<result property="roleName" column="roleName" />
+		<result property="jobNumber" column="job_num" />
+		<result property="officeOver" column="officeOver" />
+		<result property="roleId" column="roleId" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="mobile" column="mobile" />
+		<result property="remark" column="remark" />
+		<result property="position" column="position" />
+		<result property="noid" column="rnum" />
+	</resultMap>
+
+	<sql id="searchSql">
+		id,
+		name,
+		user_name,
+		password,
+		job_num,
+		company_id,
+		office_id,
+		email,
+		phone,
+		mobile,
+		status,
+		login_ip,
+		login_time,
+		add_time,
+		add_user,
+		update_time,
+		update_user,
+		remark,
+		position,
+		office_over
+	</sql>
+
+	<sql id="pageEnd">
+		where rownum &lt;= #{end}) where rnum &gt;#{startRow}
+	</sql>
+
+	<sql id="pageStart">
+		select * from (select rownum rnum,a.* from (
+	</sql>
+
+	<sql id="searchByPo">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="id!=null and id!='' ">
+				id = #{id}
+			</if>
+			<if test="name!=null and name!='' ">
+				and name like concat('',#{name}, '%')
+			</if>
+			<if test="userName!=null and userName!='' ">
+				and user_name=#{userName}
+			</if>
+			<if test="password!=null and password!='' ">
+				and password=#{password}
+			</if>
+			<if test="jobNumber!=null and jobNumber!='' ">
+				and job_num = #{jobNumber}
+			</if>
+			<if test="companyId!=null and companyId!='' ">
+				and company_id =#{companyId}
+			</if>
+			<if test="officeId!=null and officeId!='' ">
+				and office_id = #{officeId}
+			</if>
+			<if test="email!=null and email!='' ">
+				and email = #{email}
+			</if>
+			<if test="phone!=null and phone!='' ">
+				and phone = #{phone}
+			</if>
+			<if test="mobile!=null and mobile!='' ">
+				and mobile = #{mobile}
+			</if>
+			<if test="status!=null and status!='' ">
+				and status = #{status}
+			</if>
+			<if test="loginIp!=null and loginIp!='' ">
+				and login_ip=#{loginIp}
+			</if>
+			<if test="loginTime!=null and loginTime!='' ">
+				and login_time=#{loginTime}
+			</if>
+			<if test="addTime!=null and addTime!='' ">
+				and add_time=#{addTime}
+			</if>
+			<if test="addUser!=null and addUser!='' ">
+				and add_user=#{addUser}
+			</if>
+			<if test="updateUser!=null and updateUser!='' ">
+				and update_user=#{updateUser}
+			</if>
+			<if test="position!=null and position!='' ">
+				and position = #{position}
+			</if>
+			<if test="officeOver!=null and officeOver!='' ">
+				and office_over = #{officeOver}
+			</if>
+			<if test="remark!=null and remark!='' ">
+				and remark=#{remark}
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="updateByPo">
+		<trim prefix="set" suffixOverrides=",">
+			<if test="updateTime!=null and updateTime!='' ">
+				update_time=#{updateTime},
+			</if>
+			<if test="name!=null and name!='' ">
+				name=#{name},
+			</if>
+			<if test="userName!=null and userName!='' ">
+				user_name=#{userName},
+			</if>
+			<if test="password!=null and password!='' ">
+				password=#{password},
+			</if>
+			<if test="jobNumber!=null and jobNumber!='' ">
+				job_num=#{jobNumber},
+			</if>
+			<if test="companyId!=null and companyId!='' ">
+				company_id=#{companyId},
+			</if>
+			<if test="officeId!=null and officeId!='' ">
+				office_id=#{officeId},
+			</if>
+			<if test="email!=null and email!='' ">
+				email=#{email},
+			</if>
+			<if test="phone!=null and phone!='' ">
+				phone=#{phone},
+			</if>
+			<if test="mobile!=null and mobile!='' ">
+				mobile=#{mobile},
+			</if>
+			<if test="status!=null and status!='' ">
+				status=#{status},
+			</if>
+			<if test="loginIp!=null and loginIp!='' ">
+				login_ip=#{loginIp},
+			</if>
+			<if test="loginTime!=null and loginTime!='' ">
+				login_time=#{loginTime},
+			</if>
+			<if test="addTime!=null and addTime!='' ">
+				add_time=#{addTime},
+			</if>
+			<if test="addUser!=null and addUser!='' ">
+				add_user=#{addUser},
+			</if>
+			<if test="updateUser!=null and updateUser!='' ">
+				update_user=#{updateUser},
+			</if>
+			<if test="position!=null and position!='' ">
+				position=#{position},
+			</if>
+			<if test="remark!=null and remark!='' ">
+				remark=#{remark},
+			</if>
+			<if test="officeOver!=null and officeOver!='' ">
+				office_over=#{officeOver}
+			</if>
+		</trim>
+	</sql>
+
+	<insert id="save" parameterType="com.xindaibao.cashloan.system.domain.SysUser">
+		<selectKey resultType="long" keyProperty="id">
+			SELECT
+			LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into arc_sys_user(
+		name,
+		user_name,
+		password,
+		job_num,
+		company_id,
+		office_id,
+		email,
+		phone,
+		mobile,
+		status,
+		login_ip,
+		login_time,
+		add_time,
+		add_user,
+		update_time,
+		update_user,
+		remark,
+		position,
+		office_over
+		)
+		values (
+		#{name},
+		#{userName},
+		#{password},
+		#{jobNumber},
+		#{companyId},
+		#{officeId},
+		#{email},
+		#{phone},
+		#{mobile},
+		0,
+		#{loginIp},
+		#{loginTime},
+		#{addTime},
+		#{addUser},
+		#{updateTime},
+		#{updateUser},
+		#{remark},
+		#{position},
+		#{officeOver}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.xindaibao.cashloan.system.domain.SysUser">
+		update arc_sys_user
+		set
+		name=#{name},
+		job_num=#{jobNumber},
+		company_id=#{companyId},
+		office_id=#{officeId},
+		email=#{email},
+		phone=#{phone},
+		password=#{password},
+		mobile=#{mobile},
+		status=#{status},
+		update_time= #{updateTime},
+		update_user=#{updateUser},
+		remark=#{remark},
+		position=#{position}
+		where
+		id = #{id}
+	</update>
+
+	<update id="editUserLoginInfo" parameterType="com.xindaibao.cashloan.system.domain.SysUser">
+		update arc_sys_user
+		set
+		login_ip=#{loginIp},
+		login_time= #{loginTime}
+		where
+		user_name =
+		#{userName}
+	</update>
+
+	<update id="editUserPassWord" parameterType="com.xindaibao.cashloan.system.domain.SysUser">
+		update arc_sys_user
+		set
+		password=#{password}
+		where
+		user_name = #{userName}
+	</update>
+
+	<update id="updateSysUserById" parameterType="java.util.Map">
+		update arc_sys_user
+		<include refid="updateByPo" />
+		where
+		id = #{id}
+	</update>
+	
+	<update id="updateState" parameterType="java.util.Map">
+		update arc_sys_user
+		SET `status` = #{status}
+		WHERE id = #{id}
+	</update>
+
+	<select id="findByPrimary" parameterType="long" resultMap="sysUserResult">
+		select
+		<include refid="searchSql" />
+		from arc_sys_user
+		where
+		id = #{id}
+	</select>
+	
+
+	<select id="getUserByUserName" parameterType="String" resultMap="sysUserResult">
+		select
+		<include refid="searchSql" />
+		from arc_sys_user
+		where
+		user_name = #{userName}
+	</select>
+
+	<select id="queryRoleUserIsUse" parameterType="java.util.Map"
+		resultType="int">
+		SELECT
+		count(u.id)
+		FROM
+		arc_sys_user u,
+		arc_sys_user_role ur
+		WHERE
+		u.id =
+		ur.user_id
+		AND ur.role_id = #{roleId}
+	</select>
+
+	<select id="getPageCountOracle" resultType="int" parameterType="java.util.HashMap">
+		select count(*) from (
+		select
+		count(1)
+		from arc_sys_user u,arc_sys_user_role ur,sys_role r
+		where u.id = ur.user_id and r.id = ur.role_id
+		<if test="id!=null and id!='' ">
+			u.id = #{id}
+		</if>
+		<if test="name!=null and name!='' ">
+			and u.name like concat('',#{name}, '%')
+		</if>
+		<if test="jobNumber!=null and jobNumber!='' ">
+			and u.job_num = #{jobNumber}
+		</if>
+		<if test="companyId!=null and companyId!='' ">
+			and u.company_id =#{companyId}
+		</if>
+		<if test="officeId!=null and officeId!='' ">
+			and u.office_id = #{officeId}
+		</if>
+		<if test="email!=null and email!='' ">
+			and u.email = #{email}
+		</if>
+		<if test="phone!=null and phone!='' ">
+			and u.phone = #{phone}
+		</if>
+		<if test="mobile!=null and mobile!='' ">
+			and u.mobile = #{mobile}
+		</if>
+		<if test="status!=null and status!='' ">
+			and u.status = #{status}
+		</if>
+		<if test="position!=null and position!='' ">
+			and u.position = #{position}
+		</if>
+		<if test="officeOver!=null and officeOver!='' ">
+			and u.office_over = #{officeOver}
+		</if>
+		<if test="roleId!=null and roleId!='' ">
+			and u2.role_id = #{roleId}
+		</if>
+		<if test="parentofficeId!=null and parentofficeId!='' ">
+			and u.office_id like concat('',#{parentofficeId}, '%')
+		</if>
+		GROUP BY u.id
+		order by u.add_time desc
+		) as a
+	</select>
+
+	<select id="getUserInfoOracle" parameterType="java.util.HashMap" resultMap="userInfo">
+		select
+		u.id as id,
+		u.office_over as officeOver,
+		u.email as email,
+		u.phone as phone,
+		u.mobile as mobile,
+		u.remark as remark,
+		u.position as position,
+		u.name as name,
+		u.user_name as userName,
+		u.job_num as
+		job_num,
+		u.office_id as officeId,
+		u.status as
+		status,
+		group_concat( u4.id) as roleId,
+		group_concat( u4.name) as
+		roleName
+		from arc_sys_user u,
+		arc_sys_user_role u2, arc_sys_role u4
+		where u.id =
+		u2.user_id
+		and u2.role_id = u4.id
+		<if test="id!=null and id!='' ">
+			u.id = #{id}
+		</if>
+		<if test="name!=null and name!='' ">
+			and u.name like concat('',#{name}, '%')
+		</if>
+		<if test="jobNumber!=null and jobNumber!='' ">
+			and u.job_num = #{jobNumber}
+		</if>
+		<if test="companyId!=null and companyId!='' ">
+			and u.company_id =#{companyId}
+		</if>
+		<if test="officeId!=null and officeId!='' ">
+			and u.office_id = #{officeId}
+		</if>
+		<if test="email!=null and email!='' ">
+			and u.email = #{email}
+		</if>
+		<if test="phone!=null and phone!='' ">
+			and u.phone = #{phone}
+		</if>
+		<if test="mobile!=null and mobile!='' ">
+			and u.mobile = #{mobile}
+		</if>
+		<if test="status!=null and status!='' ">
+			and u.status = #{status}
+		</if>
+		<if test="position!=null and position!='' ">
+			and u.position = #{position}
+		</if>
+		<if test="officeOver!=null and officeOver!='' ">
+			and u.office_over = #{officeOver}
+		</if>
+		<if test="roleId!=null and roleId!='' ">
+			and u2.role_id = #{roleId}
+		</if>
+		<if test="parentofficeId!=null and parentofficeId!='' ">
+			and u.office_id like concat('',#{parentofficeId}, '%')
+		</if>
+		group by
+		u.id,u.office_over,u.email,u.phone,u.mobile,u.remark,u.position
+	</select>
+	
+	<select id="listUserInfo" parameterType="java.util.HashMap" resultMap="userInfo">
+		select
+		u.id as id,
+		u.office_over as officeOver,
+        u.email as email,
+        u.phone as phone,
+        u.mobile as mobile,
+        u.remark as remark,
+        u.position as position,
+		u.name as name,
+		u.user_name as userName,
+		u.job_num as job_num,
+		u.office_id as officeId,
+		u.status as status,
+		group_concat( u4.id) as roleId,
+		group_concat( u4.name) as roleName
+		from arc_sys_user u,
+		arc_sys_user_role u2, arc_sys_role u4
+		where u.id = u2.user_id
+		and u2.role_id = u4.id
+		<!-- and u.`status` = 0 -->
+		<if test="id!=null and id!='' ">
+			u.id = #{id}
+		</if>
+		<if test="name!=null and name!='' ">
+			and u.name like concat("%",#{name}, "%")
+		</if>
+		<if test="jobNumber!=null and jobNumber!='' ">
+			and u.job_num like concat("%",#{jobNumber,jdbcType=VARCHAR},"%")
+		</if>
+		<if test="email!=null and email!='' ">
+			and u.email = #{email}
+		</if>
+		<if test="phone!=null and phone!='' ">
+			and u.phone = #{phone}
+		</if>
+		<if test="mobile!=null and mobile!='' ">
+			and u.mobile = #{mobile}
+		</if>
+		<if test="status!=null and status!='' ">
+			and u.status = #{status}
+		</if>
+		<if test="position!=null and position!='' ">
+			and u.position = #{position}
+		</if>
+		<if test="roleId!=null and roleId!='' ">
+			and u2.role_id = #{roleId}
+		</if>
+		group by u.id,u.email,u.phone,u.mobile,u.remark,u.position
+	</select>
+
+	<select id="queryTheLeastBusyUserByMap" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		SELECT usr.user_name as "userName",
+		usr.office_id as "officeId",
+		count(task.ASSIGNEE_) as "count"
+		FROM arc_sys_user usr
+		left JOIN ACT_RU_TASK task
+		on task.ASSIGNEE_ = usr.user_name
+		INNER JOIN arc_sys_user_role ur
+		on ur.user_id = usr.id
+		INNER JOIN arc_sys_role r
+		on r.id = ur.role_id
+		WHERE
+		r.nid = #{roleName}
+		AND usr.status = #{status}
+		<if test="userOfficeId !=null and userOfficeId !='' ">
+			AND
+			( usr.office_id = #{userOfficeId}
+			<if test="userHeadOfficeId !=null and userHeadOfficeId !='' ">
+				OR usr.office_id = #{userHeadOfficeId}
+			</if>
+			<if test="officeId !=null and officeId !='' ">
+				OR usr.office_id like concat('',#{officeId}, '%')
+			</if>
+			)
+		</if>
+		<if test="userOverOfficeId !=null and userOverOfficeId !='' ">
+			and FIND_IN_SET(#{userOverOfficeId},usr.office_over )
+		</if>
+		GROUP BY usr.user_name,usr.office_id
+		ORDER BY count(task.ASSIGNEE_),RAND()
+		limit 0,1
+	</select>
+
+	<select id="queryTheUserWhoDidThisTask" parameterType="java.util.Map"
+		resultType="java.util.HashMap">
+		SELECT
+		usr.company_id as companyId,
+		usr.office_id as officeId,
+		ur.role_id as roleId
+		FROM ACT_HI_TASKINST task_ins
+		INNER JOIN arc_sys_user usr on
+		usr.user_name = task_ins.ASSIGNEE_
+		INNER JOIN arc_sys_user_role ur on
+		ur.user_id = usr.id
+		INNER JOIN arc_sys_role role on role.id = ur.role_id
+		WHERE
+		task_ins.PROC_INST_ID_ = #{processInstanceId}
+		AND
+		task_ins.TASK_DEF_KEY_ = #{taskDef}
+		AND role.nid =
+		task_ins.DESCRIPTION_
+	</select>
+	
+	<select id="getUserByMap" parameterType="java.util.HashMap"
+		resultMap="sysUserResult">
+		select
+		u.*
+		from arc_sys_user u
+		INNER JOIN arc_sys_user_role ur on u.id = ur.user_id
+		INNER JOIN arc_sys_role r on r.id = ur.role_id
+		where r.nid = #{roleName}
+		<if test="officeId !=null and officeId !='' ">
+			and u.office_id = #{officeId}
+		</if>
+		<if test="officeOver != null">
+			and u.office_id in
+			<foreach item="item" index="index" collection="officeOver"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<select id="getUserInfo" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		select
+		u.id,
+		u.name,
+		u.user_name as userName
+		from arc_sys_user u
+		INNER JOIN arc_sys_user_role ur on u.id = ur.user_id
+		INNER JOIN arc_sys_role r on r.id = ur.role_id
+		where r.nid = #{roleName}
+		<if test="officeOver != null">
+			and u.office_id in
+			<foreach item="item" index="index" collection="officeOver"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+	
+	<select id="findSelective" resultMap="sysUserResult" parameterType="java.util.HashMap">
+        select
+        <include refid="searchSql" />
+        from arc_sys_user
+        <include refid="searchByPo"/>
+    </select>
+    
+    <select id="listByRole" resultMap="sysUserResult" parameterType="java.util.HashMap">
+        select u.id from arc_sys_user u, arc_sys_role r, arc_sys_user_role ur where ur.role_id = r.id and ur.user_id = u.id 
+		<if test="roleNid != null and roleNid != '' ">
+			and r.nid = #{roleNid, jdbcType=VARCHAR}
+		</if>
+		<if test="name != null and name != '' ">
+			and u.name like concat("%",#{name, jdbcType=VARCHAR},"%")
+		</if>
+		<if test="userName != null and userName != '' ">
+			and u.user_name like concat("%",#{userName, jdbcType=VARCHAR},"%")
+		</if>
+		<if test="jobNum != null and jobNum != '' ">
+			and u.job_num like concat("%",#{jobNum, jdbcType=VARCHAR},"%")
+		</if>
+    </select>
+    
+    
+</mapper>     

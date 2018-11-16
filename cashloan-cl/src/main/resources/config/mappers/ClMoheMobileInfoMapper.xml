@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ClMoheMobileInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ClMoheMobileInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+      <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_mobile" jdbcType="VARCHAR" property="userMobile" />
+    <result column="mobile_net_addr" jdbcType="VARCHAR" property="mobileNetAddr" />
+    <result column="mobile_carrier" jdbcType="VARCHAR" property="mobileCarrier" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="identity_code" jdbcType="VARCHAR" property="identityCode" />
+    <result column="account_status" jdbcType="VARCHAR" property="accountStatus" />
+    <result column="account_balance" jdbcType="VARCHAR" property="accountBalance" />
+    <result column="mobile_net_time" jdbcType="VARCHAR" property="mobileNetTime" />
+    <result column="mobile_net_age" jdbcType="VARCHAR" property="mobileNetAge" />
+    <result column="contact_addr" jdbcType="VARCHAR" property="contactAddr" />
+  </resultMap>
+
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,task_id,user_id,user_mobile,mobile_net_addr,mobile_carrier,real_name,identity_code,account_status,account_balance,mobile_net_time,mobile_net_age,contact_addr
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                and task_id = #{taskId,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="userMobile != null and userMobile != '' ">
+                and user_mobile = #{userMobile,jdbcType=VARCHAR}
+            </if>
+            <if test="mobileNetAddr != null and mobileNetAddr != '' ">
+                and mobile_net_addr = #{mobileNetAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="mobileCarrier != null and mobileCarrier != '' ">
+                and mobile_carrier = #{mobileCarrier,jdbcType=VARCHAR}
+            </if>
+            <if test="realName != null and realName != '' ">
+                and real_name = #{realName,jdbcType=VARCHAR}
+            </if>
+            <if test="identityCode != null and identityCode != '' ">
+                and identity_code = #{identityCode,jdbcType=VARCHAR}
+            </if>
+            <if test="accountStatus != null and accountStatus != '' ">
+                and account_status = #{accountStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="accountBalance != null and accountBalance != '' ">
+                and account_balance = #{accountBalance,jdbcType=VARCHAR}
+            </if>
+            <if test="mobileNetTime != null and mobileNetTime != '' ">
+                and mobile_net_time = #{mobileNetTime,jdbcType=VARCHAR}
+            </if>
+            <if test="mobileNetAge != null and mobileNetAge != '' ">
+                and mobile_net_age = #{mobileNetAge,jdbcType=VARCHAR}
+            </if>
+            <if test="contactAddr != null and contactAddr != '' ">
+                and contact_addr = #{contactAddr,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheMobileInfo">
+        insert into cl_mohe_mobile_info(task_id,user_id,user_mobile,mobile_net_addr,mobile_carrier,real_name,identity_code,account_status,account_balance,mobile_net_time,mobile_net_age,contact_addr)values(#{taskId,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{userMobile,jdbcType=VARCHAR},#{mobileNetAddr,jdbcType=VARCHAR},#{mobileCarrier,jdbcType=VARCHAR},#{realName,jdbcType=VARCHAR},#{identityCode,jdbcType=VARCHAR},#{accountStatus,jdbcType=VARCHAR},#{accountBalance,jdbcType=VARCHAR},#{mobileNetTime,jdbcType=VARCHAR},#{mobileNetAge,jdbcType=VARCHAR},#{contactAddr,jdbcType=VARCHAR})
+    </insert>
+
+
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheMobileInfo">
+        update cl_mohe_mobile_info set
+        task_id = #{taskId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
+        user_mobile = #{userMobile,jdbcType=VARCHAR},
+        mobile_net_addr = #{mobileNetAddr,jdbcType=VARCHAR},
+        mobile_carrier = #{mobileCarrier,jdbcType=VARCHAR},
+        real_name = #{realName,jdbcType=VARCHAR},
+        identity_code = #{identityCode,jdbcType=VARCHAR},
+        account_status = #{accountStatus,jdbcType=VARCHAR},
+        account_balance = #{accountBalance,jdbcType=VARCHAR},
+        mobile_net_time = #{mobileNetTime,jdbcType=VARCHAR},
+        mobile_net_age = #{mobileNetAge,jdbcType=VARCHAR},
+        contact_addr = #{contactAddr,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_mohe_mobile_info
+        <set>
+            <if test="taskId != null and taskId != '' ">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="userMobile != null and userMobile != '' ">
+                user_mobile = #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNetAddr != null and mobileNetAddr != '' ">
+                mobile_net_addr = #{mobileNetAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileCarrier != null and mobileCarrier != '' ">
+                mobile_carrier = #{mobileCarrier,jdbcType=VARCHAR},
+            </if>
+            <if test="realName != null and realName != '' ">
+                real_name = #{realName,jdbcType=VARCHAR},
+            </if>
+            <if test="identityCode != null and identityCode != '' ">
+                identity_code = #{identityCode,jdbcType=VARCHAR},
+            </if>
+            <if test="accountStatus != null and accountStatus != '' ">
+                account_status = #{accountStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="accountBalance != null and accountBalance != '' ">
+                account_balance = #{accountBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNetTime != null and mobileNetTime != '' ">
+                mobile_net_time = #{mobileNetTime,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNetAge != null and mobileNetAge != '' ">
+                mobile_net_age = #{mobileNetAge,jdbcType=VARCHAR},
+            </if>
+            <if test="contactAddr != null and contactAddr != '' ">
+                contact_addr = #{contactAddr,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_mobile_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_mobile_info
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_mobile_info
+        <include refid="searchBy"/>
+    </select>
+
+
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_sys_download_log表:后台下载日志统计模块 -->
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysDownloadLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.system.domain.SysDownloadLog">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_name" property="user_name" jdbcType="VARCHAR" />
+        <result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+        <result column="download_menu" property="download_menu" jdbcType="VARCHAR" />
+        <result column="download_count" property="download_count" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_name,create_time,download_menu,download_count 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="user_name != null and user_name != '' ">
+                and user_name = #{user_name,jdbcType=VARCHAR}
+            </if>
+            <if test="create_time != null">
+                and create_time = #{create_time,jdbcType=TIMESTAMP}
+            </if>
+            <if test="download_menu != null and download_menu != '' ">
+                and download_menu = #{download_menu,jdbcType=VARCHAR}
+            </if>
+            <if test="download_count != null and download_count != '' ">
+                and download_count = #{download_count,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null">
+                <![CDATA[ AND DATE_FORMAT(create_time, '%Y-%m-%d') >=
+            	 DATE_FORMAT(#{startTime,jdbcType=TIMESTAMP},'%Y-%m-%d')]]>
+            </if>
+            <if test="endTime != null">
+                <![CDATA[ AND DATE_FORMAT(create_time, '%Y-%m-%d') <=
+            	DATE_FORMAT(#{endTime,jdbcType=TIMESTAMP},'%Y-%m-%d') ]]>
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.system.domain.SysDownloadLog">
+        insert into arc_sys_download_log(user_name,create_time,download_menu,download_count)values(#{user_name,jdbcType=VARCHAR},#{create_time,jdbcType=TIMESTAMP},#{download_menu,jdbcType=VARCHAR},#{download_count,jdbcType=INTEGER})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.system.domain.SysDownloadLog">
+        update arc_sys_download_log set 
+            user_name = #{user_name,jdbcType=VARCHAR},
+            create_time = #{create_time,jdbcType=TIMESTAMP},
+            download_menu = #{download_menu,jdbcType=VARCHAR},
+            download_count = #{download_count,jdbcType=INTEGER}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_sys_download_log
+          <set>
+            <if test="user_name != null and user_name != '' ">        
+                user_name = #{user_name,jdbcType=VARCHAR},                
+            </if>
+            <if test="create_time != null">
+                create_time = #{create_time,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="download_menu != null and download_menu != '' ">        
+                download_menu = #{download_menu,jdbcType=VARCHAR},                
+            </if>
+            <if test="download_count != null and download_count != '' ">        
+                download_count = #{download_count,jdbcType=INTEGER}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_sys_download_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_sys_download_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_sys_download_log
+        <include refid="searchBy"/>
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="page" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_sys_download_log
+        <include refid="searchBy"/>
+        ORDER BY create_time DESC
+    </select>
+    
+</mapper>

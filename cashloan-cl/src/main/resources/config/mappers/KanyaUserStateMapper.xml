@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.KanyaUserStateMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.KanyaUserState">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="info_flag" jdbcType="TINYINT" property="infoFlag" />
+    <result column="info_time" jdbcType="TIMESTAMP" property="infoTime" />
+    <result column="info_remark" jdbcType="VARCHAR" property="infoRemark" />
+    <result column="job_flag" jdbcType="TINYINT" property="jobFlag" />
+    <result column="job_time" jdbcType="TIMESTAMP" property="jobTime" />
+    <result column="job_remark" jdbcType="VARCHAR" property="jobRemark" />
+    <result column="live_flag" jdbcType="TINYINT" property="liveFlag" />
+    <result column="live_time" jdbcType="TIMESTAMP" property="liveTime" />
+    <result column="live_remark" jdbcType="VARCHAR" property="liveRemark" />
+    <result column="contact_info_flag" jdbcType="TINYINT" property="contactInfoFlag" />
+    <result column="contact_info_time" jdbcType="TIMESTAMP" property="contactInfoTime" />
+    <result column="contact_info_remark" jdbcType="VARCHAR" property="contactInfoRemark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, info_flag, info_time, info_remark, job_flag, job_time, job_remark, live_flag, 
+    live_time, live_remark, contact_info_flag, contact_info_time, contact_info_remark, 
+    status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="uid != null and uid != '' ">
+        and uid = #{uid,jdbcType=BIGINT}
+      </if>
+      <if test="infoFlag != null and infoFlag != '' ">
+        and infoFlag = #{info_flag,jdbcType=TINYINT}
+      </if>
+      <if test="infoTime != null and infoTime != '' ">
+        and infoTime = #{info_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="infoRemark != null and infoRemark != '' ">
+        and infoRemark = #{info_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="jobFlag != null and jobFlag != '' ">
+        and jobFlag = #{job_flag,jdbcType=TINYINT}
+      </if>
+      <if test="jobTime != null and jobTime != '' ">
+        and jobTime = #{job_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="jobRemark != null and jobRemark != '' ">
+        and jobRemark = #{job_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="liveFlag != null and liveFlag != '' ">
+        and liveFlag = #{live_flag,jdbcType=TINYINT}
+      </if>
+      <if test="liveTime != null and liveTime != '' ">
+        and liveTime = #{live_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="liveRemark != null and liveRemark != '' ">
+        and liveRemark = #{live_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="contactInfoFlag != null and contactInfoFlag != '' ">
+        and contactInfoFlag = #{contact_info_flag,jdbcType=TINYINT}
+      </if>
+      <if test="contactInfoTime != null and contactInfoTime != '' ">
+        and contactInfoTime = #{contact_info_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="contactInfoRemark != null and contactInfoRemark != '' ">
+        and contactInfoRemark = #{contact_info_remark,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user_state
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserState">
+    insert into k_user_state (id, uid, info_flag, 
+      info_time, info_remark, job_flag, 
+      job_time, job_remark, live_flag, 
+      live_time, live_remark, contact_info_flag, 
+      contact_info_time, contact_info_remark, status, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{infoFlag,jdbcType=TINYINT}, 
+      #{infoTime,jdbcType=TIMESTAMP}, #{infoRemark,jdbcType=VARCHAR}, #{jobFlag,jdbcType=TINYINT}, 
+      #{jobTime,jdbcType=TIMESTAMP}, #{jobRemark,jdbcType=VARCHAR}, #{liveFlag,jdbcType=TINYINT}, 
+      #{liveTime,jdbcType=TIMESTAMP}, #{liveRemark,jdbcType=VARCHAR}, #{contactInfoFlag,jdbcType=TINYINT}, 
+      #{contactInfoTime,jdbcType=TIMESTAMP}, #{contactInfoRemark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserState">
+    insert into k_user_state
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="infoFlag != null">
+        info_flag,
+      </if>
+      <if test="infoTime != null">
+        info_time,
+      </if>
+      <if test="infoRemark != null">
+        info_remark,
+      </if>
+      <if test="jobFlag != null">
+        job_flag,
+      </if>
+      <if test="jobTime != null">
+        job_time,
+      </if>
+      <if test="jobRemark != null">
+        job_remark,
+      </if>
+      <if test="liveFlag != null">
+        live_flag,
+      </if>
+      <if test="liveTime != null">
+        live_time,
+      </if>
+      <if test="liveRemark != null">
+        live_remark,
+      </if>
+      <if test="contactInfoFlag != null">
+        contact_info_flag,
+      </if>
+      <if test="contactInfoTime != null">
+        contact_info_time,
+      </if>
+      <if test="contactInfoRemark != null">
+        contact_info_remark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="infoFlag != null">
+        #{infoFlag,jdbcType=TINYINT},
+      </if>
+      <if test="infoTime != null">
+        #{infoTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="infoRemark != null">
+        #{infoRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFlag != null">
+        #{jobFlag,jdbcType=TINYINT},
+      </if>
+      <if test="jobTime != null">
+        #{jobTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobRemark != null">
+        #{jobRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="liveFlag != null">
+        #{liveFlag,jdbcType=TINYINT},
+      </if>
+      <if test="liveTime != null">
+        #{liveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveRemark != null">
+        #{liveRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfoFlag != null">
+        #{contactInfoFlag,jdbcType=TINYINT},
+      </if>
+      <if test="contactInfoTime != null">
+        #{contactInfoTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contactInfoRemark != null">
+        #{contactInfoRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserState">
+    update k_user_state
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="infoFlag != null">
+        info_flag = #{infoFlag,jdbcType=TINYINT},
+      </if>
+      <if test="infoTime != null">
+        info_time = #{infoTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="infoRemark != null">
+        info_remark = #{infoRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="jobFlag != null">
+        job_flag = #{jobFlag,jdbcType=TINYINT},
+      </if>
+      <if test="jobTime != null">
+        job_time = #{jobTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobRemark != null">
+        job_remark = #{jobRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="liveFlag != null">
+        live_flag = #{liveFlag,jdbcType=TINYINT},
+      </if>
+      <if test="liveTime != null">
+        live_time = #{liveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="liveRemark != null">
+        live_remark = #{liveRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="contactInfoFlag != null">
+        contact_info_flag = #{contactInfoFlag,jdbcType=TINYINT},
+      </if>
+      <if test="contactInfoTime != null">
+        contact_info_time = #{contactInfoTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contactInfoRemark != null">
+        contact_info_remark = #{contactInfoRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserState">
+    update k_user_state
+    set uid = #{uid,jdbcType=BIGINT},
+      info_flag = #{infoFlag,jdbcType=TINYINT},
+      info_time = #{infoTime,jdbcType=TIMESTAMP},
+      info_remark = #{infoRemark,jdbcType=VARCHAR},
+      job_flag = #{jobFlag,jdbcType=TINYINT},
+      job_time = #{jobTime,jdbcType=TIMESTAMP},
+      job_remark = #{jobRemark,jdbcType=VARCHAR},
+      live_flag = #{liveFlag,jdbcType=TINYINT},
+      live_time = #{liveTime,jdbcType=TIMESTAMP},
+      live_remark = #{liveRemark,jdbcType=VARCHAR},
+      contact_info_flag = #{contactInfoFlag,jdbcType=TINYINT},
+      contact_info_time = #{contactInfoTime,jdbcType=TIMESTAMP},
+      contact_info_remark = #{contactInfoRemark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_state
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_state
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_state
+    <include refid="searchBy"/>
+  </select>
+</mapper>

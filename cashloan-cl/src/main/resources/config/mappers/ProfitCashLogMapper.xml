@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_profit_cash_log表:分润提现记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ProfitCashLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ProfitCashLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,amount,add_time 
+    </sql>
+    
+    <resultMap id="ManageProfitLogModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageProfitLogModel">
+    	
+    </resultMap>
+    
+    <resultMap id="ManageProfitAmountModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageProfitAmountModel">
+    	
+    </resultMap>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="amount !='' and amount !=null">
+                and amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ProfitCashLog">
+        insert into cl_profit_cash_log(user_id,amount,add_time)values(#{userId,jdbcType=INTEGER},#{amount,jdbcType=DECIMAL},#{addTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ProfitCashLog">
+        update cl_profit_cash_log set 
+            user_id = #{userId,jdbcType=INTEGER},
+            amount = #{amount,jdbcType=DECIMAL},
+            add_time = #{addTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_profit_cash_log
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="amount != null and amount != '' ">        
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="addTime != null ">        
+                add_time = #{addTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_cash_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_cash_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_cash_log
+        <include refid="searchBy"/>
+        ORDER BY id DESC
+    </select>
+    
+    
+    <select id="findLog" resultMap="ManageProfitLogModel " parameterType="java.util.HashMap">
+		SELECT cpl.id,cpl.borrow_id,
+		(SELECT login_name FROM cl_user WHERE id = cpl.user_id) AS userName,
+		(SELECT login_name FROM cl_user WHERE id = cpl.agent_id) AS agentName,
+		(SELECT amount FROM cl_borrow WHERE id = cpl.borrow_id)AS money,
+		(SELECT fee FROM cl_borrow WHERE id = cpl.borrow_id)AS fee,
+		<!-- DATE_FORMAT((SELECT repay_time FROM cl_borrow_repay_log WHERE borrow_id = cpl.borrow_id),'%Y-%m-%d %T') AS repayTime, -->
+		DATE_FORMAT((cpl.add_time),'%Y-%m-%d %T') AS repayTime,
+		cpl.amount
+		FROM `cl_profit_log` AS cpl,cl_user AS cu
+		WHERE cpl.user_id = cu.id
+		AND cpl.borrow_id IN (SELECT borrow_id FROM cl_profit_log WHERE agent_id = #{userId,jdbcType=VARCHAR} GROUP BY borrow_id)
+		<if test="userName != null and userName != '' ">
+              AND (SELECT login_name FROM cl_user WHERE id = cpl.user_id) LIKE #{userName,jdbcType=VARCHAR}                
+        </if>
+        ORDER BY cpl.id DESC
+    </select>
+    
+    <select id="findSysLog" resultMap="ManageProfitLogModel " parameterType="java.util.HashMap">
+		SELECT cpl.id,
+		(SELECT login_name FROM cl_user WHERE id = cpl.agent_id) AS agentName,
+		(SELECT login_name FROM cl_user WHERE id = cpl.user_id) AS userName,
+		(SELECT amount FROM cl_borrow WHERE id = cpl.borrow_id)AS money,
+		(SELECT fee FROM cl_borrow WHERE id = cpl.borrow_id)AS fee,
+		<!-- DATE_FORMAT((SELECT repay_time FROM cl_borrow_repay_log WHERE borrow_id = cpl.borrow_id),'%Y-%m-%d %T') AS repayTime, -->
+		DATE_FORMAT((cpl.add_time),'%Y-%m-%d %T') AS repayTime,
+		cpl.amount
+		FROM `cl_profit_log`AS cpl,cl_user AS cu
+		WHERE cpl.user_id = cu.id
+		<if test="agentName != null and agentName != '' ">        
+              AND (SELECT login_name FROM cl_user WHERE id = cpl.agent_id) LIKE #{agentName,jdbcType=VARCHAR}                
+        </if>
+        ORDER BY cpl.id DESC
+    </select>
+    
+</mapper>

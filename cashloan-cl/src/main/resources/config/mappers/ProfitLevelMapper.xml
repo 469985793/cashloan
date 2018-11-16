@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_profit_level表:分润等级模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ProfitLevelMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ProfitLevel">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="level" property="level" jdbcType="INTEGER" />
+        <result column="rate" property="rate" jdbcType="DECIMAL" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,level,rate,add_time,remark 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="level !='' and level !=null">
+                and level = #{level,jdbcType=INTEGER}
+            </if>
+            <if test="rate !='' and rate !=null">
+                and rate = #{rate,jdbcType=DECIMAL}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="remark !='' and remark !=null">
+                and remark = #{remark,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ProfitLevel">
+        insert into cl_profit_level(level,rate,add_time,remark)values(#{level,jdbcType=INTEGER},#{rate,jdbcType=DECIMAL},#{addTime,jdbcType=TIMESTAMP},#{remark,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ProfitLevel">
+        update cl_profit_level set 
+            level = #{level,jdbcType=INTEGER},
+            rate = #{rate,jdbcType=DECIMAL},
+            add_time = #{addTime,jdbcType=TIMESTAMP},
+            remark = #{remark,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_profit_level
+          <set>
+            <if test="level != null and level != '' ">        
+                level = #{level,jdbcType=INTEGER},                
+            </if>
+            <if test="rate != null and rate != '' ">        
+                rate = #{rate,jdbcType=DECIMAL},                
+            </if>
+            <if test="addTime != null ">        
+                add_time = #{addTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="remark != null and remark != '' ">        
+                remark = #{remark,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_level
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_level
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_level
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_level
+    </select>
+    
+</mapper>

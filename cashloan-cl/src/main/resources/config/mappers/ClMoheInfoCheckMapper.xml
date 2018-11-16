@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ClMoheInfoCheckMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ClMoheInfoCheck">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="task_id" jdbcType="VARCHAR" property="taskId" />
+      <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="is_mobile_status_active" jdbcType="VARCHAR" property="isMobileStatusActive" />
+    <result column="is_identity_code_valid" jdbcType="VARCHAR" property="isIdentityCodeValid" />
+    <result column="is_net_age_over_3month" jdbcType="VARCHAR" property="isNetAgeOver3month" />
+    <result column="is_contact1_called_6month" jdbcType="VARCHAR" property="isContact1Called6month" />
+    <result column="is_contact2_called_6month" jdbcType="VARCHAR" property="isContact2Called6month" />
+    <result column="is_contact3_called_6month" jdbcType="VARCHAR" property="isContact3Called6month" />
+    <result column="is_contact4_called_6month" jdbcType="VARCHAR" property="isContact4Called6month" />
+    <result column="is_contact5_called_6month" jdbcType="VARCHAR" property="isContact5Called6month" />
+    <result column="is_home_tel_called_6month" jdbcType="VARCHAR" property="isHomeTelCalled6month" />
+    <result column="is_work_tel_called_6month" jdbcType="VARCHAR" property="isWorkTelCalled6month" />
+    <result column="is_net_addr_call_addr_1month" jdbcType="VARCHAR" property="isNetAddrCallAddr1month" />
+    <result column="is_net_addr_call_addr_3month" jdbcType="VARCHAR" property="isNetAddrCallAddr3month" />
+    <result column="is_net_addr_call_addr_6month" jdbcType="VARCHAR" property="isNetAddrCallAddr6month" />
+  </resultMap>
+
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,task_id,user_id,is_mobile_status_active,is_identity_code_valid,is_net_age_over_3month,is_contact1_called_6month,is_contact2_called_6month,is_contact3_called_6month,is_contact4_called_6month,is_contact5_called_6month,is_home_tel_called_6month,is_work_tel_called_6month,is_net_addr_call_addr_1month,is_net_addr_call_addr_3month,is_net_addr_call_addr_6month
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="taskId != null and taskId != '' ">
+                and task_id = #{taskId,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="isMobileStatusActive != null and isMobileStatusActive != '' ">
+                and is_mobile_status_active = #{isMobileStatusActive,jdbcType=VARCHAR}
+            </if>
+            <if test="isIdentityCodeValid != null and isIdentityCodeValid != '' ">
+                and is_identity_code_valid = #{isIdentityCodeValid,jdbcType=VARCHAR}
+            </if>
+            <if test="isNetAgeOver3month != null and isNetAgeOver3month != '' ">
+                and is_net_age_over_3month = #{isNetAgeOver3month,jdbcType=VARCHAR}
+            </if>
+            <if test="isContact1Called6month != null and isContact1Called6month != '' ">
+                and is_contact1_called_6month = #{isContact1Called6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isContact2Called6month != null and isContact2Called6month != '' ">
+                and is_contact2_called_6month = #{isContact2Called6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isContact3Called6month != null and isContact3Called6month != '' ">
+                and is_contact3_called_6month = #{isContact3Called6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isContact4Called6month != null and isContact4Called6month != '' ">
+                and is_contact4_called_6month = #{isContact4Called6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isContact5Called6month != null and isContact5Called6month != '' ">
+                and is_contact5_called_6month = #{isContact5Called6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isHomeTelCalled6month != null and isHomeTelCalled6month != '' ">
+                and is_home_tel_called_6month = #{isHomeTelCalled6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isWorkTelCalled6month != null and isWorkTelCalled6month != '' ">
+                and is_work_tel_called_6month = #{isWorkTelCalled6month,jdbcType=VARCHAR}
+            </if>
+            <if test="isNetAddrCallAddr1month != null and isNetAddrCallAddr1month != '' ">
+                and is_net_addr_call_addr_1month = #{isNetAddrCallAddr1month,jdbcType=VARCHAR}
+            </if>
+            <if test="isNetAddrCallAddr3month != null and isNetAddrCallAddr3month != '' ">
+                and is_net_addr_call_addr_3month = #{isNetAddrCallAddr3month,jdbcType=VARCHAR}
+            </if>
+            <if test="isNetAddrCallAddr6month != null and isNetAddrCallAddr6month != '' ">
+                and is_net_addr_call_addr_6month = #{isNetAddrCallAddr6month,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheInfoCheck">
+        insert into cl_mohe_info_check(task_id,user_id,is_mobile_status_active,is_identity_code_valid,is_net_age_over_3month,is_contact1_called_6month,is_contact2_called_6month,is_contact3_called_6month,is_contact4_called_6month,is_contact5_called_6month,is_home_tel_called_6month,is_work_tel_called_6month,is_net_addr_call_addr_1month,is_net_addr_call_addr_3month,is_net_addr_call_addr_6month)values(#{taskId,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{isMobileStatusActive,jdbcType=VARCHAR},#{isIdentityCodeValid,jdbcType=VARCHAR},#{isNetAgeOver3month,jdbcType=VARCHAR},#{isContact1Called6month,jdbcType=VARCHAR},#{isContact2Called6month,jdbcType=VARCHAR},#{isContact3Called6month,jdbcType=VARCHAR},#{isContact4Called6month,jdbcType=VARCHAR},#{isContact5Called6month,jdbcType=VARCHAR},#{isHomeTelCalled6month,jdbcType=VARCHAR},#{isWorkTelCalled6month,jdbcType=VARCHAR},#{isNetAddrCallAddr1month,jdbcType=VARCHAR},#{isNetAddrCallAddr3month,jdbcType=VARCHAR},#{isNetAddrCallAddr6month,jdbcType=VARCHAR})
+    </insert>
+
+
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ClMoheInfoCheck">
+        update cl_mohe_info_check set
+        task_id = #{taskId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=BIGINT},
+        is_mobile_status_active = #{isMobileStatusActive,jdbcType=VARCHAR},
+        is_identity_code_valid = #{isIdentityCodeValid,jdbcType=VARCHAR},
+        is_net_age_over_3month = #{isNetAgeOver3month,jdbcType=VARCHAR},
+        is_contact1_called_6month = #{isContact1Called6month,jdbcType=VARCHAR},
+        is_contact2_called_6month = #{isContact2Called6month,jdbcType=VARCHAR},
+        is_contact3_called_6month = #{isContact3Called6month,jdbcType=VARCHAR},
+        is_contact4_called_6month = #{isContact4Called6month,jdbcType=VARCHAR},
+        is_contact5_called_6month = #{isContact5Called6month,jdbcType=VARCHAR},
+        is_home_tel_called_6month = #{isHomeTelCalled6month,jdbcType=VARCHAR},
+        is_work_tel_called_6month = #{isWorkTelCalled6month,jdbcType=VARCHAR},
+        is_net_addr_call_addr_1month = #{isNetAddrCallAddr1month,jdbcType=VARCHAR},
+        is_net_addr_call_addr_3month = #{isNetAddrCallAddr3month,jdbcType=VARCHAR},
+        is_net_addr_call_addr_6month = #{isNetAddrCallAddr6month,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_mohe_info_check
+        <set>
+            <if test="taskId != null and taskId != '' ">
+                task_id = #{taskId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="isMobileStatusActive != null and isMobileStatusActive != '' ">
+                is_mobile_status_active = #{isMobileStatusActive,jdbcType=VARCHAR},
+            </if>
+            <if test="isIdentityCodeValid != null and isIdentityCodeValid != '' ">
+                is_identity_code_valid = #{isIdentityCodeValid,jdbcType=VARCHAR},
+            </if>
+            <if test="isNetAgeOver3month != null and isNetAgeOver3month != '' ">
+                is_net_age_over_3month = #{isNetAgeOver3month,jdbcType=VARCHAR},
+            </if>
+            <if test="isContact1Called6month != null and isContact1Called6month != '' ">
+                is_contact1_called_6month = #{isContact1Called6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isContact2Called6month != null and isContact2Called6month != '' ">
+                is_contact2_called_6month = #{isContact2Called6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isContact3Called6month != null and isContact3Called6month != '' ">
+                is_contact3_called_6month = #{isContact3Called6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isContact4Called6month != null and isContact4Called6month != '' ">
+                is_contact4_called_6month = #{isContact4Called6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isContact5Called6month != null and isContact5Called6month != '' ">
+                is_contact5_called_6month = #{isContact5Called6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isHomeTelCalled6month != null and isHomeTelCalled6month != '' ">
+                is_home_tel_called_6month = #{isHomeTelCalled6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isWorkTelCalled6month != null and isWorkTelCalled6month != '' ">
+                is_work_tel_called_6month = #{isWorkTelCalled6month,jdbcType=VARCHAR},
+            </if>
+            <if test="isNetAddrCallAddr1month != null and isNetAddrCallAddr1month != '' ">
+                is_net_addr_call_addr_1month = #{isNetAddrCallAddr1month,jdbcType=VARCHAR},
+            </if>
+            <if test="isNetAddrCallAddr3month != null and isNetAddrCallAddr3month != '' ">
+                is_net_addr_call_addr_3month = #{isNetAddrCallAddr3month,jdbcType=VARCHAR},
+            </if>
+            <if test="isNetAddrCallAddr6month != null and isNetAddrCallAddr6month != '' ">
+                is_net_addr_call_addr_6month = #{isNetAddrCallAddr6month,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_info_check
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_info_check
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_mohe_info_check
+        <include refid="searchBy"/>
+    </select>
+
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xindaibao.cashloan.rc.mapper.OperatorCountMapper">
+	
+	<select id="operatorVoicesInfo" parameterType="java.util.Map" resultType="com.xindaibao.cashloan.rc.model.OperatorCountModel">
+		<!-- 
+		select
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') then 1 else 0 end) countVoices90,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.voice_place like u.live_addr then 0 else 1 end) liveAddrVoice90N,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') then 1 else 0 end) voiceTimes30,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') and v.voice_type = '主叫' then 1 else 0 end) voiceTimes30Calling,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') and v.voice_type = '被叫' then 1 else 0 end) voiceTimes30Called,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') then 1 else 0 end) voiceTimes90,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.voice_type = '主叫' then 1 else 0 end) voiceTimes90Calling,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.voice_type = '被叫' then 1 else 0 end) voiceTimes90Called,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') then v.voice_duration else 0 end) voiceDuration30,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') and v.voice_type = '主叫' then v.voice_duration else 0 end) voiceDuration30Calling,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') and v.voice_type = '被叫' then v.voice_duration else 0 end ) voiceDuration30Called,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') then v.voice_duration else 0 end) voiceDuration90,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.voice_type = '主叫' then v.voice_duration else 0 end) voiceDuration90Calling,
+			sum(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.voice_type = '被叫' then v.voice_duration else 0 end) voiceDuration90Called,
+			count(DISTINCT(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') then v.voice_to_number end)) phoneNumCount90,
+			count(DISTINCT(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.voice_type = '主叫' then v.voice_to_number end)) phoneNumCount90Calling,
+			count(DISTINCT(case when DATE_FORMAT(v.voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.voice_type = '被叫' then v.voice_to_number end)) phoneNumCount90Called
+		from ${tableName} v LEFT JOIN cl_user_base_info  u on u.phone = v.phone_num where v.phone_num = #{phone,jdbcType=VARCHAR}
+		 -->
+		select
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') then 1 else 0 end) countVoices90,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.call_address like u.live_addr then 0 else 1 end) liveAddrVoice90N,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') then 1 else 0 end) voiceTimes30,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') and v.call_type_name = '主叫' then 1 else 0 end) voiceTimes30Calling,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') and v.call_type_name = '被叫' then 1 else 0 end) voiceTimes30Called,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') then 1 else 0 end) voiceTimes90,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.call_type_name = '主叫' then 1 else 0 end) voiceTimes90Calling,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.call_type_name = '被叫' then 1 else 0 end) voiceTimes90Called,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') then v.call_time else 0 end) voiceDuration30,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') and v.call_type_name = '主叫' then v.call_time else 0 end) voiceDuration30Calling,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 30 DAY),'%y-%m-%d') and v.call_type_name = '被叫' then v.call_time else 0 end ) voiceDuration30Called,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') then v.call_time else 0 end) voiceDuration90,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.call_type_name = '主叫' then v.call_time else 0 end) voiceDuration90Calling,
+			sum(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.call_type_name = '被叫' then v.call_time else 0 end) voiceDuration90Called,
+			count(DISTINCT(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') then v.call_other_number end)) phoneNumCount90,
+			count(DISTINCT(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.call_type_name = '主叫' then v.call_other_number end)) phoneNumCount90Calling,
+			count(DISTINCT(case when DATE_FORMAT(v.call_start_time,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(v.create_time,INTERVAL 90 DAY),'%y-%m-%d') and v.call_type_name = '被叫' then v.call_other_number end)) phoneNumCount90Called
+		from ${tableName} v LEFT JOIN cl_user_base_info  u on u.user_id = v.info_id where u.phone = #{phone,jdbcType=VARCHAR}
+		
+	</select>
+	
+	<select id="operatorMonthAmt" parameterType="java.lang.String" resultType="java.lang.Double">
+		select avg(b.bill_month_amt) monthAmt from cl_operator_bills b  
+		where  b.bill_month_amt is not null and b.phone_num = #{phone,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="operatorJoinDate" parameterType="java.lang.String" resultType="java.util.Date">
+		select extend_join_dt from cl_operator_basic  where basic_phone_num = #{phone,jdbcType=VARCHAR} LIMIT 1
+	</select>
+	
+	<select id="operatorVoicesPhone" parameterType="java.util.Map" resultType="com.xindaibao.cashloan.rc.model.OperatorCountModel">
+		select 
+			sum(case when concat_times>5 then 1 else 0 end) ge5TimesNumCount90,
+ 			sum(case when concat_times>3 and voice_duration > 60 then 1 else 0 end) ge3Times60SNumCount90
+		from (
+				select count(voice_to_number) concat_times,sum(voice_duration) voice_duration,voice_to_number 
+				from ${tableName}
+				where phone_num = #{phone,jdbcType=VARCHAR}
+					and DATE_FORMAT(voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(create_time,INTERVAL 90 DAY),'%y-%m-%d')
+ 				GROUP BY voice_to_number
+		) t
+	</select>
+	
+	<select id="concatsBorrowInfo" parameterType="java.util.Map" resultType="com.xindaibao.cashloan.rc.model.OperatorCountModel">
+		<![CDATA[
+		select 
+			case when sum(case when repay.penalty_day  > 0 then 1 else 0 end) is null then 0 else sum(case when repay.penalty_day  > 0 then 1 else 0 end) end pre20NumBorrowN90,
+			case when sum(case when repay.penalty_day  > 0 then 0 else 1 end) is null then 0 else sum(case when repay.penalty_day  > 0 then 0 else 1 end) end pre20NumBorrowY90,
+			case when sum(case when repay.penalty_day  > 30 and repay.state = '10'  then 1 else 0 end) is null then 0 else sum(case when repay.penalty_day  > 30 and repay.state = '10'  then 1 else 0 end) end pre20NumBorrowNMore30M1,
+			case when sum(case when repay.penalty_day  <= 30 and repay.state = '10'  then 1 else 0 end) is null then 0 else sum(case when repay.penalty_day  <= 30 and repay.state = '10'  then 1 else 0 end) end pre20NumBorrowNLess30M1,
+			case when sum(case when repay.penalty_day  > 90 and repay.state = '10' then 1 else 0 end) is null then 0 else sum(case when repay.penalty_day  > 90 and repay.state = '10' then 1 else 0 end) end pre20NumBorrowN90M3 
+		from (
+			select count(voice_to_number) concat_times,sum(voice_duration) voice_duration,voice_to_number,'temp' temp 
+			from ${tableName} 
+			where  DATE_FORMAT(voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(create_time,INTERVAL 90 DAY),'%y-%m-%d')
+ 			GROUP BY voice_to_number LIMIT 20
+ 			) t
+		LEFT JOIN cl_user_base_info info on info.phone = t.voice_to_number
+		LEFT JOIN cl_borrow_repay repay on repay.user_id = info.user_id
+		where info.phone = t.voice_to_number
+		]]>
+	</select>
+	
+	<select id="emerConcatTimes" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT 
+			case when min(emerConcatTimes) is null then 0 else min(emerConcatTimes) end emerConcatTimes  
+		FROM (
+			select 
+ 				sum(case WHEN DATE_FORMAT(voice_date,'%y-%m-%d') > DATE_FORMAT(DATE_SUB(create_time,INTERVAL 6 MONTH),'%y-%m-%d') then 1 else 0 end ) emerConcatTimes
+ 			FROM ${tableName}
+			WHERE  voice_to_number in (select phone from cl_user_emer_contacts where user_id = #{userId,jdbcType=BIGINT} )
+			AND phone_num = (select phone from cl_user_base_info where user_id = #{userId,jdbcType=BIGINT})
+			GROUP BY voice_to_number
+
+		) t
+	</select>
+</mapper>

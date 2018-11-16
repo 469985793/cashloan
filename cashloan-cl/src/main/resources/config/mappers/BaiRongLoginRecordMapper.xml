@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_dhb_req_log表:贷后邦贷后邦反欺诈请求记录表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.BaiRongLoginRecordMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.BaiRongLoginRecord">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="tokenId" property="tokenId" jdbcType="VARCHAR" />
+        <result column="requestTime" property="requestTime" jdbcType="TIMESTAMP" />
+        <result column="expireTime" property="expireTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id, tokenId, requestTime, expireTime
+    </sql>
+
+    <select id="selectToken" resultType="java.lang.String">
+        SELECT tokenId FROM cl_rc_bairong_login_record
+        WHERE UNIX_TIMESTAMP(NOW()) &lt; UNIX_TIMESTAMP(expireTime);
+    </select>
+
+    <update id="updateToken" parameterType="java.lang.String">
+      UPDATE cl_rc_bairong_login_record
+        SET
+          tokenId = #{tokenId},
+          requestTime = NOW(),
+          expireTime = DATE_ADD(NOW(), INTERVAL 1 HOUR)
+          WHERE id = 1
+    </update>
+
+</mapper>

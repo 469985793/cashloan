@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_adver表:广告管理模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.AdverMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.Adver">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="path" property="path" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="BIGINT" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="link" property="link" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,title,link,path,sort,state
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id != null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="title != null and title != ''">
+                and title like concat("%",#{title,jdbcType=VARCHAR},"%") 
+            </if>
+            <if test="path != null and path != ''">
+                and path = #{path,jdbcType=VARCHAR}
+            </if>
+            <if test="sort != null">
+                and sort = #{sort,jdbcType=BIGINT}
+            </if>
+            <if test="state != null and state != ''">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="link != null and link != ''">
+                and link = #{link,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.Adver">
+        insert into cl_adver(title,link,path,sort,state)values(#{title,jdbcType=VARCHAR},#{link,jdbcType=VARCHAR},#{path,jdbcType=VARCHAR},#{sort,jdbcType=BIGINT},#{state,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.Adver">
+        update cl_adver set 
+            title = #{title,jdbcType=VARCHAR},
+            link = #{link,jdbcType=VARCHAR},
+            path = #{path,jdbcType=VARCHAR},
+            sort = #{sort,jdbcType=BIGINT},
+            state = #{state,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_adver
+          <set>
+            <if test="title != null and title != ''">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+             <if test="link != null">
+                link = #{link,jdbcType=VARCHAR},
+            </if>
+            <if test="path != null and path != ''">
+                path = #{path,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=BIGINT},                
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state,jdbcType=VARCHAR}
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_adver
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_adver
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_adver
+        <include refid="searchBy"/>
+        order by sort asc,id desc
+    </select>
+    
+    <select id="getBanner" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_adver
+        where state = 10 
+        order by sort asc, id desc
+    </select>
+    
+</mapper>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.LoanReimbursementMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.LoanReimbursement">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="indent_no" jdbcType="VARCHAR" property="indentNo" />
+    <result column="rtn_amount" jdbcType="INTEGER" property="rtnAmount" />
+    <result column="rtn_code" jdbcType="VARCHAR" property="rtnCode" />
+    <result column="rtn_msg" jdbcType="VARCHAR" property="rtnMsg" />
+    <result column="rtn_order_no" jdbcType="VARCHAR" property="rtnOrderNo" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, indent_no, rtn_amount, rtn_code, rtn_msg, rtn_order_no, status, created_time, 
+    updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="indentNo != null and indentNo != '' ">
+        and indentNo = #{indent_no,jdbcType=VARCHAR}
+      </if>
+      <if test="rtnAmount != null and rtnAmount != '' ">
+        and rtnAmount = #{rtn_amount,jdbcType=INTEGER}
+      </if>
+      <if test="rtnCode != null and rtnCode != '' ">
+        and rtnCode = #{rtn_code,jdbcType=VARCHAR}
+      </if>
+      <if test="rtnMsg != null and rtnMsg != '' ">
+        and rtnMsg = #{rtn_msg,jdbcType=VARCHAR}
+      </if>
+      <if test="rtnOrderNo != null and rtnOrderNo != '' ">
+        and rtnOrderNo = #{rtn_order_no,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_loan_Reimbursement
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from k_loan_Reimbursement
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanReimbursement">
+    insert into k_loan_Reimbursement (id, indent_no, rtn_amount, 
+      rtn_code, rtn_msg, rtn_order_no, 
+      status, created_time, updated_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{indentNo,jdbcType=VARCHAR}, #{rtnAmount,jdbcType=INTEGER}, 
+      #{rtnCode,jdbcType=VARCHAR}, #{rtnMsg,jdbcType=VARCHAR}, #{rtnOrderNo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanReimbursement">
+    insert into k_loan_Reimbursement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="indentNo != null">
+        indent_no,
+      </if>
+      <if test="rtnAmount != null">
+        rtn_amount,
+      </if>
+      <if test="rtnCode != null">
+        rtn_code,
+      </if>
+      <if test="rtnMsg != null">
+        rtn_msg,
+      </if>
+      <if test="rtnOrderNo != null">
+        rtn_order_no,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="indentNo != null">
+        #{indentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnAmount != null">
+        #{rtnAmount,jdbcType=INTEGER},
+      </if>
+      <if test="rtnCode != null">
+        #{rtnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnMsg != null">
+        #{rtnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnOrderNo != null">
+        #{rtnOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanReimbursement">
+    update k_loan_Reimbursement
+    <set>
+      <if test="indentNo != null">
+        indent_no = #{indentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnAmount != null">
+        rtn_amount = #{rtnAmount,jdbcType=INTEGER},
+      </if>
+      <if test="rtnCode != null">
+        rtn_code = #{rtnCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnMsg != null">
+        rtn_msg = #{rtnMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="rtnOrderNo != null">
+        rtn_order_no = #{rtnOrderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanReimbursement">
+    update k_loan_Reimbursement
+    set indent_no = #{indentNo,jdbcType=VARCHAR},
+      rtn_amount = #{rtnAmount,jdbcType=INTEGER},
+      rtn_code = #{rtnCode,jdbcType=VARCHAR},
+      rtn_msg = #{rtnMsg,jdbcType=VARCHAR},
+      rtn_order_no = #{rtnOrderNo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_Reimbursement
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_Reimbursement
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_Reimbursement
+    <include refid="searchBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.KanyaUserPhoneAdapterMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.KanyaUserPhoneAdapter">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="resolution" jdbcType="VARCHAR" property="resolution" />
+    <result column="network_type" jdbcType="TINYINT" property="networkType" />
+    <result column="partner_no" jdbcType="VARCHAR" property="partnerNo" />
+    <result column="client_token" jdbcType="VARCHAR" property="clientToken" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
+    <result column="imsi" jdbcType="VARCHAR" property="imsi" />
+    <result column="isp" jdbcType="VARCHAR" property="isp" />
+    <result column="solid_version" jdbcType="VARCHAR" property="solidVersion" />
+    <result column="client_type" jdbcType="TINYINT" property="clientType" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, ip, brand, resolution, network_type, partner_no, client_token, imei, imsi, 
+    isp, solid_version, client_type, status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="uid != null and uid != '' ">
+        and uid = #{uid,jdbcType=BIGINT}
+      </if>
+      <if test="ip != null and ip != '' ">
+        and ip = #{ip,jdbcType=VARCHAR}
+      </if>
+      <if test="brand != null and brand != '' ">
+        and brand = #{brand,jdbcType=VARCHAR}
+      </if>
+      <if test="resolution != null and resolution != '' ">
+        and resolution = #{resolution,jdbcType=VARCHAR}
+      </if>
+      <if test="networkType != null and networkType != '' ">
+        and networkType = #{network_type,jdbcType=TINYINT}
+      </if>
+      <if test="partnerNo != null and partnerNo != '' ">
+        and partnerNo = #{partner_no,jdbcType=VARCHAR}
+      </if>
+      <if test="clientToken != null and clientToken != '' ">
+        and clientToken = #{client_token,jdbcType=VARCHAR}
+      </if>
+      <if test="imei != null and imei != '' ">
+        and imei = #{imei,jdbcType=VARCHAR}
+      </if>
+      <if test="imsi != null and imsi != '' ">
+        and imsi = #{imsi,jdbcType=VARCHAR}
+      </if>
+      <if test="isp != null and isp != '' ">
+        and isp = #{isp,jdbcType=VARCHAR}
+      </if>
+      <if test="solidVersion != null and solidVersion != '' ">
+        and solidVersion = #{solid_version,jdbcType=VARCHAR}
+      </if>
+      <if test="clientType != null and clientType != '' ">
+        and clientType = #{client_type,jdbcType=TINYINT}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user_phone_adapter
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from k_user_phone_adapter
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserPhoneAdapter">
+    insert into k_user_phone_adapter (id, uid, ip, brand, 
+      resolution, network_type, partner_no, 
+      client_token, imei, imsi, 
+      isp, solid_version, client_type, 
+      status, created_time, updated_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{ip,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, 
+      #{resolution,jdbcType=VARCHAR}, #{networkType,jdbcType=TINYINT}, #{partnerNo,jdbcType=VARCHAR}, 
+      #{clientToken,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR}, #{imsi,jdbcType=VARCHAR}, 
+      #{isp,jdbcType=VARCHAR}, #{solidVersion,jdbcType=VARCHAR}, #{clientType,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserPhoneAdapter">
+    insert into k_user_phone_adapter
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="resolution != null">
+        resolution,
+      </if>
+      <if test="networkType != null">
+        network_type,
+      </if>
+      <if test="partnerNo != null">
+        partner_no,
+      </if>
+      <if test="clientToken != null">
+        client_token,
+      </if>
+      <if test="imei != null">
+        imei,
+      </if>
+      <if test="imsi != null">
+        imsi,
+      </if>
+      <if test="isp != null">
+        isp,
+      </if>
+      <if test="solidVersion != null">
+        solid_version,
+      </if>
+      <if test="clientType != null">
+        client_type,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="resolution != null">
+        #{resolution,jdbcType=VARCHAR},
+      </if>
+      <if test="networkType != null">
+        #{networkType,jdbcType=TINYINT},
+      </if>
+      <if test="partnerNo != null">
+        #{partnerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="clientToken != null">
+        #{clientToken,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null">
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="imsi != null">
+        #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="isp != null">
+        #{isp,jdbcType=VARCHAR},
+      </if>
+      <if test="solidVersion != null">
+        #{solidVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="clientType != null">
+        #{clientType,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserPhoneAdapter">
+    update k_user_phone_adapter
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="resolution != null">
+        resolution = #{resolution,jdbcType=VARCHAR},
+      </if>
+      <if test="networkType != null">
+        network_type = #{networkType,jdbcType=TINYINT},
+      </if>
+      <if test="partnerNo != null">
+        partner_no = #{partnerNo,jdbcType=VARCHAR},
+      </if>
+      <if test="clientToken != null">
+        client_token = #{clientToken,jdbcType=VARCHAR},
+      </if>
+      <if test="imei != null">
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="imsi != null">
+        imsi = #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="isp != null">
+        isp = #{isp,jdbcType=VARCHAR},
+      </if>
+      <if test="solidVersion != null">
+        solid_version = #{solidVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="clientType != null">
+        client_type = #{clientType,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserPhoneAdapter">
+    update k_user_phone_adapter
+    set uid = #{uid,jdbcType=BIGINT},
+      ip = #{ip,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      resolution = #{resolution,jdbcType=VARCHAR},
+      network_type = #{networkType,jdbcType=TINYINT},
+      partner_no = #{partnerNo,jdbcType=VARCHAR},
+      client_token = #{clientToken,jdbcType=VARCHAR},
+      imei = #{imei,jdbcType=VARCHAR},
+      imsi = #{imsi,jdbcType=VARCHAR},
+      isp = #{isp,jdbcType=VARCHAR},
+      solid_version = #{solidVersion,jdbcType=VARCHAR},
+      client_type = #{clientType,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_phone_adapter
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_phone_adapter
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_phone_adapter
+    <include refid="searchBy"/>
+  </select>
+</mapper>

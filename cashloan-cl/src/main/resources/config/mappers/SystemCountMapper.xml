@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 首页数据统计 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.SystemCountMapper">
+    <resultMap id="mapResult" type="HashMap">  
+        <result property="key" column="ks" />  
+        <result property="value" column="vs" />
+    </resultMap>  
+    
+    <!-- 统计当日注册用户数量 -->
+    <select id="countRegister" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+    	select count(id) from cl_user 
+    	where TO_DAYS(regist_time)-TO_DAYS(SYSDATE())=0  
+    </select>
+    <!-- 统计当日登陆用户数量 -->
+    <select id="countLogin" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+    	select count(id) from cl_user 
+    	where  TO_DAYS(login_time)-TO_DAYS(SYSDATE())=0    
+    </select>
+    <!-- 统计当日借款申请的数量 -->
+    <select id="countBorrow" resultType="java.lang.Double" parameterType="java.util.HashMap">
+    	select count(id) from cl_borrow 
+    	where TO_DAYS(create_time)-TO_DAYS(SYSDATE())=0 
+    </select>
+    <!-- 统计当日借款申请通过的数量 -->
+    <select id="countBorrowPass" resultType="java.lang.Double" parameterType="java.util.HashMap">
+    	select count(id) from cl_borrow_progress 
+    	where TO_DAYS(create_time)-TO_DAYS(SYSDATE())=0 
+    		and state = '32'
+    </select>
+    <!-- 统计当日借款申请放款数量 -->
+    <select id="countBorrowLoan" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+    	select count(id) from cl_borrow_progress 
+    	where TO_DAYS(create_time)-TO_DAYS(SYSDATE())=0
+    	and state = '32'
+    </select>
+    <!-- 统计当日还款量 -->
+    <select id="countBorrowRepay" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+    	select count(id) from cl_borrow_repay_log
+    	where TO_DAYS(repay_time)-TO_DAYS(SYSDATE())=0  
+    </select>
+    <!-- 统计历史放款总量 -->
+    <select id="countBorrowLoanHistory" resultType="java.lang.Integer">
+    	select count(id) from cl_borrow_progress where state = '30'
+    </select>
+    <!-- 统计历史还款总量 -->
+    <select id="countBorrowRepayHistory" resultType="java.lang.Integer">
+    	select count(id) from cl_borrow_repay    where state = '10'
+    </select>
+    <!-- 待还款总额 -->
+    <select id="sumBorrowNeedRepay" resultType="java.lang.Double">
+    	select sum(amount+penalty_amout) from cl_borrow_repay where state = '20'
+    </select>
+    <!-- 逾期未还款总额 -->
+    <select id="sumBorrowOverdueRepay" resultType="java.lang.Double">
+    	<!--select sum(amount+penalty_amout) from cl_borrow_repay where state = '20' and penalty_amout>0-->
+		select sum(b.amount) from cl_borrow_repay a left join cl_borrow b on a.borrow_id=b.id where a.state = '20' and a.penalty_amout>0
+    </select>
+    
+    <!-- 累计成功借款金额(按地区分组) -->
+    <select id="sumBorrowAmtByProvince" resultType="java.lang.String">
+    	SELECT SUM(amount) FROM `cl_borrow` WHERE state NOT IN (10,20,22,21,26,27) AND address LIKE #{address}
+    </select>
+
+    <!-- 累计还款金额(按地区分组) -->
+    <select id="sumBorrowRepayByProvince" resultType="java.lang.String">
+    	SELECT SUM(brl.amount) FROM `cl_borrow_repay_log` brl LEFT JOIN cl_borrow b ON brl.borrow_id = b.id WHERE b.address LIKE #{address}
+    </select>
+    
+    <!-- 累计新增用户(按地区分组) -->
+    <select id="countRegisterByProvince" resultType="java.lang.String">
+    	SELECT COUNT(1) FROM `cl_user` u LEFT JOIN cl_user_base_info ubi ON u.id = ubi.user_id WHERE ubi.register_addr LIKE #{address}
+    </select>
+    
+    <!-- 最近15日每天放款量  -->
+    <select id="countFifteenDaysLoan"  resultType="map">
+    	select create_time 'key',count(id) 'value' from 
+    		(select id,DATE_FORMAT(create_time,'%Y-%m-%d') create_time 
+    			from cl_borrow_progress 
+    			where state = '30' 
+    			<![CDATA[ and TO_DAYS(SYSDATE()) - TO_DAYS(create_time) <= 15  ]]>
+    		) t 
+    	GROUP BY create_time
+    </select>
+    <!-- 还款来源 10代扣，20银行卡转账，30支付宝转账 -->
+    <select id="countRepaySource" resultType="map">
+    	select repay_way 'key',count(id) 'value' from (select id,case when repay_way = '10' then '自动代扣' when repay_way = '20' then '银行卡转账'  when repay_way = '30' then '支付宝转账' else '其它' end  repay_way from cl_borrow_repay_log ) t GROUP BY repay_way
+    </select>
+    <!-- 最近15日应还款量 -->
+    <select id="countFifteenDaysNeedRepay" resultType="map">
+    	select repay_time 'key',count(id) 'value' from 
+    		(select id,DATE_FORMAT(repay_time,'%Y-%m-%d') repay_time 
+				from cl_borrow_repay
+				where 
+				<![CDATA[  TO_DAYS(SYSDATE()) - TO_DAYS(repay_time) <= 15  and TO_DAYS(repay_time)-TO_DAYS(SYSDATE()) <=0 ]]>	
+			) t 
+		GROUP BY repay_time
+    </select>
+    <!-- 最近15日实际还款量 -->
+    <select id="countFifteenDaysRealRepay" resultType="map">
+    	select create_time 'key',count(id) 'value' from 
+    		(select id,DATE_FORMAT(repay_time,'%Y-%m-%d') create_time 
+    			from cl_borrow_repay_log 
+    			where TO_DAYS(SYSDATE()) - TO_DAYS(repay_time) <![CDATA[<=]]> 15
+    		) t 
+    	GROUP BY create_time
+    </select>
+</mapper>

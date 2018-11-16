@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd"
+	default-autowire="byName">
+	
+       	<!-- 登录页面和静态资源不受Spring Security过滤器保护, 可直接访问 -->
+		<http  pattern="/login.htm" security="none" />
+		<http  pattern="/favicon.ico" security="none" />
+		<http  pattern="/rongyun/*" security="none" /> 
+		<http  pattern="/**/*.eot" security="none" />
+		<http  pattern="/**/*.woff" security="none"/>
+		<http  pattern="/**/*.ttf" security="none"/>
+		<http  pattern="/**/*.svg" security="none" /> 
+		
+		<http  pattern="/**/*.jsp" security="none" />
+		<http  pattern="/loginerr.htm" security="none" />
+		<http  pattern="/**/*.png" security="none" />
+		<http  pattern="/**/*.gif" security="none" />
+		<http  pattern="/**/*.jpg" security="none" />
+		<http  pattern="/**/*.jpeg" security="none" />
+		<http  pattern="/**/*.ico" security="none" />
+		<http  pattern="/**/*.css" security="none" />
+		<http  pattern="/**/*.js" security="none" />
+		<http  pattern="/modeler.html" security="none" />
+		<http  pattern="/**/*.html" security="none" />
+		
+
+		<http  pattern="/json/*.json" security="none" />
+		<http  pattern="/ajaxLoginProcess.htm" security="none" />
+		<http  pattern="/getByUserPassRolesList.htm"  security="none" />
+		<http  pattern="/modules/common/upload3.htm" security="none" />
+		<http  pattern="/web-service/*" security="none" />
+       
+	<http  entry-point-ref="authenticationProcessingFilterEntryPoint" ><!-- entry-point-ref="jilujiaAuthenticationEntryPoint" -->
+		<!-- Spring security配置防用户重复登录 -->
+		<session-management	 session-authentication-error-url="${logout.url}" session-authentication-strategy-ref="sas" invalid-session-url="${logout.url}" >
+	
+
+		</session-management>
+		
+
+	
+      <!--    <request-cache ref="httpSessionRequestCache"/> -->
+		<!-- 默认角色权限, 任何验证通过后账号均拥有该权限 -->
+		<intercept-url pattern="/index.htm" access="ROLE_DEFAULT" />
+		<!-- 除上述以外和在DB中指定访问权限的URL之外, 均需要登录后访问 -->
+		<intercept-url pattern="/**" access="IS_AUTHENTICATED_FULLY" />
+		<!-- 登录权限基础设置 -->
+		<!-- <form-login login-page="/login.htm"  authentication-failure-handler-ref="ajaxFailureHandler"
+			 
+			default-target-url="/index.htm" authentication-success-handler-ref="ajaxSuccessHandler"/> -->
+             
+            <!--  authentication-failure-url="/login.htm?error=true" -->
+        <!-- <logout invalidate-session="true"   logout-success-url="/"  logout-url="/j_spring_security_logout"/> -->
+		<logout logout-success-url="${logout.url}" invalidate-session="true" logout-url="/j_spring_security_logout" />
+		<http-basic />
+		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="filterSecurityInterceptor" />
+		<custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
+
+		<!--  <custom-filter position="FORM_LOGIN_FILTER" ref="myAuthFilter" /> -->
+		     <custom-filter position="FORM_LOGIN_FILTER" ref="ajaxLoginFilter"/>
+	</http>
+	
+	<!-- <beans:bean id="httpSessionRequestCache" class="org.springframework.security.web.savedrequest.HttpSessionRequestCache">
+        <beans:property name="justUseSavedRequestOnGet" value="false" />
+    </beans:bean> -->
+	<!-- session -->
+	<beans:bean id="concurrencyFilter"
+		class="com.xindaibao.cashloan.system.security.authentication.handler.MyConcurrentSessionFilter">
+		<beans:property name="sessionRegistry" ref="sessionRegistry" />
+		<beans:property name="expiredUrl" value="${logout.url}" />
+	</beans:bean>
+	<!--登录失败 -->
+	<beans:bean id="authenticationFailureHandler"
+		class="com.xindaibao.cashloan.system.security.authentication.handler.AccessAuthenticationFailureHandler" />
+		
+	<beans:bean id="accessDeniedHandler" class="com.xindaibao.cashloan.system.security.authentication.handler.MyAccessDeniedHandlerImpl">
+		
+	</beans:bean>
+	<!-- 登录失败 -->
+	<beans:bean id="myAuthFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<beans:property name="sessionAuthenticationStrategy"
+			ref="sas" />
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+	</beans:bean>
+	
+	<beans:bean id="authenticationProcessingFilterEntryPoint" class="com.xindaibao.cashloan.system.security.authentication.handler.RdAuthenticationEntryPoint">
+        <beans:property name="loginFormUrl" value="${logout.url}" />
+    </beans:bean>
+    
+     <!-- 未登录的切入点 -->  
+   <!--  <beans:bean id="authenticationProcessingFilterEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">  
+        <beans:property name="loginFormUrl" value="/login.htm"></beans:property>  
+    </beans:bean>  -->
+    
+	<beans:bean id="ajaxLoginFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+        <beans:property name="authenticationFailureHandler" ref="ajaxFailureHandler"/>
+       <beans:property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+        <beans:property name="sessionAuthenticationStrategy"
+			ref="sas" />
+   <!--  <beans:property name="filterProcessesUrl" value="/login.htm"/> -->
+    </beans:bean>
+    
+    
+     <beans:bean id="ajaxFailureHandler" class="com.xindaibao.cashloan.system.security.authentication.handler.AjaxAuthenticationFailureHandler">
+    </beans:bean>
+     
+    <beans:bean id="ajaxSuccessHandler" class="com.xindaibao.cashloan.system.security.authentication.handler.AjaxAuthenticationSuccessHandler">
+    </beans:bean>
+
+	<beans:bean id="sas"
+		class="org.springframework.security.web.authentication.session.ConcurrentSessionControlStrategy">
+		<beans:constructor-arg name="sessionRegistry"
+			ref="sessionRegistry" />
+		<beans:property name="maximumSessions" value="1" />
+		<beans:property name="exceptionIfMaximumExceeded" value="false"/>
+   
+	</beans:bean>
+
+	<beans:bean id="sessionRegistry"
+		class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+	<!-- session -->
+
+	<beans:bean id="authenticationSuccessHandler"
+		class="com.xindaibao.cashloan.system.security.authentication.handler.SaveLoginInfoAuthenticationSuccessHandler" />
+
+	<beans:bean id="filterSecurityInterceptor"
+		class="com.xindaibao.cashloan.system.security.intercept.FilterSecurityInterceptor">
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+		<beans:property name="accessDecisionManager" ref="accessDecisionManager" />
+		<beans:property name="securityMetadataSource" ref="securityMetadataSource" />
+	</beans:bean>
+
+	<!-- 异常 -->
+	<beans:bean id="authenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<beans:property name="hideUserNotFoundExceptions"
+			value="false" />
+		<beans:property name="userDetailsService" ref="userRoleDetailProvider" />
+
+		<beans:property name="passwordEncoder" ref="passwordEncoder" />
+
+
+	</beans:bean>
+
+	<!-- 认证管理器 -->
+	<!-- <authentication-manager alias="authenticationManager"> <authentication-provider 
+		user-service-ref="userRoleDetailProvider"> <password-encoder ref="passwordEncoder" 
+		/> </authentication-provider> </authentication-manager> -->
+
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="authenticationProvider" />
+
+
+	</authentication-manager>
+
+	<beans:bean id="userRoleDetailProvider"
+		class="com.xindaibao.cashloan.system.security.authentication.provider.UserRoleDetailProvider">
+		<beans:property name="systemPasswordInitialization"
+			value="${system.password.initialization}" />
+	</beans:bean>
+
+	<!-- 密码加密 -->
+	<beans:bean id="passwordEncoder"
+		class="com.xindaibao.cashloan.system.security.authentication.encoding.PasswordEncoder">
+		<beans:property name="crypto">
+			<beans:bean
+				class="com.xindaibao.cashloan.core.common.util.crypto.impl.BlowfishCryptoImpl">
+				<beans:property name="key"
+					value="${system.password.encoding.key}" />
+			</beans:bean>
+		</beans:property>
+		<beans:property name="saltSource">
+			<beans:bean
+				class="org.springframework.security.authentication.dao.SystemWideSaltSource">
+				<beans:property name="systemWideSalt"
+					value="${system.password.encoding.salt}" />
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<!-- 访问决策器 -->
+	<beans:bean id="accessDecisionManager"
+		class="com.xindaibao.cashloan.system.security.decision.AccessDecisionManager" />
+
+	<!-- 资源源数据定义 -->
+	<beans:bean id="securityMetadataSource"
+		class="com.xindaibao.cashloan.system.security.datesource.SecurityContextMetadataSource" />
+</beans:beans>

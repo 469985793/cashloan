@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_user_card_credit_log表:人脸识别请求记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.UserCardCreditLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.UserCardCreditLog">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="req_params" property="reqParams" jdbcType="VARCHAR" />
+        <result column="return_params" property="returnParams" jdbcType="VARCHAR" />
+        <result column="confidence" property="confidence" jdbcType="VARCHAR" />
+        <result column="result" property="result" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,req_params,return_params,confidence,result,create_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="reqParams != null and reqParams != '' ">
+                and req_params = #{reqParams,jdbcType=VARCHAR}
+            </if>
+            <if test="returnParams != null and returnParams != '' ">
+                and return_params = #{returnParams,jdbcType=VARCHAR}
+            </if>
+            <if test="confidence != null and confidence != '' ">
+                and confidence = #{confidence,jdbcType=VARCHAR}
+            </if>
+            <if test="result != null and result != '' ">
+                and result = #{result,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.UserCardCreditLog">
+        insert into cl_user_card_credit_log(user_id,req_params,return_params,confidence,result,create_time)values(#{userId,jdbcType=BIGINT},#{reqParams,jdbcType=VARCHAR},#{returnParams,jdbcType=VARCHAR},#{confidence,jdbcType=VARCHAR},#{result,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.UserCardCreditLog">
+        update cl_user_card_credit_log set 
+            user_id = #{userId,jdbcType=BIGINT},
+            req_params = #{reqParams,jdbcType=VARCHAR},
+            return_params = #{returnParams,jdbcType=VARCHAR},
+            confidence = #{confidence,jdbcType=VARCHAR},
+            result = #{result,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_user_card_credit_log
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="reqParams != null and reqParams != '' ">        
+                req_params = #{reqParams,jdbcType=VARCHAR},                
+            </if>
+            <if test="returnParams != null and returnParams != '' ">        
+                return_params = #{returnParams,jdbcType=VARCHAR},                
+            </if>
+            <if test="confidence != null and confidence != '' ">        
+                confidence = #{confidence,jdbcType=VARCHAR},                
+            </if>
+            <if test="result != null and result != '' ">        
+                result = #{result,jdbcType=VARCHAR},                
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}           
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_card_credit_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_card_credit_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_card_credit_log
+        <include refid="searchBy"/>
+    </select>
+    
+     <select id="countByUserId" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(1) as count
+        from cl_user_card_credit_log where user_id = #{userId,jdbcType=BIGINT}  and  date_format(create_time, '%Y-%m-%d')=date_format(SYSDATE(), '%Y-%m-%d') 
+    </select>
+    
+</mapper>

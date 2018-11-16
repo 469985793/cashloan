@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_pay_req_log表:支付请求记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.PayReqLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.PayReqLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="service" property="service" jdbcType="VARCHAR" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="params" property="params" jdbcType="VARCHAR" />
+        <result column="req_detail_params" property="reqDetailParams" jdbcType="VARCHAR" />
+        <result column="return_params" property="returnParams" jdbcType="VARCHAR" />
+        <result column="return_time" property="returnTime" jdbcType="TIMESTAMP" />
+        <result column="notify_params" property="notifyParams" jdbcType="VARCHAR" />
+        <result column="notify_time" property="notifyTime" jdbcType="TIMESTAMP" />
+        <result column="result" property="result" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,service,order_no,params,req_detail_params,return_params,return_time,notify_params,notify_time,result,create_time,ip 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !=null and id !=''">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="service !=null and service !=''">
+                and service = #{service,jdbcType=VARCHAR}
+            </if>
+            <if test="orderNo !=null and orderNo !=''">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="params !=null and params !=''">
+                and params = #{params,jdbcType=VARCHAR}
+            </if>
+            <if test="reqDetailParams !=null and reqDetailParams !=''">
+                and req_detail_params = #{reqDetailParams,jdbcType=VARCHAR}
+            </if>
+            <if test="returnParams !=null and returnParams !=''">
+                and return_params = #{returnParams,jdbcType=VARCHAR}
+            </if>
+            <if test="returnTime !=null">
+                and return_time = #{returnTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="notifyParams !=null and notifyParams !=''">
+                and notify_params = #{notifyParams,jdbcType=VARCHAR}
+            </if>
+            <if test="notifyTime !=null">
+                and notify_time = #{notifyTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="result !=null and result !=''">
+                and result = #{result,jdbcType=INTEGER}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="ip !=null and ip !=''">
+                and ip = #{ip,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.PayReqLog">
+        insert into cl_pay_req_log(service,order_no,params,req_detail_params,return_params,return_time,notify_params,notify_time,result,create_time,ip)values(#{service,jdbcType=VARCHAR},#{orderNo,jdbcType=VARCHAR},#{params,jdbcType=VARCHAR},#{reqDetailParams,jdbcType=VARCHAR},#{returnParams,jdbcType=VARCHAR},#{returnTime,jdbcType=TIMESTAMP},#{notifyParams,jdbcType=VARCHAR},#{notifyTime,jdbcType=TIMESTAMP},#{result,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{ip,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.PayReqLog">
+        update cl_pay_req_log set 
+            service = #{service,jdbcType=VARCHAR},
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            params = #{params,jdbcType=VARCHAR},
+            req_detail_params = #{reqDetailParams,jdbcType=VARCHAR},
+            return_params = #{returnParams,jdbcType=VARCHAR},
+            return_time = #{returnTime,jdbcType=TIMESTAMP},
+            notify_params = #{notifyParams,jdbcType=VARCHAR},
+            notify_time = #{notifyTime,jdbcType=TIMESTAMP},
+            result = #{result,jdbcType=INTEGER},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            ip = #{ip,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_pay_req_log
+          <set>
+            <if test="service != null and service != '' ">        
+                service = #{service,jdbcType=VARCHAR},                
+            </if>
+            <if test="orderNo != null and orderNo != '' ">        
+                order_no = #{orderNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="params != null and params != '' ">        
+                params = #{params,jdbcType=VARCHAR},                
+            </if>
+            <if test="reqDetailParams != null and reqDetailParams != '' ">        
+                req_detail_params = #{reqDetailParams,jdbcType=VARCHAR},                
+            </if>
+            <if test="returnParams != null and returnParams != '' ">        
+                return_params = #{returnParams,jdbcType=VARCHAR},                
+            </if>
+            <if test="returnTime != null ">        
+                return_time = #{returnTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="notifyParams != null and notifyParams != '' ">        
+                notify_params = #{notifyParams,jdbcType=VARCHAR},                
+            </if>
+            <if test="notifyTime != null ">        
+                notify_time = #{notifyTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="result != null and result != '' ">        
+                result = #{result,jdbcType=INTEGER},                
+            </if>
+            <if test="createTime != null ">        
+                create_time = #{createTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="ip != null and ip != '' ">        
+                ip = #{ip,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_pay_req_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_pay_req_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_pay_req_log
+        <include refid="searchBy"/>
+    </select>
+
+	<!-- 分页查询 -->
+	<select id="page" resultType="com.xindaibao.cashloan.cl.model.ManagePayReqLogModel"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from cl_pay_req_log
+		<include refid="searchBy" />
+	</select>
+	
+	<!-- 查询详情 -->
+	<select id="findDetail" resultType="com.xindaibao.cashloan.cl.model.ManagePayReqLogModel"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from cl_pay_req_log
+		where id = #{id ,jdbcType=INTEGER}
+	</select>
+
+</mapper>

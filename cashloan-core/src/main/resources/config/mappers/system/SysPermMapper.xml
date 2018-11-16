@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysPermMapper">
+
+	<resultMap id="BaseResultMap"
+		type="com.xindaibao.cashloan.system.domain.SysPerm">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="perm_level" property="permLevel" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+		<result column="add_user" property="addUser" jdbcType="VARCHAR" />
+		<result column="menu_id" property="menuId" jdbcType="INTEGER" />
+	</resultMap>
+
+	<resultMap type="java.util.HashMap" id="permHashMap">
+		<result column="id" property="id" />
+		<result column="code" property="code"/>
+		<result column="name" property="name"/>
+		<result column="perm_level" property="permLevel" />
+		<result column="remark" property="remark" />
+		<result column="add_time" property="addTime"/>
+		<result column="add_user" property="addUser"/>
+		<result column="menu_id" property="menuId"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, code, name, perm_level, remark, add_time, add_user,
+		menu_id
+	</sql>
+
+	<sql id="permssion_Column_List">
+		perm.id, perm.code, perm.name, perm.perm_level,
+		perm.remark, perm.add_time, perm.add_user, perm.menu_id
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from arc_sys_perm
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="fetchAll" resultMap="permHashMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		FROM arc_sys_perm
+	</select>
+
+
+	<select id="listByRoleId" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		SELECT
+		<include refid="permssion_Column_List" />
+		FROM
+		arc_sys_perm perm
+		INNER JOIN (
+		SELECT
+		arc_sys_role_perm.perm_id
+		FROM
+		arc_sys_role_perm
+		WHERE 1=1
+		AND arc_sys_role_perm.role_id = (#{roleId,jdbcType=INTEGER}
+		) )AS role_perm ON role_perm.perm_id = perm.id
+		ORDER BY perm.id
+	</select>
+
+	<select id="listByUserName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		SELECT
+		<include refid="permssion_Column_List" />
+		FROM
+		arc_sys_perm perm
+		INNER JOIN (
+		SELECT
+		arc_sys_role_perm.perm_id
+		FROM
+		(
+		SELECT
+		arc_sys_role.*
+		FROM
+		arc_sys_user,
+		arc_sys_role,
+		arc_sys_user_role
+		WHERE
+		arc_sys_user.user_name =
+		#{userName,jdbcType=VARCHAR}
+		AND arc_sys_user_role.user_id = arc_sys_user.id
+		AND arc_sys_role.id = arc_sys_user_role.role_id
+		) AS role,
+		arc_sys_role_perm
+		WHERE
+		role.id = arc_sys_role_perm.role_id
+		) AS role_perm ON role_perm.perm_id =
+		perm.id
+		ORDER BY perm.id
+	</select> 
+
+	<insert id="save" parameterType="com.xindaibao.cashloan.system.domain.SysPerm">
+		insert into arc_sys_perm (id,
+		code, name,
+		perm_level, remark, add_time,
+		add_user, menu_id)
+		values
+		(#{id,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{permLevel,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP},
+		#{addUser,jdbcType=VARCHAR}, #{menuId,jdbcType=INTEGER})
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.system.domain.SysPerm">
+		update arc_sys_perm
+		<set>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="permLevel != null">
+				perm_level = #{permLevel,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addUser != null">
+				add_user = #{addUser,jdbcType=VARCHAR},
+			</if>
+			<if test="menuId != null">
+				menu_id = #{menuId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

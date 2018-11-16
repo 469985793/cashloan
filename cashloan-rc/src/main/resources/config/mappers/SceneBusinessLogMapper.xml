@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_scene_business表:场景与第三方征信接口关联关系接口执行认知 -->
+<mapper namespace="com.xindaibao.cashloan.rc.mapper.SceneBusinessLogMapper">
+	<resultMap type="com.xindaibao.cashloan.rc.domain.SceneBusinessLog" id="baseResultMap">
+		<id column="id" property="id" jdbcType="BIGINT" />
+        <result column="scene_id" property="sceneId" jdbcType="BIGINT" />
+        <result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT"/>
+        <result column="tpp_id" property="tppId" jdbcType="BIGINT" />
+        <result column="business_id" property="businessId" jdbcType="BIGINT" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="rs_state" property="rsState" jdbcType="VARCHAR" />
+        <result column="rs_desc" property="rsDesc" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--基本的sql查询字段 公共引用...-->
+    <sql id="base_column_list">
+        id,scene_id,borrow_id,user_id,tpp_id,business_id,nid,create_time,update_time,rs_state,rs_desc,type
+    </sql>
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rc.domain.SceneBusinessLog" keyProperty="id" useGeneratedKeys="true">
+    	insert cl_rc_scene_business_log(scene_id,borrow_id,user_id,tpp_id,business_id,nid,create_time,type)
+    	values(#{sceneId,jdbcType=BIGINT},#{borrowId,jdbcType=BIGINT},#{userId,jdbcType=BIGINT},#{tppId,jdbcType=BIGINT},#{businessId,jdbcType=BIGINT},#{nid,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{type,jdbcType=VARCHAR})
+    </insert>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test=" sceneId !=null ">
+                and scene_id = #{sceneId,jdbcType=BIGINT}
+            </if>
+            <if test=" borrowId !=null ">
+                and borrow_id = #{borrowId,jdbcType=BIGINT}
+            </if>
+            <if test=" userId !=null ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test=" tppId !=null ">
+                and tpp_id = #{tppId,jdbcType=BIGINT}
+            </if>
+            <if test="businessId !=null">
+                and business_id = #{businessId,jdbcType=BIGINT}
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    <select id="findSelective" resultMap="baseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="base_column_list" />
+        from cl_rc_scene_business_log
+        <include refid="searchBy"/>
+    </select>
+    
+	<update id="update" parameterType="com.xindaibao.cashloan.rc.domain.SceneBusinessLog">
+		update cl_rc_scene_business_log 
+		<set>
+			<if test=" rsState != '' and rsState != null">
+				rs_state = #{rsState,jdbcType=VARCHAR},
+			</if>
+			<if test=" rsDesc != '' and rsDesc != null">
+				rs_desc = #{rsDesc,jdbcType=VARCHAR},
+			</if>
+			<if test=" updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<!-- 查询未完成的（失败的/需要重新执行的）记录数 -->
+	<select id="countUnFinishLog" parameterType="java.lang.Long" resultType="int">
+		 select count(1) from cl_rc_scene_business_log where borrow_id = #{borrowId,jdbcType=BIGINT} and (rs_state is null or rs_state = '' or rs_state = '0')
+	</select>
+	
+	<!-- 查询未完成的（失败的/需要重新执行的）记录 -->
+	<select id="findSceneLogByBorrowId" parameterType="java.lang.Long" resultMap="baseResultMap">
+		select <include refid="base_column_list" /> from cl_rc_scene_business_log where borrow_id = #{borrowId,jdbcType=BIGINT} and (rs_state is null or rs_state = '' or rs_state = '0')
+	</select>
+	
+	<select id="findLastExcute" resultType="com.xindaibao.cashloan.rc.domain.SceneBusinessLog">
+		select <include refid="base_column_list" /> from cl_rc_scene_business_log 
+		where user_id = #{userId,jdbcType=BIGINT} and business_id = #{busId,jdbcType=BIGINT} ORDER BY create_time DESC LIMIT 1
+	</select>
+</mapper>

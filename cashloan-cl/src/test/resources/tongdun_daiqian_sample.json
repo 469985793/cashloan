@@ -1,0 +1,359 @@
+{
+  "code": 200,
+  "data": {
+    "data": {
+      "apply_time": 1510892991550,
+      "risk_items": [
+        {
+          "risk_level": "low",
+          "item_name": "身份证命中中风险关注名单",
+          "item_id": 12145533,
+          "item_detail": {
+            "namelist_hit_details": [
+              {
+                "hit_type_displayname": "借款人身份证",
+                "description": "身份证命中中风险关注名单",
+                "type": "grey_list",
+                "fraud_type": "信用异常、异常借款"
+              }
+            ],
+            "fraud_type": "信用异常、异常借款"
+          },
+          "group": "风险信息扫描"
+        },
+        {
+          "risk_level": "low",
+          "item_name": "手机号命中中风险关注名单",
+          "item_id": 12145723,
+          "item_detail": {
+            "namelist_hit_details": [
+              {
+                "hit_type_displayname": "借款人手机",
+                "description": "手机号命中中风险关注名单",
+                "type": "grey_list",
+                "fraud_type": "信用异常、异常借款"
+              }
+            ],
+            "fraud_type": "信用异常、异常借款"
+          },
+          "group": "风险信息扫描"
+        },
+        {
+          "risk_level": "low",
+          "item_name": "3个月内身份证关联多个申请信息",
+          "item_id": 12146173,
+          "item_detail": {
+            "frequency_detail_list": [
+              {
+                "detail": "3个月身份证关联邮箱数：1",
+                "data": [
+                  "615※※※560@qq.com"
+                ]
+              },
+              {
+                "detail": "3个月身份证关联手机号数：2",
+                "data": [
+                  "13956598428",
+                  "139※※※※2094"
+                ]
+              },
+              {
+                "detail": "3个月身份证关联家庭地址数：6",
+                "data": [
+                  "宣城市广德县山关2区",
+                  "安徽省宣※※※※※※※※※※※※※※※※※※※※村52号",
+                  "广德县※※※※※服务所",
+                  "安徽省宣※※※※※※※※※※※※※领37号",
+                  "山※※区",
+                  "邱村镇※※※※※52号"
+                ]
+              }
+            ],
+            "type": "frequency_detail"
+          },
+          "group": "客户行为检测"
+        },
+        {
+          "risk_level": "low",
+          "item_name": "3个月内申请人身份证关联工作单位地址个数大于等于2",
+          "item_id": 12146453,
+          "item_detail": {
+            "frequency_detail_list": [
+              {
+                "detail": "3个月内借款人身份证关联工作单位地址个数：5",
+                "data": [
+                  "安徽省宣※※※※※※※※※※※※※号楼2楼",
+                  "东方银※※售中心",
+                  "天寿路※※※※※※楼3楼",
+                  "安徽省宣※※※※※※※※※※※※※※座3号楼",
+                  "利豪※※公司"
+                ]
+              }
+            ],
+            "type": "frequency_detail"
+          },
+          "group": "客户行为检测"
+        },
+        {
+          "risk_level": "high",
+          "item_name": "7天内申请人在多个平台申请借款",
+          "item_id": 12146513,
+          "item_detail": {
+            "platform_detail_dimension": [
+              {
+                "dimension": "借款人手机详情",
+                "detail": [
+                  "一般消费分期平台:2",
+                  "小额贷款公司:2",
+                  "P2P网贷:6"
+                ],
+                "count": 10
+              },
+              {
+                "dimension": "借款人身份证详情",
+                "detail": [
+                  "一般消费分期平台:2",
+                  "小额贷款公司:2",
+                  "P2P网贷:6"
+                ],
+                "count": 10
+              },
+              {
+                "dimension": "设备ID详情",
+                "detail": [
+                  "一般消费分期平台:1",
+                  "小额贷款公司:1",
+                  "P2P网贷:2"
+                ],
+                "count": 4
+              }
+            ],
+            "platform_detail": [
+              "一般消费分期平台:2",
+              "小额贷款公司:2",
+              "P2P网贷:6"
+            ],
+            "type": "platform_detail",
+            "platform_count": 10
+          },
+          "group": "多平台借贷申请检测"
+        },
+        {
+          "risk_level": "medium",
+          "item_name": "1个月内申请人在多个平台申请借款",
+          "item_id": 12146523,
+          "item_detail": {
+            "platform_detail_dimension": [
+              {
+                "dimension": "借款人手机详情",
+                "detail": [
+                  "一般消费分期平台:8",
+                  "互联网金融门户:1",
+                  "小额贷款公司:10",
+                  "P2P网贷:11",
+                  "大型消费金融公司:1"
+                ],
+                "count": 31
+              },
+              {
+                "dimension": "借款人身份证详情",
+                "detail": [
+                  "一般消费分期平台:8",
+                  "互联网金融门户:1",
+                  "小额贷款公司:10",
+                  "P2P网贷:12",
+                  "大型消费金融公司:1"
+                ],
+                "count": 32
+              },
+              {
+                "dimension": "设备ID详情",
+                "detail": [
+                  "一般消费分期平台:4",
+                  "小额贷款公司:5",
+                  "P2P网贷:3"
+                ],
+                "count": 12
+              }
+            ],
+            "platform_detail": [
+              "一般消费分期平台:9",
+              "互联网金融门户:1",
+              "小额贷款公司:10",
+              "P2P网贷:12",
+              "大型消费金融公司:1"
+            ],
+            "type": "platform_detail",
+            "platform_count": 33
+          },
+          "group": "多平台借贷申请检测"
+        },
+        {
+          "risk_level": "medium",
+          "item_name": "3个月内申请人在多个平台申请借款",
+          "item_id": 12146533,
+          "item_detail": {
+            "platform_detail_dimension": [
+              {
+                "dimension": "借款人手机详情",
+                "detail": [
+                  "一般消费分期平台:18",
+                  "互联网金融门户:1",
+                  "信用卡中心:1",
+                  "财产保险:1",
+                  "小额贷款公司:30",
+                  "理财机构:1",
+                  "P2P网贷:35",
+                  "大型消费金融公司:2"
+                ],
+                "count": 89
+              },
+              {
+                "dimension": "借款人身份证详情",
+                "detail": [
+                  "一般消费分期平台:19",
+                  "互联网金融门户:1",
+                  "信用卡中心:1",
+                  "财产保险:1",
+                  "小额贷款公司:30",
+                  "理财机构:1",
+                  "P2P网贷:36",
+                  "大型消费金融公司:2"
+                ],
+                "count": 91
+              },
+              {
+                "dimension": "设备ID详情",
+                "detail": [
+                  "一般消费分期平台:8",
+                  "小额贷款公司:13",
+                  "P2P网贷:11"
+                ],
+                "count": 32
+              }
+            ],
+            "platform_detail": [
+              "一般消费分期平台:20",
+              "互联网金融门户:1",
+              "信用卡中心:1",
+              "财产保险:1",
+              "小额贷款公司:30",
+              "理财机构:1",
+              "P2P网贷:36",
+              "大型消费金融公司:2"
+            ],
+            "type": "platform_detail",
+            "platform_count": 92
+          },
+          "group": "多平台借贷申请检测"
+        }
+      ],
+      "address_detect": {
+        "wifi_address": "安徽省宣城市广德县桃州镇",
+        "bank_card_address": "北京市建设银行",
+        "id_card_address": "安徽省宣城地区广德县",
+        "field_address": [
+          {
+            "field_path": "id_number",
+            "address": "安徽省宣城地区广德县",
+            "value_format": "ID_NUMBER"
+          },
+          {
+            "field_path": "account_mobile",
+            "address": "安徽省宣城市",
+            "value_format": "MOBILE"
+          },
+          {
+            "field_path": "card_number",
+            "address": "北京市建设银行",
+            "value_format": "CARD_NUMBER"
+          },
+          {
+            "field_path": "contact1_mobile",
+            "address": "安徽省宣城市",
+            "value_format": "MOBILE"
+          },
+          {
+            "field_path": "contact2_mobile",
+            "address": "安徽省宣城市",
+            "value_format": "MOBILE"
+          }
+        ],
+        "mobile_address": "安徽省宣城市",
+        "true_ip_address": "安徽省宣城市"
+      },
+      "geo_trueip": {
+        "lip": 2087767458,
+        "county": "",
+        "isp": "电信",
+        "province": "安徽省",
+        "longitude": 118.757996,
+        "latitude": 30.945667,
+        "ip": "124.112.205.162",
+        "city": "宣城市",
+        "country": "中国"
+      },
+      "device_type": "android",
+      "final_decision": "Reject",
+      "report_time": 1510892991559,
+      "application_id": "171117122951461CA80014E3253C596C",
+      "device_info": {
+        "cellLocation": "[],[]",
+        "gateway": "192.168.0.1",
+        "totalStorage": "26930290688",
+        "mcc": "460,",
+        "voiceMail": "-,-",
+        "screenRes": "720x1280",
+        "availableStorage": "11315978240",
+        "bootTime": "1510612335180",
+        "blueMac": "",
+        "deviceName": "A57",
+        "phoneNumber": "+8613956598428,-",
+        "wifiIp": "192.168.0.175",
+        "batteryLevel": "86",
+        "carrier": "中国移动,中国移动",
+        "deviceId": "ca4d0d68-6c7d-40d1-bf6dc-36cf3bb593e",
+        "os": "android",
+        "host": "ubuntu-121-142",
+        "cellIp": "",
+        "imei": "865747038729075,865747038729067",
+        "fmVersion": "3.1.1",
+        "basebandVersion": "Q_V1_P14,Q_V1_P14",
+        "display": "A57t_11_A.15_171025",
+        "sessionId": "changna-20171117105740-PGS-1617e244db2d798364427248d59308d5",
+        "roName": "A57t",
+        "activeTime": "205375604",
+        "language": "zh",
+        "model": "OPPO A57t",
+        "hardware": "qcom",
+        "dnsAddress": "192.168.0.1,8.8.8.8",
+        "phoneType": "GSM,GSM",
+        "timeZone": "dstDiff=0,gmfOffset=480",
+        "sdkVersion": "23",
+        "roModel": "OPPO A57t",
+        "simOperator": "中国移动,-",
+        "subscriberId": "460005631419868,460005631419868",
+        "mnc": "00,",
+        "countryIso": "cn,-",
+        "tdid": "37a77be612c0b0d222abdfa00ba41b793,37a77be612c0b0d222abdfa00ba41b793",
+        "simSerial": "898600641214F5639868,898600641214F5639868",
+        "tags": "dev-keys",
+        "totalMemory": "2972651520",
+        "wifiMac": "3c:f5:91:6d:68:2d",
+        "cpuHardware": "AArch64 Processor rev 4 (aarch64)",
+        "batteryStatus": "not charging",
+        "udid": "eb42ed2a11fa1af",
+        "product": "A57t",
+        "serialNo": "4557674",
+        "upTime": "275123814",
+        "brand": "OPPO",
+        "roDevice": "A57",
+        "cpuType": "Qualcomm Technologies, Inc MSM8940"
+      },
+      "final_score": 100
+    },
+    "report_id": "CR2017111712295185D7F996",
+    "success": true
+  },
+  "message": "调用成功！"
+}

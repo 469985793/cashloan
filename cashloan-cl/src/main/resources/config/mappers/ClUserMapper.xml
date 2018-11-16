@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="usr">
+
+    <select id="isPhoneExists" resultType="map">
+        select 1 from cl_user where login_name=#{phone}
+    </select>
+
+    <select id="info" resultType="map">
+        select
+            u.invitation_code,
+            u.login_name,
+            lv.value profitRate,
+            u.level,
+            ua.*,
+            c.*
+        from arc_credit c
+        join cl_user u on u.id=c.consumer_no
+        left join arc_sys_config lv on lv.code=u.level
+        left join cl_user_auth ua on ua.user_id=u.id
+        where
+            consumer_no=#{userId}
+    </select>
+
+    <select id="infoTmp" resultType="map">
+        select * from arc_sys_config where code =#{code}
+    </select>
+
+    <select id="validateTradePwd" resultType="map">
+        select 1 from cl_user where id=#{userId} and trade_pwd=#{tradePwd}
+    </select>
+
+    <select id="inviteListCnt" resultType="map">
+        select
+            count(1) cnt
+        from cl_user_invite ui
+        join cl_user u on u.id=ui.invite_id
+        left join arc_sys_config lv on lv.code=u.level
+        where
+        ui.user_id=#{userId}
+    </select>
+
+
+    <select id="inviteList" resultType="map">
+        select
+            ui.invite_id      inviteId,
+            ui.invite_name    inviteName,
+            ui.invite_time    inviteTime,
+            lv.code           level
+        from cl_user_invite ui
+        join cl_user u on u.id=ui.invite_id
+        left join arc_sys_config lv on lv.code=u.level
+        where
+            ui.user_id=#{userId}
+        order by
+            ui.id desc
+        limit #{start},#{length}
+    </select>
+
+    <select id="validateUser" resultType="map">
+        select * from cl_user_base_info where user_id=#{userId}
+    </select>
+
+    <select id="queryUser" resultType="map">
+        select * from cl_user where id=#{userId}
+    </select>
+    <select id="queryUserByInvitation" resultType="map">
+        select * from cl_user where invitation_code=#{code}
+    </select>
+    <select id="queryUserByLoginName" resultType="map">
+        select * from cl_user where login_name=#{loginName}
+    </select>
+
+    <select id="getTradeState" resultType="map">
+        select
+            u.id,
+            u.trade_pwd,
+            info.real_name,
+            info.id_no
+        from cl_user u
+        left join cl_user_base_info info on info.user_id=u.id
+        where u.id=#{userId}
+    </select>
+</mapper>

@@ -1,0 +1,460 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF8">
+    <title></title>
+    <style type="text/css">
+        #container {
+            margin: 8px;
+        }
+
+        .param-table {
+            background: #E6E6E6;
+            border: 1px solid #FFF;
+            margin: 12px 0;
+            border-collapse: collapse;
+        }
+
+        .param-table th {
+            background: gray;
+            color: #FFF;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid #FFF;
+            padding: 5px;
+        }
+
+        .param-table td {
+            border-collapse: collapse;
+            border: 1px solid #FFF;
+            font-size: 12px;
+            padding: 5px;
+        }
+
+        .param-table .th-name {
+            min-width: 140px;
+        }
+
+        .param-table .th-identifier {
+            min-width: 140px;
+        }
+
+        .param-table .th-type {
+            min-width: 100px;
+        }
+
+        .param-table .th-remark {
+            min-width: 200px;
+        }
+
+        .param-table .td-name {}
+
+        .param-table .td-identifier {}
+
+        .param-table .td-type   { color: #990000; }
+
+        .param-table .td-remark { color: #666; }
+
+        .param-table .tr-level-1 { background: #F5F5F5; }
+        .param-table .tr-level-1 .td-identifier { padding-left: 5px; }
+
+        .param-table .tr-level-2 { background: #E6E6E6; }
+        .param-table .tr-level-2 .td-identifier { padding-left: 15px; }
+
+        .param-table .tr-level-3 { background: #CCCCCC; }
+        .param-table .tr-level-3 .td-identifier { padding-left: 25px; }
+
+        .param-table .tr-level-4 { background: #E6E6E6; }
+        .param-table .tr-level-4 .td-identifier { padding-left: 35px; }
+
+        .param-table .tr-level-5 { background: #CCCCCC; }
+        .param-table .tr-level-5 .td-identifier { padding-left: 45px; }
+
+        .param-table .tr-level-6 { background: #E6E6E6; }
+        .param-table .tr-level-6 .td-identifier { padding-left: 55px; }
+
+        .param-table .tr-level-7 { background: #CCCCCC; }
+        .param-table .tr-level-7 .td-identifier { padding-left: 65px; }
+
+        .param-table .tr-level-8 { background: #E6E6E6; }
+        .param-table .tr-level-8 .td-identifier { padding-left: 75px; }
+
+        .param-table .tr-level-9 { background: #CCCCCC; }
+        .param-table .tr-level-9 .td-identifier { padding-left: 85px; }
+
+        .param-table .tr-level-10 { background: #E6E6E6; }
+        .param-table .tr-level-10 .td-identifier { padding-left: 95px; }
+
+        .param-table .tr-level-11 {
+            background: #CCCCCC;
+        }
+        .param-table .tr-level-11 .td-identifier { padding-left: 105px; }
+
+        .param-table .tr-level-12 {
+            background: #E6E6E6;
+        }
+        .param-table .tr-level-12 .td-identifier { padding-left: 115px; }
+
+        .param-table .tr-level-13 {
+            background: #CCCCCC;
+        }
+        .param-table .tr-level-13 .td-identifier { padding-left: 125px; }
+    </style>
+</head>
+<body>
+<div id="container">
+            <div class="module">
+            <h1>1&nbsp;代理商模块</h1>
+                            <div class="page">
+                    <h2>1.1&nbsp;代理商前台app</h2>
+                                            <div class="action">
+                            <h3>1.1.1&nbsp;分润等级列表(暂时不用)</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/profitLevel/find.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">remark</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;1级代理&#39;,&#39;2级代理&#39;,&#39;普通用户&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">rate</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(15,10,5)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">level</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(1,2,3)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">addTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-18 14:12:12&#39;,&#39;2017-02-18 14:12:27&#39;,&#39;2017-02-18 14:14:24&#39;)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.2&nbsp;我的奖励资金</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/profitAmount/find.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---10-可提 20-不可提</td><td class="td-identifier">state</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---当前可提现奖金</td><td class="td-identifier">noCashed</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=500</td></tr><tr class="tr-level-2"><td class="td-name">---历史提现奖金</td><td class="td-identifier">cashed</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=500</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=修改成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.3&nbsp;奖励发放记录</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/profitCashLog/page.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-3"><td class="td-name">------提现金额</td><td class="td-identifier">amount</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=500</td></tr><tr class="tr-level-3"><td class="td-name">------提现时间</td><td class="td-identifier">addTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2017-02-21 09:45:30</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.4&nbsp;奖励获得明细</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/profitLog/page.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------借款信息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;借款1000.0元,综合费用150.0元&#39;,&#39;借款1000.0元,综合费用150.0元&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------好友用户名</td><td class="td-identifier">loginName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;15312345678&#39;,&#39;15312345678&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------奖励金额</td><td class="td-identifier">amount</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(10,10)</td></tr><tr class="tr-level-3"><td class="td-name">------还款时间</td><td class="td-identifier">addTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-23 14:31:34&#39;,&#39;2017-02-23 14:31:59&#39;)</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.5&nbsp;电话</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/userInvite/findPhone.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=13312345678</td></tr><tr class="tr-level-2"><td class="td-name">---是否显示</td><td class="td-identifier">isPhone</td><td class="td-type">boolean</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=false</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.6&nbsp;邀请注册地址获取</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/userInvite/findInvite.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---邀请</td><td class="td-identifier">remark</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1分钟认证，20分钟到账，无抵押，纯信用贷。时下最流行的移动贷款APP。国内首批利用大数据、人工智能实现风控审批的信贷服务平台。</td></tr><tr class="tr-level-2"><td class="td-name">---url</td><td class="td-identifier">url</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=/h5/index.jsp?invitationCode=4i12Ov</td></tr><tr class="tr-level-2"><td class="td-name">---标题</td><td class="td-identifier">title</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=现金贷</td></tr><tr class="tr-level-2"><td class="td-name">---图标</td><td class="td-identifier">inviteLogo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=http://cl.ups.erongyun.net/readFile.htm?path=E:\workspace_cashloan\cashLoan\cashloan\framework-manage\src\main\webapp\static\images\invite_logo.png</td></tr><tr class="tr-level-1"><td class="td-name">响应码 200 表示成功</td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                    </div>
+                            <div class="page">
+                    <h2>1.2&nbsp;代理后台</h2>
+                                            <div class="action">
+                            <h3>1.2.1&nbsp;1.3 提现查看 -管理员</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/sysProfit/findAmount.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">每页总数</td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">页码</td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">模糊查询</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------可提现</td><td class="td-identifier">noCashed</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(0,50,100,0,0,0,0,0,0,0)</td></tr><tr class="tr-level-3"><td class="td-name">------代理商</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;13312345678&#39;,&#39;15312345678&#39;,&#39;15312345679&#39;,&#39;18767136373&#39;,&#39;15312345689&#39;,&#39;18767136384&#39;,&#39;13549262232&#39;,&#39;13849262232&#39;,&#39;13849262233&#39;,&#39;13251011471&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(2,5,6,7,8,9,10,11,12,13)</td></tr><tr class="tr-level-3"><td class="td-name">------唯一索引</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------历史总额</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(0,100,100,0,0,0,0,0,0,0)</td></tr><tr class="tr-level-3"><td class="td-name">------已提现</td><td class="td-identifier">cashed</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(0,50,0,0,0,0,0,0,0,0)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=4</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=32</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.2&nbsp;1.2 分润明细 -管理员</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/sysProfit/findLog.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">模糊查询</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------被邀请人</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;13312345678&#39;,&#39;15312345678&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------借款综合费用</td><td class="td-identifier">fee</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;150.00&#39;,&#39;150.00&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------唯一索引</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------代理商名称</td><td class="td-identifier">agentName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;13849262232&#39;,&#39;13849262232&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------借款金额</td><td class="td-identifier">money</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;1000.00&#39;,&#39;1000.00&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------还款时间</td><td class="td-identifier">repayTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-24 16:31:35.0&#39;,&#39;2017-02-24 16:31:35.0&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------分润金额</td><td class="td-identifier">amount</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(15,10)</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.3&nbsp;1.1 代理关系明细 -管理员</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/sysProfit/findAgent.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">模糊查询</td></tr><tr class="tr-level-1"><td class="td-name">每页总数</td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">页码</td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=4</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------是否二级代理</td><td class="td-identifier">level</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;1&#39;,&#39;1&#39;,&#39;2&#39;,&#39;2&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(2,2,5,6)</td></tr><tr class="tr-level-3"><td class="td-name">------邀请时间</td><td class="td-identifier">inviteTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-22 11:40:55&#39;,&#39;2017-02-22 11:42:36&#39;,&#39;2017-02-22 13:33:41&#39;,&#39;2017-02-25 13:40:25&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------二级代理数量</td><td class="td-identifier">count</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2&#39;,&#39;2&#39;,&#39;0&#39;,&#39;0&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------邀请人名称</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;13312345678&#39;,&#39;13312345678&#39;,&#39;13312345671&#39;,&#39;13312345672&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------唯一索引</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------被邀请人名称</td><td class="td-identifier">inviteName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;15312345678&#39;,&#39;15312345679&#39;,&#39;15312345689&#39;,&#39;15312345659&#39;)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.4&nbsp;1.4 提现记录 -管理员</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/sysProfit/findCashLog.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">页码</td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">模糊查询</td></tr><tr class="tr-level-1"><td class="td-name">每页总数</td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------收款人</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;15312345678&#39;,&#39;15312345679&#39;,&#39;13312345678&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------唯一索引</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------提现时间</td><td class="td-identifier">addTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-24 17:36:48&#39;,&#39;2017-02-25 17:36:57&#39;,&#39;2017-03-26 09:21:53&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------提现金额</td><td class="td-identifier">amount</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(100,50,150)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=3</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.5&nbsp;2.1 代理商管理 -代理商</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/profit/findAgent.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">模糊查询</td></tr><tr class="tr-level-1"><td class="td-name">登陆名</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">登陆名</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------分润率</td><td class="td-identifier">rate</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;10.00&#39;,&#39;10.00&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------是否二级代理</td><td class="td-identifier">level</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2&#39;,&#39;2&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------邀请时间</td><td class="td-identifier">addTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-22 11:40:55.0&#39;,&#39;2017-02-22 11:42:36.0&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;15312345678&#39;,&#39;15312345679&#39;)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.6&nbsp;2.2 分润明细  -代理商</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/profit/findLog.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">模糊查询</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">登陆名</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------还款时间</td><td class="td-identifier">repayTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-24 16:31:35.0&#39;,&#39;2017-02-24 16:31:35.0&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------借款金额</td><td class="td-identifier">money</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;1000.00&#39;,&#39;1000.00&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------综合费用</td><td class="td-identifier">fee</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;150.00&#39;,&#39;150.00&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------分润金额</td><td class="td-identifier">amount</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(15,10)</td></tr><tr class="tr-level-3"><td class="td-name">------借款人</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;13312345678&#39;,&#39;15312345678&#39;)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.7&nbsp;2.3 提现查看  -代理商</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/profit/findAmount.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">模糊查询</td></tr><tr class="tr-level-1"><td class="td-name">登陆名</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------用户id</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(2,5,6)</td></tr><tr class="tr-level-3"><td class="td-name">------收款人</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;13312345678&#39;,&#39;15312345678&#39;,&#39;15312345679&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------历史总额</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(0,100,100)</td></tr><tr class="tr-level-3"><td class="td-name">------已提现</td><td class="td-identifier">cashed</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(0,50,0)</td></tr><tr class="tr-level-3"><td class="td-name">------可提现</td><td class="td-identifier">noCashed</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(0,50,100)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=3</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.8&nbsp;2.4 提现记录  -代理商</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/profit/findCashLog.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">模糊查询</td></tr><tr class="tr-level-1"><td class="td-name">登陆名</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list|3</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------收款人</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;15312345678&#39;,&#39;15312345679&#39;,&#39;13312345678&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(5,6,2)</td></tr><tr class="tr-level-3"><td class="td-name">------提现金额</td><td class="td-identifier">amount</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(100,50,150)</td></tr><tr class="tr-level-3"><td class="td-name">------提现时间</td><td class="td-identifier">addTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-24 17:36:48&#39;,&#39;2017-02-25 17:36:57&#39;,&#39;2017-03-26 09:21:53&#39;)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=3</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.9&nbsp;3.1 设置为代理商</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/profit/saveAgent.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">用户等级</td><td class="td-identifier">level</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">1,2,3</td></tr><tr class="tr-level-1"><td class="td-name">上级代理id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户id</td><td class="td-identifier">inviteId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">分润率</td><td class="td-identifier">rate</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">设为二级时需求</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=添加成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.10&nbsp;4.1 代理商列表 -管理员</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/sysProfit/findAgentList.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">用户模糊查询</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=4</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(1,2,3,7)</td></tr><tr class="tr-level-3"><td class="td-name">------用户名</td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;13312345678&#39;,&#39;15312345678&#39;,&#39;15312345679&#39;,&#39;13251011471&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------分润率</td><td class="td-identifier">rate</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(15,10,10,15)</td></tr><tr class="tr-level-3"><td class="td-name">------添加时间</td><td class="td-identifier">addTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-24 14:47:33&#39;,&#39;2017-02-19 17:00:41&#39;,&#39;2017-02-23 17:00:59&#39;,&#39;2017-03-03 15:00:10&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------代理等级</td><td class="td-identifier">level</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(1,2,2,1)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(2,5,6,13)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.11&nbsp;5.1 查询普通用户</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/sysProfit/findUserLevel.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">current</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">pageSize</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------用户名</td><td class="td-identifier">loginName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;15312345689&#39;,&#39;17012345340&#39;,&#39;15968821757&#39;,&#39;15068733003&#39;,&#39;18767136385&#39;,&#39;13333333333&#39;,&#39;13222222222&#39;,&#39;15312345659&#39;,&#39;15312345649&#39;,&#39;15352345649&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------等级</td><td class="td-identifier">level</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(3,3,3,3,3,3,3,3,3,3)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">id</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(8,15,16,17,19,20,22,23,24,26)</td></tr><tr class="tr-level-3"><td class="td-name">------注册时间</td><td class="td-identifier">registTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;2017-02-22 13:33:41&#39;,&#39;2017-02-24 08:52:16&#39;,&#39;2017-02-24 10:33:34&#39;,&#39;2017-02-24 18:06:54&#39;,&#39;2017-02-25 13:11:14&#39;,&#39;2017-02-25 13:22:21&#39;,&#39;2017-02-25 13:43:04&#39;,&#39;2017-02-25 13:43:37&#39;,&#39;2017-02-25 13:45:48&#39;,&#39;2017-02-25 13:56:32&#39;)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">page</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">current</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">total</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=22</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pages</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=3</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">pageSize</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.12&nbsp;3.2 取消一级代理</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/profit/freezeAgent.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=取消成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.2.13&nbsp;3.3 二级代理设置为一级</h3>
+
+                            <h3>URL</h3>
+                            <div>/modules/manage/profit/rankUp.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+                        </div>
+                                    </div>
+                    </div>
+    </div>
+</body>
+</html>

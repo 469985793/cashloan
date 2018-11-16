@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_user_contacts表:用户资料联系人模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.UserContactsMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.UserContacts">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,name,phone,user_id 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="name !='' and name !=null">
+                and name = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="phone !='' and phone !=null">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </sql>
+    
+    <select id="countTable" resultType="java.lang.Integer" parameterType="java.lang.String">
+    	SELECT COUNT(1) FROM information_schema.TABLES WHERE table_name = #{tableName,jdbcType=VARCHAR}
+    </select>
+    
+    <!-- 创建分表 -->
+    <select id="createTable">
+    	CREATE TABLE ${tableName} (
+		  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+		  `user_id` bigint(20) DEFAULT NULL COMMENT '用户标识',
+		  `name` varchar(20) DEFAULT '' COMMENT '姓名',
+		  `phone` varchar(20) DEFAULT '' COMMENT '手机号码',
+		  PRIMARY KEY (`id`),
+		  INDEX `user_id` (`user_id`) USING BTREE 
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户通讯录表';
+    </select>
+    
+    <insert id="saveShard">
+        insert into ${tableName}(name,phone,user_id)values(
+        	#{item.name,jdbcType=VARCHAR},
+        	#{item.phone,jdbcType=VARCHAR},
+        	#{item.userId,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <delete id="deleteShardByUserId">
+        delete from ${tableName} where user_id = #{userId,jdbcType=BIGINT}
+    </delete>
+    
+    <select id="listShardSelective" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ${tableName} 
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="params.userId != null">
+                user_id = #{params.userId,jdbcType=BIGINT}
+            </if>
+        </trim>
+    </select>
+    
+</mapper>

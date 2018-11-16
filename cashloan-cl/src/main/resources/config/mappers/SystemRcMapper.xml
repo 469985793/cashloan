@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 风控数据-平台数据日报 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.SystemRcMapper">
+	<!-- 用户数 -->
+   	<sql id="userCount">
+   		select count(id) userCount,regist_time time  from ( select  id,DATE_FORMAT(regist_time,'%Y-%m-%d') regist_time from cl_user ) t1 GROUP BY regist_time
+   	</sql>
+   	<!-- 借款笔数 -->
+   	<sql id="borrowCount">
+   		select count(borrow_id) borrowCount,create_time time from (select borrow_id,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from cl_borrow_progress where state = '10' ) t GROUP BY create_time
+   	</sql>
+   	<!-- 放款笔数 -->
+   	<sql id="loanCount">
+   		select count(borrow_id) loanCount,create_time time from (select borrow_id,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from cl_borrow_progress where state in ('32','211') ) t GROUP BY create_time
+   	</sql>
+   	<!-- 逾期笔数 -->
+   	<sql id="overdueCount">
+   		select count(borrow_id) overdueCount,create_time time from (select borrow_id,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from cl_borrow_progress where state = '50' ) t GROUP BY create_time
+   	</sql>
+   	<!-- 坏账笔数 -->
+   	<sql id="badAmtCount">
+   		select count(borrow_id) badAmtCount,create_time  time from (select bp.borrow_id, DATE_FORMAT(bp.create_time,'%Y-%m-%d') create_time from cl_borrow_progress bp LEFT JOIN cl_borrow b  on bp.borrow_id = b.id where bp.state = '90') t GROUP BY create_time
+   	</sql>
+   	<!-- 坏账金额 -->
+   	<sql id="badAmt">
+   		select sum(amount) badAmt,create_time time from (select (b.amount) amount, DATE_FORMAT(bp.create_time,'%Y-%m-%d') create_time from cl_borrow_progress bp LEFT JOIN cl_borrow b  on bp.borrow_id = b.id where bp.state = '90') t GROUP BY create_time
+   	</sql>
+   	<!-- 放款金额 -->
+   	<sql id="loanAmt">
+   		select sum(real_amount) loanAmt,create_time time from (select b.real_amount,DATE_FORMAT(bp.create_time,'%Y-%m-%d') create_time from cl_borrow_progress bp LEFT JOIN cl_borrow b on bp.borrow_id = b.id where bp.state in ('32','211') ) t GROUP BY create_time
+   	</sql>
+   	<!-- 还款金额 -->
+   	<sql id="repayAmt">
+   		select sum(amount) repayAmt,create_time time from (select amount,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from cl_borrow_repay_log) t GROUP BY create_time
+   	</sql>
+   	<!-- 服务费金额 -->
+   	<sql id="servFeeAmt">
+   		select sum(fee) servFeeAmt,create_time time from (select fee,DATE_FORMAT(bp.create_time,'%Y-%m-%d') create_time from cl_borrow_progress bp LEFT JOIN cl_borrow b on bp.borrow_id = b.id where bp.state = '40' ) t GROUP BY create_time
+   	</sql>
+   	<!-- 逾期金额 -->
+   	<sql id="overdueAmt">
+   		select sum(amount) overdueAmt,create_time time from (select (b.amount) amount,DATE_FORMAT(bp.create_time,'%Y-%m-%d') create_time from cl_borrow_progress bp LEFT JOIN cl_borrow b on bp.borrow_id = b.id where bp.state = '50' ) t GROUP BY create_time 
+   	</sql>
+   	<!-- 催收次数 -->
+   	<sql id="urgeRepayCount">
+   		select count(id) urgeRepayCount,create_time time from ( select id,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from cl_urge_repay_log ) t GROUP BY create_time
+   	</sql>
+   	<!-- 逾期罚息 -->
+   	<sql id="overdueInterest">
+   		select sum(penalty_amout) overdueInterest,repay_time time from ( select  penalty_amout,DATE_FORMAT(repay_time,'%Y-%m-%d') repay_time from cl_borrow_repay where state = '20' and penalty_day > 0 ) t GROUP BY repay_time
+   	</sql>
+   	
+   	<select id="dayData" resultType="com.xindaibao.cashloan.cl.model.SystemDayData" parameterType="java.util.Map">
+   		select  T.date,
+				T.userCount,
+				T.borrowCount,
+				T.loanCount,
+   				T.overdueCount,
+				T.badAmtCount,
+				T.badAmt,
+				T.loanAmt,
+				T.repayAmt,
+				T.servFeeAmt,
+   				T.overdueAmt,
+				T.urgeRepayCount,
+				T.overdueInterest
+   		from (
+	   		select DATE_FORMAT(p.time,'%Y-%m-%d') date,
+					IFNULL(p2.userCount,0) userCount,
+	   				IFNULL(p3.borrowCount,0) borrowCount,
+					IFNULL(p4.loanCount,0) loanCount,
+					IFNULL(p5.overdueCount,0) overdueCount,
+					IFNULL(p6.badAmtCount,0) badAmtCount,
+					IFNULL(p7.badAmt,0) badAmt,
+					IFNULL(p8.loanAmt,0) loanAmt,
+					IFNULL(p9.repayAmt,0) repayAmt,
+					IFNULL(p10.servFeeAmt,0) servFeeAmt,
+					IFNULL(p11.overdueAmt,0) overdueAmt,
+					IFNULL(p12.urgeRepayCount,0) urgeRepayCount,
+					IFNULL(p13.overdueInterest,0) overdueInterest
+	   		from (
+				(<include refid="userCount"></include>) UNION
+			 	(<include refid="borrowCount"></include>) UNION
+				(<include refid="loanCount"></include>) UNION
+				(<include refid="overdueCount"></include>) UNION
+				(<include refid="badAmtCount"></include>) UNION
+				(<include refid="badAmt"></include>) UNION
+				(<include refid="loanAmt"></include>) UNION
+				(<include refid="repayAmt"></include>) UNION
+				(<include refid="servFeeAmt"></include>) UNION
+				(<include refid="overdueAmt"></include>) UNION
+				(<include refid="urgeRepayCount"></include>) UNION
+				(<include refid="overdueInterest"></include>)
+			) p 
+			left join (<include refid="userCount"></include>) p2 on p.time = p2.time
+			left join (<include refid="borrowCount"></include>) p3 on p.time = p3.time
+			left join (<include refid="loanCount"></include>) p4 on p.time = p4.time
+			left join (<include refid="overdueCount"></include>) p5 on p.time = p5.time
+			left join (<include refid="badAmtCount"></include>) p6 on p.time = p6.time
+			left join (<include refid="badAmt"></include>) p7 on p.time = p7.time
+			left join (<include refid="loanAmt"></include>) p8 on p.time = p8.time
+			left join (<include refid="repayAmt"></include>) p9 on p.time = p9.time
+			left join (<include refid="servFeeAmt"></include>) p10 on p.time = p10.time
+			left join (<include refid="overdueAmt"></include>) p11 on p.time = p11.time
+			left join (<include refid="urgeRepayCount"></include>) p12 on p.time = p12.time
+			left join (<include refid="overdueInterest"></include>) p13 on p.time = p13.time
+			<where>
+				<if test="startDate!=null and startDate!=''">
+					and p.time >= #{startDate,jdbcType=VARCHAR}
+				</if>
+				<if test="endDate!=null and endDate!=''">
+					<![CDATA[ and p.time <= #{endDate,jdbcType=VARCHAR} ]]> 
+				</if>
+			</where>
+		) T GROUP BY T.date ORDER BY T.date DESC 
+   	</select>
+   	
+   	<!-- 每日通过率 -->
+   	<select id="dayApr" resultType="com.xindaibao.cashloan.cl.model.DayPassApr" parameterType="java.util.Map">
+   		select 
+   			t1.users_borrow borrowUserCount,
+   			case when t2.users_loan is null then 0 else t2.users_loan end loanUserCount , 
+			case when t2.users_loan is null or t1.users_borrow is null then 0.00  else FORMAT((t2.users_loan/t1.users_borrow)*100,2) end borrowPassApr, 
+			t1.borrows brrowCount,
+			case when t2.loans is null then 0 else t2.loans  end loanCount ,
+			case when t2.loans is null or t1.borrows is null then 0 else FORMAT((t2.loans/t1.borrows)*100,2) end borrowApr, 
+			t1.create_time date
+		from 
+			( select count(DISTINCT(user_id)) users_borrow, count(borrow_id) borrows,create_time from (select user_id,borrow_id,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from cl_borrow_progress where state = '10' ) t GROUP BY create_time ) t1
+ 			LEFT JOIN 
+			( select count(DISTINCT(user_id)) users_loan,count(borrow_id) loans,create_time from (select user_id,borrow_id,DATE_FORMAT(create_time,'%Y-%m-%d') create_time from cl_borrow_progress where state = '32') t GROUP BY create_time ) t2
+			on t1.create_time = t2.create_time
+		<where>
+			<if test="startDate!=null and startDate!=''">
+				and t1.create_time >= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				<![CDATA[ and t1.create_time <= #{endDate,jdbcType=VARCHAR} ]]> 
+			</if>
+		</where>
+		ORDER BY t1.create_time DESC
+   	</select>
+</mapper>

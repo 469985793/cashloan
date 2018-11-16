@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysAccessCodeMapper">
+	<resultMap type="com.xindaibao.cashloan.system.domain.SysAccessCode"
+		id="sysAccessCodeResult">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="sys_user_id" property="sysUserId" jdbcType="BIGINT"/>
+		<result column="code" property="code" jdbcType="VARCHAR"/>
+		<result column="state" property="state" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="exceed_time" property="exceedTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+
+	<resultMap type="com.xindaibao.cashloan.system.domain.SysUser"
+		id="sysUserResult">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="user_name" property="userName" />
+		<result column="password" property="password" />
+		<result column="job_num" property="number" />
+		<result column="company_id" property="companyId" />
+		<result column="office_id" property="officeId" />
+		<result column="email" property="email" />
+		<result column="phone" property="phone" />
+		<result column="mobile" property="mobile" />
+		<result column="status" property="status" />
+		<result column="login_ip" property="loginIp" />
+		<result column="login_time" property="loginTime" />
+		<result column="add_time" property="addTime" />
+		<result column="add_user" property="addUser" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_user" property="updateUser" />
+		<result column="remark" property="remark" />
+		<result column="position" property="position" />
+		<result column="office_over" property="officeOver" />
+	</resultMap>
+	
+	<sql id="searchSql">
+		id,sys_user_id,code,state,create_time,exceed_time
+	</sql>
+
+    
+	<resultMap id="AccessCodeModel" extends="sysAccessCodeResult"
+		type="com.xindaibao.cashloan.system.model.SysAccessCodeModel">
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="listSysAccessCode" parameterType="java.util.Map" resultMap="sysAccessCodeResult">
+		select
+		<include refid="searchSql" />
+		from arc_sys_access_code
+		where
+		sys_user_id=#{sysUserId,jdbcType=BIGINT}
+	</select>  
+	
+	<select id="listAccessCodeModel" parameterType="java.util.Map" resultMap="AccessCodeModel">
+		select
+		u.name,u.user_name,c.id,c.sys_user_id,c.state,c.code,c.create_time,c.exceed_time
+		from arc_sys_user u,arc_sys_access_code c
+		where u.id=c.sys_user_id
+			<if test="name!=null and name!='' ">
+				and u.name  like concat("%",#{name,jdbcType=VARCHAR},"%")
+			</if>
+			<if test="userName!=null and userName!='' ">
+				and u.user_name like concat("%",#{userName,jdbcType=VARCHAR},"%")
+			</if> 
+			<if test="state!=null and state!='' ">
+				and c.state = #{state,jdbcType=VARCHAR}
+			</if>
+			<if test="startTime != null">
+               and date_format(c.create_time, '%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+           </if>
+           <if test="endTime  != null">
+               and date_format(c.create_time, '%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+           </if>
+           ORDER BY c.create_time DESC
+	</select>
+
+	<insert id="save"
+		parameterType="com.xindaibao.cashloan.system.domain.SysAccessCode">
+		insert into
+		arc_sys_access_code(sys_user_id,code,state,create_time,exceed_time)
+		values(#{sysUserId,jdbcType=BIGINT},#{code,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},#{exceedTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<select id="findSysAccessCode" parameterType="java.util.Map" resultMap="sysAccessCodeResult">
+		select 
+		<include refid="searchSql" />
+		from arc_sys_access_code
+		where 
+		sys_user_id=#{sysUserId,jdbcType=BIGINT} 
+		AND
+		code=#{code,jdbcType=VARCHAR} 
+	</select>
+    
+   <update id="update"  parameterType="com.xindaibao.cashloan.system.domain.SysAccessCode">
+        update arc_sys_access_code
+         <set>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR} ,               
+            </if>
+            <if test="exceedTime != null">        
+                exceed_time = #{exceedTime,jdbcType=TIMESTAMP}          
+            </if>
+        </set>     
+        where id = #{id ,jdbcType=BIGINT}
+    </update> 
+    
+       <update id="updateState"  parameterType="java.util.Map">
+        update arc_sys_access_code
+         <set>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR} ,               
+            </if>
+            <if test="exceedTime != null">        
+                exceed_time = #{exceedTime,jdbcType=TIMESTAMP}          
+            </if>
+        </set>     
+        where id = #{id ,jdbcType=BIGINT}
+    </update> 
+    
+    <select id="findByPrimary" parameterType="long" resultMap="sysAccessCodeResult">
+		select
+		<include refid="searchSql" />
+		from arc_sys_access_code
+		where
+		id=#{id}
+	</select>
+	
+	<select id="countCode" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT count(1) 
+		from arc_sys_access_code 
+		where code=#{code,jdbcType=VARCHAR} AND sys_user_id=#{sysUserId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="listUserName" resultMap="sysUserResult">
+		select id,user_name from arc_sys_user
+	</select>
+</mapper>     

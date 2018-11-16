@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"   
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
+ xmlns:aop="http://www.springframework.org/schema/aop"   
+ xmlns:context="http://www.springframework.org/schema/context"   
+ xmlns:p="http://www.springframework.org/schema/p"   
+ xmlns:tx="http://www.springframework.org/schema/tx"     
+ xmlns:cache="http://www.springframework.org/schema/cache"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans    
+  http://www.springframework.org/schema/beans/spring-beans.xsd   
+  http://www.springframework.org/schema/aop    
+  http://www.springframework.org/schema/aop/spring-aop-3.0.xsd   
+  http://www.springframework.org/schema/context    
+  http://www.springframework.org/schema/context/spring-context-3.0.xsd   
+  http://www.springframework.org/schema/tx    
+  http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+  http://www.springframework.org/schema/cache    
+  http://www.springframework.org/schema/cache/spring-cache.xsd">   
+
+	<cache:annotation-driven/>
+    
+    
+	<!-- cacheManager工厂类，指定ehcache.xml的位置 -->    
+	<bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"    
+	    p:configLocation="classpath:/config/spring/ehcache.xml" />
+	  
+	<!-- 声明cacheManager -->  
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"    
+	    p:cacheManager-ref="cacheManagerFactory" />
+	      
+</beans> 

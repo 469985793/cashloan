@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.core.mapper.KanyaUserContactInfoMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.core.model.KanyaUserContactInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="family_member" jdbcType="TINYINT" property="familyMember" />
+    <result column="family_member_name" jdbcType="VARCHAR" property="familyMemberName" />
+    <result column="family_mobile_phone" jdbcType="VARCHAR" property="familyMobilePhone" />
+    <result column="othe_contact" jdbcType="TINYINT" property="otheContact" />
+    <result column="other_contact_name" jdbcType="VARCHAR" property="otherContactName" />
+    <result column="other_contact_mobile" jdbcType="VARCHAR" property="otherContactMobile" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, family_member, family_member_name, family_mobile_phone, othe_contact, other_contact_name, 
+    other_contact_mobile, status, created_time, updated_time
+  </sql>
+
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="uid != null and uid != '' ">
+        and uid = #{uid,jdbcType=BIGINT}
+      </if>
+      <if test="familyMember != null and familyMember != '' ">
+        and familyMember = #{family_member,jdbcType=TINYINT}
+      </if>
+      <if test="familyMemberName != null and familyMemberName != '' ">
+        and familyMemberName = #{family_member_name,jdbcType=VARCHAR}
+      </if>
+      <if test="familyMobilePhone != null and familyMobilePhone != '' ">
+        and familyMobilePhone = #{family_mobile_phone,jdbcType=VARCHAR}
+      </if>
+      <if test="otheContact != null and otheContact != '' ">
+        and otheContact = #{othe_contact,jdbcType=TINYINT}
+      </if>
+      <if test="otherContactName != null and otherContactName != '' ">
+        and otherContactName = #{other_contact_name,jdbcType=VARCHAR}
+      </if>
+      <if test="otherContactMobile != null and otherContactMobile != '' ">
+        and otherContactMobile = #{other_contact_mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user_contact_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="save" parameterType="com.xindaibao.cashloan.core.model.KanyaUserContactInfo">
+    insert into k_user_contact_info (id, uid, family_member, 
+      family_member_name, family_mobile_phone, othe_contact, 
+      other_contact_name, other_contact_mobile, status, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{familyMember,jdbcType=TINYINT}, 
+      #{familyMemberName,jdbcType=VARCHAR}, #{familyMobilePhone,jdbcType=VARCHAR}, #{otheContact,jdbcType=TINYINT}, 
+      #{otherContactName,jdbcType=VARCHAR}, #{otherContactMobile,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="saveSelective" parameterType="com.xindaibao.cashloan.core.model.KanyaUserContactInfo">
+    insert into k_user_contact_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="familyMember != null">
+        family_member,
+      </if>
+      <if test="familyMemberName != null">
+        family_member_name,
+      </if>
+      <if test="familyMobilePhone != null">
+        family_mobile_phone,
+      </if>
+      <if test="otheContact != null">
+        othe_contact,
+      </if>
+      <if test="otherContactName != null">
+        other_contact_name,
+      </if>
+      <if test="otherContactMobile != null">
+        other_contact_mobile,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="familyMember != null">
+        #{familyMember,jdbcType=TINYINT},
+      </if>
+      <if test="familyMemberName != null">
+        #{familyMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test="familyMobilePhone != null">
+        #{familyMobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="otheContact != null">
+        #{otheContact,jdbcType=TINYINT},
+      </if>
+      <if test="otherContactName != null">
+        #{otherContactName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherContactMobile != null">
+        #{otherContactMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.core.model.KanyaUserContactInfo">
+    update k_user_contact_info
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="familyMember != null">
+        family_member = #{familyMember,jdbcType=TINYINT},
+      </if>
+      <if test="familyMemberName != null">
+        family_member_name = #{familyMemberName,jdbcType=VARCHAR},
+      </if>
+      <if test="familyMobilePhone != null">
+        family_mobile_phone = #{familyMobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="otheContact != null">
+        othe_contact = #{otheContact,jdbcType=TINYINT},
+      </if>
+      <if test="otherContactName != null">
+        other_contact_name = #{otherContactName,jdbcType=VARCHAR},
+      </if>
+      <if test="otherContactMobile != null">
+        other_contact_mobile = #{otherContactMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.core.model.KanyaUserContactInfo">
+    update k_user_contact_info
+    set uid = #{uid,jdbcType=BIGINT},
+      family_member = #{familyMember,jdbcType=TINYINT},
+      family_member_name = #{familyMemberName,jdbcType=VARCHAR},
+      family_mobile_phone = #{familyMobilePhone,jdbcType=VARCHAR},
+      othe_contact = #{otheContact,jdbcType=TINYINT},
+      other_contact_name = #{otherContactName,jdbcType=VARCHAR},
+      other_contact_mobile = #{otherContactMobile,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_contact_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_contact_info
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_contact_info
+    <include refid="searchBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.core.mapper.KanyaUserMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.core.model.KanyaUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="pay_password" jdbcType="VARCHAR" property="payPassword" />
+    <result column="icon_imgcode" jdbcType="VARCHAR" property="iconImgcode" />
+    <result column="channel_code" jdbcType="VARCHAR" property="channelCode" />
+    <result column="invite_code" jdbcType="VARCHAR" property="inviteCode" />
+    <result column="register_code" jdbcType="VARCHAR" property="registerCode" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+
+<!-- 邀请人信息模块所需的子查询字段  -->
+    <result column="borrowingCount"  property="borrowingCount" />
+    <result column="reimbursementCount"  property="reimbursementCount" />
+    <result column="overdueCount"  property="overdueCount" />
+    <result column="firstName"  property="firstName" />
+    <result column="lastName"  property="lastName" />
+  </resultMap>
+
+
+  <resultMap id="KanyaUserInfoMap" extends="BaseResultMap" type="com.xindaibao.cashloan.core.model.KanyaUserInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="national_id" jdbcType="VARCHAR" property="nationalId" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="marry_status" jdbcType="TINYINT" property="marryStatus" />
+    <result column="children_number" jdbcType="TINYINT" property="childrenNumber" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+
+  <resultMap id="KanyaUserJobMap" extends="KanyaUserInfoMap" type="com.xindaibao.cashloan.core.model.KanyaUserJob">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="education1" jdbcType="INTEGER" property="education1" />
+    <result column="company_email" jdbcType="VARCHAR" property="companyEmail" />
+    <result column="office_address" jdbcType="VARCHAR" property="officeAddress" />
+    <result column="job_status" jdbcType="TINYINT" property="jobStatus" />
+    <result column="position" jdbcType="TINYINT" property="position" />
+    <result column="start_time" jdbcType="DATE" property="startTime" />
+    <result column="job_month_income" jdbcType="TINYINT" property="jobMonthIncome" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+
+  <resultMap id="KanyaUserLiveMap" extends="KanyaUserJobMap" type="com.xindaibao.cashloan.core.model.KanyaUserLive">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="live_belong" jdbcType="TINYINT" property="liveBelong" />
+    <result column="live_address" jdbcType="VARCHAR" property="liveAddress" />
+    <result column="live_state" jdbcType="VARCHAR" property="liveState" />
+    <result column="live_city" jdbcType="VARCHAR" property="liveCity" />
+    <result column="rent_year" jdbcType="INTEGER" property="rentYear" />
+    <result column="live_time" jdbcType="VARCHAR" property="liveTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+
+  <resultMap id="KanyaUserContactInfoMap" extends="KanyaUserLiveMap" type="com.xindaibao.cashloan.core.model.KanyaUserContactInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="family_member" jdbcType="TINYINT" property="familyMember" />
+    <result column="family_member_name" jdbcType="VARCHAR" property="familyMemberName" />
+    <result column="family_mobile_phone" jdbcType="VARCHAR" property="familyMobilePhone" />
+    <result column="othe_contact" jdbcType="TINYINT" property="otheContact" />
+    <result column="other_contact_name" jdbcType="VARCHAR" property="otherContactName" />
+    <result column="other_contact_mobile" jdbcType="VARCHAR" property="otherContactMobile" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+
+  <resultMap id="KanyaUserLocationMap" extends="KanyaUserContactInfoMap" type="com.xindaibao.cashloan.core.model.KanyaUserLocation">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, user_name, mobile, email, password, pay_password, icon_imgcode, channel_code, 
+    invite_code, register_code, status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="realName != null and userName != '' ">
+        and last_name = #{realName,jdbcType=VARCHAR}
+      </if>
+      <if test="loginName != null and mobile != '' ">
+        and mobile = #{loginName,jdbcType=VARCHAR}
+      </if>
+      <if test="email != null and email != '' ">
+        and email = #{email,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null and password != '' ">
+        and password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="payPassword != null and payPassword != '' ">
+        and pay_password = #{payPassword,jdbcType=VARCHAR}
+      </if>
+      <if test="iconImgcode != null and iconImgcode != '' ">
+        and icon_imgcode = #{iconImgcode,jdbcType=VARCHAR}
+      </if>
+      <if test="registerClient != null and channelCode != '' ">
+        and channel_code = #{registerClient,jdbcType=VARCHAR}
+      </if>
+      <if test="inviteCode != null and inviteCode != '' ">
+        and invite_code = #{inviteCode,jdbcType=VARCHAR}
+      </if>
+      <if test="registerCode != null and registerCode != '' ">
+        and register_code = #{registerCode,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and created_time = #{createdTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="save" parameterType="com.xindaibao.cashloan.core.model.KanyaUser">
+    insert into k_user (id, user_name, mobile, 
+      email, password, pay_password, 
+      icon_imgcode, channel_code, invite_code, 
+      register_code, status, created_time, 
+      updated_time)
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{payPassword,jdbcType=VARCHAR}, 
+      #{iconImgcode,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR}, #{inviteCode,jdbcType=VARCHAR}, 
+      #{registerCode,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.core.model.KanyaUser">
+    insert into k_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="payPassword != null">
+        pay_password,
+      </if>
+      <if test="iconImgcode != null">
+        icon_imgcode,
+      </if>
+      <if test="channelCode != null">
+        channel_code,
+      </if>
+      <if test="inviteCode != null">
+        invite_code,
+      </if>
+      <if test="registerCode != null">
+        register_code,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="iconImgcode != null">
+        #{iconImgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null">
+        #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null">
+        #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registerCode != null">
+        #{registerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.core.model.KanyaUser">
+    update k_user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="payPassword != null">
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="iconImgcode != null">
+        icon_imgcode = #{iconImgcode,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null">
+        channel_code = #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="inviteCode != null">
+        invite_code = #{inviteCode,jdbcType=VARCHAR},
+      </if>
+      <if test="registerCode != null">
+        register_code = #{registerCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.core.model.KanyaUser">
+    update k_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      icon_imgcode = #{iconImgcode,jdbcType=VARCHAR},
+      channel_code = #{channelCode,jdbcType=VARCHAR},
+      invite_code = #{inviteCode,jdbcType=VARCHAR},
+      register_code = #{registerCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateUserState" parameterType="java.util.HashMap">
+    update k_user
+    set
+      status = #{state,jdbcType=TINYINT},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="KanyaUserLocationMap" parameterType="java.lang.Long">
+    select
+      u.id,u.user_name,u.mobile,u.email,u.icon_imgcode,u.channel_code,u.invite_code,u.register_code,u.status,u.created_time,u.updated_time,
+      i.first_name,i.last_name,i.national_id,i.birthday,i.gender,i.marry_status,i.children_number,
+      j.education1,j.company_email,j.office_address,j.job_status,j.position,j.start_time,j.job_month_income,
+      l.live_belong,l.live_address,l.live_state,l.live_city,l.rent_year,l.live_time,
+      c.family_member,c.family_member_name,c.family_mobile_phone,c.othe_contact,c.other_contact_name,c.other_contact_mobile,
+      ul.location
+    from  k_user u left join k_user_info i on u.id=i.uid left join k_user_job j on u.id=j.uid left join k_user_live l on u.id=l.uid left join k_user_contact_info c on u.id=c.uid left join k_user_location ul on u.id=ul.uid
+    <include refid="searchBy"/>
+    and  i.status=1 and u.status=1 and ul.status=1 and j.status=1 and l.status=1 and c.status=1 order by u.created_time desc
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="getBaseModelByUserId" resultMap="KanyaUserLocationMap" parameterType="java.lang.Long">
+    select
+      u.id,u.user_name,u.mobile,u.email,u.icon_imgcode,u.channel_code,u.invite_code,u.register_code,u.status,u.created_time,u.updated_time,
+      i.first_name,i.last_name,i.national_id,i.birthday,i.gender,i.marry_status,i.children_number,
+      j.education1,j.company_name,j.company_email,j.office_address,j.job_status,j.position,j.start_time,j.job_month_income,
+      l.live_belong,l.live_address,l.live_state,l.live_city,l.rent_year,l.live_time,
+      c.family_member,c.family_member_name,c.family_mobile_phone,c.othe_contact,c.other_contact_name,c.other_contact_mobile,
+      ul.location
+    from  k_user u left join k_user_info i on u.id=i.uid left join k_user_job j on u.id=j.uid left join k_user_live l on u.id=l.uid left join k_user_contact_info c on u.id=c.uid left join k_user_location ul on u.id=ul.uid
+    where u.id = #{userId,jdbcType=BIGINT} and i.status=1 and ul.status=1 and j.status=1 and l.status=1 and c.status=1
+  </select>
+
+
+  <select id="selectRegisteredCount" resultType="Integer">
+      select count(id)
+      from k_user
+      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')
+  </select>
+
+  <select id="findByMobile" resultMap="BaseResultMap" >
+    select
+      u.id
+    from  k_user u
+    where u.mobile= #{mobile,jdbcType=VARCHAR}
+  </select>
+
+  <update id="addBlackList" parameterType="java.lang.Long">
+    update k_user
+    set
+      status = 10,
+      updated_time = sysdate()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="queryInvited" resultMap="BaseResultMap">
+		select i.first_name,
+		i.last_name,
+		count(r.id) as borrowingCount,
+		(select count(re.id)
+		from k_user us left join k_loan_record re
+		on us.id=re.uid
+		where re.status in(6,22) and us.register_code=#{inviteCode})
+		as reimbursementCount,
+		(select count(re.id)
+		from k_user us left join k_loan_record re
+		on us.id=re.uid
+		where re.status in(21,22,51) and us.register_code=#{inviteCode})
+		as overdueCount
+		from k_user u left join k_loan_record r
+		on u.id=r.uid
+		left join k_user_info i
+		on u.id=i.uid
+		where register_code=#{inviteCode}
+	</select>
+</mapper>

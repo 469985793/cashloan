@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_user_base_info表:用户详细信息模块 -->
+<mapper namespace="com.xindaibao.cashloan.core.mapper.UserBaseInfoMapper">
+    <!--返回Map-->        
+     <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.core.domain.UserBaseInfo">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="real_name" property="realName" jdbcType="VARCHAR" />
+        <result column="age" property="age" jdbcType="INTEGER" />
+        <result column="sex" property="sex" jdbcType="VARCHAR" />
+        <result column="national" property="national" jdbcType="VARCHAR" />
+        <result column="id_no" property="idNo" jdbcType="VARCHAR" />
+        <result column="id_addr" property="idAddr" jdbcType="VARCHAR" />
+        <result column="living_img" property="livingImg" jdbcType="VARCHAR" />
+        <result column="ocr_img" property="ocrImg" jdbcType="VARCHAR" />
+        <result column="front_img" property="frontImg" jdbcType="VARCHAR" />
+        <result column="back_img" property="backImg" jdbcType="VARCHAR" />
+        <result column="education" property="education" jdbcType="VARCHAR" />
+        <result column="marry_state" property="marryState" jdbcType="VARCHAR" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+        <result column="company_phone" property="companyPhone" jdbcType="VARCHAR" />
+        <result column="company_addr" property="companyAddr" jdbcType="VARCHAR" />
+        <result column="company_detail_addr" property="companyDetailAddr" jdbcType="VARCHAR" />
+        <result column="company_coordinate" property="companyCoordinate" jdbcType="VARCHAR" />
+        <result column="salary" property="salary" jdbcType="VARCHAR" />
+        <result column="working_years" property="workingYears" jdbcType="VARCHAR" />
+        <result column="working_img" property="workingImg" jdbcType="VARCHAR" />
+        <result column="live_time" property="liveTime" jdbcType="VARCHAR" />
+        <result column="live_addr" property="liveAddr" jdbcType="VARCHAR" />
+        <result column="live_detail_addr" property="liveDetailAddr" jdbcType="VARCHAR" />
+        <result column="live_coordinate" property="liveCoordinate" jdbcType="VARCHAR" />
+        <result column="phone_server_pwd" property="phoneServerPwd" jdbcType="VARCHAR" />
+        <result column="register_addr" property="registerAddr" jdbcType="VARCHAR" />
+        <result column="register_coordinate" property="registerCoordinate" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="black_reason" property="blackReason" jdbcType="VARCHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+
+         <result column="id_province" property="idProvince" jdbcType="VARCHAR" />
+         <result column="id_city" property="idCity" jdbcType="VARCHAR" />
+         <result column="id_county" property="idCounty" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,phone,real_name,age,sex,national,id_no,id_addr,living_img,ocr_img,front_img,back_img,education,marry_state,company_name,company_phone,
+        company_addr,company_detail_addr,company_coordinate,salary,working_years,working_img,
+        live_time,live_addr,live_detail_addr,live_coordinate,phone_server_pwd,register_addr,register_coordinate,state,black_reason,update_time,
+        create_time, id_province, id_city, id_county
+    </sql>
+     <!--用户的基本信息的sql查询字段 公共引用...-->
+    <resultMap id="BaseInfoModelMap" extends="BaseResultMap"  type="com.xindaibao.cashloan.core.model.ManagerUserModel">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+        <result column="login_pwd" property="loginPwd" jdbcType="VARCHAR" />
+        <result column="loginpwd_modify_time" property="loginpwdModifyTime" jdbcType="TIMESTAMP" />
+        <result column="regist_time" property="registTime" jdbcType="TIMESTAMP" />
+        <result column="register_client" property="registerClient" jdbcType="VARCHAR" />
+        <result column="trade_pwd" property="tradePwd" jdbcType="VARCHAR" />
+        <result column="tradepwd_modify_time" property="tradepwdModifyTime" jdbcType="TIMESTAMP" />
+        <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+        <result column="invitation_code" property="invitationCode" jdbcType="VARCHAR" />
+        <result column="level" property="level" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id !=null and id !=''">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId !=null and userId !=''">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="phone !=null and phone !=''">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="realName !=null and realName !=''">
+                and real_name = #{realName,jdbcType=VARCHAR}
+            </if>
+            <if test="age !=null and age !=''">
+                and age = #{age,jdbcType=INTEGER}
+            </if>
+            <if test="sex !=null and sex !=''">
+                and sex = #{sex,jdbcType=VARCHAR}
+            </if>
+            <if test="national !=null and national !=''">
+                and national = #{national,jdbcType=VARCHAR}
+            </if>
+            <if test="idNo !=null and idNo !=''">
+                and id_no = #{idNo,jdbcType=VARCHAR}
+            </if>
+            <if test="idAddr !=null and idAddr !=''" >
+                and id_addr = #{idAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="livingImg !=null and livingImg !=''">
+                and living_img = #{livingImg,jdbcType=VARCHAR}
+            </if>
+            <if test="ocrImg !=null and ocrImg !=''">
+                and ocr_img = #{ocrImg,jdbcType=VARCHAR}
+            </if>
+            <if test="frontImg !=null and frontImg !=''">
+                and front_img = #{frontImg,jdbcType=VARCHAR}
+            </if>
+            <if test="backImg !=null and backImg !=''">
+                and back_img = #{backImg,jdbcType=VARCHAR}
+            </if>
+            <if test="education !=null and education !=''">
+                and education = #{education,jdbcType=VARCHAR}
+            </if>
+            <if test="marryState !=null and marryState !=''">
+                and marry_state = #{marryState,jdbcType=VARCHAR}
+            </if>
+            <if test="companyName !=null and companyName !=''">
+                and company_name = #{companyName,jdbcType=VARCHAR}
+            </if>
+            <if test="companyPhone !=null and companyPhone !=''">
+                and company_phone = #{companyPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="companyAddr !=null and companyAddr !=''">
+                and company_addr = #{companyAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="companyDetailAddr !=null and companyDetailAddr !=''">
+                and company_detail_addr = #{companyDetailAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="companyCoordinate !=null and companyCoordinate !=''">
+                and company_coordinate = #{companyCoordinate,jdbcType=VARCHAR}
+            </if>
+            <if test="salary !=null and salary !=''">
+                and salary = #{salary,jdbcType=VARCHAR}
+            </if>
+            <if test="workingYears !=null and workingYears !=''">
+                and working_years = #{workingYears,jdbcType=VARCHAR}
+            </if>
+            <if test="workingImg !=null and workingImg !=''">
+                and working_img = #{workingImg,jdbcType=VARCHAR}
+            </if>
+            <if test="liveTime !=null and liveTime !=''">
+                and live_time = #{liveTime,jdbcType=VARCHAR}
+            </if>
+            <if test="liveAddr !=null and liveAddr !=''">
+                and live_addr = #{liveAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="liveDetailAddr !=null and liveDetailAddr !=''">
+                and live_detail_addr = #{liveDetailAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="liveCoordinate !=null and liveCoordinate !=''">
+                and live_coordinate = #{liveCoordinate,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneServerPwd !=null and phoneServerPwd !=''">
+                and phone_server_pwd = #{phoneServerPwd,jdbcType=VARCHAR}
+            </if>
+            <if test="registerAddr !=null and registerAddr !=''">
+                and register_addr = #{registerAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="registerCoordinate !=null and registerCoordinate !=''">
+                and register_coordinate = #{registerCoordinate,jdbcType=VARCHAR}
+            </if>
+            <if test="state !=null and state !=''">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="blackReason !=null and blackReason !=''">
+                and black_reason = #{blackReason,jdbcType=VARCHAR}
+            </if>
+            <if test="updateTime !=null">
+                and update_time = #{updateTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+
+            <if test="idProvince !=null">
+                and id_province = #{idProvince,jdbcType=VARCHAR}
+            </if>
+            <if test="idCity !=null">
+                and id_city = #{idCity,jdbcType=VARCHAR}
+            </if>
+            <if test="idCounty !=null">
+                and id_county = #{idCounty,jdbcType=VARCHAR}
+            </if>
+
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.core.domain.UserBaseInfo">
+        insert into cl_user_base_info(user_id,phone,real_name,age,sex,national,id_no,id_addr,living_img,ocr_img,front_img,back_img,education,marry_state,company_name,company_phone,
+        company_addr,company_detail_addr,company_coordinate,salary,working_years,working_img,live_time,live_addr,live_detail_addr,live_coordinate,
+        phone_server_pwd,register_addr,register_coordinate,state,black_reason,update_time,create_time, id_province, id_city, id_county)
+        values(#{userId,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},#{realName,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{sex,jdbcType=VARCHAR},#{national,jdbcType=VARCHAR},
+        #{idNo,jdbcType=VARCHAR},#{idAddr,jdbcType=VARCHAR},#{livingImg,jdbcType=VARCHAR},#{ocrImg,jdbcType=VARCHAR},#{frontImg,jdbcType=VARCHAR},#{backImg,jdbcType=VARCHAR},
+        #{education,jdbcType=VARCHAR},#{marryState,jdbcType=VARCHAR},#{companyName,jdbcType=VARCHAR},#{companyPhone,jdbcType=VARCHAR},#{companyAddr,jdbcType=VARCHAR},
+        #{companyDetailAddr,jdbcType=VARCHAR},#{companyCoordinate,jdbcType=VARCHAR},#{salary,jdbcType=VARCHAR},#{workingYears,jdbcType=VARCHAR},#{workingImg,jdbcType=VARCHAR},
+        #{liveTime,jdbcType=VARCHAR},#{liveAddr,jdbcType=VARCHAR},#{liveDetailAddr,jdbcType=VARCHAR},#{liveCoordinate,jdbcType=VARCHAR},#{phoneServerPwd,jdbcType=VARCHAR},
+        #{registerAddr,jdbcType=VARCHAR},#{registerCoordinate,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},
+        #{blackReason,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=TIMESTAMP},
+
+        #{idProvince,jdbcType=VARCHAR},
+        #{idCity,jdbcType=VARCHAR},
+        #{idCounty,jdbcType=VARCHAR}
+        )
+    </insert>
+
+
+    
+     <update id="update" parameterType="com.xindaibao.cashloan.core.domain.UserBaseInfo">
+        update cl_user_base_info set 
+            user_id = #{userId,jdbcType=INTEGER},
+            phone = #{phone,jdbcType=VARCHAR},
+            real_name = #{realName,jdbcType=VARCHAR},
+            age = #{age,jdbcType=INTEGER},
+            sex = #{sex,jdbcType=VARCHAR},
+            national = #{national,jdbcType=VARCHAR},
+            id_no = #{idNo,jdbcType=VARCHAR},
+            id_addr = #{idAddr,jdbcType=VARCHAR},
+            living_img = #{livingImg,jdbcType=VARCHAR},
+            ocr_img = #{ocrImg,jdbcType=VARCHAR},
+            front_img = #{frontImg,jdbcType=VARCHAR},
+            back_img = #{backImg,jdbcType=VARCHAR},
+            education = #{education,jdbcType=VARCHAR},
+            marry_state = #{marryState,jdbcType=VARCHAR},
+            company_name = #{companyName,jdbcType=VARCHAR},
+            company_phone = #{companyPhone,jdbcType=VARCHAR},
+            company_addr = #{companyAddr,jdbcType=VARCHAR},
+            company_detail_addr = #{companyDetailAddr,jdbcType=VARCHAR},
+            company_coordinate = #{companyCoordinate,jdbcType=VARCHAR},
+            salary = #{salary,jdbcType=VARCHAR},
+            working_years = #{workingYears,jdbcType=VARCHAR},
+            working_img = #{workingImg,jdbcType=VARCHAR},
+            live_time = #{liveTime,jdbcType=VARCHAR},
+            live_addr = #{liveAddr,jdbcType=VARCHAR},
+            live_detail_addr = #{liveDetailAddr,jdbcType=VARCHAR},
+            live_coordinate = #{liveCoordinate,jdbcType=VARCHAR},
+            phone_server_pwd = #{phoneServerPwd,jdbcType=VARCHAR},
+            register_addr = #{registerAddr,jdbcType=VARCHAR},
+            register_coordinate = #{registerCoordinate,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            black_reason = #{blackReason,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+
+            id_province = #{idProvince,jdbcType=VARCHAR},
+            id_city = #{idCity,jdbcType=VARCHAR},
+            id_county = #{idCounty,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+
+   <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_user_base_info
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="phone != null and phone != '' ">        
+                phone = #{phone,jdbcType=VARCHAR},                
+            </if>
+            <if test="realName != null and realName != '' ">        
+                real_name = #{realName,jdbcType=VARCHAR},                
+            </if>
+            <if test="age != null and age != '' ">        
+                age = #{age,jdbcType=INTEGER},                
+            </if>
+            <if test="sex != null and sex != '' ">        
+                sex = #{sex,jdbcType=VARCHAR},                
+            </if>
+            <if test="national != null and national != '' ">        
+                national = #{national,jdbcType=VARCHAR},                
+            </if>
+            <if test="idNo != null and idNo != '' ">        
+                id_no = #{idNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="idAddr != null and idAddr != '' ">        
+                id_addr = #{idAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="livingImg != null and livingImg != '' ">        
+                living_img = #{livingImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="ocrImg != null and ocrImg != '' ">        
+                ocr_img = #{ocrImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="frontImg != null and frontImg != '' ">        
+                front_img = #{frontImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="backImg != null and backImg != '' ">        
+                back_img = #{backImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="education != null and education != '' ">        
+                education = #{education,jdbcType=VARCHAR},                
+            </if>
+            <if test="marryState != null and marryState != '' ">        
+                marry_state = #{marryState,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyName != null and companyName != '' ">        
+                company_name = #{companyName,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyPhone != null and companyPhone != '' ">        
+                company_phone = #{companyPhone,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyAddr != null and companyAddr != '' ">        
+                company_addr = #{companyAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyDetailAddr != null and companyDetailAddr != '' ">        
+                company_detail_addr = #{companyDetailAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="companyCoordinate != null and companyCoordinate != '' ">        
+                company_coordinate = #{companyCoordinate,jdbcType=VARCHAR},                
+            </if>
+            <if test="salary != null and salary != '' ">        
+                salary = #{salary,jdbcType=VARCHAR},                
+            </if>
+            <if test="workingYears != null and workingYears != '' ">        
+                working_years = #{workingYears,jdbcType=VARCHAR},                
+            </if>
+            <if test="workingImg != null and workingImg != '' ">        
+                working_img = #{workingImg,jdbcType=VARCHAR},                
+            </if>
+            <if test="liveTime != null and liveTime != '' ">        
+                live_time = #{liveTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="liveAddr != null and liveAddr != '' ">        
+                live_addr = #{liveAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="liveDetailAddr != null and liveDetailAddr != '' ">        
+                live_detail_addr = #{liveDetailAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="liveCoordinate != null and liveCoordinate != '' ">        
+                live_coordinate = #{liveCoordinate,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneServerPwd != null and phoneServerPwd != '' ">        
+                phone_server_pwd = #{phoneServerPwd,jdbcType=VARCHAR},                
+            </if>
+            <if test="registerAddr != null and registerAddr != '' ">        
+                register_addr = #{registerAddr,jdbcType=VARCHAR},                
+            </if>
+            <if test="registerCoordinate != null and registerCoordinate != '' ">        
+                register_coordinate = #{registerCoordinate,jdbcType=VARCHAR},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="blackReason != null and blackReason != '' ">        
+                black_reason = #{blackReason,jdbcType=VARCHAR},                
+            </if>
+            <if test="updateTime != null">        
+                update_time = #{updateTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="createTime != null">        
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+
+          <if test="idProvince !=null">
+              id_province = #{idProvince,jdbcType=VARCHAR},
+          </if>
+          <if test="idCity !=null">
+              id_city = #{idCity,jdbcType=VARCHAR},
+          </if>
+          <if test="idCounty !=null">
+             id_county = #{idCounty,jdbcType=VARCHAR}
+          </if>
+
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_base_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_base_info
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_base_info
+        <include refid="searchBy"/>
+    </select>
+            
+     <select id="getDictsCache" parameterType="java.lang.String" resultType="java.util.HashMap">
+		SELECT
+			b.item_code as "code",
+			b.item_value as "value"
+		FROM
+			arc_sys_dict a,
+			arc_sys_dict_detail b
+		WHERE
+			a.id = b.parent_id
+			AND a.type_code = #{type}
+	</select>
+
+    <select id="getBaseModelByUserId" resultMap="BaseInfoModelMap" parameterType="java.lang.Long">
+        select 
+        	u.login_name,u.login_pwd,u.loginpwd_modify_time,u.regist_time,u.register_client,u.trade_pwd,u.tradepwd_modify_time,u.uuid,u.invitation_code,
+	        baseInfo.id,baseInfo.user_id,baseInfo.real_name,baseInfo.id_no,baseInfo.id_addr,baseInfo.company_name,baseInfo.company_addr,baseInfo.sex,baseInfo.live_addr,baseInfo.live_time,
+	        baseInfo.marry_state,baseInfo.phone,baseInfo.phone_server_pwd,baseInfo.national,baseInfo.education,baseInfo.working_years,baseInfo.salary,baseInfo.create_time,
+	        baseInfo.update_time,baseInfo.user_id,baseInfo.live_detail_addr,baseInfo.living_img,baseInfo.front_img,baseInfo.back_img,baseInfo.ocr_img,baseInfo.live_coordinate,
+	        baseInfo.register_coordinate,baseInfo.register_addr,baseInfo.state,baseInfo.black_reason,baseInfo.company_phone,baseInfo.working_img,baseInfo.age
+		from  cl_user u 
+		left join cl_user_base_info baseInfo on u.id = baseInfo.user_id 
+		where u.id = #{userId,jdbcType=BIGINT}  
+    </select>
+    
+    <select id="findUserImags" resultType="com.xindaibao.cashloan.core.domain.UserBaseInfo" parameterType="java.lang.Long" >
+    	select id,user_id userId,living_img livingImg,front_img frontImg,back_img backImg,ocr_img ocrImg,real_name realName,id_no idNo,phone
+        from  cl_user_base_info where user_id = #{userId,jdbcType=BIGINT}
+    </select>
+	
+	<select id="findWorkInfo" resultType="com.xindaibao.cashloan.core.model.UserWorkInfoModel" parameterType="java.lang.Long" >
+		select 
+			info.id,info.user_id,info.company_name,info.company_phone,info.company_addr,info.company_detail_addr,
+			info.company_coordinate,info.salary,info.working_years,info.working_img,dict.item_code
+		from cl_user_base_info info 
+		left join arc_sys_dict_detail dict on info.working_years = dict.item_value 
+		where info.user_id = #{userId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="findByUserId" resultType="com.xindaibao.cashloan.core.domain.UserBaseInfo" parameterType="java.lang.Long" >
+		 select
+        <include refid="Base_Column_List" />
+        from cl_user_base_info
+        where user_id = #{userId,jdbcType=INTEGER}
+	</select>
+	
+</mapper>

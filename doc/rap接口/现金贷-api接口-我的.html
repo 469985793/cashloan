@@ -1,0 +1,566 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF8">
+    <title></title>
+    <style type="text/css">
+        #container {
+            margin: 8px;
+        }
+
+        .param-table {
+            background: #E6E6E6;
+            border: 1px solid #FFF;
+            margin: 12px 0;
+            border-collapse: collapse;
+        }
+
+        .param-table th {
+            background: gray;
+            color: #FFF;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid #FFF;
+            padding: 5px;
+        }
+
+        .param-table td {
+            border-collapse: collapse;
+            border: 1px solid #FFF;
+            font-size: 12px;
+            padding: 5px;
+        }
+
+        .param-table .th-name {
+            min-width: 140px;
+        }
+
+        .param-table .th-identifier {
+            min-width: 140px;
+        }
+
+        .param-table .th-type {
+            min-width: 100px;
+        }
+
+        .param-table .th-remark {
+            min-width: 200px;
+        }
+
+        .param-table .td-name {}
+
+        .param-table .td-identifier {}
+
+        .param-table .td-type   { color: #990000; }
+
+        .param-table .td-remark { color: #666; }
+
+        .param-table .tr-level-1 { background: #F5F5F5; }
+        .param-table .tr-level-1 .td-identifier { padding-left: 5px; }
+
+        .param-table .tr-level-2 { background: #E6E6E6; }
+        .param-table .tr-level-2 .td-identifier { padding-left: 15px; }
+
+        .param-table .tr-level-3 { background: #CCCCCC; }
+        .param-table .tr-level-3 .td-identifier { padding-left: 25px; }
+
+        .param-table .tr-level-4 { background: #E6E6E6; }
+        .param-table .tr-level-4 .td-identifier { padding-left: 35px; }
+
+        .param-table .tr-level-5 { background: #CCCCCC; }
+        .param-table .tr-level-5 .td-identifier { padding-left: 45px; }
+
+        .param-table .tr-level-6 { background: #E6E6E6; }
+        .param-table .tr-level-6 .td-identifier { padding-left: 55px; }
+
+        .param-table .tr-level-7 { background: #CCCCCC; }
+        .param-table .tr-level-7 .td-identifier { padding-left: 65px; }
+
+        .param-table .tr-level-8 { background: #E6E6E6; }
+        .param-table .tr-level-8 .td-identifier { padding-left: 75px; }
+
+        .param-table .tr-level-9 { background: #CCCCCC; }
+        .param-table .tr-level-9 .td-identifier { padding-left: 85px; }
+
+        .param-table .tr-level-10 { background: #E6E6E6; }
+        .param-table .tr-level-10 .td-identifier { padding-left: 95px; }
+
+        .param-table .tr-level-11 {
+            background: #CCCCCC;
+        }
+        .param-table .tr-level-11 .td-identifier { padding-left: 105px; }
+
+        .param-table .tr-level-12 {
+            background: #E6E6E6;
+        }
+        .param-table .tr-level-12 .td-identifier { padding-left: 115px; }
+
+        .param-table .tr-level-13 {
+            background: #CCCCCC;
+        }
+        .param-table .tr-level-13 .td-identifier { padding-left: 125px; }
+    </style>
+</head>
+<body>
+<div id="container">
+            <div class="module">
+            <h1>1&nbsp;app接口-我的</h1>
+                            <div class="page">
+                    <h2>1.1&nbsp;资料完善</h2>
+                                            <div class="action">
+                            <h3>1.1.1&nbsp;人证识别--保存</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userInfo/idCardCredit.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">反面</td><td class="td-identifier">backImg</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">身份证号</td><td class="td-identifier">idNo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">姓名</td><td class="td-identifier">realName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">现居地址</td><td class="td-identifier">liveAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">身份证上的照片</td><td class="td-identifier">ocrImg</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">详细地址</td><td class="td-identifier">detailAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">正面</td><td class="td-identifier">frontImg</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">自拍</td><td class="td-identifier">livingImg</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">纬度</td><td class="td-identifier">latitude</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">经度</td><td class="td-identifier">longitude</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">学历</td><td class="td-identifier">education</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=保存成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.2&nbsp;人证识别--获取</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userInfo/getUserInfo.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---现居住地址</td><td class="td-identifier">liveAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---身份证背面</td><td class="td-identifier">backImg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---姓名</td><td class="td-identifier">realName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---经度</td><td class="td-identifier">longitude</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---自拍</td><td class="td-identifier">livingImg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---身份证正面</td><td class="td-identifier">frontImg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---身份证号</td><td class="td-identifier">idNo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---纬度</td><td class="td-identifier">latitude</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---学历</td><td class="td-identifier">education</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---详细地址</td><td class="td-identifier">detailAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---身份证上照片</td><td class="td-identifier">ocrImg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=操作成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.3&nbsp;联系人--保存</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/contact/saveOrUpdate.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">系统版本</td><td class="td-identifier">systemVersions</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=android5.0.1</td></tr><tr class="tr-level-1"><td class="td-name">关系(中文)</td><td class="td-identifier">relation</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=父亲,亲戚</td></tr><tr class="tr-level-1"><td class="td-name">是否直系,10直系，20其他</td><td class="td-identifier">type</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10,20</td></tr><tr class="tr-level-1"><td class="td-name">用户id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name">手机品牌</td><td class="td-identifier">phoneBrand</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=小米</td></tr><tr class="tr-level-1"><td class="td-name">手机型号</td><td class="td-identifier">phoneType</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=小米5s</td></tr><tr class="tr-level-1"><td class="td-name">电话号码</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=111,222</td></tr><tr class="tr-level-1"><td class="td-name">Mac地址</td><td class="td-identifier">mac</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">应用build号</td><td class="td-identifier">versionCode</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name">手机设备标识</td><td class="td-identifier">phoneMark</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=mi</td></tr><tr class="tr-level-1"><td class="td-name">姓名</td><td class="td-identifier">name</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=qwe,asd</td></tr><tr class="tr-level-1"><td class="td-name">操作系统</td><td class="td-identifier">operatingSystem</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=android</td></tr><tr class="tr-level-1"><td class="td-name">应用版本号</td><td class="td-identifier">versionName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1.0</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=保存成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.4&nbsp;联系人--获取用户联系人</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/contact/getContactInfoList.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">list</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">type</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;10&#39;,&#39;20&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;1&#39;,&#39;1&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">relation</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;父亲&#39;,&#39;亲戚&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">name</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;qwe&#39;,&#39;qwe&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------新增就不传，更新传下</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;1&#39;,&#39;1&#39;)</td></tr><tr class="tr-level-3"><td class="td-name">------</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=$order(&#39;11111111111&#39;,&#39;11111111111&#39;)</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=操作成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.5&nbsp;银行卡--获取银行卡</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/bankCard/getBankCardList.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=获取成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---卡号</td><td class="td-identifier">cardNo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1234567891234567</td></tr><tr class="tr-level-2"><td class="td-name">---开户行</td><td class="td-identifier">bank</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=zhongguoyinhang</td></tr><tr class="tr-level-2"><td class="td-name">---预留手机号</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=11111111111</td></tr><tr class="tr-level-2"><td class="td-name">---用户id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---绑定时间</td><td class="td-identifier">bindTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2016-01-01 01:01:01</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.6&nbsp;公共--获取各项资料完善状态</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userAuth/getUserAuth.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=获取成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---手机运营商认证状态(10未认证/未完善，20认证中/完善中，30已认证/</td><td class="td-identifier">phoneState</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---银行卡状态(10未认证/未完善，20认证中/完善中，30已认证/已完善)</td><td class="td-identifier">bankCardState</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---工作信息状态(10未认证/未完善，20认证中/完善中，30已认证/已完善)</td><td class="td-identifier">workInfoState</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---更多信息状态(10未认证/未完善，20认证中/完善中，30已认证/已完善)</td><td class="td-identifier">otherInfoState</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---个人信息认证状态(10未认证/未完善，20认证中/完善中，30已认证/</td><td class="td-identifier">idState</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---芝麻授信状态(10未认证/未完善，20认证中/完善中，30已认证/</td><td class="td-identifier">zhimaState</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---紧急联系人状态(10未认证/未完善，20认证中/完善中，30已认证/</td><td class="td-identifier">contactState</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=10</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">id</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.7&nbsp;公共--获取字典项-新</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/dict/list.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">字典类型编码，支持查询多个，多个typeCode间用英文逗号隔开。</td><td class="td-identifier">type</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=CONTACT_RELATION,WORK_TIME</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=获取成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---教育程度，type=EDUCATIONAL_STATE</td><td class="td-identifier">educationalList</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---婚姻状况，type=MARITAL_STATE</td><td class="td-identifier">maritalList</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---银行代码，type=BANK_TYPE</td><td class="td-identifier">bankTypeList</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---居住时长，type=LIVE_TIME</td><td class="td-identifier">liveTimeList</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---联系人关系，type=CONTACT_RELATION</td><td class="td-identifier">contactRelationList</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-3"><td class="td-name">------值</td><td class="td-identifier">value</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=父母</td></tr><tr class="tr-level-3"><td class="td-name">------编码</td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=01</td></tr><tr class="tr-level-2"><td class="td-name">---工作时长，type=WORK_TIME</td><td class="td-identifier">workTimeList</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---月薪范围，type=SALARY_RANGE</td><td class="td-identifier">salaryRangeList</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.8&nbsp;芝麻信用分数查询</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/zhima/view.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">id</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---是否已绑定 10 否 20 是</td><td class="td-identifier">bind</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=20</td></tr><tr class="tr-level-2"><td class="td-name">---芝麻信用分数</td><td class="td-identifier">score</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=667</td></tr><tr class="tr-level-2"><td class="td-name">---</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---绑定时间</td><td class="td-identifier">bindTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2017-02-21 14:15:23</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.9&nbsp;运营商--认证</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/operator/operatorCredit.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=认证成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.10&nbsp;银行卡--获取验证码</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/bankCard/getCaptcha.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.11&nbsp;用户资料--短信</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userInfo/messages.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">info</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---发送时间</td><td class="td-identifier">time</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---手机号码</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---收发标识，10发20收</td><td class="td-identifier">type</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---收发人</td><td class="td-identifier">name</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.12&nbsp;用户资料--通讯录</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userInfo/contacts.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">info</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---手机号</td><td class="td-identifier">phone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---姓名</td><td class="td-identifier">name</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.13&nbsp;芝麻信用授权</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/zhima/authorize.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">用户id</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=201</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">array&lt;object&gt;</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=https://zmopenapi.zmxy.com.cn/openapi.do?charset=UTF-8&method=zhima.auth.info.authorize&channel=app&sign=j%2B9P%2FBZMk8goDFKPrt5IDQlOSYWiJ%2Byodu4dqVsqwYiiRXsQ9wC4cE0dx5FfQu0IdYf1Ee%2F7ROcdxwDGVyfq9hsR8%2FScx5XW2X3V1m3lbF1JMlkfoHjULwEbQhoveLKl%2F2QNKlTud94F9qUNLIC%2B5HnmsrF8XLDf0VOzGqFbvsY%3D&version=1.0&app_id=1002108&sign_type=RSA&platform=zmop&params=iG5Nvz6FpjtG8DZj0sHAGMsn5GO2iRASP3DoUETyHhPWj4aVM2X%2B4FLQEz5WVHtZMpB3%2BPSKmGgOlZ1uXJZp6xzzTHBm76%2BBYiHqOeyV8pA2yCbJjZwgf5IRcr%2BZDIyA%2FgI3vYo2cXdJyrvaEwzZP1EvZKP5oSfPsSj9PqjN%2FS%2Bi%2BSbYCuOTqJio4Dw%2FFbUWst77ZMPFdnhxXjQ%2FF2%2Fo%2FPDvgWSO54axUfh7SrNbYYuGVhIrDREQL1opwSCfoBj8pvTwvM2AA3VVvpKq0xU3p%2FxAiN6vFHriBmACZ2dW3ChW6IQgOE66MQofz7EkMvrHjtwPEfp54%2BJ98KlWOF2pbkqFByzHG8b9lC4mVyDEEhqwY0x%2BDrY28xfF9f95V%2FjEPFAgDHJ%2BymkhRmfv93cRfE6JZwxDSzAafV%2FNFuHEku%2FRNuEt5RoxWCcZEerlF7Pkn2dHytRBx7%2FbQzAX9Mh18F2HeAlWBKiuHJYYoGBLvOzIBKK%2BRIfZSNipEf2tF855</td></tr><tr class="tr-level-2"><td class="td-name">---跳转授权url</td><td class="td-identifier">url</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">信息提示</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.14&nbsp;完善工作信息</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/workInfo/saveOrUpdate.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">单位电话</td><td class="td-identifier">companyPhone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">工作时长</td><td class="td-identifier">workingYears</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">单位名称</td><td class="td-identifier">companyName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户标识 id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">单位坐标(经度，纬度)</td><td class="td-identifier">companyCoordinate</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">单位详细地址（门牌号）</td><td class="td-identifier">companyDetailAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">单位地址</td><td class="td-identifier">companyAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">响应消息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=保存成功</td></tr><tr class="tr-level-1"><td class="td-name">响应码  200 表示成功</td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.15&nbsp;完善更多信息</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/other/saveOrUpdate.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">微信账号</td><td class="td-identifier">wechat</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">常用邮箱</td><td class="td-identifier">email</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">QQ账号</td><td class="td-identifier">qq</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">淘宝账号</td><td class="td-identifier">taobao</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户标识Id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">响应码  200 表示成功</td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name">响应消息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=保存成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.16&nbsp;查询用户更多信息</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/other/findDetail.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">用户标识Id</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">响应消息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name">响应码  200 表示成功</td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---常用邮箱</td><td class="td-identifier">email</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=121@qq.com</td></tr><tr class="tr-level-2"><td class="td-name">---用户标识</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=9</td></tr><tr class="tr-level-2"><td class="td-name">---淘宝账号</td><td class="td-identifier">taobao</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=123</td></tr><tr class="tr-level-2"><td class="td-name">---微信账号</td><td class="td-identifier">wechat</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1212</td></tr><tr class="tr-level-2"><td class="td-name">---创建时间</td><td class="td-identifier">createTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=2017-03-16 13:44:42</td></tr><tr class="tr-level-2"><td class="td-name">---QQ账号</td><td class="td-identifier">qq</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=121</td></tr><tr class="tr-level-2"><td class="td-name">---主键Id</td><td class="td-identifier">id</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.17&nbsp;查询用户工作照片</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userInfo/getWorkImg.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">用户标识Id</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">响应消息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name">响应码 200 表示成功</td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---工作照片3</td><td class="td-identifier">workImgThr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=http://10.10.2.156:80801121.jpg</td></tr><tr class="tr-level-2"><td class="td-name">---工作照片1</td><td class="td-identifier">workImgFir</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=http://10.10.2.156:8080/112.jpg</td></tr><tr class="tr-level-2"><td class="td-name">---工作照片2</td><td class="td-identifier">workImgSec</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=http://10.10.2.156:8080/1121.jpg</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.18&nbsp;完善工作信息添加工作照片</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/workInfo/workImgSave.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">工作照片2</td><td class="td-identifier">workImgSec</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">工作照片3</td><td class="td-identifier">workImgThr</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">工作照片1</td><td class="td-identifier">workImgFir</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户标识Id</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">响应消息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">响应码 200 表示成功</td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.19&nbsp;查询用户工作信息</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userInfo/getWorkInfo.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">用户标识Id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">响应码 200 表示成功</td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name">响应信息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=查询成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---用户标识Id</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---工作年限</td><td class="td-identifier">workingYears</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=3年</td></tr><tr class="tr-level-2"><td class="td-name">---工作年限字典code</td><td class="td-identifier">itemCode</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---单位坐标</td><td class="td-identifier">companyCoordinate</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=</td></tr><tr class="tr-level-2"><td class="td-name">---公司名称</td><td class="td-identifier">companyName</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=杭州融都科技股份有限公司</td></tr><tr class="tr-level-2"><td class="td-name">---单位地址</td><td class="td-identifier">companyAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=海蓝金融科技中心丰潭路508号</td></tr><tr class="tr-level-2"><td class="td-name">---是否上传工作照 10 添加过 20 未添加</td><td class="td-identifier">workImgState</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---公司电话</td><td class="td-identifier">companyPhone</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=</td></tr><tr class="tr-level-2"><td class="td-name">---主键Id</td><td class="td-identifier">id</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-2"><td class="td-name">---月薪范围</td><td class="td-identifier">salary</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=5000</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.20&nbsp;银行卡 - 签约响应处理</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/bankCard/authSignReturn.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">签约协议号</td><td class="td-identifier">agreeNo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=201733</td></tr><tr class="tr-level-1"><td class="td-name">签约响应结果</td><td class="td-identifier">signResult</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=</td></tr><tr class="tr-level-1"><td class="td-name">银行卡号</td><td class="td-identifier">cardNo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=6225885866103659</td></tr><tr class="tr-level-1"><td class="td-name">开户行信息</td><td class="td-identifier">bank</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=招商银行</td></tr><tr class="tr-level-1"><td class="td-name">用户标识Id</td><td class="td-identifier">userId</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name">签约响应user_id</td><td class="td-identifier">uuid</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">响应码  200 表示成功</td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">响应消息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.21&nbsp;银行卡--签约数据封装</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/bankCard/authSign.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">开户行名称</td><td class="td-identifier">bank</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=招商银行</td></tr><tr class="tr-level-1"><td class="td-name">用户标识Id</td><td class="td-identifier">userId</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=1</td></tr><tr class="tr-level-1"><td class="td-name">卡号</td><td class="td-identifier">cardNo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=6225885866103698</td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---签约提交参数</td><td class="td-identifier">authSignData</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">响应消息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=保存成功</td></tr><tr class="tr-level-1"><td class="td-name">响应码 200 表示成功</td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.22&nbsp;公共 - 获取认证界面Logo图</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userAuth/getAuthImgLogo.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---获取图片地址</td><td class="td-identifier">authImgLogo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=http://cl.ups.erongyun.net/readFile.htm?path=E:\workspace_cashloan\cashLoan\cashloan\framework-manage\src\main\webapp\static\images\authImgLogo.png</td></tr><tr class="tr-level-1"><td class="td-name">响应码 200 表示成功</td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name">响应消息</td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=获取成功</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.23&nbsp;SDK可操作次数</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/sdk/time.htm</div>
+
+                            <h3>Method</h3>
+                            <div>GET</div>
+
+                            <h3>Description</h3>
+                            <div>以日为单位，次数上线，防止盗刷。
+app调用活体识别、OCR sdk前先调用该接口，可操作次数大于0时才能调用sdk，等于0时给出提示：今日操作过于频繁，请明日再试</div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">data</td><td class="td-type">object</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-2"><td class="td-name">---活体识别可操作次数</td><td class="td-identifier">faceTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=&quot;10&quot;</td></tr><tr class="tr-level-2"><td class="td-name">---ocr识别可操作次数</td><td class="td-identifier">ocrTime</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=&quot;10&quot;</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=&quot;查询成功&quot;</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.24&nbsp;SDK使用记录同步</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/sdk/synchron.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div>停用</div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">身份证号码，type=20时传递</td><td class="td-identifier">idCard</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">10活体识别  20ocr身份证识别</td><td class="td-identifier">type</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">用户姓名，type=20时传递</td><td class="td-identifier">name</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=操作成功</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">number</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                            <div class="action">
+                            <h3>1.1.25&nbsp;faceID人证识别</h3>
+
+                            <h3>URL</h3>
+                            <div>/api/act/mine/userInfo/authentication.htm</div>
+
+                            <h3>Method</h3>
+                            <div>POST</div>
+
+                            <h3>Description</h3>
+                            <div></div>
+
+                            <h3>Request Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name">现居住地经纬度</td><td class="td-identifier">liveCoordinate</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">现居住地</td><td class="td-identifier">liveAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">身份证反面照</td><td class="td-identifier">backImg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">自拍照</td><td class="td-identifier">livingImg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">faceID sdk 返回的校验字符串</td><td class="td-identifier">delta</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">身份证号</td><td class="td-identifier">idNo</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">现居住地详细</td><td class="td-identifier">detailAddr</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">身份证正面照</td><td class="td-identifier">frontImg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr><tr class="tr-level-1"><td class="td-name">学历</td><td class="td-identifier">education</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark"></td></tr></table>
+
+                            <h3>Response Param List</h3>
+                            <table class="param-table"><thead><th class="th-name">Name</th><th class="th-identifier">Identifier</th><th class="th-type">Type</th><th class="th-length">Length</th><th class="th-needed">Needed</th><th class="th-remark">Remark</th></thead><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">msg</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=&quot;操作成功&quot;</td></tr><tr class="tr-level-1"><td class="td-name"></td><td class="td-identifier">code</td><td class="td-type">string</td><td class="td-length"></td><td class="td-needed"></td><td class="td-remark">@mock=200</td></tr></table>
+                        </div>
+                                    </div>
+                    </div>
+    </div>
+</body>
+</html>

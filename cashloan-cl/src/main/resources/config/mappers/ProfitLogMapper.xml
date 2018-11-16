@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_profit_log表:分润记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ProfitLogMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ProfitLog">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="borrow_id" property="borrowId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="agent_id" property="agentId" jdbcType="INTEGER" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="rate" property="rate" jdbcType="DECIMAL" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+       id,borrow_id,user_id,agent_id,amount,rate,add_time 
+    </sql>
+    
+    <resultMap id="profitLogModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ProfitLogModel">
+    	
+    </resultMap>
+    
+    <resultMap id="ManageCashLogModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageCashLogModel">
+    	
+    </resultMap>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="borrowId !='' and borrowId !=null">
+                and borrow_id = #{borrowId,jdbcType=INTEGER}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="agentId !='' and agentId !=null">
+                and agent_id = #{agentId,jdbcType=INTEGER}
+            </if>
+            <if test="amount !='' and amount !=null">
+                and amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="rate !='' and rate !=null">
+                and rate = #{rate,jdbcType=DECIMAL}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ProfitLog">
+        insert into cl_profit_log(borrow_id,user_id,agent_id,amount,rate,add_time)values(#{borrowId,jdbcType=INTEGER},#{userId,jdbcType=INTEGER},#{agentId,jdbcType=INTEGER},#{amount,jdbcType=DECIMAL},#{rate,jdbcType=DECIMAL},#{addTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_profit_log
+          <set>
+            <if test="borrowId != null and borrowId != '' ">        
+                borrow_id = #{borrowId,jdbcType=INTEGER},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="agentId != null and agentId != '' ">        
+                agent_id = #{agentId,jdbcType=INTEGER},                
+            </if>
+            <if test="amount != null and amount != '' ">        
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="rate != null and rate != '' ">        
+                rate = #{rate,jdbcType=DECIMAL},                
+            </if>
+            <if test="addTime != null ">        
+                add_time = #{addTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_profit_log
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listInfo" resultMap="profitLogModel" parameterType="java.util.HashMap">
+        SELECT cpl.amount,cpl.add_time,cu.login_name,cb.amount AS money,cb.fee
+		FROM cl_profit_log AS cpl,cl_user AS cu,cl_borrow AS cb
+		WHERE cpl.borrow_id = cb.id AND cpl.user_id = cu.id AND cpl.agent_id = #{agentId,jdbcType=INTEGER}
+		order by cpl.add_time DESC
+    </select>
+    
+    <select id="findCashLog" resultMap="ManageCashLogModel" parameterType="java.util.HashMap">
+        SELECT 
+        pcl.id,
+        pcl.user_id,
+		login_name AS userName,
+		pcl.amount,pcl.add_time
+		FROM `cl_user` AS cu,cl_profit_cash_log AS pcl
+		WHERE pcl.user_id = cu.id AND 
+		(pcl.user_id IN (SELECT user_id FROM cl_profit_agent WHERE leader_id = #{id,jdbcType=INTEGER}) 
+		OR pcl.user_id = #{id,jdbcType=INTEGER})
+		<if test="userName != null and userName != '' ">
+			AND login_name LIKE #{userName,jdbcType=VARCHAR}
+		</if>
+		ORDER BY pcl.id DESC
+    </select>
+    
+    <select id="findSysCashLog" resultMap="ManageCashLogModel" parameterType="java.util.HashMap">
+        SELECT pcl.id, login_name AS userName,
+		pcl.amount,pcl.add_time
+		FROM `cl_user` AS cu,cl_profit_cash_log AS pcl
+		WHERE cu.id = pcl.user_id 
+		<if test="userName != null and userName != '' ">        
+                AND login_name LIKE #{userName,jdbcType=VARCHAR}                
+        </if>
+        ORDER BY pcl.id DESC
+    </select>
+    
+    <select id="count" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+        select count(1) from cl_profit_log 
+        <include refid="searchBy"/>
+    </select>
+</mapper>

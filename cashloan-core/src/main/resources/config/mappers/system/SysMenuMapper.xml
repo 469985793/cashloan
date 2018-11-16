@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysMenuMapper">
+	<resultMap id="menuResult" type="com.xindaibao.cashloan.system.domain.SysMenu">
+		<result column="id" property="id" />
+		<result column="name" property="text" />
+		<result column="parent_id" property="parentId" />
+		<result column="icon_cls" property="iconCls" />
+		<result column="sort" property="sort" />
+		<result column="add_time" property="addTime" />
+		<result column="add_user" property="addUser" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_user" property="updateUser" />
+		<result column="remark" property="remark" />
+		<result column="is_delete" property="isDelete" />
+		<result column="is_menu" property="isMenu" />
+		<result column="scriptid" property="scriptid" />
+		<result column="level" property="level" />
+		<result column="leaf" property="leaf" />
+		<result column="controller_name" property="controllerName" />
+	</resultMap>
+
+	<resultMap type="com.xindaibao.cashloan.system.model.SysMenuCheck" id="menuCheckedRe">
+		<result column="id" property="id" />
+		<result column="name" property="text" />
+		<result column="parent_id" property="parentId" />
+		<result column="icon_cls" property="iconCls" />
+		<result column="sort" property="sort" />
+		<result column="add_time" property="addTime" />
+		<result column="add_user" property="addUser" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_user" property="updateUser" />
+		<result column="remark" property="remark" />
+		<result column="is_delete" property="isDelete" />
+		<result column="is_menu" property="isMenu" />
+		<result column="scriptid" property="scriptid" />
+		<result column="level" property="level" />
+		<result column="leaf" property="leaf" />
+		<result column="controller_name" property="controllerName" />
+	</resultMap>
+	
+	<resultMap type="java.util.HashMap" id="menuHashMap">
+        <result column="id" property="value" />
+        <result column="name" property="label" />
+        <result column="parent_id" property="parentId" />
+        <result column="icon_cls" property="iconCls" />
+        <result column="sort" property="sort" />
+        <result column="add_time" property="addTime" />
+        <result column="add_user" property="addUser" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_user" property="updateUser" />
+        <result column="remark" property="remark" />
+        <result column="is_delete" property="isDelete" />
+        <result column="is_menu" property="isMenu" />
+        <result column="scriptid" property="scriptid" />
+        <result column="level" property="level" />
+        <result column="leaf" property="leaf" />
+        <result column="controller_name" property="controllerName" />
+        <result column="checked" property="checked" />
+    </resultMap>
+
+	<resultMap id="menuModelResult" type="com.xindaibao.cashloan.system.model.MenuModel">
+		<result column="id" property="id" />
+		<result column="name" property="text" />
+		<result column="href" property="href" />
+		<result column="role_id" property="roleId" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.xindaibao.cashloan.system.domain.SysMenu">
+		<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into arc_sys_menu(
+		id,
+		name,
+		parent_id,
+		href,
+		icon_cls,
+		sort,
+		add_time,
+		add_user,
+		update_time,
+		update_user,
+		remark,
+		is_delete,
+		is_menu,
+		scriptid,
+		leaf,
+		level
+		)
+		values (
+		#{id},
+		#{text},
+		#{parentId},
+		#{href},
+		#{iconCls},
+		#{sort},
+		sysdate,
+		#{addUser},
+		#{updateTime},
+		#{updateUser},
+		#{remark},
+		#{isDelete},
+		#{isMenu},
+		#{scriptid},
+		#{leaf},
+		#{level}
+		)
+	</insert>
+
+	<insert id="insertmap" parameterType="java.util.HashMap">
+		<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+		insert into arc_sys_menu(
+		name,
+		parent_id,
+		icon_cls,
+		sort,
+		remark,
+		is_delete,
+		is_menu,
+		scriptid,
+		leaf,
+		level
+		)
+		values (
+		#{text},
+		#{parentId},
+		#{iconCls},
+        #{sort},	
+		#{remark},
+		#{isDelete},
+		#{isMenu},
+		#{scriptid},
+		#{leaf},
+		#{level}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.xindaibao.cashloan.system.domain.SysMenu">
+		update
+		arc_sys_menu
+		set
+		NAME=#{text},
+		parent_id=#{parentId},
+		href=#{href},
+		icon_cls=#{iconCls},
+		SORT=#{sort},
+		add_time=sysdate,
+		add_user=#{addUser},
+		update_time=sysdate,
+		update_user=#{updateUser},
+		remark=#{remark},
+		is_delete=#{isDelete},
+		is_menu=#{isMenu},
+		scriptid=#{scriptid},
+		leaf=#{leaf},
+		level=#{level}
+		where
+		id = #{id}
+	</update>
+
+	<update id="updateMenu" parameterType="java.util.Map">
+		update arc_sys_menu
+		<trim prefix="SET" suffixOverrides=",">
+			update_time= NOW(),
+			<if test="text!=null">
+				name = #{text},
+			</if>
+			<if test="parentId!=null">
+				parent_id = #{parentId},
+			</if>
+			<if test="href!=null">
+				href = #{href},
+			</if>
+			<if test="iconCls!=null">
+				icon_cls = #{iconCls},
+			</if>
+			<if test="sort!=null">
+				sort = #{sort},
+			</if>
+			<if test="addTime!=null">
+				add_time = #{addTime},
+			</if>
+			<if test="addUser!=null">
+				add_user = #{addUser},
+			</if>
+			<if test="updateUser!=null">
+				update_user = #{updateUser},
+			</if>
+			<if test="remark!=null">
+				remark = #{remark},
+			</if>
+			<if test="isDelete!=null">
+				is_delete = #{isDelete},
+			</if>
+			<if test="isMenu!=null">
+				is_menu = #{isMenu},
+			</if>
+			<if test="scriptid!=null">
+				scriptid = #{scriptid},
+			</if>
+			<if test="leaf!=null">
+				leaf = #{leaf},
+			</if>
+			<if test="level!=null">
+				level = #{level}
+			</if>
+		</trim>
+		where
+		id = #{id}
+	</update>
+
+	<select id="getItemById" parameterType="long" resultMap="menuResult">
+		select
+		id,
+		name,
+		parent_id,
+		href,
+		icon_cls,
+		sort,
+		add_time,
+		add_user,
+		update_time,
+		update_user,
+		remark,
+		is_delete,
+		is_menu,
+		scriptid,
+		leaf,
+		level,
+		controller_name
+		from
+		arc_sys_menu
+		where
+		is_delete = 0 and id = #{id}
+	</select>
+	
+	<select id="getMenuInfoById" parameterType="long" resultType="java.util.HashMap">
+		select
+		s.id,
+		s.name			text,
+		s.parent_id		parentId,
+		sm.name			parent_text,
+		s.href,
+		s.icon_cls		iconCls,
+		s.sort,
+		s.add_time		addTime,
+		s.add_user		addUser,
+		s.update_time	updateTime,
+		s.update_user	updateUser,
+		s.remark,
+		s.is_delete		isDelete,
+		s.is_menu		isMenu,
+		s.scriptid,
+		s.leaf,
+		s.level,
+		s.controller_name	controllerName
+		from
+		arc_sys_menu s
+		join arc_sys_menu sm on sm.id = s.parent_id
+		where
+		s.is_delete = 0 and s.id = #{id}
+	</select>
+
+	<select id="getMenuList" resultMap="menuResult" parameterType="java.util.Map">
+		select
+		id,
+		name,
+		parent_id,
+		href,
+		icon_cls,
+		sort,
+		add_time,
+		add_user,
+		update_time,
+		update_user,
+		remark,
+		is_delete,
+		is_menu,
+		scriptid,
+		leaf,
+		level,
+		controller_name
+		from
+		arc_sys_menu
+		where
+		is_delete = 0
+		<if test="name!=null and name!='' ">
+			and name=#{name}
+		</if>
+		<if test="parentId!=null and parentId!='' ">
+			and parent_id = #parentId#
+		</if>
+		<if test="href!=null and href!='' ">
+			and href = #href#
+		</if>
+		<if test="isMenu!=null and isMenu!='' ">
+			and is_menu = #isMenu#
+		</if>
+		 order by sort asc
+	</select>
+	
+	<select id="getMenuListByRoleIds" resultMap="menuModelResult"
+        parameterType="java.util.Map">
+        select
+        p1.id,
+        p1.name,
+        p1.href,
+        p2.role_id
+        from
+        arc_sys_menu p1 , arc_sys_role_menu
+        p2
+        where
+        p1.id = p2.menu_id and p1.is_delete = 0
+        
+        <foreach item="roleIds" index="index" collection="list"
+	       open="and p2.role_id in (" separator="," close=")">
+	       #{roleIds}
+        </foreach>
+        
+        <!-- <iterate prepend=" and p2.role_id in " open="(" close=")"
+            conjunction="," property="roleIds">
+            #roleIds[]#
+        </iterate> -->
+    </select>
+    
+    <select id="getRoleSysMenu" resultType="java.util.HashMap"
+        parameterType="java.util.Map">
+        SELECT DISTINCT
+		    rm.menu_id
+		FROM
+		    arc_sys_role_menu rm
+		JOIN arc_sys_menu menu ON menu.id = rm.menu_id
+		WHERE
+		    rm.role_id IN ( #{0} )
+		AND NOT EXISTS (
+		    SELECT
+		        1
+		    FROM
+		        arc_sys_menu
+		    WHERE
+		        parent_id = rm.menu_id
+		)
+		AND SYS_TYPE IN (0, #{1} )
+    </select>
+    
+    <select id="getMenuParentId" resultType="java.util.HashMap">
+        SELECT DISTINCT
+		    parent_id id
+		FROM
+		    arc_sys_menu
+		WHERE
+		    id IN 
+        <foreach item="item" index="index" collection="menuLeafIds"
+		      open="(" separator="," close=")">
+		        #{item}
+		  </foreach>
+		    
+    </select>
+    
+    <select id="getMenuByParentIds" resultMap="menuHashMap"
+        parameterType="java.lang.String">
+        SELECT
+		    id,
+		    parent_id,
+		    name,
+		    icon_cls,
+		    scriptid,
+		    sort,
+		    controller_name 
+		FROM
+		    arc_sys_menu
+		WHERE
+		    is_delete = 0
+		
+		    <foreach item="item" index="index" collection="ids"
+              open="AND id IN (" separator="," close=")">
+                #{item}
+            </foreach>
+		
+		ORDER BY
+		    sort,
+		    sys_type
+    </select>
+    
+    <select id="fetchRoleMenuHas" resultMap="menuHashMap"
+        parameterType="long">
+       <!--  SELECT
+		   	if(rm.role_id is not null, 1, 0) as checked,
+		    menu.name,
+		    menu.id,
+		    menu.parent_id
+		FROM
+		    arc_sys_menu menu
+		LEFT JOIN arc_sys_role_menu rm ON rm.menu_id = menu.id
+		AND role_id = #{roleId}
+		WHERE
+		    menu.is_delete = 0 -->
+		     SELECT
+		   	if(rm.role_id is not null, 1, 0) as checked,
+		    menu.name,
+		    menu.id,
+		    menu.parent_id
+		FROM
+		    arc_sys_menu menu
+		LEFT JOIN arc_sys_role_menu rm ON rm.menu_id = menu.id
+		AND role_id =#{roleId}		AND NOT EXISTS (
+		    SELECT
+		        1
+		    FROM
+		        arc_sys_menu
+		    WHERE
+		        parent_id = rm.menu_id
+		)
+		WHERE
+		    menu.is_delete = 0
+    </select>
+    
+    <select id="fetchAllMenu" resultMap="menuHashMap">
+    SELECT
+	    id,
+	    parent_id,
+	    name,
+	    icon_cls,
+	    remark,
+	    sort,
+	    scriptid,
+	    controller_name,
+	    level,
+	    is_delete,
+	    is_menu
+	FROM
+	    arc_sys_menu
+	WHERE
+	    is_delete = 0
+	ORDER BY
+	    sort,
+	    name 
+    </select>
+</mapper>

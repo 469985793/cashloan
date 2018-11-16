@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_rank表:评分等级模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.RankMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.Rank">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="rank_name" property="rankName" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,rank_name
+    </sql>
+    
+    <resultMap id="resultModel" extends="BaseResultMap" type="com.xindaibao.creditrank.cr.model.RankModel">
+    	
+    </resultMap>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="rankName !='' and rankName !=null">
+                and rank_name = #{rankName,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.Rank">
+    	<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+        insert into arc_cr_rank(rank_name)values(#{rankName,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.Rank">
+        update arc_cr_rank set 
+            rank_name = #{rankName,jdbcType=VARCHAR},
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_rank
+          <set>
+            <if test="rankName != null and rankName != '' ">        
+                rank_name = #{rankName,jdbcType=VARCHAR},                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_rank
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_rank
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_rank
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="countList" resultMap="resultModel" parameterType="java.util.HashMap">
+        select acr.id,acr.rank_name,COUNT(acrd.rank_id) as num 
+        from arc_cr_rank as acr ,arc_cr_rank_detail as acrd
+        <include refid="searchBy"/>
+        GROUP BY acr.id DESC
+    </select>
+    
+    <delete id="deleteSelective" parameterType="java.lang.Long">
+    	delete
+    	from arc_cr_rank
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <select id="findAll" resultMap="BaseResultMap">
+    	 select
+        <include refid="Base_Column_List" />
+        from arc_cr_rank 
+    </select>
+    
+</mapper>

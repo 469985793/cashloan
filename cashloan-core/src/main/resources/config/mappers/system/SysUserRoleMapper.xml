@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysUserRoleMapper">
+	<resultMap id="sysUserRoleResult" type="com.xindaibao.cashloan.system.domain.SysUserRole">
+		<result column="id" property="id" />
+		<result column="role_id" property="roleId" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.xindaibao.cashloan.system.domain.SysUserRole">
+		<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into arc_sys_user_role(
+			role_id,
+			user_id				
+		)
+		values (
+			#{roleId},
+			#{userId}				
+		)
+	</insert>
+	
+	<delete id="deleteByUserId" parameterType="long">
+		delete from arc_sys_user_role
+		where
+		user_id  = #{userId}
+ 	</delete> 
+	
+    <select id="getItemListByMap"	parameterType="java.util.HashMap" resultMap="sysUserRoleResult">
+		select * 
+		from  arc_sys_user_role
+		where 1=1
+		<if test="roleId != null">
+		    AND role_id = #{roleId}
+        </if>
+        <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+	</select>
+	
+	<!-- <update id="update" parameterClass="com.rongdu.arc.modules.manage.system.domain.SysUserRole">
+		update arc_sys_user_role
+		set
+			role_id=#roleId#,
+			user_id=#userId#				
+		where
+			id = #id#
+	</update> -->
+   
+ 	<!-- <select id="getItemById" parameterClass="long" resultMap="sysUserRoleResult">
+		select
+			id,
+			role_id,
+			user_id				
+		from arc_sys_user_role
+		where 
+			id = #id#
+	</select> -->
+	
+	<!-- <select id="getItemListByIds" parameterClass="java.util.Map" resultMap="sysUserRoleResult">
+		select
+			id,
+			role_id,
+			user_id				
+		from arc_sys_user_role
+		where
+		<iterate open="(" close=")" conjunction="," property="ids">
+			#id[]#
+		</iterate>
+	</select> -->
+	
+ 	<!-- <delete id="deleteByIds" parameterClass="java.util.Map">
+		delete from arc_sys_user_role
+		where
+		<iterate open="(" close=")" conjunction="," property="ids">
+			#id[]#
+		</iterate>
+ 	</delete> -->
+ 	
+ 	<!-- <delete id="deleteByUserId" parameterClass="long">
+ 	  delete from arc_sys_user_role
+ 	  where
+ 	  user_id = #userId#
+ 	</delete> -->
+ 	
+	<!-- <select id="getPageList" resultMap="sysUserRoleResult" parameterClass="map" >
+		select 
+			id,
+			role_id,
+			user_id		
+	    from arc_sys_user_role
+	    <dynamic prepend="where">
+	    	<isNotEmpty prepend="and" property="id">
+			      id = #id#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="roleId">
+			      role_id = #roleId#
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="userId">
+			      user_id = #userId#
+			</isNotEmpty>
+		</dynamic>
+			order by id desc
+		 	limit #startRow#, #pageSize#
+	</select> -->
+  
+	<!-- <select id="getPageCount" resultClass="int" parameterClass="com.rongdu.arc.modules.manage.system.domain.SysUserRole" >
+		select 
+			count(*)		
+	    from arc_sys_user_role
+	    <dynamic prepend="where">
+    	<isNotEmpty prepend="and" property="id">
+		      id = #id#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="roleId">
+		      role_id = #roleId#
+		</isNotEmpty>
+		<isNotEmpty prepend="and" property="userId">
+		      user_id = #userId#
+		</isNotEmpty>
+		</dynamic>
+	</select>    -->
+	
+	<!-- <select id="getItemInfoByMap" parameterClass="java.util.Map" resultMap="sysUserRoleResult">
+	   select 
+            id,
+            role_id,
+            user_id     
+        from arc_sys_user_role
+        <dynamic prepend="where">
+            <isNotEmpty prepend="and" property="id">
+                  id = #id#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="roleId">
+                  role_id = #roleId#
+            </isNotEmpty>
+            <isNotEmpty prepend="and" property="userId">
+                  user_id = #userId#
+            </isNotEmpty>
+        </dynamic>
+	</select> -->
+</mapper>

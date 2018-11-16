@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_dhb_risk_social_network表:贷后邦社交风险点模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.DhbRiskSocialNetworkMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.DhbRiskSocialNetwork">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="sn_score" property="snScore" jdbcType="INTEGER" />
+        <result column="sn_order1_contacts_cnt" property="snOrder1ContactsCnt" jdbcType="INTEGER" />
+        <result column="sn_order1_blacklist_contacts_cnt" property="snOrder1BlacklistContactsCnt" jdbcType="INTEGER" />
+        <result column="sn_order2_blacklist_contacts_cnt" property="snOrder2BlacklistContactsCnt" jdbcType="INTEGER" />
+        <result column="sn_order2_blacklist_routers_cnt" property="snOrder2BlacklistRoutersCnt" jdbcType="INTEGER" />
+        <result column="sn_order2_blacklist_routers_pct" property="snOrder2BlacklistRoutersPct" jdbcType="DECIMAL" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,order_no,user_id,sn_score,sn_order1_contacts_cnt,sn_order1_blacklist_contacts_cnt,sn_order2_blacklist_contacts_cnt,sn_order2_blacklist_routers_cnt,sn_order2_blacklist_routers_pct 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo != null and orderNo != '' ">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != '' ">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="snScore != null and snScore != '' ">
+                and sn_score = #{snScore,jdbcType=INTEGER}
+            </if>
+            <if test="snOrder1ContactsCnt != null and snOrder1ContactsCnt != '' ">
+                and sn_order1_contacts_cnt = #{snOrder1ContactsCnt,jdbcType=INTEGER}
+            </if>
+            <if test="snOrder1BlacklistContactsCnt != null and snOrder1BlacklistContactsCnt != '' ">
+                and sn_order1_blacklist_contacts_cnt = #{snOrder1BlacklistContactsCnt,jdbcType=INTEGER}
+            </if>
+            <if test="snOrder2BlacklistContactsCnt != null and snOrder2BlacklistContactsCnt != '' ">
+                and sn_order2_blacklist_contacts_cnt = #{snOrder2BlacklistContactsCnt,jdbcType=INTEGER}
+            </if>
+            <if test="snOrder2BlacklistRoutersCnt != null and snOrder2BlacklistRoutersCnt != '' ">
+                and sn_order2_blacklist_routers_cnt = #{snOrder2BlacklistRoutersCnt,jdbcType=INTEGER}
+            </if>
+            <if test="snOrder2BlacklistRoutersPct != null and snOrder2BlacklistRoutersPct != '' ">
+                and sn_order2_blacklist_routers_pct = #{snOrder2BlacklistRoutersPct,jdbcType=DECIMAL}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.DhbRiskSocialNetwork">
+        insert into cl_rc_dhb_risk_social_network(order_no,user_id,sn_score,sn_order1_contacts_cnt,sn_order1_blacklist_contacts_cnt,sn_order2_blacklist_contacts_cnt,sn_order2_blacklist_routers_cnt,sn_order2_blacklist_routers_pct)values(#{orderNo,jdbcType=VARCHAR},#{userId,jdbcType=BIGINT},#{snScore,jdbcType=INTEGER},#{snOrder1ContactsCnt,jdbcType=INTEGER},#{snOrder1BlacklistContactsCnt,jdbcType=INTEGER},#{snOrder2BlacklistContactsCnt,jdbcType=INTEGER},#{snOrder2BlacklistRoutersCnt,jdbcType=INTEGER},#{snOrder2BlacklistRoutersPct,jdbcType=DECIMAL})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.DhbRiskSocialNetwork">
+        update cl_rc_dhb_risk_social_network set 
+            order_no = #{orderNo,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=BIGINT},
+            sn_score = #{snScore,jdbcType=INTEGER},
+            sn_order1_contacts_cnt = #{snOrder1ContactsCnt,jdbcType=INTEGER},
+            sn_order1_blacklist_contacts_cnt = #{snOrder1BlacklistContactsCnt,jdbcType=INTEGER},
+            sn_order2_blacklist_contacts_cnt = #{snOrder2BlacklistContactsCnt,jdbcType=INTEGER},
+            sn_order2_blacklist_routers_cnt = #{snOrder2BlacklistRoutersCnt,jdbcType=INTEGER},
+            sn_order2_blacklist_routers_pct = #{snOrder2BlacklistRoutersPct,jdbcType=DECIMAL}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_dhb_risk_social_network
+          <set>
+            <if test="orderNo != null and orderNo != '' ">        
+                order_no = #{orderNo,jdbcType=VARCHAR},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="snScore != null and snScore != '' ">        
+                sn_score = #{snScore,jdbcType=INTEGER},                
+            </if>
+            <if test="snOrder1ContactsCnt != null and snOrder1ContactsCnt != '' ">        
+                sn_order1_contacts_cnt = #{snOrder1ContactsCnt,jdbcType=INTEGER},                
+            </if>
+            <if test="snOrder1BlacklistContactsCnt != null and snOrder1BlacklistContactsCnt != '' ">        
+                sn_order1_blacklist_contacts_cnt = #{snOrder1BlacklistContactsCnt,jdbcType=INTEGER},                
+            </if>
+            <if test="snOrder2BlacklistContactsCnt != null and snOrder2BlacklistContactsCnt != '' ">        
+                sn_order2_blacklist_contacts_cnt = #{snOrder2BlacklistContactsCnt,jdbcType=INTEGER},                
+            </if>
+            <if test="snOrder2BlacklistRoutersCnt != null and snOrder2BlacklistRoutersCnt != '' ">        
+                sn_order2_blacklist_routers_cnt = #{snOrder2BlacklistRoutersCnt,jdbcType=INTEGER},                
+            </if>
+            <if test="snOrder2BlacklistRoutersPct != null and snOrder2BlacklistRoutersPct != '' ">        
+                sn_order2_blacklist_routers_pct = #{snOrder2BlacklistRoutersPct,jdbcType=DECIMAL}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_risk_social_network
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_risk_social_network
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_dhb_risk_social_network
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

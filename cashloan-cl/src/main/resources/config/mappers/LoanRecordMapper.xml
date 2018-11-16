@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.LoanRecordMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.LoanRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="indent_no" jdbcType="VARCHAR" property="indentNo" />
+    <result column="first_name" jdbcType="VARCHAR" property="firstName" />
+    <result column="last_name" jdbcType="VARCHAR" property="lastName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="apply_terminal" jdbcType="TINYINT" property="applyTerminal" />
+    <result column="loan_reason" jdbcType="TINYINT" property="loanReason" />
+    <result column="balance" jdbcType="BIGINT" property="balance" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="cycle" jdbcType="INTEGER" property="cycle" />
+    <result column="fee_type" jdbcType="INTEGER" property="feeType" />
+    <result column="fee_percent" jdbcType="INTEGER" property="feePercent" />
+    <result column="overdue_percent" jdbcType="INTEGER" property="overduePercent" />
+    <result column="fee" jdbcType="INTEGER" property="fee" />
+    <result column="fee_getway" jdbcType="TINYINT" property="feeGetway" />
+    <result column="overdue_fee" jdbcType="BIGINT" property="overdueFee" />
+    <result column="arrive_time" jdbcType="TIMESTAMP" property="arriveTime" />
+    <result column="actual_balance" jdbcType="BIGINT" property="actualBalance" />
+    <result column="shouldback_time" jdbcType="TIMESTAMP" property="shouldbackTime" />
+    <result column="lastback_time" jdbcType="TIMESTAMP" property="lastbackTime" />
+    <result column="actualback_amt" jdbcType="BIGINT" property="actualbackAmt" />
+    <result column="bank_card_no" jdbcType="VARCHAR" property="bankCardNo" />
+    <result column="bankacc_name" jdbcType="VARCHAR" property="bankaccName" />
+    <result column="bank_no" jdbcType="VARCHAR" property="bankNo" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="audit_risk_time" jdbcType="TIMESTAMP" property="auditRiskTime" />
+    <result column="audit_risk_reson" jdbcType="VARCHAR" property="auditRiskReson" />
+    <result column="audit_user_id" jdbcType="BIGINT" property="auditUserId" />
+    <result column="audit_user_time" jdbcType="TIMESTAMP" property="auditUserTime" />
+    <result column="audit_user_reson" jdbcType="VARCHAR" property="auditUserReson" />
+    <result column="pay_user_id" jdbcType="BIGINT" property="payUserId" />
+    <result column="trade_mode" jdbcType="TINYINT" property="tradeMode" />
+    <result column="apply_city" jdbcType="VARCHAR" property="applyCity" />
+    <result column="coupons_id" jdbcType="INTEGER" property="couponsId" />
+    <result column="image_code" jdbcType="VARCHAR" property="imageCode" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, indent_no, first_name, last_name, mobile, apply_terminal, loan_reason, balance, 
+    product_id, cycle, fee_type, fee_percent, overdue_percent, fee, fee_getway, overdue_fee, 
+    arrive_time, actual_balance, shouldback_time, lastback_time, actualback_amt, bank_card_no, 
+    bankacc_name, bank_no, bank_name, audit_risk_time, audit_risk_reson, audit_user_id, 
+    audit_user_time, audit_user_reson, pay_user_id, trade_mode, apply_city, coupons_id, 
+    image_code, status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="code != null and code != '' ">
+        and code = #{code,jdbcType=INTEGER}
+      </if>
+      <if test="name != null and name != '' ">
+        and name = #{name,jdbcType=INTEGER}
+      </if>
+      <if test="fee != null and fee != '' ">
+        and fee = #{fee,jdbcType=INTEGER}
+      </if>
+      <if test="cycle != null and cycle != '' ">
+        and cycle = #{cycle,jdbcType=INTEGER}
+      </if>
+      <if test="feeType != null and feeType != '' ">
+        and feeType = #{fee_type,jdbcType=INTEGER}
+      </if>
+      <if test="feePercent != null and feePercent != '' ">
+        and feePercent = #{fee_percent,jdbcType=INTEGER}
+      </if>
+      <if test="overduePercent != null and overduePercent != '' ">
+        and overduePercent = #{overdue_percent,jdbcType=INTEGER}
+      </if>
+      <if test="overduePercentTwo != null and overduePercentTwo != '' ">
+        and overduePercentTwo = #{overdue_percent_two,jdbcType=INTEGER}
+      </if>
+      <if test="overduePercentMax != null and overduePercentMax != '' ">
+        and overduePercentMax = #{overdue_percent_max,jdbcType=INTEGER}
+      </if>
+      <if test="fastAudit != null and fastAudit != '' ">
+        and fastAudit = #{fast_audit,jdbcType=INTEGER}
+      </if>
+      <if test="accountManage != null and accountManage != '' ">
+        and accountManage = #{account_manage,jdbcType=INTEGER}
+      </if>
+      <if test="profit != null and profit != '' ">
+        and profit = #{profit,jdbcType=INTEGER}
+      </if>
+      <if test="zhengxin != null and zhengxin != '' ">
+        and zhengxin = #{zhengxin,jdbcType=INTEGER}
+      </if>
+      <if test="cuoheFee != null and cuoheFee != '' ">
+        and cuoheFee = #{cuohe_fee,jdbcType=INTEGER}
+      </if>
+      <if test="infoAudit != null and infoAudit != '' ">
+        and infoAudit = #{info_audit,jdbcType=INTEGER}
+      </if>
+      <if test="loanlossFee != null and loanlossFee != '' ">
+        and loanlossFee = #{loanloss_fee,jdbcType=INTEGER}
+      </if>
+      <if test="useFee != null and v != '' ">
+        and useFee = #{use_fee,jdbcType=INTEGER}
+      </if>
+      <if test="totalFee != null and totalFee != '' ">
+        and totalFee = #{total_fee,jdbcType=INTEGER}
+      </if>
+      <if test="couponsId != null and couponsId != '' ">
+        and couponsId = #{coupons_id,jdbcType=INTEGER}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_loan_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanRecord">
+    insert into k_loan_record (id, uid, indent_no, 
+      first_name, last_name, mobile, 
+      apply_terminal, loan_reason, balance, 
+      product_id, cycle, fee_type, 
+      fee_percent, overdue_percent, fee, 
+      fee_getway, overdue_fee, arrive_time, 
+      actual_balance, shouldback_time, lastback_time, 
+      actualback_amt, bank_card_no, bankacc_name, 
+      bank_no, bank_name, audit_risk_time, 
+      audit_risk_reson, audit_user_id, audit_user_time, 
+      audit_user_reson, pay_user_id, trade_mode, 
+      apply_city, coupons_id, image_code, 
+      status, created_time, updated_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{indentNo,jdbcType=VARCHAR}, 
+      #{firstName,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{applyTerminal,jdbcType=TINYINT}, #{loanReason,jdbcType=TINYINT}, #{balance,jdbcType=BIGINT}, 
+      #{productId,jdbcType=BIGINT}, #{cycle,jdbcType=INTEGER}, #{feeType,jdbcType=INTEGER}, 
+      #{feePercent,jdbcType=INTEGER}, #{overduePercent,jdbcType=INTEGER}, #{fee,jdbcType=INTEGER}, 
+      #{feeGetway,jdbcType=TINYINT}, #{overdueFee,jdbcType=BIGINT}, #{arriveTime,jdbcType=TIMESTAMP}, 
+      #{actualBalance,jdbcType=BIGINT}, #{shouldbackTime,jdbcType=TIMESTAMP}, #{lastbackTime,jdbcType=TIMESTAMP}, 
+      #{actualbackAmt,jdbcType=BIGINT}, #{bankCardNo,jdbcType=VARCHAR}, #{bankaccName,jdbcType=VARCHAR}, 
+      #{bankNo,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{auditRiskTime,jdbcType=TIMESTAMP}, 
+      #{auditRiskReson,jdbcType=VARCHAR}, #{auditUserId,jdbcType=BIGINT}, #{auditUserTime,jdbcType=TIMESTAMP}, 
+      #{auditUserReson,jdbcType=VARCHAR}, #{payUserId,jdbcType=BIGINT}, #{tradeMode,jdbcType=TINYINT}, 
+      #{applyCity,jdbcType=VARCHAR}, #{couponsId,jdbcType=INTEGER}, #{imageCode,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanRecord">
+    insert into k_loan_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="indentNo != null">
+        indent_no,
+      </if>
+      <if test="firstName != null">
+        first_name,
+      </if>
+      <if test="lastName != null">
+        last_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="applyTerminal != null">
+        apply_terminal,
+      </if>
+      <if test="loanReason != null">
+        loan_reason,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="cycle != null">
+        cycle,
+      </if>
+      <if test="feeType != null">
+        fee_type,
+      </if>
+      <if test="feePercent != null">
+        fee_percent,
+      </if>
+      <if test="overduePercent != null">
+        overdue_percent,
+      </if>
+      <if test="fee != null">
+        fee,
+      </if>
+      <if test="feeGetway != null">
+        fee_getway,
+      </if>
+      <if test="overdueFee != null">
+        overdue_fee,
+      </if>
+      <if test="arriveTime != null">
+        arrive_time,
+      </if>
+      <if test="actualBalance != null">
+        actual_balance,
+      </if>
+      <if test="shouldbackTime != null">
+        shouldback_time,
+      </if>
+      <if test="lastbackTime != null">
+        lastback_time,
+      </if>
+      <if test="actualbackAmt != null">
+        actualback_amt,
+      </if>
+      <if test="bankCardNo != null">
+        bank_card_no,
+      </if>
+      <if test="bankaccName != null">
+        bankacc_name,
+      </if>
+      <if test="bankNo != null">
+        bank_no,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="auditRiskTime != null">
+        audit_risk_time,
+      </if>
+      <if test="auditRiskReson != null">
+        audit_risk_reson,
+      </if>
+      <if test="auditUserId != null">
+        audit_user_id,
+      </if>
+      <if test="auditUserTime != null">
+        audit_user_time,
+      </if>
+      <if test="auditUserReson != null">
+        audit_user_reson,
+      </if>
+      <if test="payUserId != null">
+        pay_user_id,
+      </if>
+      <if test="tradeMode != null">
+        trade_mode,
+      </if>
+      <if test="applyCity != null">
+        apply_city,
+      </if>
+      <if test="couponsId != null">
+        coupons_id,
+      </if>
+      <if test="imageCode != null">
+        image_code,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="indentNo != null">
+        #{indentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTerminal != null">
+        #{applyTerminal,jdbcType=TINYINT},
+      </if>
+      <if test="loanReason != null">
+        #{loanReason,jdbcType=TINYINT},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="cycle != null">
+        #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null">
+        #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="feePercent != null">
+        #{feePercent,jdbcType=INTEGER},
+      </if>
+      <if test="overduePercent != null">
+        #{overduePercent,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null">
+        #{fee,jdbcType=INTEGER},
+      </if>
+      <if test="feeGetway != null">
+        #{feeGetway,jdbcType=TINYINT},
+      </if>
+      <if test="overdueFee != null">
+        #{overdueFee,jdbcType=BIGINT},
+      </if>
+      <if test="arriveTime != null">
+        #{arriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualBalance != null">
+        #{actualBalance,jdbcType=BIGINT},
+      </if>
+      <if test="shouldbackTime != null">
+        #{shouldbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastbackTime != null">
+        #{lastbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualbackAmt != null">
+        #{actualbackAmt,jdbcType=BIGINT},
+      </if>
+      <if test="bankCardNo != null">
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccName != null">
+        #{bankaccName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRiskTime != null">
+        #{auditRiskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRiskReson != null">
+        #{auditRiskReson,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserId != null">
+        #{auditUserId,jdbcType=BIGINT},
+      </if>
+      <if test="auditUserTime != null">
+        #{auditUserTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditUserReson != null">
+        #{auditUserReson,jdbcType=VARCHAR},
+      </if>
+      <if test="payUserId != null">
+        #{payUserId,jdbcType=BIGINT},
+      </if>
+      <if test="tradeMode != null">
+        #{tradeMode,jdbcType=TINYINT},
+      </if>
+      <if test="applyCity != null">
+        #{applyCity,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsId != null">
+        #{couponsId,jdbcType=INTEGER},
+      </if>
+      <if test="imageCode != null">
+        #{imageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanRecord">
+    update k_loan_record
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="indentNo != null">
+        indent_no = #{indentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        first_name = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        last_name = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTerminal != null">
+        apply_terminal = #{applyTerminal,jdbcType=TINYINT},
+      </if>
+      <if test="loanReason != null">
+        loan_reason = #{loanReason,jdbcType=TINYINT},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="cycle != null">
+        cycle = #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="feeType != null">
+        fee_type = #{feeType,jdbcType=INTEGER},
+      </if>
+      <if test="feePercent != null">
+        fee_percent = #{feePercent,jdbcType=INTEGER},
+      </if>
+      <if test="overduePercent != null">
+        overdue_percent = #{overduePercent,jdbcType=INTEGER},
+      </if>
+      <if test="fee != null">
+        fee = #{fee,jdbcType=INTEGER},
+      </if>
+      <if test="feeGetway != null">
+        fee_getway = #{feeGetway,jdbcType=TINYINT},
+      </if>
+      <if test="overdueFee != null">
+        overdue_fee = #{overdueFee,jdbcType=BIGINT},
+      </if>
+      <if test="arriveTime != null">
+        arrive_time = #{arriveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualBalance != null">
+        actual_balance = #{actualBalance,jdbcType=BIGINT},
+      </if>
+      <if test="shouldbackTime != null">
+        shouldback_time = #{shouldbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastbackTime != null">
+        lastback_time = #{lastbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actualbackAmt != null">
+        actualback_amt = #{actualbackAmt,jdbcType=BIGINT},
+      </if>
+      <if test="bankCardNo != null">
+        bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccName != null">
+        bankacc_name = #{bankaccName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        bank_no = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRiskTime != null">
+        audit_risk_time = #{auditRiskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditRiskReson != null">
+        audit_risk_reson = #{auditRiskReson,jdbcType=VARCHAR},
+      </if>
+      <if test="auditUserId != null">
+        audit_user_id = #{auditUserId,jdbcType=BIGINT},
+      </if>
+      <if test="auditUserTime != null">
+        audit_user_time = #{auditUserTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditUserReson != null">
+        audit_user_reson = #{auditUserReson,jdbcType=VARCHAR},
+      </if>
+      <if test="payUserId != null">
+        pay_user_id = #{payUserId,jdbcType=BIGINT},
+      </if>
+      <if test="tradeMode != null">
+        trade_mode = #{tradeMode,jdbcType=TINYINT},
+      </if>
+      <if test="applyCity != null">
+        apply_city = #{applyCity,jdbcType=VARCHAR},
+      </if>
+      <if test="couponsId != null">
+        coupons_id = #{couponsId,jdbcType=INTEGER},
+      </if>
+      <if test="imageCode != null">
+        image_code = #{imageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanRecord">
+    update k_loan_record
+    set uid = #{uid,jdbcType=BIGINT},
+      indent_no = #{indentNo,jdbcType=VARCHAR},
+      first_name = #{firstName,jdbcType=VARCHAR},
+      last_name = #{lastName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      apply_terminal = #{applyTerminal,jdbcType=TINYINT},
+      loan_reason = #{loanReason,jdbcType=TINYINT},
+      balance = #{balance,jdbcType=BIGINT},
+      product_id = #{productId,jdbcType=BIGINT},
+      cycle = #{cycle,jdbcType=INTEGER},
+      fee_type = #{feeType,jdbcType=INTEGER},
+      fee_percent = #{feePercent,jdbcType=INTEGER},
+      overdue_percent = #{overduePercent,jdbcType=INTEGER},
+      fee = #{fee,jdbcType=INTEGER},
+      fee_getway = #{feeGetway,jdbcType=TINYINT},
+      overdue_fee = #{overdueFee,jdbcType=BIGINT},
+      arrive_time = #{arriveTime,jdbcType=TIMESTAMP},
+      actual_balance = #{actualBalance,jdbcType=BIGINT},
+      shouldback_time = #{shouldbackTime,jdbcType=TIMESTAMP},
+      lastback_time = #{lastbackTime,jdbcType=TIMESTAMP},
+      actualback_amt = #{actualbackAmt,jdbcType=BIGINT},
+      bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      bankacc_name = #{bankaccName,jdbcType=VARCHAR},
+      bank_no = #{bankNo,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      audit_risk_time = #{auditRiskTime,jdbcType=TIMESTAMP},
+      audit_risk_reson = #{auditRiskReson,jdbcType=VARCHAR},
+      audit_user_id = #{auditUserId,jdbcType=BIGINT},
+      audit_user_time = #{auditUserTime,jdbcType=TIMESTAMP},
+      audit_user_reson = #{auditUserReson,jdbcType=VARCHAR},
+      pay_user_id = #{payUserId,jdbcType=BIGINT},
+      trade_mode = #{tradeMode,jdbcType=TINYINT},
+      apply_city = #{applyCity,jdbcType=VARCHAR},
+      coupons_id = #{couponsId,jdbcType=INTEGER},
+      image_code = #{imageCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="findByStatus" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_record
+    where indent_no = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_record
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_loan_record
+    <include refid="searchBy"/>
+  </select>
+
+  <update id="updateLate" parameterType="com.xindaibao.cashloan.cl.model.kenya.LoanRecord">
+    update k_loan_record set
+    overdue_fee = #{overdueFee},
+    updated_time = #{updatedTime},
+    status = #{status}
+    where id = #{id ,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateParam"  parameterType="java.util.HashMap">
+    update k_loan_record
+    <set>
+      status = #{state,jdbcType=VARCHAR} ,
+      <if test="amount !=null">
+        actualback_amt = #{amount,jdbcType=DECIMAL} ,
+      </if>
+      <if test="repayAccount !=null">
+        bank_card_no = #{repayAccount,jdbcType=DECIMAL} ,
+      </if>
+      <if test="repayTime != null ">
+        lastback_time = #{repayTime,jdbcType=TIMESTAMP}
+      </if>
+    </set>
+    where status in(5,21) and id = #{id ,jdbcType=BIGINT}
+  </update>
+
+  <select id="loanApplicationCount" resultType="Integer">
+      select count(id)
+      from k_loan_record
+      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d')
+  </select>
+
+  <select id="throughCount" resultType="Integer">
+      select count(id)
+      from k_loan_record
+      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and status in(3,4,5)
+  </select>
+
+  <select id="loanPassThroughRate" resultType="Double">
+      select distinct((select count(id)
+      from k_loan_record
+      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and status in(3,4,5))/(select count(id)
+      from k_loan_record
+      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d'))) as rate
+      from k_loan_record
+  </select>
+
+
+  <select id="loanAmount" resultType="Integer">
+      select count(id)
+      from k_loan_record
+      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and status=5
+  </select>
+
+  <select id="reimbursementAmount" resultType="Integer">
+      select count(id)
+      from k_loan_record
+      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and status in(6,22)
+  </select>
+
+  <select id="totalHistoricalLoan" resultType="Integer">
+      select count(id)
+      from k_loan_record
+      where status in(5,6,21,22,51)
+  </select>
+
+  <select id="totalReimbursementCount" resultType="Integer">
+      select count(id)
+      from k_loan_record
+      where status in(6,22)
+  </select>
+
+  <select id="totalAmountRepaid" resultType="Integer">
+      select distinct((select sum(balance)
+      from k_loan_record
+      where status in(5,21,51))+
+      (select sum(p.profit)
+      from k_loan_record r left join k_loan_product p on r.product_id=p.id
+      where r.status in(5,21,51))+
+      (select sum(p.account_manage)
+      from k_loan_record r left join k_loan_product p on r.product_id=p.id
+      where r.status in(5,21,51))+
+      (select sum(overdue_fee)
+      from k_loan_record
+      where status in(5,21,51))) as amount
+      from k_loan_record
+  </select>
+
+  <select id="overdueAmountPrincipal" resultType="Integer">
+      select sum(actual_balance)
+      from k_loan_record
+      where status in(21,51)
+  </select>
+</mapper>

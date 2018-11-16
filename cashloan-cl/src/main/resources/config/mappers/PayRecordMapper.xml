@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.PayRecordMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.PayRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="indent_no" jdbcType="VARCHAR" property="indentNo" />
+    <result column="explain" jdbcType="VARCHAR" property="explain" />
+    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="pay_count" jdbcType="TINYINT" property="payCount" />
+    <result column="bank_card_no" jdbcType="VARCHAR" property="bankCardNo" />
+    <result column="bank_no" jdbcType="VARCHAR" property="bankNo" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="bankacc_name" jdbcType="VARCHAR" property="bankaccName" />
+    <result column="way_code" jdbcType="VARCHAR" property="wayCode" />
+    <result column="way_name" jdbcType="VARCHAR" property="wayName" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type, indent_no, explain, amount, pay_time, pay_count, bank_card_no, bank_no, 
+    bank_name, bankacc_name, way_code, way_name, remark, status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="type != null and type != '' ">
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="indentNo != null and indentNo != '' ">
+        and indentNo = #{indent_no,jdbcType=VARCHAR}
+      </if>
+      <if test="explain != null and explain != '' ">
+        and explain = #{explain,jdbcType=VARCHAR}
+      </if>
+      <if test="amount != null and amount != '' ">
+        and amount = #{rtn_msg,amount=BIGINT}
+      </if>
+      <if test="payTime != null and payTime != '' ">
+        and payTime = #{pay_time,jdbcType=VARCHAR}
+      </if>
+      <if test="payCount != null and payCount != '' ">
+        and payCount = #{pay_count,jdbcType=VARCHAR}
+      </if>
+      <if test="bankCardNo != null and bankCardNo != '' ">
+        and bankCardNo = #{bank_card_no,jdbcType=VARCHAR}
+      </if>
+      <if test="bankNo != null and bankNo != '' ">
+        and bankNo = #{bank_no,jdbcType=INTEGER}
+      </if>
+      <if test="bankName != null and bankName != '' ">
+        and bankName = #{bank_name,jdbcType=VARCHAR}
+      </if>
+      <if test="bankaccName != null and bankaccName != '' ">
+        and bankaccName = #{bankacc_name,amount=VARCHAR}
+      </if>
+      <if test="wayCode != null and wayCode != '' ">
+        and wayCode = #{way_code,jdbcType=VARCHAR}
+      </if>
+      <if test="wayName != null and wayName != '' ">
+        and wayName = #{way_name,jdbcType=VARCHAR}
+      </if>
+      <if test="remark != null and remark != '' ">
+        and remark = #{remark,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_pay_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.PayRecord">
+    insert into k_pay_record (id, type, indent_no, 
+      explain, amount, pay_time, 
+      pay_count, bank_card_no, bank_no, 
+      bank_name, bankacc_name, way_code, 
+      way_name, remark, status, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=TINYINT}, #{indentNo,jdbcType=VARCHAR}, 
+      #{explain,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{payCount,jdbcType=TINYINT}, #{bankCardNo,jdbcType=VARCHAR}, #{bankNo,jdbcType=VARCHAR}, 
+      #{bankName,jdbcType=VARCHAR}, #{bankaccName,jdbcType=VARCHAR}, #{wayCode,jdbcType=VARCHAR}, 
+      #{wayName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.PayRecord">
+    insert into k_pay_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="indentNo != null">
+        indent_no,
+      </if>
+      <if test="explain != null">
+        explain,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="payCount != null">
+        pay_count,
+      </if>
+      <if test="bankCardNo != null">
+        bank_card_no,
+      </if>
+      <if test="bankNo != null">
+        bank_no,
+      </if>
+      <if test="bankName != null">
+        bank_name,
+      </if>
+      <if test="bankaccName != null">
+        bankacc_name,
+      </if>
+      <if test="wayCode != null">
+        way_code,
+      </if>
+      <if test="wayName != null">
+        way_name,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="indentNo != null">
+        #{indentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="explain != null">
+        #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payCount != null">
+        #{payCount,jdbcType=TINYINT},
+      </if>
+      <if test="bankCardNo != null">
+        #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccName != null">
+        #{bankaccName,jdbcType=VARCHAR},
+      </if>
+      <if test="wayCode != null">
+        #{wayCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wayName != null">
+        #{wayName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.PayRecord">
+    update k_pay_record
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="indentNo != null">
+        indent_no = #{indentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="explain != null">
+        explain = #{explain,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payCount != null">
+        pay_count = #{payCount,jdbcType=TINYINT},
+      </if>
+      <if test="bankCardNo != null">
+        bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankNo != null">
+        bank_no = #{bankNo,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccName != null">
+        bankacc_name = #{bankaccName,jdbcType=VARCHAR},
+      </if>
+      <if test="wayCode != null">
+        way_code = #{wayCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wayName != null">
+        way_name = #{wayName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.PayRecord">
+    update k_pay_record
+    set type = #{type,jdbcType=TINYINT},
+      indent_no = #{indentNo,jdbcType=VARCHAR},
+      explain = #{explain,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      pay_count = #{payCount,jdbcType=TINYINT},
+      bank_card_no = #{bankCardNo,jdbcType=VARCHAR},
+      bank_no = #{bankNo,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bankacc_name = #{bankaccName,jdbcType=VARCHAR},
+      way_code = #{wayCode,jdbcType=VARCHAR},
+      way_name = #{wayName,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_pay_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_pay_record
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_pay_record
+    <include refid="searchBy"/>
+  </select>
+</mapper>

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_user_auth表:用户认证模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.UserAuthMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.UserAuth">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="id_state" property="idState" jdbcType="VARCHAR" />
+        <result column="zhima_state" property="zhimaState" jdbcType="VARCHAR" />
+        <result column="phone_state" property="phoneState" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="contact_state" property="contactState" jdbcType="VARCHAR" />
+        <result column="bank_card_state" property="bankCardState" jdbcType="VARCHAR" />
+        <result column="work_info_state" property="workInfoState" jdbcType="VARCHAR" />        
+		<result column="other_info_state" property="otherInfoState" jdbcType="VARCHAR" />  
+		<result column="acc_fund_state" property="accFundState" jdbcType="VARCHAR" />  
+    </resultMap>
+       
+    <resultMap id="ModelResultMap" type="com.xindaibao.cashloan.cl.model.UserAuthModel">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+        <result column="real_name" property="realName" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="id_state" property="idState" jdbcType="VARCHAR" />
+        <result column="zhima_state" property="zhimaState" jdbcType="VARCHAR" />
+        <result column="phone_state" property="phoneState" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="contact_state" property="contactState" jdbcType="VARCHAR" />
+        <result column="bank_card_state" property="bankCardState" jdbcType="VARCHAR" />
+		<result column="work_info_state" property="workInfoState" jdbcType="VARCHAR" />        
+		<result column="other_info_state" property="otherInfoState" jdbcType="VARCHAR" /> 
+		<result column="acc_fund_state" property="accFundState" jdbcType="VARCHAR" />  
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,id_state,zhima_state,phone_state,user_id,contact_state,bank_card_state,work_info_state,other_info_state,acc_fund_state 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+             <if test="id != null and id != ''">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="idState != null and idState != ''">
+                and id_state = #{idState,jdbcType=VARCHAR}
+            </if>
+            <if test="zhimaState != null and zhimaState != ''">
+                and zhima_state = #{zhimaState,jdbcType=VARCHAR}
+            </if>
+            <if test="phoneState != null and phoneState != ''">
+                and phone_state = #{phoneState,jdbcType=VARCHAR}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="contactState != null and contactState != ''">
+                and contact_state = #{contactState,jdbcType=VARCHAR}
+            </if>
+            <if test="bankCardState != null and bankCardState != ''">
+                and bank_card_state = #{bankCardState,jdbcType=VARCHAR}
+            </if>
+            <if test="workInfoState != null and workInfoState != ''">
+				and work_info_state = #{workInfoState,jdbcType=VARCHAR}
+			</if>
+			<if test="otherInfoState != null and otherInfoState != ''">
+				and other_info_state = #{otherInfoState,jdbcType=VARCHAR}
+			</if>
+			<if test="accFundState != null and accFundState != ''">
+				and acc_fund_state = #{accFundState,jdbcType=VARCHAR}
+			</if>
+        </trim>
+    </sql>
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.UserAuth">
+        insert into cl_user_auth(
+        	id_state,
+        	zhima_state,
+        	phone_state,
+        	user_id,
+        	contact_state,
+        	bank_card_state,
+        	work_info_state,
+        	other_info_state,
+        	acc_fund_state
+        )values(
+        	#{idState,jdbcType=VARCHAR},
+        	#{zhimaState,jdbcType=VARCHAR},
+        	#{phoneState,jdbcType=VARCHAR},
+        	#{userId,jdbcType=BIGINT},
+        	#{contactState,jdbcType=VARCHAR},
+        	#{bankCardState,jdbcType=VARCHAR},
+			#{workInfoState,jdbcType=VARCHAR}, 
+			#{otherInfoState,jdbcType=VARCHAR},
+			#{accFundState,jdbcType=VARCHAR}
+		)
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.UserAuth">
+        update cl_user_auth set 
+            id_state = #{idState,jdbcType=VARCHAR},
+            zhima_state = #{zhimaState,jdbcType=VARCHAR},
+            phone_state = #{phoneState,jdbcType=VARCHAR},
+            user_id = #{userId,jdbcType=BIGINT},
+            contact_state = #{contactState,jdbcType=VARCHAR},
+		    bank_card_state = #{bankCardState,jdbcType=VARCHAR},
+			work_info_state = #{workInfoState,jdbcType=VARCHAR},
+			other_info_state = #{otherInfoState,jdbcType=VARCHAR},
+			acc_fund_state = #{accFundState,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+ <update id="updateByUserId" parameterType="java.util.HashMap">
+        update cl_user_auth 
+          <set>
+            <if test="idState != null and idState != '' ">        
+                id_state = #{idState,jdbcType=VARCHAR},                
+            </if>
+            <if test="zhimaState != null and zhimaState != '' ">        
+                zhima_state = #{zhimaState,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneState != null and phoneState != '' ">        
+                phone_state = #{phoneState,jdbcType=VARCHAR},                
+            </if>
+            <if test="contactState != null and contactState != ''">
+                contact_state = #{contactState,jdbcType=VARCHAR},
+            </if>
+            <if test="bankCardState != null and bankCardState != ''">
+				bank_card_state = #{bankCardState,jdbcType=VARCHAR},
+			</if>
+			<if test="workInfoState != null and workInfoState != ''">
+             	work_info_state = #{workInfoState,jdbcType=VARCHAR},
+            </if>
+            <if test="otherInfoState != null and otherInfoState != ''">
+            	other_info_state = #{otherInfoState,jdbcType=VARCHAR},
+           	</if>
+           	<if test="accFundState != null and accFundState != ''">
+				acc_fund_state = #{accFundState,jdbcType=VARCHAR}
+			</if>
+        </set>    
+        where user_id = #{userId ,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_user_auth
+          <set>
+            <if test="idState != null and idState != '' ">        
+                id_state = #{idState,jdbcType=VARCHAR},                
+            </if>
+            <if test="zhimaState != null and zhimaState != '' ">        
+                zhima_state = #{zhimaState,jdbcType=VARCHAR},                
+            </if>
+            <if test="phoneState != null and phoneState != '' ">        
+                phone_state = #{phoneState,jdbcType=VARCHAR},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="contactState != null and contactState != '' ">        
+                contact_state = #{contactState,jdbcType=VARCHAR},                
+            </if>
+            <if test="bankCardState != null and bankCardState != ''">
+				bank_card_state = #{bankCardState,jdbcType=VARCHAR},
+			</if>
+			<if test="workInfoState != null and workInfoState != ''">
+				work_info_state = #{workInfoState,jdbcType=VARCHAR},
+			</if>
+			<if test="otherInfoState != null and otherInfoState != ''">
+				other_info_state = #{otherInfoState,jdbcType=VARCHAR}
+            </if>
+            <if test="accFundState != null and accFundState != ''">
+				acc_fund_state = #{accFundState,jdbcType=VARCHAR}
+			</if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_auth
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_auth
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_user_auth
+        <include refid="searchBy"/>
+    </select>
+    
+           
+     <!-- 用户关键信息查询条件公共引用 -->
+    <sql id="searchUserBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="userId !='' and userId !=null">
+                and au.user_id = #{userId,jdbcType=BIGINT}
+            </if>
+             <if test="loginName !='' and loginName !=null">
+                and u.login_name like concat("%",#{loginName,jdbcType=VARCHAR},"%")  
+            </if>
+              <if test="realName != null and realName != '' ">        
+                and  b.real_name  like concat("%",#{realName,jdbcType=VARCHAR},"%")             
+            </if>
+            <if test="phone != null and phone != '' ">        
+                and  b.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%")                  
+            </if>
+            <if test="idState !='' and idState !=null">
+				and au.id_state = #{idState,jdbcType=VARCHAR} 
+			</if>
+			<if test="zhimaState !='' and zhimaState !=null">
+				and au.zhima_state = #{zhimaState,jdbcType=VARCHAR} 
+			</if>
+			<if test="phoneState !='' and phoneState !=null">
+				and au.phone_state = #{phoneState,jdbcType=VARCHAR} 
+			</if>
+			<if test="contactState !='' and contactState !=null">
+				and au.contact_state = #{contactState,jdbcType=VARCHAR} 
+			</if>
+			<if test="bankCardState !='' and bankCardState !=null">
+				and au.bank_card_state = #{bankCardState,jdbcType=VARCHAR} 
+			</if>
+			<if test="accFundState != null and accFundState != ''">
+				and au.acc_fund_state = #{accFundState,jdbcType=VARCHAR}
+			</if>
+        </trim>
+    </sql>
+    
+     <select id="listUserAuthModel" resultMap="ModelResultMap" parameterType="java.util.HashMap">
+        select  au.user_id,u.login_name,b.real_name,b.phone,au.id_state,au.zhima_state,au.phone_state,au.contact_state,au.bank_card_state,au.work_info_state,au.other_info_state,au.acc_fund_state 
+        from  cl_user u join cl_user_auth  au  on u.id=au.user_id  join  cl_user_base_info  b  on u.id=b.user_id
+        <include refid="searchUserBy"/>
+    </select>
+    
+     
+    <!-- 芝麻信用必填项 -->
+    <select id="getZmRequiredAuthState" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+    	SELECT
+			(
+				IF (id_state = 30, 1, 0) +
+				IF (phone_state = 30, 1, 0) +
+				IF (contact_state = 30, 1, 0) +
+				IF (bank_card_state = 30, 1, 0) +
+				IF (work_info_state = 30, 1, 0) +
+				IF (other_info_state = 30, 1, 0)+
+				IF (acc_fund_state = 30, 1, 0)+
+				IF (zhima_state = 30, 1, 0)
+			) AS result,
+			#{total,jdbcType=INTEGER} AS total,
+		IF ((
+				IF (id_state = 30, 1, 0) +
+				IF (phone_state = 30, 1, 0) +
+				IF (contact_state = 30, 1, 0) +
+				IF (bank_card_state = 30, 1, 0) +
+				IF (zhima_state = 30, 1, 0)
+			) = 5,
+			1,
+			0
+		) AS qualified
+		FROM
+			cl_user_auth
+		WHERE
+			user_id = #{userId}
+    </select>
+    
+    <!-- 芝麻信用选填项 -->
+    <select id="getZmOptionalAuthState" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+    	SELECT
+			(
+				IF (id_state = 30, 1, 0) +
+				IF (phone_state = 30, 1, 0) +
+				IF (contact_state = 30, 1, 0) +
+				IF (bank_card_state = 30, 1, 0) +
+				IF (work_info_state = 30, 1, 0) +
+				IF (other_info_state = 30, 1, 0)+
+				IF (acc_fund_state = 30, 1, 0)+
+				IF (zhima_state = 30, 1, 0)
+			) AS result,
+			#{total,jdbcType=INTEGER} AS total,
+		IF ((
+				IF (id_state = 30, 1, 0) +
+				IF (phone_state = 30, 1, 0) +
+				IF (contact_state = 30, 1, 0) +
+				IF (bank_card_state = 30, 1, 0) 
+			) = 4,
+			1,
+			0
+		) AS qualified
+		FROM
+			cl_user_auth
+		WHERE
+			user_id = #{userId}
+    </select>
+    
+    <!-- 获取认证状态 - 不使用芝麻信用 -->
+	<select id="getZmRemoveAuthState" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+			(
+				IF (id_state = 30, 1, 0) +
+				IF (phone_state = 30, 1, 0) +
+				IF (contact_state = 30, 1, 0) +
+				IF (bank_card_state = 30, 1, 0) +
+				IF (work_info_state = 30, 1, 0) +
+				IF (other_info_state = 30, 1, 0)+
+				IF (acc_fund_state = 30, 1, 0)
+			) AS result,
+			#{total,jdbcType=INTEGER} AS total,
+		IF ((
+				IF (id_state = 30, 1, 0) +
+				IF (phone_state = 30, 1, 0) +
+				IF (contact_state = 30, 1, 0) +
+				IF (bank_card_state = 30, 1, 0)
+			) = 4,
+			1,
+			0
+		) AS qualified
+		FROM
+			cl_user_auth
+		WHERE
+			user_id = #{userId}
+    </select>
+    
+    <select id="executeSql" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    	${sqlstring}
+    </select>
+    
+     <update id="updatePhoneState"  parameterType="java.util.HashMap">
+        update cl_user_auth  set phone_state=#{phoneState}  where  user_id = #{userId}
+          <if test="phoneState != null and phoneState != '' and phoneState=='30' ">        
+                and  phone_state IN (10,20)                
+          </if>
+          <if test="phoneState != null and phoneState != '' and phoneState=='20' ">        
+                and  phone_state IN (10)                
+          </if>
+     </update>
+    
+</mapper>

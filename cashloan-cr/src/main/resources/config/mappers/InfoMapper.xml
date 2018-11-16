@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_info表:评分关联表模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.InfoMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.Info">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="tb_nid" property="tbNid" jdbcType="VARCHAR" />
+        <result column="tb_name" property="tbName" jdbcType="VARCHAR" />
+        <result column="detail" property="detail" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,tb_nid,tb_name,detail,state,add_time 
+    </sql>
+    
+    <resultMap id="resultModel" extends="BaseResultMap" type="com.xindaibao.creditrank.cr.model.InfoModel">
+    	
+    </resultMap>
+    
+    <resultMap id="tableResultMap"  type="java.util.HashMap" >
+         <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+         <result column="table_comment" property="tableComment" jdbcType="VARCHAR" />
+    </resultMap>
+     <resultMap id="columnResultMap"  type="java.util.HashMap" >
+         <result column="table_name" property="tableName" jdbcType="VARCHAR" />
+         <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+         <result column="column_comment" property="columnComment" jdbcType="VARCHAR" />
+         <result column="data_type" property="data_type" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="tbNid !='' and tbNid !=null">
+                and tb_nid = #{tbNid,jdbcType=VARCHAR}
+            </if>
+            <if test="tbName !='' and tbName !=null">
+                and tb_name = #{tbName,jdbcType=VARCHAR}
+            </if>
+            <if test="detail !='' and detail !=null">
+                and detail = #{detail,jdbcType=VARCHAR}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.Info">
+        insert into arc_cr_info(tb_nid,tb_name,detail,state,add_time)values(#{tbNid,jdbcType=VARCHAR},#{tbName,jdbcType=VARCHAR},#{detail,jdbcType=VARCHAR},state = #{state,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.Info">
+        update arc_cr_info set 
+            tb_nid = #{tbNid,jdbcType=VARCHAR},
+            tb_name = #{tbName,jdbcType=VARCHAR},
+            detail = #{detail,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_info
+          <set>
+            <if test="tbNid != null and tbNid != '' ">        
+                tb_nid = #{tbNid,jdbcType=VARCHAR},                
+            </if>
+            <if test="tbName != null and tbName != '' ">        
+                tb_name = #{tbName,jdbcType=VARCHAR},                
+            </if>
+            <if test="detail != null and detail != '' ">        
+                detail = #{detail,jdbcType=VARCHAR},                
+            </if>
+            <if test="state !='' and state !=null">
+                state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime != null">        
+                add_time = #{addTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="findByTbNid" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_info
+        where tb_nid = #{tbNid,jdbcType=VARCHAR}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_info
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_info
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listSelect" resultMap="resultModel" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_info
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findTable" resultMap="tableResultMap" parameterType="java.util.HashMap">
+       select table_name,table_comment from information_schema.tables where table_schema= (select database()) and table_type='base table' order by table_name asc
+    </select>
+    
+     <select id="findColumnByName" resultMap="columnResultMap" parameterType="java.util.HashMap">
+        select table_name,column_name,column_comment,data_type from information_schema.columns where table_schema= (select database())  order by table_name asc;
+    </select>
+</mapper>

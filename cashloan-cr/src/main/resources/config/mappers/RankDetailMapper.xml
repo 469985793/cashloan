@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_rank_detail表:评分卡等级详情表模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.RankDetailMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.RankDetail">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="rank_id" property="rankId" jdbcType="INTEGER" />
+        <result column="rank" property="rank" jdbcType="VARCHAR" />
+        <result column="amount_min" property="amountMin" jdbcType="DECIMAL" />
+        <result column="amount_max" property="amountMax" jdbcType="DECIMAL" />
+        <result column="score_min" property="scoreMin" jdbcType="INTEGER" />
+        <result column="score_max" property="scoreMax" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="rtype" property="rtype" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,rank_id,rank,amount_min,amount_max,score_min,score_max,state,rtype,add_time 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="rankId !='' and rankId !=null">
+                and rank_id = #{rankId,jdbcType=INTEGER}
+            </if>
+            <if test="rank !='' and rank !=null">
+                and rank = #{rank,jdbcType=VARCHAR}
+            </if>
+            <if test="amountMin !='' and amountMin !=null">
+                and amount_min = #{amountMin,jdbcType=DECIMAL}
+            </if>
+            <if test="amountMax !='' and amountMax !=null">
+                and amount_max = #{amountMax,jdbcType=DECIMAL}
+            </if>
+            <if test="scoreMin !='' and scoreMin !=null">
+                and score_min = #{scoreMin,jdbcType=INTEGER}
+            </if>
+            <if test="scoreMax !='' and scoreMax !=null">
+                and score_max = #{scoreMax,jdbcType=INTEGER}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="rtype !='' and rtype !=null">
+                and rtype = #{rtype,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.RankDetail">
+        insert into arc_cr_rank_detail(rank_id,rank,amount_min,amount_max,score_min,score_max,state,rtype,add_time)values(#{rankId,jdbcType=INTEGER},#{rank,jdbcType=VARCHAR},#{amountMin,jdbcType=DECIMAL},#{amountMax,jdbcType=DECIMAL},#{scoreMin,jdbcType=INTEGER},#{scoreMax,jdbcType=INTEGER},#{state,jdbcType=VARCHAR},#{rtype,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.RankDetail">
+        update arc_cr_rank_detail set 
+            rank_id = #{rankId,jdbcType=INTEGER},
+            rank = #{rank,jdbcType=VARCHAR},
+            amount_min = #{amountMin,jdbcType=DECIMAL},
+            amount_max = #{amountMax,jdbcType=DECIMAL},
+            score_min = #{scoreMin,jdbcType=INTEGER},
+            score_max = #{scoreMax,jdbcType=INTEGER},
+            state = #{state,jdbcType=VARCHAR},
+            rtype = #{rtype,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_rank_detail
+          <set>
+            <if test="rankId != null and rankId != '' ">        
+                rank_id = #{rankId,jdbcType=INTEGER},                
+            </if>
+            <if test="rank != null and rank != '' ">        
+                rank = #{rank,jdbcType=VARCHAR},                
+            </if>
+            <if test="amountMin != null and amountMin != '' ">        
+                amount_min = #{amountMin,jdbcType=DECIMAL},                
+            </if>
+            <if test="amountMax != null and amountMax != '' ">        
+                amount_max = #{amountMax,jdbcType=DECIMAL},                
+            </if>
+            <if test="scoreMin != null and scoreMin != '' ">        
+                score_min = #{scoreMin,jdbcType=INTEGER},                
+            </if>
+            <if test="scoreMax != null and scoreMax != '' ">        
+                score_max = #{scoreMax,jdbcType=INTEGER},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="rtype != null and rtype != '' ">        
+                rtype = #{rtype,jdbcType=VARCHAR},                
+            </if>
+            <if test="addTime != null">        
+                add_time = #{addTime,jdbcType=TIMESTAMP}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_rank_detail
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_rank_detail
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_rank_detail
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findByParentIdAndScore" resultType="com.xindaibao.creditrank.cr.domain.RankDetail">
+    	select id,rank_id rankId,rank,amount_min amountMin,amount_max amountMax,score_min scoreMin,score_max scoreMax,state,rtype,add_time addTime 
+     	from arc_cr_rank_detail where rank_id = #{id,jdbcType=BIGINT} 
+     	<![CDATA[
+     	and score_min <= #{score,jdbcType=INTEGER}  and score_max >= #{score,jdbcType=INTEGER}
+     	]]>
+    </select>
+    <!-- 根据主键删除rankdetail -->
+    <delete id="deleteSelective" parameterType="java.lang.Long">
+		delete
+		from arc_cr_rank_detail
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+    
+</mapper>

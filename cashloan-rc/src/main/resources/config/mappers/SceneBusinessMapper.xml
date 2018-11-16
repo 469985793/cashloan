@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_scene_business表:场景与第三方征信接口关联关系模块 -->
+<mapper namespace="com.xindaibao.cashloan.rc.mapper.SceneBusinessMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.rc.domain.SceneBusiness">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="scene" property="scene" jdbcType="VARCHAR" />
+        <result column="business_id" property="businessId" jdbcType="BIGINT" />
+        <result column="get_way" property="getWay" jdbcType="VARCHAR" />
+        <result column="period" property="period" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,scene,business_id,get_way,period,state,add_time,type 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="scene !='' and scene !=null">
+                and scene = #{scene,jdbcType=VARCHAR}
+            </if>
+            <if test="type !='' and type !=null">
+                and type = #{type,jdbcType=VARCHAR}
+            </if>
+            <if test="businessId !=null">
+                and business_id = #{businessId,jdbcType=BIGINT}
+            </if>
+            <if test="getWay !='' and getWay !=null">
+                and get_way = #{getWay,jdbcType=VARCHAR}
+            </if>
+            <if test="period !='' and period !=null">
+                and period = #{period,jdbcType=INTEGER}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rc.domain.SceneBusiness">
+        insert into cl_rc_scene_business(scene,business_id,get_way,period,state,add_time,type)values(#{scene,jdbcType=VARCHAR},#{businessId,jdbcType=BIGINT},#{getWay,jdbcType=VARCHAR},#{period,jdbcType=INTEGER},#{state,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{type,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.rc.domain.SceneBusiness">
+        update cl_rc_scene_business 
+        <set>
+            <if test="scene != null and scene != '' ">        
+                scene = #{scene,jdbcType=VARCHAR},                
+            </if>
+            <if test="businessId != null and businessId != '' ">        
+                business_id = #{businessId,jdbcType=BIGINT},                
+            </if>
+            <if test="type != null and type != '' ">        
+                type = #{type,jdbcType=BIGINT},                
+            </if>
+            <if test="getWay != null and getWay != '' ">        
+                get_way = #{getWay,jdbcType=VARCHAR},                
+            </if>
+            <if test="period != null and period != '' ">        
+                period = #{period,jdbcType=INTEGER},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_scene_business
+          <set>
+            <if test="scene != null and scene != '' ">        
+                scene = #{scene,jdbcType=VARCHAR},                
+            </if>
+            <if test="businessId != null and businessId != '' ">        
+                business_id = #{businessId,jdbcType=BIGINT},                
+            </if>
+            <if test="type != null and type != '' ">        
+                type = #{type,jdbcType=BIGINT},                
+            </if>
+            <if test="getWay != null and getWay != '' ">        
+                get_way = #{getWay,jdbcType=VARCHAR},                
+            </if>
+            <if test="period != null and period != '' ">        
+                period = #{period,jdbcType=INTEGER},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_scene_business
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_scene_business
+        <include refid="searchBy"/> limit 0,1 
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_scene_business
+        <include refid="searchBy"/>
+    </select>
+    
+     <!-- 后台管理 列表查询 -->
+    <select id="list" resultType="com.xindaibao.cashloan.rc.model.ManageSceneBusinessModel" parameterType="java.util.HashMap">
+		select 
+			scene.id,scene.scene,scene.get_way,scene.type,scene.state,scene.add_time,scene.business_id,
+			(case when scene.get_way = 20 then  scene.period else ''  end)  as period,
+			(case when scene.type = 10 then  tpp.`name` when scene.type = 20 then stpp.`name` end)  as tppName,
+			(case when scene.type = 10 then  tpp.id when scene.type = 20 then stpp.id end)  as tppId,
+			(case when scene.type = 10 then  busi.`name` when scene.type = 20 then sbusi.`name` end) as businessName,
+			(case when scene.scene = 10 then '贷前' when scene.scene = 20 then '贷后' end) as sceneName 
+		from cl_rc_scene_business scene 
+		LEFT JOIN cl_rc_tpp_business busi on scene.business_id = busi.id
+		LEFT JOIN cl_rc_statistics_business sbusi on scene.business_id = sbusi.id 
+		LEFT JOIN cl_rc_tpp tpp on tpp.id = busi.tpp_id
+		LEFT JOIN cl_rc_statistics stpp on stpp.id = sbusi.statistics_id
+    </select>
+    
+    <select id="findTppServiceInfo" resultType="com.xindaibao.cashloan.rc.model.TppServiceInfoModel">
+		select sceneId,sceneCode,getWay,period,type,busId,busNid,busName,serParams,tppId,tpp.key tppKey,tpp.mer_no merNo,tpp.sign_type signType,
+		(case when type = 10 then  tpp.extend when type = 20 then stpp.extend end) tppParams
+		from ( 
+			select scene.id sceneId,scene.scene sceneCode,scene.get_way getWay,scene.period period,scene.type type,scene.state sceneState,
+				(case when scene.type = 10 then  busi.id when scene.type = 20 then sbusi.id end) busId,
+				(case when scene.type = 10 then  busi.nid when scene.type = 20 then sbusi.nid end) busNid,
+				(case when scene.type = 10 then  busi.name when scene.type = 20 then sbusi.name end) busName,
+				(case when scene.type = 10 then  busi.extend when scene.type = 20 then sbusi.extend end) serParams,
+				(case when scene.type = 10 then  busi.tpp_id when scene.type = 20 then sbusi.statistics_id end) tppId
+			from cl_rc_scene_business scene 
+			LEFT JOIN cl_rc_tpp_business busi on scene.business_id = busi.id
+			LEFT JOIN cl_rc_statistics_business sbusi on scene.business_id = sbusi.id 
+			where scene.state = 10 and ( busi.state = 10 or sbusi.state = 10 )
+			order by scene.type desc
+		) t 
+		LEFT JOIN cl_rc_tpp tpp on tpp.id = t.tppId
+		LEFT JOIN cl_rc_statistics stpp on stpp.id = t.tppId
+		where tpp.state = 10 or stpp.state = 10
+    </select>
+</mapper>

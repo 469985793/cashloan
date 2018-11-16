@@ -1,0 +1,278 @@
+body,dl,dd,ul,ol,h1,h2,h3,h4,h5,h6,p,form,input,textarea,button,th,td{padding:0;margin:0;}
+img,iframe{border:0;} 
+ol,ul{list-style:none;}
+h1,h2,h3,h4,h5,h6{font-weight:bold;font-size:100%;}
+em,strong{font-weight:bold;font-style:normal;}
+body,textarea,select,input{font:12px/1.14 "MicroSoft Yahei", "宋体",\5b8b\4f53;color:#000;}
+a,button{cursor:pointer;}
+a{color:#fff;text-decoration:none;}
+a:hover,a:active{outline:0;}
+body,html{width:100%;height:100%;/* overflow:hidden; */}  
+
+/* 登录模块 start */
+
+
+.m-hd .nav,
+.m-hd .nav a {
+    color: #99b3c5;
+}
+
+.f-cb {
+    *zoom: 1;
+}
+
+.m-hd {
+    height: 55px;
+    line-height: 55px;
+    padding: 0 20px;
+}
+
+.u-logo {
+    float: left;
+    margin: 9px 0 0 0;
+    background: url("/dev/images/r-cloud.png") no-repeat;
+    padding-left: 95px;
+    height: 37px;
+    width: 255px;
+    background-position: 0 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+  
+    line-height: 27px;
+}
+
+.g-scroll {
+    position: relative;
+    width: 103%;
+    height: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.g-loginbox {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.g-bd {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.m-loginbg { 
+    background: url("/dev/images/bg-login.png") no-repeat top left;
+    background-size: cover; 
+}
+
+.m-bgwrap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    background: url("/dev/images/shadow.png") repeat-x 0 100%;
+}
+
+.m-loginboxbg {
+    position: absolute;
+    right: 20%;
+    top: 30%;
+    z-index: 6;
+    margin-left: 10%;
+    width: 320px;
+    height: 390px;
+    filter: alpha(opacity=40);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+}
+
+.m-loginbox .lbinner {
+    padding: 30px 0 0 30px;
+    font-size: 12px;
+    /* text-shadow: 1px 1px rgba(0, 0, 0, 0.2); */
+}
+
+.m-loginbox .ipt-user,
+.m-loginbox .ipt-pwd {
+    width: 240px;
+}
+
+.m-loginbox {
+    display: block;
+    position: absolute;
+    right: 20%;
+    top: 30%;
+    z-index: 7;
+    margin-left: 10%;
+    width: 320px;
+    height: 390px;
+    color: #fff;
+}
+
+.login-wrap {
+    position: absolute;
+    width: 100%;
+    min-width: 1190px;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.login-bg {
+    background: url("/dev/images/bg-login.jpg") no-repeat top left;
+    background-size: cover;
+}
+
+.m-loginbox .ipt-replace {
+    color: #999;
+    font-weight: 400;
+}
+
+.m-loginbox .login-hd {
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.m-loginbox .ipt {
+    outline: none;
+    height: 35px;
+    line-height: 20px;
+    border: 0;
+    color: #333;
+    font-size: 13px;
+}
+
+.imgCode{
+    width: 100px;
+    margin-left: 30px; 
+    height: 35px;
+    border: 0;
+    vertical-align: bottom;
+}
+
+.m-loginbox .ipt-user,
+.m-loginbox .ipt-pwd {
+    width: 260px;
+}
+
+.m-loginbox .ipt-pwd1 {
+    width: 130px;  
+}
+
+.m-loginbox .u-loginbtn {
+    font-family: MicroSoft Yahei;
+    display: block;
+    width: 260px;
+    height: 40px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    background: #2f83ba;
+    background: -webkit-linear-gradient(top, #3086bf, #2d7eb3);
+    background: -moz-linear-gradient(top, #3086bf, #2d7eb3);
+}
+
+.m-loginbox .input_role{
+/*   height: 40px;
+line-height: 40px; */
+  width: 260px;
+}
+.rem-checkbox.ant-checkbox-wrapper {
+    color: #fff;
+}
+/*override  antd css*/
+.ant-modal-mask{
+   z-index: 1000!important;
+}
+.ant-select-selection--multiple .ant-select-selection__rendered{
+    padding-bottom: 0px!important;
+}
+.ant-tabs-bar{
+    margin-bottom: 0px!important;
+}
+.ant-input-number,.ant-input-number-input{
+  border-radius: 3px!important;  
+}  
+.ant-form-item.ant-form-item-with-help{
+  margin-bottom: 0px!important; 
+}
+.ant-form-item{
+  margin-bottom: 10px!important; 
+}
+.edit-mode input{
+	border: none;
+    background: transparent;
+}
+.edit-mode input:focus{
+	border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: none;
+}
+.edit-mode .ant-select-selection {
+    border: none;
+    background: transparent;
+}
+.edit-mode .ant-select-arrow,.edit-mode .ant-calendar-picker-icon{
+	display: none;
+}
+.edit-mode .ant-select-open .ant-select-selection{
+	border: 1px solid #d9d9d9;
+    background: #fff;
+}
+.edit-mode .ant-select-open .ant-select-arrow{
+	display: block;
+}
+.ant-input[disabled],
+.ant-input-number-disabled.ant-input-number,
+ fieldset[disabled] .ant-input,.ant-select-disabled .ant-select-selection,
+ .ant-input-number-disabled .ant-input-number-input,
+ .ant-select-disabled .ant-select-selection--multiple .ant-select-selection__choice{
+    /*background-color:#fff!important;*/
+    color: #666!important;
+    /*border: 0;*/
+    cursor:default!important;
+}
+.ant-select-disabled .ant-select-arrow:before ,.ant-input[disabled] + .ant-calendar-picker-icon:after{
+    content: ''!important;
+}  
+.m-loginbox  .ant-form-item{
+    margin-bottom: 15px!important;
+}
+.ant-message{
+        top: 45%!important; 
+}
+.order-setting{
+    color: #000
+}
+.order-setting span{
+    margin-right:0px;  
+}
+.ant-table th{
+    background: #eee!important;
+}
+@media (max-width: 1366px) {
+  .Mytabs>.ant-tabs{
+        overflow: auto
+    }
+}
+::-webkit-scrollbar { width: 8px;height :10px } /* Track */ 
+::-webkit-scrollbar-track { -webkit-box-shadow: inset 0 0 6px #e1e1e1; -webkit-border-radius: 10px;
+ border-radius: 8px; } 
+/* Handle */ 
+::-webkit-scrollbar-thumb { -webkit-border-radius: 8px;
+ border-radius: 8px; background: #e9e9e9;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); } 
+::-webkit-scrollbar-thumb:window-inactive { background: #f7f7f7; } 

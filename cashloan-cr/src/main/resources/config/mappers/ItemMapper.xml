@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- arc_cr_item表:评分项目模块 -->
+<mapper namespace="com.xindaibao.creditrank.cr.mapper.ItemMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.creditrank.cr.domain.Item">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="card_id" property="cardId" jdbcType="INTEGER" />
+        <result column="item_name" property="itemName" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="nid" property="nid" jdbcType="VARCHAR" />
+        <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+        <result column="req_ext" property="reqExt" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap id="resultModel" extends="BaseResultMap" type="com.xindaibao.creditrank.cr.model.ItemModel">
+    	
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,card_id,item_name,score,state,add_time,nid,req_ext 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="cardId !='' and cardId !=null">
+                and card_id = #{cardId,jdbcType=INTEGER}
+            </if>
+            <if test="itemName !='' and itemName !=null">
+                and item_name = #{itemName,jdbcType=VARCHAR}
+            </if>
+            <if test="score !='' and score !=null">
+                and score = #{score,jdbcType=INTEGER}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="addTime !=null">
+                and add_time = #{addTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt !='' and reqExt !=null">
+                and req_ext = #{reqExt,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.creditrank.cr.domain.Item">
+        insert into arc_cr_item(card_id,item_name,score,state,add_time,nid,req_ext)values(#{cardId,jdbcType=INTEGER},#{itemName,jdbcType=VARCHAR},#{score,jdbcType=INTEGER},#{state,jdbcType=VARCHAR},#{addTime,jdbcType=TIMESTAMP},#{nid,jdbcType=VARCHAR},#{reqExt,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.creditrank.cr.domain.Item">
+        update arc_cr_item set 
+            card_id = #{cardId,jdbcType=INTEGER},
+            item_name = #{itemName,jdbcType=VARCHAR},
+            score = #{score,jdbcType=INTEGER},
+            state = #{state,jdbcType=VARCHAR},
+            add_time = #{addTime,jdbcType=TIMESTAMP},
+            nid = #{nid,jdbcType=VARCHAR},
+            req_ext = #{reqExt,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update arc_cr_item
+          <set>
+            <if test="cardId != null and cardId != '' ">        
+                card_id = #{cardId,jdbcType=INTEGER},                
+            </if>
+            <if test="itemName != null and itemName != '' ">        
+                item_name = #{itemName,jdbcType=VARCHAR},                
+            </if>
+            <if test="score != null and score != '' or score == 0 ">        
+                score = #{score,jdbcType=INTEGER},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR},                
+            </if>
+            <if test="addTime != null">        
+                add_time = #{addTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="nid !='' and nid !=null">
+                and nid = #{nid,jdbcType=VARCHAR}
+            </if>
+            <if test="reqExt != null and reqExt != '' ">        
+                req_ext = #{reqExt,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+	<delete id="deleteSelective" parameterType="java.lang.Long">
+		delete
+		from arc_cr_item
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_item
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="findByCardId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_item
+        where card_id = #{cardId,jdbcType=INTEGER}
+    </select>
+    
+    <select id="findByItmeName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_item
+        where item_name = #{itemName,jdbcType=VARCHAR}
+    </select>
+    
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_item
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_item
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="listSelect" resultMap="resultModel" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from arc_cr_item
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findSumScore" resultType="java.lang.Integer" parameterType="java.lang.Long">
+    	SELECT SUM(score) AS score 
+    	from `arc_cr_item`
+    	where card_id = #{cardId,jdbcType=INTEGER}
+    </select>
+</mapper>

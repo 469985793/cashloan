@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysRoleMapper">
+	<resultMap type="com.xindaibao.cashloan.system.domain.SysRole" id="roleResult">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="add_time" property="addTime" />
+		<result column="add_user" property="addUser" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_user" property="updateUser" />
+		<result column="remark" property="remark" />
+		<result column="is_delete" property="isDelete" />
+		<result column="nid" property="nid" />
+	</resultMap>
+     
+    <resultMap type="java.util.HashMap" id="roleResultMap">
+        <id column="id" property="id" />
+        <result column="user_name" property="userName" />
+        <result column="name" property="name" />
+        <result column="add_time" property="addTime" />
+        <result column="add_user" property="addUser" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_user" property="updateUser" />
+        <result column="remark" property="remark" />
+        <result column="is_delete" property="isDelete" />
+        <result column="nid" property="nid" />
+    </resultMap>
+     
+	<sql id="searchSql">
+     	id,
+		name,
+		add_time,
+		add_user,
+		update_time,
+		update_user,
+		remark,
+		is_delete,
+		nid
+	</sql>
+	
+	<sql id="searchByPo">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="id!=null and id!='' ">
+				id = #{id}
+			</if>
+			<if test="name!=null and name!='' ">
+				and name like concat('',#{name}, '%')
+			</if>
+			<if test="addTime!=null and addTime!='' ">
+				and add_time = #{addTime}
+			</if>
+			<if test="addUser!=null and addUser!='' ">
+				and add_user = #{addUser}
+			</if>
+			<if test="updateTime!=null and updateTime!='' ">
+				and update_time = #{updateTime}
+			</if>
+			<if test="updateUser!=null and updateUser!='' ">
+				and update_user = #{updateUser}
+			</if>
+			<if test="remark!=null and remark!='' ">
+				and remark = #{remark}
+			</if>
+			<if test="isDelete!=null and isDelete!='' ">
+				and is_delete = #{isDelete}
+			</if>
+			<if test="nid!=null and nid!='' ">
+				and nid = #{nid}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="updateByPo">
+		<trim prefix="set" suffixOverrides=",">
+			<if test="updateTime!=null and updateTime!='' ">
+				update_time=#{updateTime},
+			</if>
+			<if test="name!=null and name!='' ">
+				name=#{name},
+			</if>
+			<if test="addTime!=null and addTime!='' ">
+				add_time = #{addTime},
+			</if>
+			<if test="addUser!=null and addUser!='' ">
+				add_user = #{addUser},
+			</if>
+			<if test="updateUser!=null and updateUser!='' ">
+				update_user = #{updateUser},
+			</if>
+			<if test="remark!=null and remark!='' ">
+				remark = #{remark},
+			</if>
+			<if test="isDelete!=null">
+				is_delete = #{isDelete},
+			</if>
+			<if test="nid!=null and nid!='' ">
+				nid = #{nid}
+			</if>
+		</trim>
+	</sql>
+	
+	<sql id="pageEnd">
+		where rownum &lt;= #{pageSize}) where rnum &gt;#{startRow}
+	</sql>
+
+	<sql id="pageStart">
+		select * from (select rownum rnum,a.* from (
+	</sql>
+	
+	<insert id="save" parameterType="com.xindaibao.cashloan.system.domain.SysRole">
+		<selectKey resultType="long" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into arc_sys_role(
+		name,
+		add_time,
+		add_user,
+		update_time,
+		update_user,
+		remark,
+		is_delete,
+		nid
+		)
+		values (
+		#{name},
+		#{addTime},
+		#{addUser},
+        #{addTime},	
+		#{updateUser},
+		#{remark},
+		#{isDelete},
+		#{nid}
+		)
+	</insert>
+	
+	<!-- 动态的插入Map -->
+	<insert id="insertByMap" parameterType="java.util.HashMap">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+			SELECT arc_sys_role_seq.nextval as id from dual
+		</selectKey>
+		insert into arc_sys_role(
+			id,         
+		<foreach collection="keys" item="k" open="" separator="," close=")">             
+		 	${k}         
+		</foreach>         
+		values(
+		 	#{id},         
+		<foreach collection="keys" item="k" open="" separator="," close=")">             
+		 	'${params[k]}'         
+	 	</foreach> 
+	 </insert>
+	
+	<select id="findByPrimary" parameterType="long" resultMap="roleResult">
+		select
+		<include refid="searchSql" />
+		from arc_sys_role
+		where
+		id = #{id}
+	</select>
+	
+	<select id="getRoleListByUserId" resultMap="roleResult" parameterType="long">
+		select 
+			p1.* 
+		from arc_sys_role p1 , arc_sys_user_role p2 
+		where p1.id = p2.role_id and p2.user_id = #{userId} and p1.is_delete = 0 and p1.nid != 'saleCustomerManager'
+	</select>
+	
+	<delete id="deleteById" parameterType="long">
+ 	  delete from arc_sys_role
+ 	  where
+ 	  id = #{id}
+ 	</delete>
+ 	
+ 	<select id="getRolePageList" parameterType="java.util.HashMap" resultMap="roleResult">
+		select
+			<include refid="searchSql" />
+		from arc_sys_role
+		<include refid="searchByPo" />
+		order by id asc
+	</select>
+	
+ 	<select id="getRolecount" parameterType="java.util.HashMap" resultType="int">
+		select count(1)  
+		from arc_sys_role
+		<include refid="searchByPo" />
+	</select>
+     
+	<update id="updateByMap" parameterType="java.util.HashMap">
+		update arc_sys_role
+			<include refid="updateByPo" />
+		where
+			id = #{id}
+	</update>
+     
+     <select id="listSelective" resultMap="roleResult" parameterType="java.util.Map" >
+        select 
+        	id,
+			name,
+			add_time,
+			add_user,
+			update_time,
+			update_user,
+			remark,
+			is_delete,
+			nid     
+        from arc_sys_role 
+		<include refid="searchByPo"></include>
+        ORDER BY id ASC
+    </select>
+    
+    <select id="getByUserPassRolesList" resultMap="roleResultMap"
+        parameterType="java.util.Map">
+        SELECT
+        a.user_name,
+        b.id,
+        b.name
+        FROM
+        arc_sys_user a,
+        arc_sys_role b,
+        arc_sys_user_role c
+        WHERE
+        a.id = c.user_id
+        AND b.id = c.role_id
+        AND a.user_name = #{username}
+        AND a.password = #{password}
+        AND b.nid !='saleCustomerManager'
+    </select>
+    
+    <select id="findSelective" resultMap="roleResult" parameterType="java.util.HashMap">
+        select
+        <include refid="searchSql" />
+        from arc_sys_role
+        <include refid="searchByPo"/>
+    </select>
+</mapper>   

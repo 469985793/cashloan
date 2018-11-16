@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_borrow_repay表:还款计划模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.BorrowRepayMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.BorrowRepay">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="repay_time" property="repayTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="penalty_amout" property="penaltyAmout" jdbcType="DECIMAL" />
+        <result column="penalty_day" property="penaltyDay" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <resultMap id="BorrowRepayModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.BorrowRepayModel" >
+    
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,borrow_id,amount,repay_time,state,penalty_amout,penalty_day,create_time
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="borrowId !='' and borrowId !=null">
+                and borrow_id = #{borrowId,jdbcType=BIGINT}
+            </if>
+            <if test="amount !='' and amount !=null">
+                and amount = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="repayTime !=null">
+                and repay_time = #{repayTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="penaltyAmout !='' and penaltyAmout !=null">
+                and penalty_amout = #{penaltyAmout,jdbcType=DECIMAL}
+            </if>
+            <if test="penaltyDay !='' and penaltyDay !=null">
+                and penalty_day = #{penaltyDay,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.BorrowRepay">
+        insert into cl_borrow_repay(user_id,borrow_id,amount,repay_time,state,penalty_amout,penalty_day,create_time)
+        SELECT #{userId,jdbcType=BIGINT},#{borrowId,jdbcType=BIGINT},#{amount,jdbcType=DECIMAL},#{repayTime,jdbcType=TIMESTAMP},
+        #{state,jdbcType=VARCHAR},#{penaltyAmout,jdbcType=DECIMAL},#{penaltyDay,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP} FROM DUAL
+        where not exists(select id from cl_borrow_repay where borrow_id = #{borrowId,jdbcType=BIGINT})
+    </insert>
+
+    
+    <update id="updateParam"  parameterType="java.util.HashMap">
+        update cl_borrow_repay
+          <set> 
+            state = #{state,jdbcType=VARCHAR} , 
+            <if test="penaltyDay !=null and penaltyDay != ''">
+           		penalty_day = #{penaltyDay,jdbcType=VARCHAR},  
+            </if>
+            <if test="penaltyAmout !=null">
+            	penalty_amout = #{penaltyAmout,jdbcType=DECIMAL} , 
+            </if>
+            <if test="repayTime != null ">      
+            	repay_time = #{repayTime,jdbcType=TIMESTAMP}  
+            </if>            
+        </set>    
+        where state = '20' and id = #{id ,jdbcType=BIGINT} 
+    </update>
+    
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_borrow_repay
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="borrowId != null and borrowId != '' ">        
+                borrow_id = #{borrowId,jdbcType=BIGINT},                
+            </if>
+            <if test="amount != null and amount != '' ">        
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR} ,               
+            </if>
+            <if test="penaltyAmout != null and penaltyAmout != '' ">        
+                penalty_amout = #{penaltyAmout,jdbcType=DECIMAL} ,              
+            </if>
+            <if test="penaltyDay !='' and penaltyDay !=null">
+                 penalty_day = #{penaltyDay,jdbcType=VARCHAR},
+            </if>
+            <if test="repayTime != null ">        
+                repay_time = #{repayTime,jdbcType=TIMESTAMP}              
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+	
+    
+    <update id="updateByBorrowId"  parameterType="java.util.HashMap">
+        update cl_borrow_repay
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=BIGINT},                
+            </if>
+            <if test="amount != null and amount != '' ">        
+                amount = #{amount,jdbcType=DECIMAL},                
+            </if>
+            <if test="repayTime != null ">        
+                repay_time = #{repayTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where borrow_id = #{borrowId ,jdbcType=BIGINT}
+    </update>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay
+        <include refid="searchBy"/>
+    </select>
+    
+    
+    <select id="listSelModel" resultMap="BorrowRepayModel" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow_repay
+        <include refid="searchBy"/>
+    </select>
+            
+    <resultMap id="userBorrowRayMap"  extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageBRepayModel">
+         <result column="real_name" property="realName" jdbcType="VARCHAR" />
+         <result column="phone" property="phone" jdbcType="VARCHAR" />
+    	 <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+         <result column="borrow_amount" property="borrowAmount" jdbcType="DECIMAL" />
+         <result column="repay_amount" property="repayAmount" jdbcType="DECIMAL" />
+         <result column="borrow_time" property="borrowTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <!-- 用户借款sql查询条件公共引用 -->
+    <sql id="searchModelBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="realName !='' and realName !=null">
+                  u.real_name   like  concat("%",#{realName,jdbcType=VARCHAR},"%")  
+            </if>
+             <if test="phone !='' and phone !=null">
+                and u.phone  like  concat("%",#{phone,jdbcType=VARCHAR},"%")  
+            </if>
+            <if test="orderNo !='' and orderNo !=null">
+                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")  
+            </if>
+             <if test="state != null and state != '' ">        
+                and r.state = #{state,jdbcType=VARCHAR}                
+            </if>
+            <if test="startTime != null">
+                and DATE_FORMAT(r.repay_time,'%Y-%m-%d')  &gt;= #{startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime  != null">
+                and DATE_FORMAT(r.repay_time,'%Y-%m-%d')  &lt;= #{endTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+     <select id="listModel" resultMap="userBorrowRayMap" parameterType="java.util.HashMap">
+        select  u.real_name,u.phone,b.order_no,b.amount as borrow_amount,b.create_time as borrow_time,r.id,r.user_id,r.borrow_id,r.state,r.amount  as repay_amount,r.repay_time,r.penalty_amout,r.penalty_day
+        from  cl_borrow b  left join  cl_user_base_info u on  u.user_id=b.user_id  join cl_borrow_repay r on r.borrow_id=b.id  
+        <include refid="searchModelBy"/>
+        ORDER BY r.id DESC
+    </select>
+    
+	  <resultMap id="userBorrowMap"  extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageBorrowModel">
+	    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+	    <result column="phone" property="phone" jdbcType="VARCHAR" />
+	    <result column="repay_amount" property="repayAmount" jdbcType="DECIMAL" />
+        <result column="repay_time" property="repayTime" jdbcType="VARCHAR" />
+        <result column="penalty_amout" property="penaltyAmout" jdbcType="DECIMAL" />
+        <result column="penalty_day" property="penaltyDay" jdbcType="VARCHAR" />
+	  </resultMap>
+	  
+ 
+    <sql id="searchPayModelBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="realName !='' and realName !=null">
+                  u.real_name   like  concat("%",#{realName,jdbcType=VARCHAR},"%")  
+            </if>
+             <if test="phone !='' and phone !=null">
+                and u.phone  like  concat("%",#{phone,jdbcType=VARCHAR},"%")  
+            </if>
+            <if test="orderNo !='' and orderNo !=null">
+                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")  
+            </if>
+            <if test="stateList !='' and stateList !=null">
+                 and b.state  in
+	             <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">  
+				      #{item}  
+	             </foreach> 
+            </if>
+             
+        </trim>
+    </sql>
+	  
+     <select id="listRepayModel" resultMap="userBorrowMap" parameterType="java.util.HashMap">
+        select  u.real_name,u.phone,
+        b.order_no,b.amount ,b.fee,b.time_limit,b.state,b.service_fee,b.info_auth_fee,b.interest,b.create_time,
+        r.id,r.amount  as repay_amount,r.repay_time,r.penalty_amout,r.penalty_day,r.create_time
+        from  cl_borrow b  left join  cl_user_base_info u on  u.user_id=b.user_id  join cl_borrow_repay r on r.borrow_id=b.id  
+        <include refid="searchPayModelBy"/>
+        ORDER BY r.repay_time DESC
+    </select>
+    
+    <update id="updateLate" parameterType="com.xindaibao.cashloan.cl.domain.BorrowRepay">
+        update cl_borrow_repay set 
+        penalty_amout = #{penaltyAmout},                
+        penalty_day = #{penaltyDay}
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+    
+        <sql id="searchUrgeBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="realName !='' and realName !=null">
+                  u.real_name like  concat("%",#{realName,jdbcType=VARCHAR},"%") 
+            </if>
+             <if test="phone !='' and phone !=null">
+                and u.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%") 
+            </if>
+            <if test="orderNo !='' and orderNo !=null">
+                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")  
+            </if>
+             <if test="state !='' and state !=null">
+                 and b.state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="type !='' and type !=null">
+                 and b.id  not  in
+             <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">  
+			      #{item}  
+             </foreach> 
+            </if>
+        </trim>
+    </sql>
+    
+     <select id="listModelNotUrge" resultMap="userBorrowMap" parameterType="java.util.HashMap">
+        select  u.real_name,u.phone,
+        b.id,b.order_no,b.amount ,b.fee,b.time_limit,b.state,b.service_fee,b.info_auth_fee,b.interest,b.create_time,
+        r.amount  as repay_amount,r.repay_time,r.penalty_amout,r.penalty_day,r.borrow_id
+        from  cl_borrow b  left join  cl_user_base_info u on  u.user_id=b.user_id  join cl_borrow_repay r on r.borrow_id=b.id  
+        <include refid="searchUrgeBy"/>
+        ORDER BY b.create_time DESC
+    </select>
+
+	<!-- 查询未还款借款项目 borrowState 32:放款成功  50:逾期  90:坏账 -->
+	<select id="findUnRepay" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+			repay.id,repay.user_id,repay.borrow_id,repay.amount,repay.repay_time,repay.state,repay.penalty_amout,repay.penalty_day
+		from cl_borrow_repay repay left join cl_borrow borrow on repay.`borrow_id` = borrow.id
+		where  borrow.`state` in (32,50,90) 
+		<if test="repayTime != null ">
+			and repay.repay_time &lt; #{repayTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="state != null and state != ''">
+			and repay.state = #{state,jdbcType = VARCHAR}
+		</if>
+		<if test="userId != null">
+			and repay.user_id = #{userId,jdbcType = BIGINT}
+		</if>
+	</select>
+    
+    <select id="findOverdue" resultMap="BorrowRepayModel" parameterType="java.lang.Long">
+        SELECT cb.create_time,cb.amount,cbr.repay_time,cbr.penalty_day,cbr.penalty_amout,
+        (SELECT login_name FROM cl_user WHERE id = cb.user_id) AS phone
+		FROM cl_borrow_repay AS cbr LEFT JOIN cl_borrow AS cb ON cbr.borrow_id = cb.id
+		WHERE cb.id = #{id,jdbcType=BIGINT}
+    </select>
+    
+    <select id="findRepayTotal" resultType="java.lang.Double">
+		SELECT 	IFNULL(SUM(amount),0) FROM cl_borrow_repay WHERE DATE(create_time) = CURDATE()
+    </select>
+    
+      <select id="findByBorrowId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+	 	select
+        	<include refid="Base_Column_List" />
+        from cl_borrow_repay
+        	where borrow_id = #{borrowId,jdbcType=BIGINT}
+    </select>
+
+    <!-- 查询 当天 未还款借款项目 borrowState 32:放款成功  50:逾期  90:坏账 -->
+    <select id="findUnRepayIntraday" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        repay.id,repay.user_id,repay.borrow_id,repay.amount,repay.repay_time,repay.state,repay.penalty_amout,repay.penalty_day
+        from cl_borrow_repay repay left join cl_borrow borrow on repay.`borrow_id` = borrow.id
+        where  borrow.`state` in (32,50,90)
+        <if test="repayTime != null ">
+            and DATE_FORMAT(repay.repay_time,'%y-%m-%d') = DATE_FORMAT(#{repayTime,jdbcType=TIMESTAMP},'%y-%m-%d')
+        </if>
+        <if test="state != null and state != ''">
+            and repay.state = #{state,jdbcType = VARCHAR}
+        </if>
+        <if test="userId != null">
+            and repay.user_id = #{userId,jdbcType = BIGINT}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_zhima_anti_fraud表:芝麻反欺诈模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.RcZhimaAntiFraudMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.RcZhimaAntiFraud">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="ivs_score" property="ivsScore" jdbcType="VARCHAR" />
+        <result column="ivs_detail" property="ivsDetail" jdbcType="VARCHAR" />
+        <result column="biz_no" property="bizNo" jdbcType="VARCHAR" />
+        <result column="transaction_id" property="transactionId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,ivs_score,ivs_detail,biz_no,transaction_id,create_time
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="ivsScore !='' and ivsScore !=null">
+                and ivs_score = #{ivsScore,jdbcType=VARCHAR}
+            </if>
+            <if test="ivsDetail !='' and ivsDetail !=null">
+                and ivs_detail = #{ivsDetail,jdbcType=VARCHAR}
+            </if>
+            <if test="bizNo !='' and bizNo !=null">
+                and biz_no = #{bizNo,jdbcType=VARCHAR}
+            </if>
+            <if test="transactionId !='' and transactionId !=null">
+                and transaction_id = #{transactionId,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.RcZhimaAntiFraud">
+        insert into cl_rc_zhima_anti_fraud(user_id,ivs_score,ivs_detail,biz_no,transaction_id,create_time)
+        values
+        (#{userId,jdbcType=INTEGER},#{ivsScore,jdbcType=VARCHAR},#{ivsDetail,jdbcType=VARCHAR},#{bizNo,jdbcType=VARCHAR},
+        #{transactionId,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.RcZhimaAntiFraud">
+        update cl_rc_zhima_anti_fraud set 
+            user_id = #{userId,jdbcType=INTEGER},
+            ivs_score = #{ivsScore,jdbcType=VARCHAR},
+            ivs_detail = #{ivsDetail,jdbcType=VARCHAR},
+            biz_no = #{bizNo,jdbcType=VARCHAR},
+            transaction_id = #{transactionId,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_rc_zhima_anti_fraud
+          <set>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="ivsScore != null and ivsScore != '' ">        
+                ivs_score = #{ivsScore,jdbcType=VARCHAR},                
+            </if>
+            <if test="ivsDetail != null and ivsDetail != '' ">        
+                ivs_detail = #{ivsDetail,jdbcType=VARCHAR},                
+            </if>
+            <if test="bizNo != null and bizNo != '' ">        
+                biz_no = #{bizNo,jdbcType=VARCHAR},               
+            </if>
+            <if test="transactionId !='' and transactionId !=null">
+                transaction_id = #{transactionId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime !=null">
+                create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_zhima_anti_fraud
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_zhima_anti_fraud
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_rc_zhima_anti_fraud
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findByuserId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    	select
+        <include refid="Base_Column_List" />
+        from cl_rc_zhima_anti_fraud
+        where user_id = #{userId,jdbcType=VARCHAR} order by create_time DESC
+    </select>
+    
+</mapper>

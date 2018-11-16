@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_qiancheng_req_log表:浅橙借款申请审核模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.QianchengReqlogMapper">
+	<!--返回Map -->
+	<resultMap id="BaseResultMap"
+		type="com.xindaibao.cashloan.cl.domain.QianchengReqlog">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="borrow_id" property="borrowId" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="resp_code" property="respCode" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="resp_params" property="respParams" jdbcType="VARCHAR" />
+		<result column="notify_params" property="notifyParams" jdbcType="VARCHAR" />
+		<result column="resp_time" property="respTime" jdbcType="TIMESTAMP" />
+		<result column="resp_order_no" property="respOrderNo" jdbcType="VARCHAR" />
+		<result column="rs_state" property="rsState" jdbcType="VARCHAR" />
+		<result column="rs_desc" property="rsDesc" jdbcType="VARCHAR" />
+		<result column="req_params" property="reqParams" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--基本的sql查询字段 公共引用... -->
+	<sql id="Base_Column_List">
+		id,order_no,borrow_id,user_id,state,create_time,resp_code,update_time,resp_params,notify_params,resp_time,resp_order_no,rs_state,rs_desc,req_params
+	</sql>
+
+	<!-- 基本的sql查询条件公共引用 -->
+	<sql id="searchBy">
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test=" id !=null">
+				id = #{id,jdbcType=BIGINT}
+			</if>
+			<if test="orderNo !=null and orderNo !=''">
+				and order_no = #{orderNo,jdbcType=VARCHAR}
+			</if>
+			<if test="borrowId !=null">
+				and borrow_id = #{borrowId,jdbcType=INTEGER}
+			</if>
+			<if test="userId !=null">
+				and user_id = #{userId,jdbcType=INTEGER}
+			</if>
+			<if test="state !=null and state !=''">
+				and state = #{state,jdbcType=VARCHAR}
+			</if>
+			<if test="createTime !=null">
+				and create_time = #{createTime,jdbcType=TIMESTAMP}
+			</if>
+			<if test="respCode !=null and respCode !=''">
+				and resp_code = #{respCode,jdbcType=VARCHAR}
+			</if>
+			<if test="updateTime !=null">
+				and update_time = #{updateTime,jdbcType=TIMESTAMP}
+			</if>
+		</trim>
+	</sql>
+
+
+	<insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.QianchengReqlog"
+		keyProperty="id" useGeneratedKeys="true">
+		insert into cl_qiancheng_req_log(
+		order_no,
+		borrow_id,
+		user_id,
+		state,
+		create_time
+		)values(
+		#{orderNo,jdbcType=VARCHAR},
+		#{borrowId,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER},
+		#{state,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<insert id="demoSave" parameterType="com.xindaibao.cashloan.cl.domain.QianchengReqlog"
+		keyProperty="id" useGeneratedKeys="true">
+		insert into cl_qiancheng_req_log(
+		order_no,
+		borrow_id,
+		user_id,
+		state,
+		create_time,
+		resp_code,update_time,resp_params,notify_params,resp_time,resp_order_no,rs_state,rs_desc
+		)values(
+		#{orderNo,jdbcType=VARCHAR},
+		#{borrowId,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER},
+		#{state,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		
+		#{respCode,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{respParams,jdbcType=VARCHAR},
+		#{notifyParams,jdbcType=VARCHAR},
+		#{respTime,jdbcType=TIMESTAMP},
+		#{respOrderNo,jdbcType=VARCHAR},
+		#{rsState,jdbcType=VARCHAR},
+		#{rsDesc,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<update id="update" parameterType="com.xindaibao.cashloan.cl.domain.QianchengReqlog">
+		update cl_qiancheng_req_log
+		<set>
+			<if test="orderNo != null and orderNo != '' ">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowId != null">
+				borrow_id = #{borrowId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null ">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null and state != '' ">
+				state = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="respCode != null and respCode != '' ">
+				resp_code = #{respCode,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime !=null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="respParams!=null and respParams!=''">
+				resp_params = #{respParams,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyParams!=null and notifyParams!=''">
+				notify_params = #{notifyParams,jdbcType=VARCHAR},
+			</if>
+			<if test="respTime!=null">
+				resp_time = #{respTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="respOrderNo!=null and respOrderNo!=''">
+				resp_order_no = #{respOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="rsState!=null and rsState!=''">
+				rs_state = #{rsState,jdbcType=VARCHAR},
+			</if>
+			<if test="rsDesc!=null and rsDesc!=''">
+				rs_desc = #{rsDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="reqParams != null and reqParams != ''">
+				req_params = #{reqParams,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id ,jdbcType=INTEGER}
+	</update>
+
+
+	<update id="updateSelective" parameterType="java.util.HashMap">
+		update cl_qiancheng_req_log
+		<set>
+			<if test="orderNo != null and orderNo != '' ">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="borrowId != null">
+				borrow_id = #{borrowId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null ">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null and state != '' ">
+				state = #{state,jdbcType=VARCHAR},
+			</if>
+			<if test="respCode != null and respCode != '' ">
+				resp_code = #{respCode,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime !=null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="respParams!=null and respParams!=''">
+				resp_params = #{respParams,jdbcType=VARCHAR},
+			</if>
+			<if test="notifyParams!=null and notifyParams!=''">
+				notify_params = #{notifyParams,jdbcType=VARCHAR},
+			</if>
+			<if test="respTime!=null">
+				resp_time = #{respTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="respOrderNo!=null and respOrderNo!=''">
+				resp_order_no = #{respOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="rsState!=null and rsState!=''">
+				rs_state = #{rsState,jdbcType=VARCHAR},
+			</if>
+			<if test="rsDesc!=null and rsDesc!=''">
+				rs_desc = #{rsDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="rsState!=null and rsState!=''">
+				rs_state = #{rsState,jdbcType=VARCHAR},
+			</if>
+			<if test="rsDesc!=null and rsDesc!=''">
+				rs_desc = #{rsDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="reqParams != null and reqParams != ''">
+				req_params = #{reqParams,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id ,jdbcType=BIGINT}
+	</update>
+
+
+	<select id="findByPrimary" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from cl_qiancheng_req_log
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="findSelective" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from cl_qiancheng_req_log
+		<include refid="searchBy" />
+	</select>
+
+	<select id="listSelective" resultMap="BaseResultMap"
+		parameterType="java.util.HashMap">
+		select
+		<include refid="Base_Column_List" />
+		from cl_qiancheng_req_log
+		<include refid="searchBy" />
+	</select>
+
+	<resultMap id="qianchengReqlogMap" extends="BaseResultMap"
+		type="com.xindaibao.cashloan.cl.model.QianchengReqlogModel">
+		<result column="real_name" property="realName" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="listQianchengReqlog" resultMap="qianchengReqlogMap"
+		parameterType="java.util.HashMap">
+		select
+		i.real_name,i.phone,q.id,q.state,q.create_time,q.resp_code,q.update_time,q.order_no,b.amount 
+		from cl_qiancheng_req_log q , cl_user_base_info i , cl_borrow b where q.borrow_id = b.id and 
+		q.user_id = i.user_id 
+		<!--  <include refid="searchBy" />-->
+		<if test="realName !=null and realName != '' ">
+			and i.real_name like concat("%",#{realName,jdbcType=VARCHAR},"%")
+		</if>
+		<if test="phone !=null and phone != '' ">
+			and i.phone like concat("%",#{phone,jdbcType=VARCHAR},"%")
+		</if>
+		<if test="orderNo !=null and orderNo !=''">
+			and q.order_no like concat("%",#{orderNo,jdbcType=VARCHAR},"%")
+		</if>
+		<if test="state !=null and state !=''">
+			and q.state = #{state,jdbcType=VARCHAR}
+		</if>
+		<if test="startTime != null">
+               and date_format(q.create_time, '%Y-%m-%d') &gt;= #{startTime,jdbcType=TIMESTAMP}
+           </if>
+           <if test="endTime  != null">
+               and date_format(q.create_time, '%Y-%m-%d') &lt;= #{endTime,jdbcType=TIMESTAMP}
+           </if>
+		ORDER BY q.create_time DESC
+	</select>
+	
+	<select id="findByOrderNo" parameterType="java.lang.String" resultType="com.xindaibao.cashloan.cl.domain.QianchengReqlog">
+		select id,order_no orderNo,borrow_id borrowId,user_id userId,state,resp_order_no respOrderNo
+		from cl_qiancheng_req_log where resp_order_no = #{orderNo,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findByBorrowId" parameterType="java.lang.Long" resultType="com.xindaibao.cashloan.cl.domain.QianchengReqlog">
+		select id,order_no orderNo,borrow_id borrowId,user_id userId,state,resp_order_no respOrderNo,rs_state,rs_desc,resp_code
+		from cl_qiancheng_req_log where borrow_id = #{borrowId,jdbcType=BIGINT} ORDER BY id DESC LIMIT 0,1
+	</select>
+</mapper>

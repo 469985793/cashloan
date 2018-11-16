@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_channel_app表:app渠道版本表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ChannelAppMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.ChannelApp">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="channel_id" property="channelId" jdbcType="BIGINT" />
+        <result column="app_type" property="appType" jdbcType="VARCHAR" />
+        <result column="latest_version" property="latestVersion" jdbcType="VARCHAR" />
+        <result column="min_version" property="minVersion" jdbcType="VARCHAR" />
+        <result column="download_url" property="downloadUrl" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,channel_id,app_type,latest_version,min_version,download_url,state 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="channelId != null and channelId != '' ">
+                and channel_id = #{channelId,jdbcType=BIGINT}
+            </if>
+            <if test="appType != null and appType != '' ">
+                and app_type = #{appType,jdbcType=VARCHAR}
+            </if>
+            <if test="latest-version != null and latest-version != '' ">
+                and latest_version = #{latestVersion,jdbcType=VARCHAR}
+            </if>
+            <if test="minVersion != null and minVersion != '' ">
+                and min_version = #{minVersion,jdbcType=VARCHAR}
+            </if>
+            <if test="downloadurl != null and downloadurl != '' ">
+                and download_url = #{downloadUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="state != null and state != '' ">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.ChannelApp">
+        insert into cl_channel_app(channel_id,app_type,latest_version,min_version,download_url,state)values(#{channelId,jdbcType=BIGINT},#{appType,jdbcType=VARCHAR},#{latestVersion,jdbcType=VARCHAR},#{minVersion,jdbcType=VARCHAR},#{downloadUrl,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.ChannelApp">
+        update cl_channel_app set 
+            channel_id = #{channelId,jdbcType=BIGINT},
+            app_type = #{appType,jdbcType=VARCHAR},
+            latest_version = #{latestVersion,jdbcType=VARCHAR},
+            min_version = #{minVersion,jdbcType=VARCHAR},
+            download_url = #{downloadUrl,jdbcType=VARCHAR},
+            state = #{state,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_channel_app
+          <set>
+            <if test="channelId != null and channelId != '' ">        
+                channel_id = #{channelId,jdbcType=BIGINT},                
+            </if>
+            <if test="appType != null and appType != '' ">        
+                app_type = #{appType,jdbcType=VARCHAR},                
+            </if>
+            <if test="latestVersion != null and latestVersion != '' ">        
+                latest_version = #{latestVersion,jdbcType=VARCHAR},                
+            </if>
+            <if test="minVersion != null and minVersion != '' ">        
+                min_version = #{minVersion,jdbcType=VARCHAR},                
+            </if>
+            <if test="downloadUrl != null and downloadUrl != '' ">        
+                download_url = #{downloadUrl,jdbcType=VARCHAR}                
+            </if>
+            <if test="state != null and state != '' ">        
+                state = #{state,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_channel_app
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_channel_app
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_channel_app
+        <include refid="searchBy"/>
+    </select>
+
+	<resultMap id="ChannelAppModel" extends="BaseResultMap"
+		type="com.xindaibao.cashloan.cl.model.ChannelAppModel">
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="VARCHAR" />
+	</resultMap>
+	
+    <select id="listChannelAppModel"  resultMap="ChannelAppModel">
+		SELECT
+		cc.code,cc.name,ccl.id,ccl.state,ccl.app_type,ccl.download_url,ccl.latest_version,ccl.min_version
+		FROM cl_channel cc,cl_channel_app ccl
+		WHERE cc.id = ccl.channel_id
+    </select>
+    
+</mapper>

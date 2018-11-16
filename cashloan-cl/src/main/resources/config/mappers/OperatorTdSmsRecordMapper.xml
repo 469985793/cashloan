@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_td_sms_record表:短信记录具体记录模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorTdSmsRecordMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorTdSmsRecord">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="info_id" property="infoId" jdbcType="BIGINT" />
+        <result column="msg_start_time" property="msgStartTime" jdbcType="VARCHAR" />
+        <result column="msg_type" property="msgType" jdbcType="VARCHAR" />
+        <result column="msg_other_num" property="msgOtherNum" jdbcType="VARCHAR" />
+        <result column="msg_channel" property="msgChannel" jdbcType="VARCHAR" />
+        <result column="msg_biz_name" property="msgBizName" jdbcType="VARCHAR" />
+        <result column="msg_address" property="msgAddress" jdbcType="VARCHAR" />
+        <result column="msg_fee" property="msgFee" jdbcType="VARCHAR" />
+        <result column="msg_discount" property="msgDiscount" jdbcType="VARCHAR" />
+        <result column="msg_cost" property="msgCost" jdbcType="VARCHAR" />
+        <result column="msg_remark" property="msgRemark" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,info_id,msg_start_time,msg_type,msg_other_num,msg_channel,msg_biz_name,msg_address,msg_fee,msg_discount,msg_cost,msg_remark 
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="infoId != null and infoId != '' ">
+                and info_id = #{infoId,jdbcType=BIGINT}
+            </if>
+            <if test="msgStartTime != null and msgStartTime != '' ">
+                and msg_start_time = #{msgStartTime,jdbcType=VARCHAR}
+            </if>
+            <if test="msgType != null and msgType != '' ">
+                and msg_type = #{msgType,jdbcType=VARCHAR}
+            </if>
+            <if test="msgOtherNum != null and msgOtherNum != '' ">
+                and msg_other_num = #{msgOtherNum,jdbcType=VARCHAR}
+            </if>
+            <if test="msgChannel != null and msgChannel != '' ">
+                and msg_channel = #{msgChannel,jdbcType=VARCHAR}
+            </if>
+            <if test="msgBizName != null and msgBizName != '' ">
+                and msg_biz_name = #{msgBizName,jdbcType=VARCHAR}
+            </if>
+            <if test="msgAddress != null and msgAddress != '' ">
+                and msg_address = #{msgAddress,jdbcType=VARCHAR}
+            </if>
+            <if test="msgFee != null and msgFee != '' ">
+                and msg_fee = #{msgFee,jdbcType=VARCHAR}
+            </if>
+            <if test="msgDiscount != null and msgDiscount != '' ">
+                and msg_discount = #{msgDiscount,jdbcType=VARCHAR}
+            </if>
+            <if test="msgCost != null and msgCost != '' ">
+                and msg_cost = #{msgCost,jdbcType=VARCHAR}
+            </if>
+            <if test="msgRemark != null and msgRemark != '' ">
+                and msg_remark = #{msgRemark,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdSmsRecord">
+        insert into cl_operator_td_sms_record(info_id,msg_start_time,msg_type,msg_other_num,msg_channel,msg_biz_name,msg_address,msg_fee,msg_discount,msg_cost,msg_remark)values(#{infoId,jdbcType=BIGINT},#{msgStartTime,jdbcType=VARCHAR},#{msgType,jdbcType=VARCHAR},#{msgOtherNum,jdbcType=VARCHAR},#{msgChannel,jdbcType=VARCHAR},#{msgBizName,jdbcType=VARCHAR},#{msgAddress,jdbcType=VARCHAR},#{msgFee,jdbcType=VARCHAR},#{msgDiscount,jdbcType=VARCHAR},#{msgCost,jdbcType=VARCHAR},#{msgRemark,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.OperatorTdSmsRecord">
+        update cl_operator_td_sms_record set 
+            info_id = #{infoId,jdbcType=BIGINT},
+            msg_start_time = #{msgStartTime,jdbcType=VARCHAR},
+            msg_type = #{msgType,jdbcType=VARCHAR},
+            msg_other_num = #{msgOtherNum,jdbcType=VARCHAR},
+            msg_channel = #{msgChannel,jdbcType=VARCHAR},
+            msg_biz_name = #{msgBizName,jdbcType=VARCHAR},
+            msg_address = #{msgAddress,jdbcType=VARCHAR},
+            msg_fee = #{msgFee,jdbcType=VARCHAR},
+            msg_discount = #{msgDiscount,jdbcType=VARCHAR},
+            msg_cost = #{msgCost,jdbcType=VARCHAR},
+            msg_remark = #{msgRemark,jdbcType=VARCHAR}
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_operator_td_sms_record
+          <set>
+            <if test="infoId != null and infoId != '' ">        
+                info_id = #{infoId,jdbcType=BIGINT},                
+            </if>
+            <if test="msgStartTime != null and msgStartTime != '' ">        
+                msg_start_time = #{msgStartTime,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgType != null and msgType != '' ">        
+                msg_type = #{msgType,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgOtherNum != null and msgOtherNum != '' ">        
+                msg_other_num = #{msgOtherNum,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgChannel != null and msgChannel != '' ">        
+                msg_channel = #{msgChannel,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgBizName != null and msgBizName != '' ">        
+                msg_biz_name = #{msgBizName,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgAddress != null and msgAddress != '' ">        
+                msg_address = #{msgAddress,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgFee != null and msgFee != '' ">        
+                msg_fee = #{msgFee,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgDiscount != null and msgDiscount != '' ">        
+                msg_discount = #{msgDiscount,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgCost != null and msgCost != '' ">        
+                msg_cost = #{msgCost,jdbcType=VARCHAR},                
+            </if>
+            <if test="msgRemark != null and msgRemark != '' ">        
+                msg_remark = #{msgRemark,jdbcType=VARCHAR}                
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_sms_record
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_sms_record
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_td_sms_record
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

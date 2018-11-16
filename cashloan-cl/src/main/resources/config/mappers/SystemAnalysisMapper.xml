@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 运营分析 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.SystemAnalysisMapper">
+	<!-- 逾期笔数 -->
+	<sql id="overdueCount">
+		select count(borrow_id) overdueCount,create_time time from (select borrow_id,DATE_FORMAT(create_time,#{dateType,jdbcType=VARCHAR}) create_time from cl_borrow_progress where state = '50' and DATE_FORMAT(SYSDATE(),#{dateType,jdbcType=VARCHAR}) =  DATE_FORMAT(create_time,#{dateType,jdbcType=VARCHAR})) t GROUP BY create_time 
+	</sql>
+	<!-- 逾期还款笔数 -->
+	<sql id="overdueRepayCount">
+		select count(borrow_id) overdueCount,create_time time from (select borrow_id,DATE_FORMAT(repay_time,'%y-%m') create_time from cl_borrow_repay_log where penalty_day > 0 and DATE_FORMAT(repay_time,'%y-%m') =  DATE_FORMAT(SYSDATE(),'%y-%m')) t GROUP BY create_time 
+	</sql>
+	<!-- 还款笔数 -->
+	<sql id="repayCount">
+		select count(borrow_id) repayCount,create_time time from (select borrow_id,DATE_FORMAT(create_time,#{dateType,jdbcType=VARCHAR}) create_time from cl_borrow_progress where state = '40' ) t GROUP BY create_time 
+	</sql>
+	<!-- 逾期笔数 -->
+	<sql id="overdueCount_new">
+		select count(borrow_id) overdueCount,create_time time from (select borrow_id,DATE_FORMAT(create_time,#{dateType,jdbcType=VARCHAR}) create_time from cl_borrow_progress where state = '50') t GROUP BY create_time 
+	</sql>
+	<!-- 逾期罚息 -->
+	<sql id="penaltyAmout_new">
+		select sum(penalty_amout) penaltyAmout,repay_time time from ( select  penalty_amout,DATE_FORMAT(repay_time,#{dateType,jdbcType=VARCHAR}) repay_time from cl_borrow_repay where penalty_day > 0 ) t GROUP BY repay_time
+	</sql>
+	<!-- 逾期金额 -->
+	<sql id="overdueAmt">
+		select sum(amount) overdueAmt,create_time time from (select (b.amount) amount,DATE_FORMAT(bp.create_time,#{dateType,jdbcType=VARCHAR}) create_time from cl_borrow_progress bp LEFT JOIN cl_borrow b on bp.borrow_id = b.id where bp.state = '50' ) t GROUP BY create_time
+	</sql>
+	<!-- 逾期罚息 -->
+	<sql id="penaltyAmout">
+		select sum(penalty_amout) penaltyAmout,repay_time time from ( select  penalty_amout,DATE_FORMAT(repay_time,#{dateType,jdbcType=VARCHAR}) repay_time from cl_borrow_repay where state = '20' and penalty_day > 0 ) t GROUP BY repay_time
+	</sql>
+	<!-- 催收笔数 -->
+	<sql id="urgeRepayBorrow">
+		select count(DISTINCT(borrow_id)) urgeRepayBorrow,create_time time from ( select borrow_id,DATE_FORMAT(create_time,#{dateType,jdbcType=VARCHAR}) create_time from cl_urge_repay_log ) t GROUP BY create_time
+	</sql>
+	<!-- 催收次数 -->
+	<sql id="urgeRepayCount">
+		select count(id) urgeRepayCount,create_time time from ( select id,DATE_FORMAT(create_time,#{dateType,jdbcType=VARCHAR}) create_time from cl_urge_repay_log ) t GROUP BY create_time
+	</sql>
+	<!-- 催收成功数 -->
+	<sql id="urgeRepaySuccess">
+		select count(id) urgeRepaySuccess,create_time time from ( select id,DATE_FORMAT(create_time,#{dateType,jdbcType=VARCHAR}) create_time from cl_urge_repay_log where state = '40') t GROUP BY create_time
+	</sql>
+	<!-- 坏账笔数 -->
+	<sql id="badCount">
+		select count(borrow_id) badCount,create_time time from (select bp.borrow_id, DATE_FORMAT(bp.create_time,#{dateType,jdbcType=VARCHAR}) create_time from cl_borrow_progress bp LEFT JOIN cl_borrow b  on bp.borrow_id = b.id where bp.state = '90') t GROUP BY create_time
+	</sql>
+	
+	<!-- 每月逾期统计 每月 ：%Y-%m   -->
+	<select id="overdueAnalisis" parameterType="java.util.Map" resultType="com.xindaibao.cashloan.cl.model.OverdueAnalisisModel">
+		select DISTINCT(p.time) date,
+			case when p2.overdueCount is null then 0 else p2.overdueCount end overdueCount,
+			case when p3.overdueAmt is null then 0 else p3.overdueAmt end overdueAmt,
+			case when p4.penaltyAmout is null then 0 else p4.penaltyAmout end penaltyAmout,
+			case when p5.urgeRepayBorrow is null then 0 else p5.urgeRepayBorrow end urgeRepayBorrow,
+			case when p6.urgeRepayCount is null then 0 else p6.urgeRepayCount end urgeRepayCount,
+			case when p7.urgeRepaySuccess is null then 0 else p7.urgeRepaySuccess end urgeRepaySuccess,
+			case when p8.badCount is null then 0 else p8.badCount end badCount
+		from (
+			(<include refid="overdueCount_new"></include>) UNION
+			(<include refid="overdueAmt"></include>) UNION
+			(<include refid="penaltyAmout_new"></include>) UNION
+			(<include refid="urgeRepayBorrow"></include>) UNION
+			(<include refid="urgeRepayCount"></include>) UNION
+			(<include refid="urgeRepaySuccess"></include>) UNION
+			(<include refid="badCount"></include>) 
+		) p 
+		LEFT JOIN (<include refid="overdueCount_new"></include>) p2 on p.time = p2.time
+		LEFT JOIN (<include refid="overdueAmt"></include>) p3 on p.time = p3.time
+		LEFT JOIN (<include refid="penaltyAmout_new"></include>) p4 on p.time = p4.time
+		LEFT JOIN (<include refid="urgeRepayBorrow"></include>) p5 on p.time = p5.time
+		LEFT JOIN (<include refid="urgeRepayCount"></include>) p6 on p.time = p6.time
+		LEFT JOIN (<include refid="urgeRepaySuccess"></include>) p7 on p.time = p7.time
+		LEFT JOIN (<include refid="badCount"></include>) p8 on p.time = p8.time
+		<where>
+			<if test="startDate!=null and startDate!=''">
+				and p.time >= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				<![CDATA[ and p.time <= #{endDate,jdbcType=VARCHAR} ]]> 
+			</if>
+		</where>
+		ORDER BY p.time DESC
+	</select>
+	
+	<select id="repayCount" resultType="java.lang.String" parameterType="java.util.HashMap">
+    	SELECT COUNT(id) FROM `cl_borrow_repay_log` 
+    	WHERE DATE_FORMAT(repay_time,#{dateType,jdbcType=VARCHAR})=DATE_FORMAT(#{date,jdbcType=TIMESTAMP},#{dateType,jdbcType=VARCHAR});
+    </select>
+    
+    <select id="overdueCount" resultType="java.lang.String" parameterType="java.util.HashMap">
+    	SELECT SUM(CASE WHEN penalty_day>0 THEN 1 ELSE 0 END) FROM `cl_borrow_repay_log` 
+    	WHERE DATE_FORMAT(repay_time,#{dateType,jdbcType=VARCHAR})=DATE_FORMAT(#{date,jdbcType=TIMESTAMP},#{dateType,jdbcType=VARCHAR});
+    </select>
+    
+    <select id="repayAmt" resultType="java.lang.String" parameterType="java.util.HashMap">
+    	SELECT SUM(amount) FROM `cl_borrow_repay_log` 
+    	WHERE DATE_FORMAT(repay_time,#{dateType,jdbcType=VARCHAR})=DATE_FORMAT(#{date,jdbcType=TIMESTAMP},#{dateType,jdbcType=VARCHAR});
+    </select>
+    
+    <select id="penaltyRepayAmt" resultType="java.lang.String" parameterType="java.util.HashMap">
+    	SELECT SUM(CASE WHEN penalty_day>0 THEN amount ELSE 0 END) FROM `cl_borrow_repay_log` 
+    	WHERE DATE_FORMAT(repay_time,#{dateType,jdbcType=VARCHAR})=DATE_FORMAT(#{date,jdbcType=TIMESTAMP},#{dateType,jdbcType=VARCHAR});
+    </select>
+    
+    <select id="mouthList" resultType="java.lang.String">
+    	select DATE_FORMAT(repay_time,'%y-%m') date from cl_borrow_repay_log 
+    	where repay_time between date_sub(now(),interval 10 month) and now() GROUP BY DATE_FORMAT(repay_time,'%y-%m');
+    </select>
+	
+</mapper>

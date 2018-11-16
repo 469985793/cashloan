@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.core.mapper.KanyaUserLiveMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.core.model.KanyaUserLive">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="live_belong" jdbcType="TINYINT" property="liveBelong" />
+    <result column="live_address" jdbcType="VARCHAR" property="liveAddress" />
+    <result column="live_state" jdbcType="VARCHAR" property="liveState" />
+    <result column="live_city" jdbcType="VARCHAR" property="liveCity" />
+    <result column="rent_year" jdbcType="INTEGER" property="rentYear" />
+    <result column="live_time" jdbcType="VARCHAR" property="liveTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, live_belong, live_address, live_state, live_city, rent_year, live_time, 
+    status, created_time, updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="uid != null and uid != '' ">
+        and uid = #{uid,jdbcType=BIGINT}
+      </if>
+      <if test="liveBelong != null and liveBelong != '' ">
+        and liveBelong = #{live_belong,jdbcType=TINYINT}
+      </if>
+      <if test="liveAddress != null and liveAddress != '' ">
+        and liveAddress = #{live_address,jdbcType=VARCHAR}
+      </if>
+      <if test="liveState != null and liveState != '' ">
+        and liveState = #{live_state,jdbcType=VARCHAR}
+      </if>
+      <if test="liveCity != null and liveCity != '' ">
+        and liveCity = #{live_city,jdbcType=VARCHAR}
+      </if>
+      <if test="rentYear != null and rentYear != '' ">
+        and rentYear = #{rent_year,jdbcType=TINYINT}
+      </if>
+      <if test="liveTime != null and liveTime != '' ">
+        and liveTime = #{live_time,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user_live
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from k_user_live
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="save" parameterType="com.xindaibao.cashloan.core.model.KanyaUserLive">
+    insert into k_user_live (id, uid, live_belong, 
+      live_address, live_state, live_city, 
+      rent_year, live_time, status, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{liveBelong,jdbcType=TINYINT}, 
+      #{liveAddress,jdbcType=VARCHAR}, #{liveState,jdbcType=VARCHAR}, #{liveCity,jdbcType=VARCHAR}, 
+      #{rentYear,jdbcType=INTEGER}, #{liveTime,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="saveSelective" parameterType="com.xindaibao.cashloan.core.model.KanyaUserLive">
+    insert into k_user_live
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="liveBelong != null">
+        live_belong,
+      </if>
+      <if test="liveAddress != null">
+        live_address,
+      </if>
+      <if test="liveState != null">
+        live_state,
+      </if>
+      <if test="liveCity != null">
+        live_city,
+      </if>
+      <if test="rentYear != null">
+        rent_year,
+      </if>
+      <if test="liveTime != null">
+        live_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="liveBelong != null">
+        #{liveBelong,jdbcType=TINYINT},
+      </if>
+      <if test="liveAddress != null">
+        #{liveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="liveState != null">
+        #{liveState,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCity != null">
+        #{liveCity,jdbcType=VARCHAR},
+      </if>
+      <if test="rentYear != null">
+        #{rentYear,jdbcType=INTEGER},
+      </if>
+      <if test="liveTime != null">
+        #{liveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.core.model.KanyaUserLive">
+    update k_user_live
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="liveBelong != null">
+        live_belong = #{liveBelong,jdbcType=TINYINT},
+      </if>
+      <if test="liveAddress != null">
+        live_address = #{liveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="liveState != null">
+        live_state = #{liveState,jdbcType=VARCHAR},
+      </if>
+      <if test="liveCity != null">
+        live_city = #{liveCity,jdbcType=VARCHAR},
+      </if>
+      <if test="rentYear != null">
+        rent_year = #{rentYear,jdbcType=INTEGER},
+      </if>
+      <if test="liveTime != null">
+        live_time = #{liveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.core.model.KanyaUserLive">
+    update k_user_live
+    set uid = #{uid,jdbcType=BIGINT},
+      live_belong = #{liveBelong,jdbcType=TINYINT},
+      live_address = #{liveAddress,jdbcType=VARCHAR},
+      live_state = #{liveState,jdbcType=VARCHAR},
+      live_city = #{liveCity,jdbcType=VARCHAR},
+      rent_year = #{rentYear,jdbcType=INTEGER},
+      live_time = #{liveTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_live
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_live
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_live
+    <include refid="searchBy"/>
+  </select>
+</mapper>

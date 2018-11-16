@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.core.mapper.KanyaUserJobMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.core.model.KanyaUserJob">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="education1" jdbcType="INTEGER" property="education1" />
+    <result column="company_email" jdbcType="VARCHAR" property="companyEmail" />
+    <result column="office_address" jdbcType="VARCHAR" property="officeAddress" />
+    <result column="job_status" jdbcType="TINYINT" property="jobStatus" />
+    <result column="position" jdbcType="TINYINT" property="position" />
+    <result column="start_time" jdbcType="DATE" property="startTime" />
+    <result column="job_month_income" jdbcType="TINYINT" property="jobMonthIncome" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, education1, company_email, office_address, job_status, position, start_time, 
+    job_month_income, status, created_time, updated_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_user_job
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="uid != null and uid != '' ">
+        and uid = #{uid,jdbcType=BIGINT}
+      </if>
+      <if test="education1 != null and education1 != '' ">
+        and education1 = #{education1,jdbcType=INTEGER}
+      </if>
+      <if test="companyEmail != null and companyEmail != '' ">
+        and companyEmail = #{company_email,jdbcType=VARCHAR}
+      </if>
+      <if test="officeAddress != null and officeAddress != '' ">
+        and officeAddress = #{office_address,jdbcType=VARCHAR}
+      </if>
+      <if test="jobStatus != null and jobStatus != '' ">
+        and jobStatus = #{job_status,jdbcType=TINYINT}
+      </if>
+      <if test="position != null and position != '' ">
+        and position = #{position,jdbcType=TINYINT}
+      </if>
+      <if test="startTime != null and startTime != '' ">
+        and startTime = #{start_time,jdbcType=DATE}
+      </if>
+      <if test="jobMonthIncome != null and jobMonthIncome != '' ">
+        and jobMonthIncome = #{job_month_income,jdbcType=TINYINT}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <insert id="save" parameterType="com.xindaibao.cashloan.core.model.KanyaUserJob">
+    insert into k_user_job (id, uid, education1, 
+      company_email, office_address, job_status, 
+      position, start_time, job_month_income, 
+      status, created_time, updated_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{education1,jdbcType=INTEGER}, 
+      #{companyEmail,jdbcType=VARCHAR}, #{officeAddress,jdbcType=VARCHAR}, #{jobStatus,jdbcType=TINYINT}, 
+      #{position,jdbcType=TINYINT}, #{startTime,jdbcType=DATE}, #{jobMonthIncome,jdbcType=TINYINT}, 
+      #{status,jdbcType=TINYINT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="saveSelective" parameterType="com.xindaibao.cashloan.core.model.KanyaUserJob">
+    insert into k_user_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="education1 != null">
+        education1,
+      </if>
+      <if test="companyEmail != null">
+        company_email,
+      </if>
+      <if test="officeAddress != null">
+        office_address,
+      </if>
+      <if test="jobStatus != null">
+        job_status,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="jobMonthIncome != null">
+        job_month_income,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="education1 != null">
+        #{education1,jdbcType=INTEGER},
+      </if>
+      <if test="companyEmail != null">
+        #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="officeAddress != null">
+        #{officeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="jobStatus != null">
+        #{jobStatus,jdbcType=TINYINT},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=DATE},
+      </if>
+      <if test="jobMonthIncome != null">
+        #{jobMonthIncome,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.core.model.KanyaUserJob">
+    update k_user_job
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="education1 != null">
+        education1 = #{education1,jdbcType=INTEGER},
+      </if>
+      <if test="companyEmail != null">
+        company_email = #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="officeAddress != null">
+        office_address = #{officeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="jobStatus != null">
+        job_status = #{jobStatus,jdbcType=TINYINT},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=DATE},
+      </if>
+      <if test="jobMonthIncome != null">
+        job_month_income = #{jobMonthIncome,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.core.model.KanyaUserJob">
+    update k_user_job
+    set uid = #{uid,jdbcType=BIGINT},
+      education1 = #{education1,jdbcType=INTEGER},
+      company_email = #{companyEmail,jdbcType=VARCHAR},
+      office_address = #{officeAddress,jdbcType=VARCHAR},
+      job_status = #{jobStatus,jdbcType=TINYINT},
+      position = #{position,jdbcType=TINYINT},
+      start_time = #{startTime,jdbcType=DATE},
+      job_month_income = #{jobMonthIncome,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_job
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_job
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_job
+    <include refid="searchBy"/>
+  </select>
+</mapper>

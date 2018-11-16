@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_operator_req_log表:运营商认证中间表模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.OperatorReqLogMapper">
+    <!--返回Map-->
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.OperatorReqLog">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="resp_order_no" property="respOrderNo" jdbcType="VARCHAR" />
+        <result column="resp_code" property="respCode" jdbcType="VARCHAR" />
+        <result column="resp_params" property="respParams" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="resp_time" property="respTime" jdbcType="TIMESTAMP" />
+		<result column="business_type" property="businessType" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+		id, user_id, order_no, resp_order_no, resp_code, resp_params, create_time, resp_time,business_type
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="orderNo !='' and orderNo !=null">
+                and order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="respCode !='' and respCode !=null">
+                and resp_code = #{respCode,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="businessType !=null">
+                and business_type = #{businessType,jdbcType=VARCHAR}
+            </if>
+             <if test="respOrderNo !='' and respOrderNo !=null">
+                and resp_order_no = #{respOrderNo,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.OperatorReqLog">
+        insert into cl_operator_req_log(user_id,order_no,resp_code,create_time,resp_time,resp_params,resp_order_no,business_type) 
+        values(#{userId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{respCode,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{respTime,jdbcType=TIMESTAMP},#{respParams,jdbcType=VARCHAR},#{respOrderNo,jdbcType=VARCHAR},#{businessType,jdbcType=VARCHAR})
+    </insert>
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.OperatorReqLog">
+    	update cl_operator_req_log
+        <set>
+			<if test="orderNo != null and orderNo != '' ">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="respOrderNo!=null and respOrderNo!=''">
+				resp_order_no = #{respOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="respCode != null and respCode != '' ">
+				resp_code = #{respCode,jdbcType=VARCHAR},
+			</if>
+			<if test="respParams!=null and respParams!=''">
+				resp_params = #{respParams,jdbcType=VARCHAR},
+			</if>
+			<if test="respTime!=null">
+				resp_time = #{respTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="businessType!=null and businessType!=''">
+				business_type = #{businessType,jdbcType=VARCHAR}
+			</if>
+		</set>
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+    
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_operator_req_log
+        <set>
+			<if test="orderNo != null and orderNo != '' ">
+				order_no = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="respOrderNo!=null and respOrderNo!=''">
+				resp_order_no = #{respOrderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="respCode != null and respCode != '' ">
+				resp_code = #{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="respParams!=null and respParams!=''">
+				resp_params = #{respParams,jdbcType=VARCHAR},
+			</if>
+			<if test="respTime!=null">
+				resp_time = #{respTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="businessType!=null and businessType!=''">
+				business_type = #{businessType,jdbcType=VARCHAR}
+			</if>
+		</set>
+        where id = #{id ,jdbcType=BIGINT}
+    </update>
+    
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_req_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_req_log
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_operator_req_log
+        <include refid="searchBy"/>
+    </select>
+    
+    <select id="findOrderByUserId" resultType="java.lang.String" parameterType="java.lang.Long" >
+    	select order_no,create_time from cl_operator_req_log where user_id = #{userId,jdbcType=BIGINT} and resp_code = '200' ORDER BY  create_time DESC LIMIT 1
+    </select>
+    
+   <select id="listByUserId" resultMap="BaseResultMap" parameterType="java.util.HashMap" >
+    	select  
+    	<include refid="Base_Column_List" />
+    	from cl_operator_req_log where user_id = #{userId,jdbcType=BIGINT}  and  date_format(create_time, '%Y-%m-%d')=date_format(SYSDATE(), '%Y-%m-%d')   ORDER BY  create_time DESC  
+    </select>
+    
+    <select id="findLastRecord" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+		select
+			<include refid="Base_Column_List" />
+		from cl_operator_req_log
+			<include refid="searchBy"/>
+		ORDER BY create_time DESC limit 1;
+	</select>
+
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_rc_simple_contact_count表:风控数据统计-（简）通讯录统计模块 -->
+<mapper namespace="com.xindaibao.cashloan.rc.mapper.SimpleContactCountMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.rc.domain.SimpleContactCount">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="count_one" property="countOne" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,user_id,count_one,create_time 
+    </sql>
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.rc.domain.SimpleContactCount">
+        insert into cl_rc_simple_contact_count(user_id,count_one,create_time)values(#{userId,jdbcType=INTEGER},#{countOne,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+	<!-- 通讯录总条数 -->
+    <select id="countOne" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM ${tableName} WHERE user_id = #{userId,jdbcType=BIGINT}
+    </select>
+    
+</mapper>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_zhima表:芝麻信用模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.ZhimaMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.Zhima">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="bind" property="bind" jdbcType="VARCHAR" />
+        <result column="bind_time" property="bindTime" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="score" property="score" jdbcType="DECIMAL" />
+        <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,bind,bind_time,user_id,score,open_id
+    </sql>
+    
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="id !='' and id !=null">
+                id  = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="bind !='' and bind !=null">
+                and bind = #{bind,jdbcType=VARCHAR}
+            </if>
+            <if test="bindTime !=null">
+                and bind_time = #{bindTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="score !='' and score !=null">
+                and score = #{score,jdbcType=DECIMAL}
+            </if>
+            <if test="openId !='' and openId !=null">
+                and open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </sql>
+    
+    
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.Zhima">
+        insert into cl_zhima(bind,bind_time,user_id,score,open_id)values(#{bind,jdbcType=VARCHAR},#{bindTime,jdbcType=TIMESTAMP},#{userId,jdbcType=INTEGER},#{score,jdbcType=DECIMAL},
+        #{openId,jdbcType=VARCHAR})
+    </insert>
+
+    
+    <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.Zhima">
+        update cl_zhima 
+        <set>
+            <if test="bind != null and bind != '' ">        
+                bind = #{bind,jdbcType=VARCHAR},                
+            </if>
+            <if test="bindTime != null ">        
+                bind_time = #{bindTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="score != null and score != '' ">        
+                score = #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="openId !='' and openId !=null">
+                open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+        </set>  
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateSelective"  parameterType="java.util.HashMap">
+        update cl_zhima
+          <set>
+            <if test="bind != null and bind != '' ">        
+                bind = #{bind,jdbcType=VARCHAR},                
+            </if>
+            <if test="bindTime != null ">        
+                bind_time = #{bindTime,jdbcType=TIMESTAMP},                
+            </if>
+            <if test="userId != null and userId != '' ">        
+                user_id = #{userId,jdbcType=INTEGER},                
+            </if>
+            <if test="score != null and score != '' ">        
+                score = #{score,jdbcType=DECIMAL},
+            </if>
+            <if test="openId !='' and openId !=null">
+                open_id = #{openId,jdbcType=VARCHAR}
+            </if>
+        </set>    
+        where id = #{id ,jdbcType=INTEGER}
+    </update>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from cl_zhima
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_zhima
+        <include refid="searchBy"/>
+    </select>
+               
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from cl_zhima
+        <include refid="searchBy"/>
+    </select>
+    
+</mapper>

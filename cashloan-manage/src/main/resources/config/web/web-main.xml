@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"  
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/task  
+    http://www.springframework.org/schema/task/spring-task-4.0.xsd 
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean id="ResourceConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:/config/server.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 使用annotation @Repository,@Service自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:component-scan base-package="com.xindaibao.cashloan,com.xindaibao.creditrank">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+	</context:component-scan>
+
+	<task:executor id="executor" pool-size="5" />      
+    <task:scheduler id="scheduler" pool-size="5" />    
+    <task:annotation-driven executor="executor" scheduler="scheduler" />
+
+
+	<bean id="secAuthorizeUrl"
+		class="com.xindaibao.cashloan.system.security.freemarker.directive.SpringSecurityAuthorizeUrlDirective"></bean>
+	 <!-- 配置freeMarker的模板路径 -->
+	<bean id="freeMarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="WEB-INF/views/" />
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="secAuthorizeUrl" value-ref="secAuthorizeUrl"></entry>
+			</map>
+		</property>
+		<!--FreeMarker默认每隔5秒检查模板是否被更新，如果已经更新了，就会重新加载并分析模板。 但经常检查模板是否更新可能比较耗时。如果你的应用运行在生产模式下，而且你预期模板不会经常更新， 
+			则可以将更新的延迟时间延长至一个小时或者更久。 可以通过为freemarkerSettings属性设置template_update_delay达到这一目的-->
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="output_encoding">UTF-8</prop>
+			</props>
+		</property>
+		<!--以下语句可以也可以配置freemarker Settings属性，代码更为简洁-->
+		<property name="configLocation" value="classpath:/config/freeMarker.properties"></property>
+	</bean> 
+
+	<!-- 配置freeMarker视图解析器 -->
+	<!-- FreeMarker视图解析 如返回student,在这里配置后缀名ftl和视图解析器 -->
+	 <bean id="freemarkerResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="cache" value="true" />
+		<property name="suffix" value=".ftl" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="requestContextAttribute" value="request" />
+		<!-- 将请求和会话属性作为变量暴露给FreeMarker模板使用。要做到这一点，可以设置exposeRequestAttributes或者exposeSessionAttributes为true -->
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<!-- 使用这些宏，必须设置FreeMarkerViewResolver的exposeMacroHelpers属性为true -->
+		<property name="exposeSpringMacroHelpers" value="true" />
+	</bean> 
+ 
+	<!-- 缺省的url-bean映射方式 -->
+	<bean id="defaultHandlerMapping"
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping">
+		<property name="order" value="0" />
+		<property name="interceptors">
+			<list>
+				<ref bean="urlConfigLauncherInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- URL分布式缓存处理示例 -->
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"> 
+		<property name="order" value="100" /> <property name="urlMap"> <map> <entry 
+		key="/remoting/cacheService.html" value-ref="cacheService-hessian" /> </map> 
+		</property> </bean> -->
+
+
+
+	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值，默认为10K
+		<property name="maxInMemorySize" value="40960" /> -->
+	</bean>
+
+
+	<!-- 默认的注释处理程序映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="order" value="200" />
+		<property name="interceptors">
+			<list>
+				<ref bean="urlConfigLauncherInterceptor" />
+				<ref bean="permissionsInterceptor" />
+				<ref bean="handInterceptor" />
+			</list>
+		</property>
+	
+	</bean>
+	<!-- 用户权限处理 -->
+	<bean id="permissionsInterceptor"
+		class="com.xindaibao.cashloan.core.common.web.interceptor.PermissionsInterceptor" />
+		
+	<!-- 处理程序拦截器 -->
+	<bean id="handInterceptor" class="com.xindaibao.cashloan.core.common.web.interceptor.HandInterceptor" />
+
+
+	<!-- 动静分离配置 -->
+	<bean id="urlConfigLauncherInterceptor"
+		class="com.xindaibao.cashloan.core.common.web.interceptor.URLConfigLauncherInterceptor">
+		<property name="urlConfigs">
+			<map>
+				<entry key="mlmsAppServer" value-ref="mlmsAppServerConfig"></entry>
+				<entry key="mlmsImageServer" value-ref="mlmsImageServerConfig"></entry>
+				<entry key="mlmsScriptServer" value-ref="mlmsScriptServerConfig"></entry>
+				<entry key="mlmsStyleServer" value-ref="mlmsStyleServerConfig"></entry>
+			</map>
+		</property>
+	</bean>
+     
+     <bean id="RDobjectMapper" class="com.xindaibao.cashloan.core.common.util.json.mapper.RDObjectMapper" init-method="init">
+        <property name="dateFormatPattern" value="yyyy-MM-dd HH:mm:ss"/>
+    </bean>
+     <mvc:annotation-driven>
+        <mvc:message-converters>
+        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper" ref="RDobjectMapper"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
+     <bean class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor"/>
+     
+     
+     <!-- 指定自己定义的validator -->  
+	<mvc:annotation-driven validator="validator"/>  
+	  
+	<!-- 以下 validator  ConversionService 在使用 mvc:annotation-driven 会 自动注册-->  
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">  
+	    <property name="providerClass" value="org.hibernate.validator.HibernateValidator"/>  
+	    <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->  
+	    <property name="validationMessageSource" ref="messageSource"/>  
+	</bean>  
+	  
+	<!-- 国际化的消息资源文件（本系统中主要用于显示/错误消息定制） -->  
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">  
+	    <property name="basenames">  
+	        <list>  
+	            <!-- 在web环境中一定要定位到classpath 否则默认到当前web应用下找  -->  
+	            <value>classpath:validatorMsg</value>  
+	            <value>classpath:org/hibernate/validator/ValidationMessages</value>  
+	        </list>  
+	    </property>  
+	    <property name="useCodeAsDefaultMessage" value="false"/>  
+	    <property name="defaultEncoding" value="UTF-8"/>  
+	    <property name="cacheSeconds" value="60"/>  
+	</bean> 
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/modules/manage/**/*"/>
+
+			<mvc:exclude-mapping path="/arsenal/*"/>
+			<bean class="com.xindaibao.cashloan.manage.interceptor.ManageSessionInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+</beans>

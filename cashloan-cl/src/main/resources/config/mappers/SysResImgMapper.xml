@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.SysResImgMapper">
+  <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.SysResImg">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="img_name" jdbcType="VARCHAR" property="imgName" />
+    <result column="suffix_name" jdbcType="VARCHAR" property="suffixName" />
+    <result column="src_code" jdbcType="VARCHAR" property="srcCode" />
+    <result column="md5_name" jdbcType="VARCHAR" property="md5Name" />
+    <result column="upload_id" jdbcType="BIGINT" property="uploadId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, path, type, img_name, suffix_name, src_code, md5_name, upload_id, status, created_time, 
+    updated_time
+  </sql>
+  <!-- 基本的sql查询条件公共引用 -->
+  <sql id="searchBy">
+    <trim prefix="where" prefixOverrides="and|or">
+      <if test=" id != null and id != '' ">
+        id  = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="path != null and path != '' ">
+        and path = #{path,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null and type != '' ">
+        and type = #{type,jdbcType=TINYINT}
+      </if>
+      <if test="imgName != null and imgName != '' ">
+        and imgName = #{img_name,jdbcType=VARCHAR}
+      </if>
+      <if test="suffixName != null and suffixName != '' ">
+        and suffixName = #{suffix_name,jdbcType=TINYINT}
+      </if>
+      <if test="srcCode != null and srcCode != '' ">
+        and srcCode = #{src_code,jdbcType=VARCHAR}
+      </if>
+      <if test="md5Name != null and md5Name != '' ">
+        and md5Name = #{md5_name,jdbcType=VARCHAR}
+      </if>
+      <if test="uploadId != null and uploadId != '' ">
+        and uploadId = #{upload_id,jdbcType=BIGINT}
+      </if>
+      <if test="status != null and status != '' ">
+        and status = #{status,jdbcType=TINYINT}
+      </if>
+      <if test="createdTime != null and createdTime != '' ">
+        and createdTime = #{created_time,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedTime != null and updatedTime != '' ">
+        and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from k_sys_res_img
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from k_sys_res_img
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.SysResImg">
+    insert into k_sys_res_img (id, path, type, 
+      img_name, suffix_name, src_code, 
+      md5_name, upload_id, status, 
+      created_time, updated_time)
+    values (#{id,jdbcType=BIGINT}, #{path,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{imgName,jdbcType=VARCHAR}, #{suffixName,jdbcType=VARCHAR}, #{srcCode,jdbcType=VARCHAR}, 
+      #{md5Name,jdbcType=VARCHAR}, #{uploadId,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.SysResImg">
+    insert into k_sys_res_img
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="imgName != null">
+        img_name,
+      </if>
+      <if test="suffixName != null">
+        suffix_name,
+      </if>
+      <if test="srcCode != null">
+        src_code,
+      </if>
+      <if test="md5Name != null">
+        md5_name,
+      </if>
+      <if test="uploadId != null">
+        upload_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="imgName != null">
+        #{imgName,jdbcType=VARCHAR},
+      </if>
+      <if test="suffixName != null">
+        #{suffixName,jdbcType=VARCHAR},
+      </if>
+      <if test="srcCode != null">
+        #{srcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="md5Name != null">
+        #{md5Name,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadId != null">
+        #{uploadId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xindaibao.cashloan.cl.model.kenya.SysResImg">
+    update k_sys_res_img
+    <set>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="imgName != null">
+        img_name = #{imgName,jdbcType=VARCHAR},
+      </if>
+      <if test="suffixName != null">
+        suffix_name = #{suffixName,jdbcType=VARCHAR},
+      </if>
+      <if test="srcCode != null">
+        src_code = #{srcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="md5Name != null">
+        md5_name = #{md5Name,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadId != null">
+        upload_id = #{uploadId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.SysResImg">
+    update k_sys_res_img
+    set path = #{path,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      img_name = #{imgName,jdbcType=VARCHAR},
+      suffix_name = #{suffixName,jdbcType=VARCHAR},
+      src_code = #{srcCode,jdbcType=VARCHAR},
+      md5_name = #{md5Name,jdbcType=VARCHAR},
+      upload_id = #{uploadId,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from k_sys_res_img
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_sys_res_img
+    <include refid="searchBy"/>
+  </select>
+
+  <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_sys_res_img
+    <include refid="searchBy"/>
+  </select>
+</mapper>
