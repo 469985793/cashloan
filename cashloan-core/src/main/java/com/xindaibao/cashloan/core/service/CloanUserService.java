@@ -71,12 +71,5 @@ public interface CloanUserService extends BaseService<KanyaUser, Long>{
 	 * @param loginName
 	 */
 	void modify(String loginName);
-	/**
-	 * 导入用户
-     * @param firstName
-     * @param lastName
-     * @param nationId
-     * @param mobile
-	 */
-	boolean saveUser(String firstName,String lastName,String nationId,String mobile);
+
 }

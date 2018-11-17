@@ -6,12 +6,8 @@ import javax.annotation.Resource;
 
 import com.xindaibao.cashloan.core.common.mapper.BaseMapper;
 import com.xindaibao.cashloan.core.domain.User;
-import com.xindaibao.cashloan.core.mapper.KanyaUserMapper;
-import com.xindaibao.cashloan.core.mapper.KanyaUserInfoMapper;
-import com.xindaibao.cashloan.core.mapper.UserMapper;
-import com.xindaibao.cashloan.core.model.CloanUserModel;
-import com.xindaibao.cashloan.core.model.KanyaUser;
-import com.xindaibao.cashloan.core.model.KanyaUserInfo;
+import com.xindaibao.cashloan.core.mapper.*;
+import com.xindaibao.cashloan.core.model.*;
 import com.xindaibao.cashloan.core.service.CloanUserService;
 import com.xindaibao.cashloan.system.mapper.SysDictDetailMapper;
 import org.slf4j.Logger;
@@ -48,6 +44,12 @@ public class CloanUserServiceImpl extends BaseServiceImpl<KanyaUser, Long> imple
 	private KanyaUserMapper  kanyaUserMapper;
 	@Resource
 	private KanyaUserInfoMapper  kanyaUserInfoMapper;
+	@Resource
+	private KanyaUserJobMapper  kanyaUserJobMapper;
+	@Resource
+	private KanyaUserLiveMapper kanyaUserLiveMapper;
+	@Resource
+	private KanyaUserContactInfoMapper  kanyaUserContactInfoMapper;
 	@Resource
 	private SysDictDetailMapper sysDictDetailMapper;
 
@@ -145,35 +147,5 @@ public class CloanUserServiceImpl extends BaseServiceImpl<KanyaUser, Long> imple
 			userMapper.updateSelective(paramMap);
 		}
 	}
-	/**
-	 * 导入用户
-	 */
-	@Override
-	public boolean saveUser(String firstName,String lastName,String nationId,String mobile){
-		//密码MD5加密
-		//String password = MD5.md5Pwd(MD5.String2SHA256StrJava("1234"));
-		//直接加密后的“1234”
-		String password ="96EF9496AD3AD87AC01293BFBB0FD46F625957C2F89704DF58056FA5AF30366C";
-		KanyaUser kanyaUser1 = new KanyaUser();
-		kanyaUser1.setUserName(firstName);
-		kanyaUser1.setMobile(mobile);
-		kanyaUser1.setPassword(password);
-		kanyaUser1.setStatus((byte) 1);
-		kanyaUser1.setChannelCode("HAKIKA");
-		kanyaUser1.setCreatedTime(new Date());
-		kanyaUser1.setUpdatedTime(new Date());
-		kanyaUserMapper.save(kanyaUser1);
-		KanyaUser kanyaUser4=kanyaUserMapper.findByMobile(mobile);
-		//创建用户基本信息
-		KanyaUserInfo kanyaUserInfo=new KanyaUserInfo();
-		kanyaUserInfo.setUid(kanyaUser4.getId());
-		kanyaUserInfo.setFirstName(firstName);
-		kanyaUserInfo.setLastName(lastName);
-		kanyaUserInfo.setNationalId(nationId);
-		kanyaUserInfo.setCreatedTime(new Date());
-		kanyaUserInfo.setUpdatedTime(new Date());
-		kanyaUserInfo.setStatus((byte) 1);
-		kanyaUserInfoMapper.save(kanyaUserInfo);
-		return true;
-	}
+
 }

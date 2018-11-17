@@ -8,4 +8,6 @@ import com.xindaibao.cashloan.core.common.mapper.RDBatisDao;
 public interface KanyaUserInfoMapper extends BaseMapper<KanyaUserInfo, Long> {
     //添加用户基本信息
     int save(KanyaUserInfo kanyaUserInfo);
+    //查询身份ID是否重复
+    KanyaUserInfo selectByNationId(String selectByNationId);
 }

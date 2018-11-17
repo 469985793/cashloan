@@ -33,6 +33,8 @@ public class KanyaUserState {
 
     private Byte status;
 
+    private Byte currentState;
+
     private Date createdTime;
 
     private Date updatedTime;
@@ -155,6 +157,15 @@ public class KanyaUserState {
 
     public void setStatus(Byte status) {
         this.status = status;
+    }
+
+
+    public Byte getCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(Byte currentState) {
+        this.currentState = currentState;
     }
 
     public Date getCreatedTime() {

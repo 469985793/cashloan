@@ -77,6 +77,8 @@ public class ManageUserController extends ManageBaseController{
 	private static final Logger logger = LoggerFactory.getLogger(ManageUserController.class);
 	@Resource
 	private CloanUserService cloanUserService;
+	 @Resource
+	 private ImportUserService importUserService;
 	@Resource
 	private UserAuthService authService;
 	@Resource
@@ -137,30 +139,67 @@ public class ManageUserController extends ManageBaseController{
 		 	for (int cIndex = firstCellIndex; cIndex < lastCellIndex; cIndex++) {   //遍历列
 		 		 Cell cell = row.getCell(cIndex);
 				String val = "";
-				switch (cell.getCellType()) {
-					case Cell.CELL_TYPE_STRING:
-						val = cell.getStringCellValue();
-						break;
-					case Cell.CELL_TYPE_NUMERIC:
-						DecimalFormat df = new DecimalFormat("0");
-						val = df.format(cell.getNumericCellValue());
-						break;
-					case Cell.CELL_TYPE_BLANK:
-						break;
-					default:
-						throw new Exception("数据类型配置不正确");
+				if(cell!=null){
+					switch (cell.getCellType()) {
+						case Cell.CELL_TYPE_STRING:
+							val = cell.getStringCellValue();
+							break;
+						case Cell.CELL_TYPE_NUMERIC:
+							DecimalFormat df = new DecimalFormat("0");
+							val = df.format(cell.getNumericCellValue());
+							break;
+						case Cell.CELL_TYPE_BLANK:
+							break;
+						default:
+							throw new Exception("数据类型配置不正确");
+					}
+				}else {
+					val=" ";
 				}
 				 rowList.add(val);
 		 	}
 			 result.add(rowList);
 		 }
 		 }
+		 int excleRows=result.size();
 		 for (int a=0;a<result.size();a++){
-			 boolean row=userService.saveUser(result.get(a).get(2),result.get(a).get(3),result.get(a).get(4),result.get(a).get(5));
-			 if (row){
-				 rows=rows+1;
+		 	String fitstName;
+		 	String lastName;
+		 	String nationId;
+		 	String mobile;
+		 	if(result.get(a).get(2).trim().equals(" ")){
+				fitstName="fitstName";
+			}else {
+		 		fitstName=result.get(a).get(2).trim();
+			}
+			 if(result.get(a).get(3).trim().equals(" ")){
+				 lastName="lastName";
+			 }else {
+				 lastName=result.get(a).get(3).trim();
 			 }
+			 if(result.get(a).get(4).trim().equals(" ")){
+				 nationId="nationId";
+			 }else {
+				 nationId=result.get(a).get(4).trim();
+			 }
+			 if(result.get(a).get(5).trim().equals(" ")){
+				 mobile="mobile";
+			 }else {
+				 mobile=result.get(a).get(5).trim();
+			 }
+			 if(mobile.equals("mobile")){
+
+			 }else {
+				 boolean row=importUserService.saveUser(fitstName,lastName,nationId,mobile);
+				 if (row){
+					 rows=rows+1;
+				 }
+			 }
+
 		 }
+		 	int importRows=rows;
+		 	int notImportRows=excleRows-importRows;
+		 	int test=notImportRows;
 	 }
 
 	/**
