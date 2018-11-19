@@ -264,28 +264,30 @@ public class ManageUserController extends ManageBaseController{
 
 			//计算工作年限
 
+		if(model.getStartTime()!=null){
+			try {
+				int day = new Date().getDay()
+						- model.getStartTime().getDay();
+				int month = new Date().getMonth()
+						- model.getStartTime().getMonth();
+				int year = new Date().getYear()
+						- model.getStartTime().getYear();
 
-		try {
-			int day = new Date().getDay()
-					- model.getStartTime().getDay();
-			int month = new Date().getMonth()
-					- model.getStartTime().getMonth();
-			int year = new Date().getYear()
-					- model.getStartTime().getYear();
+				if (day > 15) {
+					month++;
+				}
 
-			if (day > 15) {
-				month++;
+				if (month > 6) {
+					year++;
+				}
+				model.setWorkingYears(year+"");
+				int i =+1;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			if (month > 6) {
-				year++;
-			}
-			model.setWorkingYears(year+"");
-			int i =+1;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+
 
 
 
