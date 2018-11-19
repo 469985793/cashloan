@@ -1,4 +1,4 @@
-  import React from 'react'
+import React from 'react'
 import {
   Table,
   Modal
@@ -120,7 +120,7 @@ export default React.createClass({
               dataForm.jobMonthIncome = "--";
             }
             if(result.data.userbase.marryStatus == 1){
-              dataForm.marryStatus = "Maried";
+              dataForm.marryStatus = "Marited";
             }else if(result.data.userbase.marryStatus == 2){
               dataForm.marryStatus = "Single";
             }else if(result.data.userbase.marryStatus == 3){
@@ -151,18 +151,7 @@ export default React.createClass({
 			dataForm.liveAddress = result.data.userbase.liveAddress;
 			dataForm.liveCity = result.data.userbase.liveCity;
 			dataForm.rentYear = result.data.userbase.rentYear;
-      dataForm.liveTime = result.data.userbase.liveTime;
-      if(result.data.userbase.liveBelong ==1){
-        dataForm.typeOfResidence='Living with parents';
-    }else if(result.data.userbase.liveBelong ==2){
-        dataForm.typeOfResidence='Tenant';
-    }else if(result.data.userbase.liveBelong ==3){
-        dataForm.typeOfResidence='Owner';
-    }else if(result.data.userbase.liveBelong ==4){
-        dataForm.typeOfResidence='Other';
-    }else if(result.data.userbase.liveBelong ==5){
-        dataForm.typeOfResidence='Boarder';
-    }
+			dataForm.liveTime = result.data.userbase.liveTime;
             dataForm.companyName = result.data.userbase.companyName;
             dataForm.companyPhone = result.data.userbase.companyEmail;
             dataForm.companyAddr = result.data.userbase.officeAddress;
@@ -171,11 +160,11 @@ export default React.createClass({
             dataForm.otherName = result.data.userbase.otherContactName;
             dataForm.otherPhone = result.data.userbase.otherContactMobile;
             if(result.data.userbase.otheContact == 1){
-              dataForm.otherRelation = "friend";
+              dataForm.otherRelation = "farther";
             }else if(result.data.userbase.otheContact == 2){
-              dataForm.otherRelation = "colleague";
+              dataForm.otherRelation = "mother";
             }else if(result.data.userbase.otheContact == 3){
-              dataForm.otherRelation = "schoolmate";
+              dataForm.otherRelation = "borther";
             }else if(result.data.userbase.otheContact == 4){
               dataForm.otherRelation = "sister";
             }else if(result.data.userbase.otheContact == 5){
@@ -480,21 +469,21 @@ export default React.createClass({
       dataIndex: 'status',
       render: (text, record) => {
         if (text == 10) {
-          return "黑名单"
+          return "blacklist"//"黑名单"
         } else {
-          return "正常"
+          return "normal"//"正常""
         }
       }
     }, {
-      title: '操作',
+      title: 'Operating',//操作
       render: (text, record) => {
         return <div>
-          <a href="javascript:;" onClick={me.showModal.bind(me, '查看详情', record, true)}>查看</a>
+          <a href="javascript:;" onClick={me.showModal.bind(me, '查看详情', record, true)}>View</a>
           <span className="ant-divider"></span>
           {record.status == "10" ? (
-            <a href="javascript:;" onClick={me.changeStatus.bind(me, '解除黑名单', record)}>解除黑名单</a>
+            <a href="javascript:;" onClick={me.changeStatus.bind(me, '解除黑名单', record)}>Lift blacklist</a>
           ) : (
-              <a href="javascript:;" onClick={me.changeStatus.bind(me, '添加黑名单', record)}>添加黑名单</a>
+              <a href="javascript:;" onClick={me.changeStatus.bind(me, '添加黑名单', record)}>Add blacklist</a>
             )}
           
           {/*<span className="ant-divider"></span>{record.education ? (

@@ -83,6 +83,12 @@ export default React.createClass({
       data: params,
       method: "get",
       callback: (result) => {
+        if(result.data){
+          for(var i = 0 ; i<result.data.length;i++){
+            result.data[i].amount=result.data[i].amount/100;
+            result.data[i].penaltyAmout=result.data[i].penaltyAmout/100;
+          }
+        }
         const pagination = this.state.pagination;
         pagination.current = params.current;
         pagination.pageSize = params.pageSize;
@@ -188,7 +194,7 @@ export default React.createClass({
     
     
     var columns = [{
-      title: '真姓名',
+      title: '真实姓名',
       dataIndex: 'borrowName',
     }, {
       title: '订单号',

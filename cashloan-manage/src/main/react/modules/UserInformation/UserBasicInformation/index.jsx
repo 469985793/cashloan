@@ -21,7 +21,6 @@ export default React.createClass({
       </div>
       <List params={this.state.params}/>
     </div>
-    
   }
 });
 

@@ -286,11 +286,6 @@ var Tab1 = React.createClass({
               </Row>
 			  <h2>Live Message</h2>
               <Row>
-              <Col span="8">
-                  <FormItem {...formItemLayout} label="Type of Residence：">
-                    <Input {...getFieldProps('typeOfResidence', { initialValue: '' }) } disabled={true} />
-                  </FormItem>
-                </Col>
                 <Col span="8">
                   <FormItem {...formItemLayout} label="Live Address：">
                     <Input {...getFieldProps('liveAddress', { initialValue: '' }) } disabled={props.canEdit} />

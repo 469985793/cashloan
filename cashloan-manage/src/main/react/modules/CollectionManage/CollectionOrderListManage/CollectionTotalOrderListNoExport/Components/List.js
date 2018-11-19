@@ -84,6 +84,13 @@ export default React.createClass({
       method: "get",
       callback: (result) => {
         const pagination = this.state.pagination;
+        // console.log(result);
+        if(result.data){
+          for(var i = 0 ; i<result.data.length;i++){
+            result.data[i].amount=result.data[i].amount/100;
+            result.data[i].penaltyAmout=result.data[i].penaltyAmout/100;
+          }
+        }
         pagination.current = params.current;
         pagination.pageSize = params.pageSize;
         pagination.total = result.page.total;
