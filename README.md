@@ -1,32 +1,24 @@
-# xindaibao-z
-
+#### 现金贷后台
 #### 项目介绍
-xindaibao-z is xindaibao of zuoli
+后台操作管理
 
 #### 软件架构
 软件架构说明
-
+SSM+Maven+MySQL
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. 克隆项目
+2. 配置tomcat 端口号8086
+3. 在cashlon-manage\src\main下运行nodejs
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
 
 #### 参与贡献
-
-1. Fork 本项目
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
-
+1.
+2.
+3.
 #### 码云特技
 
 1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
