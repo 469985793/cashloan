@@ -138,18 +138,18 @@ const Top = React.createClass({
         </div>
         <div className="navbar navbar-static-top">
           <a href="#" className="sidebar-toggle" onClick={this.toggleMenu}>
-            <Icon type={`${ fold ? 'menu-unfold' : 'menu-fold'}`}/><span className="system-name">后台管理系统</span>
+            <Icon type={`${ fold ? 'menu-unfold' : 'menu-fold'}`}/><span className="system-name">Background management system</span>{/*后台管理系统*/}
           </a>
           <div className="navbar-custom-menu">
             <div className="fn-right right-block">
-              欢迎您，{ userMessage.name }
+              Welcome,{ userMessage.name }{/*欢迎您，{userMessage.name}*/}
               <a onClick={this.signOut}>
-                <Icon type="logout"/> 注销
+                <Icon type="logout"/> Logout{/*注销*/}
               </a>
               <i className="anticon anticon-edit"></i><a style={{display:"inline-block",marginLeft:'5px'}}
-                                                            onClick={this.showModal.bind(this,userMessage.id)}>修改密码</a>
+                                                            onClick={this.showModal.bind(this,userMessage.id)}>change Password{/*修改密码*/}</a>
                <Tooltip placement="bottom" title={toggleRole}>
-                <a className="">[切换角色]</a>
+                <a className="">[Switch roles{/*切换角色*/}]</a>
               </Tooltip> 
             </div>
 

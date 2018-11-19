@@ -54,7 +54,7 @@ var AddWin = React.createClass({
         return;
       }
       //console.log(me.props.dataRecord[me.state.index].cardId+','+me.props.dataRecord[me.state.index].userId);
-     var tips = "您是否确定测试借款";
+     var tips = "Are you sure to test the loan?";//您是否确定测试借款
      confirm({
         title: tips,
         onOk: function() {

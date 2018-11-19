@@ -179,19 +179,19 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '手机号码',
+            title: 'Phone',//手机号码
             dataIndex: 'userName',
         }, {
-            title: '用户名',
+            title: 'Username',//用户名
             dataIndex: "realName",
         }, {
-            title: '奖励总额(元)',
+            title: 'Total Reward(KSH)',//奖励总额(元))
             dataIndex: "total",
         }, {
-            title: '待打款(元)',
+            title: 'Waiting For Money(KSH)',//待打款(元)
             dataIndex: 'noCashed',
         }, {
-            title: '已打款(元)',
+            title: 'Paid(KSH)',//已打款(元)
             dataIndex: "cashed",
         }]
         // },{

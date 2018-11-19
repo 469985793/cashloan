@@ -24,7 +24,6 @@ export default React.createClass({
             rowRecord: [],
             record: "",
             visibleAdd: false,
-
         };
     },
 
@@ -57,6 +56,7 @@ export default React.createClass({
             method: "post",
             data: params,
             callback: (result) => {
+                // console.log(result);
                 const pagination = this.state.pagination;
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;

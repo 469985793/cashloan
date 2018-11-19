@@ -80,7 +80,7 @@ var AddRole = React.createClass({
         if(i.indexOf('ccolumn') > -1){
           if(!data[i]){
             Modal.error({
-              title: '信息不能为空'
+              title: 'Information Cannot Be Empty'//信息不能为空
             })
             return;
           }
@@ -129,7 +129,7 @@ var AddRole = React.createClass({
               continue;
             } else {
               Modal.error({
-                title: '信息不能为空'
+                title: 'Information Cannot Be Empty'//信息不能为空
               })
               return;
             }
@@ -169,7 +169,7 @@ var AddRole = React.createClass({
                 continue;
               } else { 
                 Modal.error({
-                  title: '信息不能为空'
+                  title: 'Information Cannot Be Empty'//信息不能为空
                 })
                 return;
               }
@@ -179,7 +179,7 @@ var AddRole = React.createClass({
             
       }
       params.infoList=res; 
-      if (this.props.title == '编辑') {
+      if (this.props.title == 'Edit') {//编辑
         url = '/modules/manage/rule/saveRuleConfig.htm'; //+ '?name=' + params.name + '&id=' + this.props.ruleData.rule.id + '&configList=' + JSON.stringify(params.configList);
          paramsData={"name": params.name,"id":this.props.ruleData.rule.id,"configList": JSON.stringify(params.configList),"infoList":JSON.stringify(params.infoList),"type":params.type}
        // //console.log(url)
@@ -336,7 +336,7 @@ var AddRole = React.createClass({
   //  //console.log("mmmmmmmmmm",nextProps.ruleData);
     if (nextProps.visible) {
 
-      if (nextProps.title == '编辑' && this.state.num == 1) {
+      if (nextProps.title == 'Edit' && this.state.num == 1) {//编辑
         var data = nextProps.ruleData.configList;
         var data2= nextProps.ruleData.infoList
         var data3= nextProps.ruleData.rule
@@ -358,7 +358,7 @@ var AddRole = React.createClass({
         });
         this.state.num = 2;
       //  //console.log(333333);
-      } else if (nextProps.title == '新增') {
+      } else if (nextProps.title == 'Add') {//新增
         this.formData = {};
         this.formData2 = {};
     //    //console.log(55555555);
@@ -423,9 +423,9 @@ var AddRole = React.createClass({
     var props = this.props;
     var state = this.state;
     var modalBtns = [
-      <button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</button>,
+      <button key="back" className="ant-btn" onClick={this.handleCancel}>Back{/*返 回*/}</button>,
       <button key="button" className="ant-btn ant-btn-primary"  onClick={this.handleOk}>
-          提 交
+          Submit{/*提 交*/}
       </button>
     ];
  //   //console.log("state.keys2",state.keys2);
@@ -441,9 +441,9 @@ var AddRole = React.createClass({
                   wrapperCol: {
                   span: 14
                   },
-                  }} label="结果评分:">
-                   <Select style={{ width: '100%' }}  placeholder="请选择"
-                     {...getFieldProps(`${k}info_formula`,{initialValue:this.formData2?this.formData2[`${k}formula`]:''})}>
+                  }} label="Result Score:">{/*结果评分*/}
+                   <Select style={{ width: '100%' }}  placeholder="Please Choose"
+                     {...getFieldProps(`${k}info_formula`,{initialValue:this.formData2?this.formData2[`${k}formula`]:''})}>{/*请选择*/}
                      <Option  value='>'>></Option>
                      <Option  value='<'>{'<'}</Option>
                      <Option  value='='>=</Option>
@@ -462,18 +462,18 @@ var AddRole = React.createClass({
                 </FormItem> 
               </Col>
                <Col span="6" className="col_h">
-                <FormItem  {...{ labelCol: {span: 6},wrapperCol: {span: 15}}} label="分值:">
-                 <Input  type="number"    {...getFieldProps(`${k}info_integral`,{onChange:this.changeInt,getValueFromEvent: this.changeNUm,initialValue:this.formData2?this.formData2[`${k}integral`]:'',rules: [{type:'number' ,max:2147483647,message:'输入过多'}]})} />
+                <FormItem  {...{ labelCol: {span: 6},wrapperCol: {span: 15}}} label="Score:">{/*分值*/}
+                 <Input  type="number"    {...getFieldProps(`${k}info_integral`,{onChange:this.changeInt,getValueFromEvent: this.changeNUm,initialValue:this.formData2?this.formData2[`${k}integral`]:'',rules: [{type:'number' ,max:2147483647,message:'Too Much Input'}]})} />{/*输入过多*/}
                 </FormItem>
                </Col>
              <Col span="6" className="col_h">
                     <FormItem  {...{ labelCol: {},wrapperCol: {span:20}} }
                       label="">
-                      <Select style={{ width: '100%' }}  placeholder="请选择"  {...getFieldProps(`${k}info_result`,{initialValue:this.formData2?this.formData2[`${k}result`]:''})}>
+                      <Select style={{ width: '100%' }}  placeholder="Please Choose"  {...getFieldProps(`${k}info_result`,{initialValue:this.formData2?this.formData2[`${k}result`]:''})}>{/*请选择*/}
                            {/*<Option  value="">结果选择</Option>*/} 
-                            <Option  value={"10"}>不通过</Option>
-                            <Option  value={"20"}>需人工复审</Option>
-                            <Option  value={"30"}>通过</Option>
+                            <Option  value={"10"}>Fail</Option>{/*不通过*/}
+                            <Option  value={"20"}>Manual Review</Option>{/*需人工复审*/}
+                            <Option  value={"30"}>Pass</Option>{/*通过*/}
                       </Select>
                     </FormItem>
               </Col>
@@ -498,8 +498,8 @@ var AddRole = React.createClass({
               span: 18
               },
               }}
-              label="表字段:">
-               <Cascader options={this.state.tableInfo} {...getFieldProps(`${k}ccolumn`,{initialValue:this.formData?this.formData[`${k}ccolumn`]:''})} placeholder="请选择字段" />
+              label="Table Field:">{/*表字段*/}
+               <Cascader options={this.state.tableInfo} {...getFieldProps(`${k}ccolumn`,{initialValue:this.formData?this.formData[`${k}ccolumn`]:''})} placeholder="Please Select A Field" />{/*请选择字段*/}
             </FormItem> 
           </Col>
           <Col span="4" className='col_h'>
@@ -510,9 +510,9 @@ var AddRole = React.createClass({
               wrapperCol: {
               span: 14
               },
-              }} label="表达式:">
-               <Select style={{ width: '100%' }}  placeholder="请选择"
-                 {...getFieldProps(`${k}formula`,{initialValue:this.formData?this.formData[`${k}formula`]:''})}>
+              }} label="Expression:">{/*表达式*/}
+               <Select style={{ width: '100%' }}  placeholder="Please Choose"
+                 {...getFieldProps(`${k}formula`,{initialValue:this.formData?this.formData[`${k}formula`]:''})}>{/*请选择*/}
                  <Option  value='>'>></Option>
                  <Option  value='<'>{'<'}</Option>
                  <Option  value='='>=</Option>
@@ -523,31 +523,31 @@ var AddRole = React.createClass({
                  <Option  value='<=and<'>{'<=and<'}</Option>
                  <Option  value='<=and<='>{'<=and<='}</Option>
                  <Option  value='<and<='>{'<and<='}</Option>
-                 <Option  value='include'>包含</Option>
-                 <Option  value='exclude'>不包含</Option>
+                 <Option  value='include'>Contain</Option>{/*包含*/}
+                 <Option  value='exclude'>Not Included</Option>{/*不包含*/}
                </Select>
             </FormItem> 
           </Col>
           <Col span="3" className='col_h'>
             <FormItem  {...{ labelCol: {span: 6},wrapperCol: {span: 15}}}
-              label="值:">
-              <Input  {...getFieldProps(`${k}cvalue`,{initialValue:this.formData?this.formData[`${k}cvalue`]:'',rules: [{max:20,message:'输入过多'}]})} type="text" autoComplete="off" />
+              label="value:">{/*值*/}
+              <Input  {...getFieldProps(`${k}cvalue`,{initialValue:this.formData?this.formData[`${k}cvalue`]:'',rules: [{max:20,message:'Too Much Input'}]})} type="text" autoComplete="off" />{/*输入过多*/}
             </FormItem>
           </Col>
                {this.state.type=='10'?
                 <Col span="3" className="col_h">
-                <FormItem  {...{ labelCol: {span: 6},wrapperCol: {span: 15}}} label="分数:">
-                 <Input  type="number"  {...getFieldProps(`${k}integral`,{onChange:this.changeInt,getValueFromEvent: this.changeNUm,initialValue:this.formData?this.formData[`${k}integral`]:'',rules: [{type:'number',max:2147483647,message:'输入过多'}]})}/>
+                <FormItem  {...{ labelCol: {span: 6},wrapperCol: {span: 15}}} label="Score:">{/*分数*/}
+                 <Input  type="number"  {...getFieldProps(`${k}integral`,{onChange:this.changeInt,getValueFromEvent: this.changeNUm,initialValue:this.formData?this.formData[`${k}integral`]:'',rules: [{type:'number',max:2147483647,message:'Too Much Input'}]})}/>{/*输入过多*/}
                 </FormItem>
              </Col>
              :<Col span="3" className="col_h">
                     <FormItem  {...{ labelCol: {},wrapperCol: {span:20}} }
                       label="">
-                      <Select style={{ width: '100%' }} placeholder="请选择"  {...getFieldProps(`${k}result`,{initialValue:this.formData?this.formData[`${k}result`]:''})} >
+                      <Select style={{ width: '100%' }} placeholder="Please Choose"  {...getFieldProps(`${k}result`,{initialValue:this.formData?this.formData[`${k}result`]:''})} >
                             {/*<Option  value="">结果选择</Option>*/}
-                            <Option  value={"10"}>不通过</Option>
-                            <Option  value={"20"}>需人工复审</Option>
-                            <Option  value={"30"}>通过</Option>
+                            <Option  value={"10"}>Fail</Option>{/*不通过*/}
+                            <Option  value={"20"}>Manual review</Option>{/*需人工复审*/}
+                            <Option  value={"30"}>Pass</Option>{/*通过*/}
                       </Select>
                     </FormItem>
               </Col>
@@ -574,16 +574,16 @@ var AddRole = React.createClass({
             <Row>
              <Col span='6' className='col_h'>
                 <FormItem  {...{ labelCol: {span: 8},wrapperCol: {span: 16}}}        
-                  label="规则名称：">
-                  <Input  {...getFieldProps('name', {initialValue:"", rules: [{required:true,message: '请输入规则名称，最多20个字!',max:20}]})} type="text" autoComplete="off" />
+                  label="Rule Name">{/*规则名称*/}
+                  <Input  {...getFieldProps('name', {initialValue:"", rules: [{required:true,message: 'Please enter a rule name, up to 20 words!',max:20}]})} type="text" autoComplete="off" />{/*请输入规则名称，最多20个字*/}
                 </FormItem>
               </Col>
              <Col span='6' className='col_h'>
                 <FormItem  {...{ labelCol: {span:6},wrapperCol: {span: 14}}}
-                  label="模式：">
+                  label="Mode:">{/*模式：*/}
                     <Select style={{ width: '100%' }} {...getFieldProps('type', {initialValue: '20',onChange:this.change})} >
-                     <Option  value={'10'}>评分模式</Option>
-                     <Option  value={'20'}>结果模式</Option>
+                     <Option  value={'10'}>Scoring Mode</Option>{/*评分模式*/}
+                     <Option  value={'20'}>Result Mode</Option>{/*结果模式*/}
                    </Select>
                 </FormItem>
               </Col>  
@@ -595,7 +595,7 @@ var AddRole = React.createClass({
                this.state.type=="10"? 
               <div>
                 <Input type='hidden' {...getFieldProps('0id2',{initialValue:this.formData2?this.formData2['0id2']:0})}/>
-               <p style={{width:"100px",height:"20px",color:"#2db7f5",fontSize:"15px",textAlign:"center",borderLeft:"2px solid #2db7f5",lineHeight:"20px" ,marginBottom:"10px"}}>决策引擎</p>
+               <p style={{width:"100px",height:"20px",color:"#2db7f5",fontSize:"15px",textAlign:"center",borderLeft:"2px solid #2db7f5",lineHeight:"20px" ,marginBottom:"10px"}}>Decision Engine</p>{/*决策引擎*/}
                {this.state.itemTwo ?( <Row>
                  <Col span="8" className='col_h'>
                 <FormItem  {...{

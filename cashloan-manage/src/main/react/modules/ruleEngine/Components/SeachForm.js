@@ -39,18 +39,18 @@ let SeachForm = React.createClass({
 
         return (
             <Form inline>
-             <FormItem label="规则名称:">
+             <FormItem label="Rule Name:">{/*规则名称*/}
                     <Input type="text" {...getFieldProps('name') } />
                 </FormItem>
-                <FormItem label="状态:">
-                    <Select style={{ width: 100 }}  placeholder="请选择" {...getFieldProps('state',{initialValue:""}) }>
-                        <Option value={""}>全部</Option>
-                        <Option value={"10"}>启用</Option>
-                        <Option value={"20"}>禁用</Option>
+                <FormItem label="Status:">{/*状态*/}
+                    <Select style={{ width: 100 }}  placeholder="Please Choose" {...getFieldProps('state',{initialValue:""}) }>{/*请选择*/}
+                        <Option value={""}>All</Option>{/*全部*/}
+                        <Option value={"10"}>Enable</Option>{/*启用*/}
+                        <Option value={"20"}>Disable</Option>{/*禁用*/}
                     </Select>
                 </FormItem>
-                <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
-                <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+                <FormItem><Button type="primary" onClick={this.handleQuery}>Search</Button></FormItem>{/*查询*/}
+                <FormItem><Button type="reset" onClick={this.handleReset}>Reset</Button></FormItem>{/*重置*/}
             </Form>
         );
     }

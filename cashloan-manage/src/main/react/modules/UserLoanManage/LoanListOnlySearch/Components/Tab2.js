@@ -54,6 +54,7 @@ var Tab2 = React.createClass({
         if (!pagination.current) {
           pagination.current = 1
         };
+        // console.log(result);
         this.setState({
           loading: false,
           data: result.data.list,

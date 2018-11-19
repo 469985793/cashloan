@@ -34,7 +34,8 @@ export default React.createClass({
 
     componentDidMount() {
         this.fetch();
-        []
+        [];
+        // console.log(123);
     },
 
     fetch(params = {}) {
@@ -57,6 +58,13 @@ export default React.createClass({
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
+                // console.log(result);
+                if (result.data[0]) {
+                    result.data[0].balance = result.data[0].balance / 100;
+                    result.data[0].totalFee = result.data[0].totalFee / 100;
+                    result.data[0].actualBalance = result.data[0].actualBalance / 100;
+                    result.data[0].actualbackAmt = result.data[0].actualbackAmt / 100;
+                }
                 if (!pagination.current) {
                     pagination.current = 1
                 }
@@ -72,13 +80,14 @@ export default React.createClass({
 
     //查看弹窗
     showModal(title, record, canEdit) {
-
+        // console.log(record);
         this.setState({
             visible: true,
             canEdit: canEdit,
             record: record,
             title: title
         }, () => {
+            // console.log(record);
             Utils.ajaxData({
                 url: '/modules/manage/borrow/borrowRepayContent.htm',
                 data: {
@@ -86,6 +95,17 @@ export default React.createClass({
                 },
                 method: "post",
                 callback: (result) => {
+                    // console.log(result);
+                    if (result.data) {
+                        result.data.actualBalance = result.data.actualBalance / 100;
+                        result.data.balance = result.data.balance / 100;
+                        result.data.overdueFee = result.data.overdueFee / 100;
+                        result.data.totalFee = result.data.totalFee / 100;
+                        result.data.profit = result.data.profit / 100;
+                        // result.data[0].totalFee = result.data[0].totalFee / 100;
+                        // result.data[0].actualBalance = result.data[0].actualBalance / 100;
+                        // result.data[0].actualbackAmt = result.data[0].actualbackAmt / 100;
+                    }
                     this.refs.Lookdetails.setFieldsValue(result.data);
                     this.setState({
                         dataRecord: result.data,
@@ -154,7 +174,7 @@ export default React.createClass({
 
     //行点击事件
     onRowClick(record) {
-        //console.log(record)
+        // console.log(record);
         this.setState({
             selectedRowKeys: [record.id],
             selectedRow: record,
@@ -189,7 +209,7 @@ export default React.createClass({
         const {
             loading,
             selectedRowKeys
-            } = this.state;
+        } = this.state;
         const rowSelection = {
             type: 'checkbox',
             selectedRowKeys,
@@ -202,85 +222,85 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '真实姓名',
+            title: 'Actual Name',//真实姓名
             dataIndex: 'lastName'
         }, {
-            title: '手机号码',
+            title: 'Phone',//手机号码
             dataIndex: 'mobile'
         }, {
-            title: '订单号',
+            title: 'Order Number',//订单号
             dataIndex: 'indentNo'
         }, {
-            title: '借款金额',
+            title: 'Loan Amount',//借款金额
             dataIndex: 'balance'
         }, {
-            title: '借款期限(Days)',
+            title: 'Borrowing Period(Days)',//借款期限
             dataIndex: "cycle",
         }, {
-            title: '订单生成时间',
+            title: 'Order Generation Time',//订单生成时间
             dataIndex: 'createdTime'
         }, {
-            title: '综合费用',
+            title: 'Comprehensive Cost',//综合费用
             dataIndex: "totalFee"
         }, {
-            title: '实际到账金额',
+            title: 'Actual Arrival Amount',//实际到账金额
             dataIndex: 'actualBalance'
         }, {
-            title: '实际还款金额',
+            title: 'Actual Repayment Amount',//实际还款金额
             dataIndex: 'actualbackAmt'
         }, {
-            title: '订单状态',
+            title: 'Order Status',//订单状态
             dataIndex: "status",
             render: (text, record) => {
-                if (text == 1){
-                return "申请中,待风控审核"
-                }else if (text == 2){
-                return "风控审核通过,待复审"
-                }else if (text == 3){
-                return "复审通过,待放款"
-                }else if (text == 4){
-                return "放款中"
-                }else if (text == 5){
-                return "已放款,待还款"
-                }else if (text == 6){
-                return "正常还款"
-                }else if (text == 21){
-                return "已逾期"
-                }else if (text == 22){
-                return "逾期还款"
-                }else if (text == 31){
-                return "风控审核不通过"
-                }else if (text == 32){
-                return "复审不通过"
-                }else if (text == 41){
-                return "放款失败"
-                }else if (text == 42){
-                return "放款被拒"
-                }else if (text == 51){
-                return "坏账"
-                }else{
+                if (text == 1) {
+                    return "In the application, pending risk control review"//申请中,待风控审核
+                } else if (text == 2) {
+                    return "Wind control audit passed, pending review"//风控审核通过,待复审
+                } else if (text == 3) {
+                    return "Review and approval, pending payment"//复审通过,待放款
+                } else if (text == 4) {
+                    return "In the lending"//放款中
+                } else if (text == 5) {
+                    return "Loaned, pending payment"//已放款,待还款
+                } else if (text == 6) {
+                    return "Normal reimbursement"//正常还款
+                } else if (text == 21) {
+                    return "Overdue"//已逾期
+                } else if (text == 22) {
+                    return "Terms for late"//逾期还款
+                } else if (text == 31) {
+                    return "Risk control audit did not pass"//风控审核不通过
+                } else if (text == 32) {
+                    return "Review not approved"//复审不通过
+                } else if (text == 41) {
+                    return "Loan failure"//放款失败
+                } else if (text == 42) {
+                    return "Lending was rejected"//放款被拒
+                } else if (text == 51) {
+                    return "Bad debt"//坏账
+                } else {
                     return " "
                 }
             }
-        },{
-            title: '渠道名称',
+        }, {
+            title: 'Channel Name',//渠道名称
             dataIndex: 'applyTerminal',
             render: (text, record) => {
-            if (text == 1){
+                if (text == 1) {
                     return "android"
-                }else if(text == 2){
+                } else if (text == 2) {
                     return "IOS"
-                }else{
-                return "pc"
-            }
+                } else {
+                    return "pc"
+                }
             }
         }, {
-            title: '操作',
+            title: 'Operating',//操作
             dataIndex: "",
             render: (value, record) => {
                 return (
                     <div style={{ textAlign: "left" }}>
-                        <a href="#" onClick={me.showModal.bind(me, '查看详情', record, false)}>查看详情</a>
+                        <a href="#" onClick={me.showModal.bind(me, '查看详情', record, false)}>View</a>{/*查看详情*/}
                     </div>
                 )
             }

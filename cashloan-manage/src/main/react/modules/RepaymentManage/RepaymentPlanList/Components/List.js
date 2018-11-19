@@ -56,6 +56,11 @@ export default React.createClass({
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
+                // console.log(result);
+                if(result.data[0]){
+                    result.data[0].overdueFee=result.data[0].overdueFee/100;
+                    result.data[0].balance=result.data[0].balance/100;
+                }
                 if (!pagination.current) {
                     pagination.current = 1
                 }
@@ -182,45 +187,48 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '真实姓名',
+            title: 'Real Name',//真实姓名
             dataIndex: 'lastName'
         }, {
-            title: '手机号码',
+            title: 'Phone',//手机号码
             dataIndex: "mobile",
         }, {
-            title: '订单号',
+            title: 'Order Number',//订单号
             dataIndex: 'indentNo'
         }, {
-            title: '借款金额',
+            title: 'Loan Amount',//借款金额
             dataIndex: 'balance'
         }, {
-            title: '逾期罚金',
+            title: 'Overdue Fine',//逾期罚金
             dataIndex: 'overdueFee'
         }, {
-            title: '应还款金额(元)',
+            title: 'Repayment Amount(KSh)',//应还款金额
             dataIndex: 'repayAmount'
         }, {
-            title: '应还款总额(元)',
+            title: 'Total Amount Of Repayment(KSh)',//应还款总额
             dataIndex: 'repayTotal'
         }, {
-            title: '应还款日期',
+            title: 'Repayment Date',//应还款日期
             dataIndex: 'shouldbackTime'
         }, {
-            title: '还款状态',
+            title: 'Actual Repayment Amount',//实际还款金额(新增)
+            dataIndex: 'actualRepayment'
+        },{
+            title: 'Repayment Status',//还款状态
             dataIndex: "status",
             render: (text, record)=>{
                 if(record.status==6){
-                    return "已还款"
+                    return "Repaid"//已还款
                 }else if(record.status==5){
-                    return "未还款"
+                    return "Unpaid"//未还款
                 }else if(record.status==21){
-                    return "已逾期"
+                    return "Overdue"//已逾期
                 }else{
                     return "-"
         }
             }
         },{
-            title: '操作',
+            title: 'Operating',
             dataIndex: "",
             render: (text,record) => {
                 if(record.state == 10){
@@ -228,9 +236,9 @@ export default React.createClass({
                 }else{
                     return(
                     <div style={{ textAlign: "left" }}>
-                            <a href="#" onClick={me.showModal.bind(me, '确认还款',record, false)}>确认还款</a>
+                            <a href="#" onClick={me.showModal.bind(me, 'Confirm Repayment',record, false)}>Confirm Repayment{/*确认还款*/}</a>
                             <br />
-                            <a href="#" onClick={me.showModal.bind(me, '手动划款',record, false)}>手动划款</a>
+                            <a href="#" onClick={me.showModal.bind(me, 'Manual Transfer',record, false)}>Manual Transfer{/*手动划款*/}</a>
                     </div>
                     )
                 }
@@ -242,10 +250,10 @@ export default React.createClass({
             <div className="block-panel">
                 <div className="actionBtns" style={{ marginBottom: 16 }}>
                     <button onClick={me.addModal.bind(me,'批量')} className="ant-btn"> 
-                        批量还款
+                        {/*批量还款*/}Batch Repayment
                     </button>
                     <button onClick={me.download.bind(me,'下载')} className="ant-btn"> 
-                        下载模板
+                        {/*下载模板*/}Download Template
                     </button>
                 </div>
                 <Table columns={columns} rowKey={this.rowKey} ref="table" 

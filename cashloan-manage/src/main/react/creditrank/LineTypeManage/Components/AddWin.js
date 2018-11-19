@@ -68,7 +68,7 @@ var AddWin = React.createClass({
             rankArray:nextProps.rankArray,
             rankmateArray:nextProps.rankmateArray,
         })
-        if (nextProps.title == "编辑" || nextProps.title == "查看") {
+        if (nextProps.title == "Edit" || nextProps.title == "View") {//编辑 查看
             var dataArray = [];
             this.setState({
                 dataRecord: nextProps.dataRecord,
@@ -99,12 +99,12 @@ var AddWin = React.createClass({
                 //console.log('Errors in form!!!');
                 return;
             }
-            if (this.props.title == "新增额度类型") {
+            if (this.props.title == "New quota type") {//新增额度类型
                 var res = [];
                 var url = '/modules/manage/cr/creditType/saveCreditType.htm';
                 params.borrowTypeId=borrowTypeId;
             }
-            if (this.props.title == "编辑") {
+            if (this.props.title == "Edit") {//编辑
                 var paramsData = this.props.form.getFieldsValue();
                 var url = '/modules/manage/cr/creditType/updateCreditType.htm';
                 params.borrowTypeId=borrowTypeId;
@@ -216,13 +216,13 @@ var AddWin = React.createClass({
         var props = this.props;
         var state = this.state;
         var modalBtns = [
-            <Button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</Button>,
+            <Button key="back" className="ant-btn" onClick={this.handleCancel}>{/*返 回*/}Back</Button>,
             <Button key="button" className="ant-btn ant-btn-primary" loading={state.loading} onClick={this.handleOk}>
-                提 交
+                Submit{/*提 交*/}
             </Button>
         ];
         var modalBtnsLook = [
-            <Button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</Button>
+            <Button key="back" className="ant-btn" onClick={this.handleCancel}>{/*返 回*/}Back</Button>
         ];
         const formItemLayout = {
             labelCol: {
@@ -251,26 +251,26 @@ var AddWin = React.createClass({
             selectedRowKeys
         } = this.state;
         const rowSelection = {
-            type: props.title=="查看"?'':'checkbox',
+            type: props.title=="View"?'':'checkbox',//查看
             selectedRowKeys,
             onSelectAll: this.onSelectAll,
         };
         const hasSelected = selectedRowKeys.length > 0;
 
         var columns = [{
-            title: "借款类型",
+            title: "Type of loan",//借款类型
             dataIndex: "borrowId"
         }];
         return (
-            <Modal title={props.title} visible={props.visible} onCancel={this.handleCancel} width="800" footer={props.title =="查看"?modalBtnsLook:modalBtns} maskClosable={false} >
+            <Modal title={props.title} visible={props.visible} onCancel={this.handleCancel} width="800" footer={props.title =="View"?modalBtnsLook:modalBtns} maskClosable={false} >{/*查看*/}
                 <div style={{ position: "relative" }}>
                     <Form horizontal form={this.props.form} style={{ marginTop: "20px" }}>
                         <Input  {...getFieldProps('id') } type="hidden" />
                         <Row>
                             <Col span="18">
-                                <FormItem  {...formItemLayout} label="额度类型名称:">
-                                    {this.props.title == "新增额度类型" ? (
-                                        <div>
+                                <FormItem  {...formItemLayout} label="Limit type name:">{/*额度类型名称*/}
+                                    {this.props.title == "New quota type" ? (
+                                        <div>{/*新增额度类型*/}
                                             <Select disabled={!props.canEdit} onSelect={this.select} {...getFieldProps('creditTypeId') } >
                                                 {this.state.rankArray}
                                             </Select>
@@ -287,7 +287,7 @@ var AddWin = React.createClass({
                         </Row>
                         <Row>
                             <Col span="18">
-                                <FormItem  {...formItemLayout} label="关联评分卡:">
+                                <FormItem  {...formItemLayout} label="Associated scorecard:">{/*关联评分卡*/}
                                     <Select disabled={!props.canEdit} onSelect={this.select} {...getFieldProps('cardId') } >
                                         {this.state.tableCommentList}
                                     </Select>
@@ -296,7 +296,7 @@ var AddWin = React.createClass({
                         </Row>
                         <Row>
                             <Col span="18">
-                                <FormItem  {...formItemLayout} label="关联额度等级:">
+                                <FormItem  {...formItemLayout} label="Linkage level:">{/*关联额度等级*/}
                                     <Select disabled={!props.canEdit} onSelect={this.select} {...getFieldProps('rankId') } >
                                         {this.state.rankIdList}
                                     </Select>
@@ -305,14 +305,14 @@ var AddWin = React.createClass({
                         </Row>
                         <Row>
                             <Col span="18">
-                                <FormItem  {...formItemLayout} label="关联借款类型:">
+                                <FormItem  {...formItemLayout} label="Associated loan type:">{/*关联借款类型*/}
                                     <Table columns={columns} rowKey={this.rowKey} size="middle"
                                         rowSelection={rowSelection}
                                         onRowClick={this.onRowClick}
-                                        dataSource={props.title =="新增额度类型"?this.props.borrowIdAddList:this.state.dataEdit}
+                                        dataSource={props.title =="New quota type"?this.props.borrowIdAddList:this.state.dataEdit}
                                         loading={this.state.loading}
                                         onChange={this.handleTableChange} />
-                                </FormItem>
+                                </FormItem>{/*新增额度类型*/}
                             </Col>
                         </Row>
                     </Form>

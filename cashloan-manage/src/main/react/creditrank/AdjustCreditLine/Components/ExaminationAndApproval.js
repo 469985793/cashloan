@@ -78,9 +78,9 @@ var AdjustCreditLine = React.createClass({
         var isTotal = record ? record.total :"0";
         var modalBtns = [
             <button key="button" className="ant-btn ant-btn-primary" onClick={this.handleOk}>
-                确定
+                {/*确定*/}OK
             </button>,
-            <button key="back" className="ant-btn" onClick={this.handleCancel}>取消</button>
+            <button key="back" className="ant-btn" onClick={this.handleCancel}>{/*取消*/}Cancel</button>
         ];
         const formItemLayout = {
             labelCol: {
@@ -96,17 +96,17 @@ var AdjustCreditLine = React.createClass({
                   <Input  {...getFieldProps('id', { initialValue: '' }) } type="hidden" />     
                     <Row>
                         <Col>
-                            <FormItem  {...formItemLayout} label="总额度：">
+                            <FormItem  {...formItemLayout} label="Total Amount:">{/*总额度：*/}
                                 <Input disabled={!props.canEdit} {...getFieldProps('total', { initialValue: isTotal }) } type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                         <FormItem  {...formItemLayout} label="状态：">
+                         <FormItem  {...formItemLayout} label="Status:">{/*状态：*/}
                               <Select disabled={!props.canEdit}  {...getFieldProps('state', {initialValue: '10'})}style={{ width: 120 }}>
-                                  <Option value="10">审批通过</Option>
-                                  <Option value="40">审批不通过</Option>
+                                  <Option value="10">{/*审批通过*/}Approved</Option>
+                                  <Option value="40">{/*审批不通过*/}Approval not passed</Option>
                               </Select>
                           </FormItem>
                         </Col>

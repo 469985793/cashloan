@@ -226,23 +226,23 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '手机号码',
+            title: 'Phone',//手机号码
             dataIndex: 'userName',
         }, {
-            title: '代理等级',
+            title: 'Agent Level',//代理等级
             dataIndex: "level",
             render: (text) => {
                 switch(text){
                     case 1: 
-                        return "一级";
+                        return "First Level";//一级
                     case 2: 
-                        return "二级";
+                        return "Second Level";//二级
                     case 3: 
-                        return "三级";
+                        return "Third Level";//三级
                 }
             }
         }, {
-            title: '分润率(%)',
+            title: 'Separation Rate(%)',//分润率
             dataIndex: "rate",
             render: (text) => {
                 if(text){
@@ -250,24 +250,24 @@ export default React.createClass({
                 }
             }
         }, {
-            title: '添加时间',
+            title: 'Add Time',//添加时间
             dataIndex: 'createTime',
         },{
-            title: '更新时间',
+            title: 'Update Time',//更新时间
             dataIndex: 'updateTime',
         },{
-            title: '操作',
+            title: 'Operating',//操作
             render: (value, record) => {
                 if(record.level!=1){
                     return(
                     <div style={{ textAlign: "left" }}>
-                            <a href="#" onClick={me.SetAgent.bind(this, record, "设置为一级代理商")}>设置为一级代理商</a>
+                            <a href="#" onClick={me.SetAgent.bind(this, record, "设置为一级代理商")}>Set as a primary agent{/*设置为一级代理商*/}</a>
                     </div>  
                     )
                 }else{
                     return(
                     <div style={{ textAlign: "left" }}>
-                            <a href="#" onClick={me.SetAgent.bind(this, record, "取消一级代理")}>取消一级代理</a>
+                            <a href="#" onClick={me.SetAgent.bind(this, record, "取消一级代理")}>Cancel an agent{/*取消一级代理*/}</a>
                     </div>  
                     )
                 }

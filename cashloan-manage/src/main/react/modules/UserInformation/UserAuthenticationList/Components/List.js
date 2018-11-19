@@ -172,77 +172,77 @@ export default React.createClass({
     }; 
     const hasSelected = selectedRowKeys.length > 0;
     var columns = [{
-      title: '真实姓名',
+      title: 'Real Name',//真实姓名
       dataIndex: 'realName',
     }, {
-      title: '手机号码',
+      title: 'Phone',//手机号码
       dataIndex: "phone",
     }, {
-      title: '银行卡状态',
+      title: 'Bank Card Status',//银行卡状态
       dataIndex: 'bankCardState',
       render: (text, record)=>{
         if(record.bankCardState==10){
-          return "未认证"
+          return "unverified"//未认证
         }else if(record.bankCardState==20){
-          return "认证中"
+          return "in authentication"//认证中
         }else if(record.bankCardState==30){
-          return "已认证"
+          return "authenticated"//已认证
         }else{
           return "-"
         }
       }
     }, {
-      title: '紧急联系人状态',
+      title: 'Emergency Contact Status',//紧急联系人状态
       dataIndex: 'contactState',
       render: (text, record)=>{
         if(record.contactState==10){
-          return "未完善"
+          return "Not Completed"//未完善
         }else if(record.contactState==20){
-          return "完善中"
+          return "Completing"//完善中
         }else if(record.contactState==30){
-          return "已完善"
+          return "Completed"//已完善
         }else{
           return "-"
         }
       }
     }, {
-      title: '身份认证状态',
+      title: 'Status Of Identity Authentication',//身份认证状态
       dataIndex: "idState",
       render: (text, record)=>{
         if(record.idState==10){
-          return "未认证"
+          return "Not Certified"//未认证
         }else if(record.idState==20){
-          return "认证中"
+          return "In Certification"//认证中
         }else if(record.idState==30){
-          return "已认证"
+          return "Verified"//已认证
         }else{
           return "-"
         }
       }
     }, {
-      title: '手机运营商认证状态',
+      title: 'Mobile Phone Carrier Certification Status',//手机运营商认证状态
       dataIndex: "phoneState",
       render: (text, record)=>{
         if(record.phoneState==10){
-          return "未认证"
+          return "Not certified"//未认证
         }else if(record.phoneState==20){
-          return "认证中"
+          return "In certification"//认证中
         }else if(record.phoneState==30){
-          return "已认证"
+          return "Verified"//已认证
         }else{
           return "-"
         }
       }
     }, {
-      title: '芝麻授信状态',
+      title: 'Credit Status Of Sesame',//芝麻授信状态
       dataIndex: 'zhimaState',
       render: (text, record)=>{
         if(record.zhimaState==10){
-          return "未授信"
+          return "No credit"//未授信
         }else if(record.zhimaState==20){
-          return "授信中"
+          return "In the letter"//授信中
         }else if(record.zhimaState==30){
-          return "已授信"
+          return "Have credit"//已授信
         }else{
           return "-"
         }

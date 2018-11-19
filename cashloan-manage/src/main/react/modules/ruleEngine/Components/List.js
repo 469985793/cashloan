@@ -165,11 +165,11 @@ export default React.createClass({
     },
     //修改规则状态,删除操作
     changeStaus(title, record) {
-        if (title != '删除') {
+        if (title != 'Delete') {//删除
             var params = {
                 id: record.id
             }
-            if (title == '禁用') {
+            if (title == 'Disable') {//禁用
                 params.state = 20;
             } else {
                 params.state = 10;
@@ -222,16 +222,16 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '规则名称',
+            title: 'Rule Name',//规则名称
             dataIndex: 'name'
         }, {
-            title: '规则配置数量',
+            title: 'Number Of Rule Configurations',//规则配置数量
             dataIndex: 'configCount'
         }, {
-            title: '模式',
+            title: 'Mode',//模式
             dataIndex: 'type',
             render:(text) => {
-                return text == '10' ? '评分模式' : '结果模式'
+                return text == '10' ? 'Scoring Mode' : 'Result Mode'//'评分模式' : '结果模式'
             }
         },
         // }, {
@@ -242,30 +242,30 @@ export default React.createClass({
         //     dataIndex: 'addTime'
         // },
          {
-            title: '状态',
+            title: 'status',//状态
             dataIndex: 'state',
             render: (text, record) => {
                 if (text == 10) {
-                    return <span>启用</span>
+                    return <span>Enable</span>//启用
                 } else {
-                    return <span>禁用</span>
+                    return <span>Disable</span>//禁用
                 }
             }
         }, {
-            title: '操作',
+            title: 'Operating',//操作
             key: 'operation',
             render: (text, record) => {
                 if (record.state == 10) {
                     return <span >
-                     <a onClick={me.showModal.bind(me,'编辑',record)}>编辑</a>
+                     <a onClick={me.showModal.bind(me,'Edit',record)}>Edit</a>{/*编辑*/}
                      <span className="ant-divider"></span>
-                     <a onClick={me.changeStaus.bind(me,'禁用',record)}>禁用</a>
+                     <a onClick={me.changeStaus.bind(me,'Disable',record)}>Disable</a>{/*禁用*/}
                    </span>
                 } else {
                     return <span >
-                      <a onClick={me.showModal.bind(me,'编辑',record)}>编辑</a>
+                      <a onClick={me.showModal.bind(me,'Edit',record)}>Edit</a>{/*编辑*/}
                       <span className="ant-divider"></span>
-                      <a onClick={me.changeStaus.bind(me,'启用',record)}>启用</a>
+                      <a onClick={me.changeStaus.bind(me,'Disable',record)}>Disable</a>{/*禁用*/}
                     </span>
                 }
             }
@@ -273,8 +273,8 @@ export default React.createClass({
         return (
             <div className="block-panel">
             <div className="actionBtns" style={{ marginBottom: 16 }}>
-              <button onClick={me.showModal.bind(me,'新增')} className="ant-btn"> 
-                新增
+              <button onClick={me.showModal.bind(me,'Add')} className="ant-btn"> {/*新增*/}
+                Add{/*新增*/}
               </button>
             </div>
                 <Table columns={columns} rowKey={this.rowKey} ref="table"

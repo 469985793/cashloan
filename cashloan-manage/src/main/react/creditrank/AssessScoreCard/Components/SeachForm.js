@@ -35,18 +35,18 @@ let SeachForm = React.createClass({
 
         return (
             <Form inline>
-             <FormItem label="名称:">
+             <FormItem label="Name:">{/*名称*/}
                   <Input  {...getFieldProps('cardName', {initialValue: ''})} />
              </FormItem>
-            <FormItem label="状态:">
+            <FormItem label="Status:">{/*状态*/}
                 <Select style={{ width: 100 }} {...getFieldProps('state', {initialValue: ''})}>
-                    <Option value="">全部</Option>
-                    <Option value="10">启用</Option>
-                    <Option value="20">禁用</Option>
+                    <Option value="">{/*全部*/}All</Option>
+                    <Option value="10">{/*启用*/}Enable</Option>
+                    <Option value="20">{/*禁用*/}Disable</Option>
                 </Select>
             </FormItem>
-                <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
-                <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+                <FormItem><Button type="primary" onClick={this.handleQuery}>{/*查询*/}Search</Button></FormItem>
+                <FormItem><Button type="reset" onClick={this.handleReset}>{/*重置*/}Reset</Button></FormItem>
             </Form>
         );
     }

@@ -84,7 +84,7 @@ export default React.createClass({
         var search={
             id:record.id
         }
-        if(title=='编辑'){
+        if(title=='Edit'){//编辑
           Utils.ajaxData({
             url: '/modules/manage/cr/card/page.htm',
             data: {
@@ -169,11 +169,11 @@ export default React.createClass({
     },
     //修改规则状态,删除操作
     changeStaus(title, record) {
-        if (title != '删除') {
+        if (title != 'Delete') {//删除
             var params = {
                 id: record.id
             }
-            if (title == '禁用') {
+            if (title == 'Disable') {//禁用
                 params.state = 20;
             } else {
                 params.state = 10;
@@ -218,36 +218,36 @@ export default React.createClass({
         var state = this.state;
         var props = this.props;
         var columns = [{
-            title: '评分卡名称',
+            title: 'Score card name',//评分卡名称
             dataIndex: 'cardName'
         }, {
-            title: '状态',
+            title: 'Status',//状态
             render: (text, record) => {
-            	return  record.state == '10' ? '启用':'禁用';
+            	return  record.state == '10' ? 'Enable':'Disable';//启用 禁用
             }
         }, {
-            title: '分值',
+            title: 'Score',//分值
             dataIndex: 'score'
         }, {
-            title: '操作',
+            title: 'Operating',//操作
             key: '',
             render: (text, record) => {
                 return  <div>
                              
                             { record.state == '10' ?
                                <span>
-                                 <a onClick={me.showModalScorecard.bind(me,'编辑',record,false)}>编辑</a>
+                                 <a onClick={me.showModalScorecard.bind(me,'Edit',record,false)}>{/*编辑*/}Edit</a>
                                  <span className="ant-divider"></span>
-                                 <a onClick={me.goNextTab.bind(me,record)}>查看评分项目</a>
+                                 <a onClick={me.goNextTab.bind(me,record)}>View rating items{/*查看评分项目*/}</a>
                                  &nbsp;<span className="ant-divider"></span>&nbsp;
-                                 <a onClick={me.changeStaus.bind(me, '禁用', record) }>禁用</a>
+                                 <a onClick={me.changeStaus.bind(me, 'Disable', record) }>{/*禁用*/}Disable</a>
                                </span>
                               :<span>
-                                 <a onClick={me.showModalScorecard.bind(me,'编辑',record,false)}>编辑</a>
+                                 <a onClick={me.showModalScorecard.bind(me,'Edit',record,false)}>{/*编辑*/}Edit</a>
                                  <span className="ant-divider"></span>
-                                 <a onClick={me.goNextTab.bind(me,record) }>查看评分项目</a>
+                                 <a onClick={me.goNextTab.bind(me,record) }>{/*查看评分项目*/}View rating items</a>
                                  &nbsp;<span className="ant-divider"></span>&nbsp;
-                                 <a onClick={me.changeStaus.bind(me, '启用', record) }>启用</a>
+                                 <a onClick={me.changeStaus.bind(me, 'Enable', record) }>{/*启用*/}Enable</a>
                                </span>
                             }
                         </div>
@@ -256,8 +256,8 @@ export default React.createClass({
         return (
             <div className="block-panel">
             <div className="actionBtns" style={{ marginBottom: 16 }}>
-              <button onClick={me.showModalScorecard.bind(me,'新增评分卡',false)} className="ant-btn"> 
-                新增评分卡
+              <button onClick={me.showModalScorecard.bind(me,'Add a scorecard',false)} className="ant-btn"> 
+                {/*新增评分卡*/}Add a scorecard
               </button>
             </div>
                 <Table columns={columns} rowKey={this.rowKey} ref="table"

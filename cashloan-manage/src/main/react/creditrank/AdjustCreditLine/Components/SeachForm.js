@@ -34,15 +34,15 @@ let SeachForm = React.createClass({
     } = this.props.form;
     return (
       <Form inline >
-        <FormItem label="客户姓名：">
+        <FormItem label="Customer's Name:">{/*客户姓名：*/}
           <Input  {...getFieldProps('realName', { initialValue: '' }) } />
         </FormItem>
-        <FormItem label="身份证号码：">
+        <FormItem label="Identification Number:">{/*身份证号码：*/}
           <Input  {...getFieldProps('idNo', { initialValue: '' }) } />
         </FormItem>
        
-        <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
-        <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+        <FormItem><Button type="primary" onClick={this.handleQuery}>{/*查询*/}Search</Button></FormItem>
+        <FormItem><Button type="reset" onClick={this.handleReset}>{/*重置*/}Reset</Button></FormItem>
       </Form>
     );
   }

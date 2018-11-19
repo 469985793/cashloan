@@ -47,7 +47,7 @@ export default React.createClass({
             title: title,
             record: record
         }, () => {
-            if (title =="编辑") {
+            if (title =="Edit") {//编辑
                  Utils.ajaxData({
                 url: '/modules/manage/cr/info/infoPage.htm',
                 data: {
@@ -146,15 +146,15 @@ export default React.createClass({
         var msg = "";
         var tips = "";
         var trueurl = "";
-        if (title == '启用') {
-            msg = '启用成功';
+        if (title == 'Enable') {//启用
+            msg = 'Successfully enabled';//启用成功
             status = "10";
-            tips = '您是否启用';
+            tips = 'Are you enabled';//您是否启用
             trueurl = "/modules/manage/cr/info/updateState.htm"
-        } else if (title == '禁用') {
-            msg = '禁用成功';
+        } else if (title == 'Disable') {//禁用
+            msg = 'Disabled successfully';//禁用成功
             status = "20";
-            tips = '您是否禁用';
+            tips = 'Are you disabled';//您是否禁用
             trueurl = "/modules/manage/cr/info/updateState.htm"
         }
         confirm({
@@ -199,15 +199,15 @@ export default React.createClass({
         };
         const hasSelected = selectedRowKeys.length > 0;
         var columns = [{
-            title: '表名',
+            title: 'Table Name',//表名
             width:200,
             dataIndex: "tbNid"
         }, {
-            title: '表注释',
+            title: 'Table Comment',//表注释
              width:200,
             dataIndex: 'tbName'
         },{
-            title: '字段详情',
+            title: 'Field Details',//字段详情
             dataIndex: "detail",
             render(text,record){ 
                 var record=JSON.parse(record.detail);
@@ -219,25 +219,26 @@ export default React.createClass({
                      })) 
             }
         },{
-            title:"状态",
+            title:"Status",//状态
             dataIndex:"state",
+            width:70,
            render: (text, record) => {
                 if (text == 10) {
-                    return <span>启用</span>
+                    return <span>{/*启用*/}Enable</span>
                 } else {
-                    return <span>禁用</span>
+                    return <span>{/*禁用*/}Disable</span>
                 }
             }
         },{
-            title:"操作",
+            title:"Operating",//操作
             width:100,
             dataIndex:"",
             render(text,record){
                 return  (
                     <div style={{ textAlign: "left" }}>
-                        <a href="#" onClick={me.showModal.bind(me, '编辑',record, false)}>编辑</a>
+                        <a href="#" onClick={me.showModal.bind(me, 'Edit',record, false)}>Edit{/*编辑*/}</a>
                          <span className="ant-divider"></span>       
-                         {record.state=="20"?<a href="#" onClick={me.changeStatus.bind(me ,record,'启用')}>启用</a>:<a href="#" onClick={me.changeStatus.bind(me,record,'禁用')}>禁用</a>}  
+                         {record.state=="20"?<a href="#" onClick={me.changeStatus.bind(me ,record,'Enable')}>Enable{/*启用*/}</a>:<a href="#" onClick={me.changeStatus.bind(me,record,'Disable')}>Disable{/*禁用*/}</a>}  
                    </div>
                 )
             }
@@ -248,8 +249,8 @@ export default React.createClass({
         return (
             <div className="block-panel">
                 <div className="actionBtns" style={{ marginBottom: 16 }}>
-                    <button className="ant-btn" onClick={this.showModal.bind(this, '新增', record, true)}>
-                        新增
+                    <button className="ant-btn" onClick={this.showModal.bind(this, 'Add', record, true)}>
+                        {/*新增*/}Add
                     </button>    
                 </div>
                 <Table columns={columns} rowKey={this.rowKey} size="middle"

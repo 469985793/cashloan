@@ -179,10 +179,10 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '真实姓名',
+            title: 'Real Name',//真实姓名
             dataIndex: 'realName'
         }, {
-            title: '手机号码',
+            title: '手机号码',//手机号码
             dataIndex: 'phone'
         },　{
             title: '订单号',

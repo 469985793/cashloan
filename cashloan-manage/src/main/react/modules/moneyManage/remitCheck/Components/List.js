@@ -1,7 +1,7 @@
 import React from 'react'
-import {Table, Modal, Icon} from 'antd';
+import { Table, Modal, Icon } from 'antd';
 import Lookdetails from "./Lookdetails";
-var repaymentTypeText={'10':'待审核', '20': '审核中' ,'30': '通过','40' :'已拒绝' ,'50': '还款中', '60' :'还款完成', '70': '逾期'}
+var repaymentTypeText = { '10': '待审核', '20': '审核中', '30': '通过', '40': '已拒绝', '50': '还款中', '60': '还款完成', '70': '逾期' }
 const objectAssign = require('object-assign');
 import AddWin from "./AddWin";
 export default React.createClass({
@@ -20,9 +20,9 @@ export default React.createClass({
             visible2: false,
             pictureData: [],
             creditReportData: [],
-            rowRecord:[],
-            record:"",
-            visibleAdd:false,
+            rowRecord: [],
+            record: "",
+            visibleAdd: false,
 
         };
     },
@@ -45,11 +45,11 @@ export default React.createClass({
             params = {
                 pageSize: 10,
                 current: 1,
-                search: JSON.stringify({state: '15',type: '10'})
+                search: JSON.stringify({ state: '15', type: '10' })
             }
         }
-        if(!params.search){
-            params.search= JSON.stringify({state: '15',type: '10'})
+        if (!params.search) {
+            params.search = JSON.stringify({ state: '15', type: '10' })
         }
         Utils.ajaxData({
             url: '/modules/manage/pay/log/page.htm',
@@ -60,11 +60,15 @@ export default React.createClass({
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
+                if (result.data[0]) {
+                    result.data[0].balance = result.data[0].balance / 100;
+                }
                 if (!pagination.current) {
                     pagination.current = 1
                 }
                 ;
-                //console.log(result.data);
+                // console.log(result.data);
+                // console.log(result.data);
                 this.setState({
                     loading: false,
                     data: result.data,
@@ -75,26 +79,25 @@ export default React.createClass({
     },
 
     //查看弹窗
-    showModal(title,record, canEdit) {
-      
+    showModal(title, record, canEdit) {
         this.setState({
             visibleAdd: true,
             canEdit: canEdit,
             record: record,
             title: title
-        },()=>{ 
-            
+        }, () => {
+
             this.refs.AddWin.setFieldsValue(record);
         })
     },
-  //新增
-  addModal(title, record, canEdit){
-      this.setState({
-        visibleAdd:true,
-        title:title,  
-      })
+    //新增
+    addModal(title, record, canEdit) {
+        this.setState({
+            visibleAdd: true,
+            title: title,
+        })
 
-  },
+    },
     //隐藏弹窗
     hideModal() {
         this.setState({
@@ -103,7 +106,7 @@ export default React.createClass({
             visible2: false,
             selectedIndex: '',
             selectedRowKeys: [],
-            visibleAdd:false
+            visibleAdd: false
         });
         this.refreshList();
     },
@@ -144,8 +147,8 @@ export default React.createClass({
         this.setState({
             selectedRowKeys: [record.id],
             selectedRow: record,
-            rowRecord:record
-        },()=>{
+            rowRecord: record
+        }, () => {
             this
         });
     },
@@ -175,70 +178,71 @@ export default React.createClass({
         const {
             loading,
             selectedRowKeys
-            } = this.state;
+        } = this.state;
         const rowSelection = {
             type: 'checkbox',
             selectedRowKeys,
             onSelectAll: this.onSelectAll,
         };
-        let me=this;
+        let me = this;
         const hasSelected = selectedRowKeys.length > 0;
         let openEdit = true;
         if (hasSelected && selectedRowKeys.indexOf("0") === -1) {
             openEdit = false;
         }
         var columns = [{
-            title: 'LastName',
+            title: 'LastName',//姓
             dataIndex: 'lastName'
         }, {
-            title: 'Phone',
+            title: 'Phone',//手机号
             dataIndex: 'mobile'
         }, {
-            title: 'Amount',
+            title: 'Amount',//金额
             dataIndex: 'balance'
         }, {
-            title: 'Borrow Time',
+            title: 'Borrow Time',//借款时间
             dataIndex: 'createdTime'
         }, {
-            title: 'cycle',
+            title: 'cycle',//期限
             dataIndex: "cycle"
         }, {
-            title: 'scenes',
+            title: 'scenes',//背景
             dataIndex: "scenesStr",
             render: (text, record) => {
-            if (text == 10) {
-            return "黑名单"
-        } else {
-            return "Under line"
-        }
-    }
+                if (text == 10) {
+                    return "Blacklist"//黑名单
+                } else {
+                    return "Under line"
+                }
+            }
         }, {
             title: 'status',
             dataIndex: 'status'
-        },{
+        }, {
             title: 'operation',
             dataIndex: "",
-            render: (value,record) => {
-                return(
-                   <div style={{ textAlign: "left" }}>
-                        <a href="#" onClick={me.showModal.bind(me, '审核',record, true)}>审核</a>
-                   </div>  
+            render: (value, record) => {
+                return (
+                    <div style={{ textAlign: "left" }}>
+                        <a href="#" onClick={me.showModal.bind(me, '审核', record, true)}>Review{/*审核*/}</a>
+                    </div>
                 )
-            } }]; 
+            }
+        }];
 
         var state = this.state;
         return (
             <div className="block-panel">
-                <Table columns={columns} rowKey={this.rowKey} ref="table" 
-                       onRowClick={this.onRowClick}
-                       dataSource={this.state.data}
-                       rowClassName={this.rowClassName}
-                       pagination={this.state.pagination}
-                       onChange={this.handleTableChange}
+                <Table columns={columns} rowKey={this.rowKey} ref="table"
+                    onRowClick={this.onRowClick}
+                    dataSource={this.state.data}
+                    rowClassName={this.rowClassName}
+                    pagination={this.state.pagination}
+                    onChange={this.handleTableChange}
                 />
                 <Lookdetails ref="Lookdetails" visible={state.visible} title={state.title} hideModal={me.hideModal} record={state.record}
-                canEdit={state.canEdit} />
-                <AddWin ref="AddWin" record={state.record}  visible={state.visibleAdd} hideModal={me.hideModal} title={state.title}/>
+                    canEdit={state.canEdit} />
+                <AddWin ref="AddWin" record={state.record} visible={state.visibleAdd} hideModal={me.hideModal} title={state.title} />
             </div>
         );
     }

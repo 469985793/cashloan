@@ -179,13 +179,13 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '手机号码',
+            title: 'Phone',//手机号码
             dataIndex: 'userName',
         }, {
-            title: '打款金额(元)',
+            title: 'Amount Of Payment(KSH)',//打款金额(元)
             dataIndex: 'amount',
         }, {
-            title: '打款时间',
+            title: 'Time Of Payment',//打款时间
             dataIndex: "addTime",
         }]
         // },{

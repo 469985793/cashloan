@@ -55,13 +55,13 @@ export default React.createClass({
         var search = {
             id: record.id
         }
-         var paramsCode =title =="新增额度类型"? {
+         var paramsCode =title =="New quota type"? {
                 code:"CREDIT_TYPE"
             }:{
                 code:"CREDIT_TYPE",
                 id: record.creditTypeId
-            }
-         var creditTypeUrl = title =="新增额度类型"?'/modules/manage/system/dict/listByTypeCode.htm':'/modules/manage/system/dict/listUpdateCode.htm'
+            }//新增额度类型
+         var creditTypeUrl = title =="New quota type"?'/modules/manage/system/dict/listByTypeCode.htm':'/modules/manage/system/dict/listUpdateCode.htm'//新增额度类型
         Utils.ajaxData({
             url: creditTypeUrl,
             data: paramsCode,
@@ -103,7 +103,7 @@ export default React.createClass({
             title: title,
             record: record
         }, () => {
-            if (title == "编辑" || title == "查看") {
+            if (title == "Edit" || title == "View") {//编辑 查看
                 Utils.ajaxData({
                     url: '/modules/manage/cr/creditType/findDetail.htm',
                     data: search,
@@ -131,7 +131,7 @@ export default React.createClass({
                         var checkDefault = [];
                         var dataEdit = [];
                         result.data.map((item) => {
-                            if(title == "查看"){
+                            if(title == "View"){//查看
                                 item.type !=""?(dataEdit.push({ id: Number(item.borrowTypeId), "borrowId": item.borrowTypeName,title:defaultTitle,type:item.type })):dataEdit;
                             }else{
                                 dataEdit.push({ id: Number(item.borrowTypeId), "borrowId": item.borrowTypeName,title:defaultTitle,type:item.type });
@@ -210,27 +210,27 @@ export default React.createClass({
         };
         const hasSelected = selectedRowKeys.length > 0;
         var columns = [{
-            title: '额度类型名称',
+            title: 'Limit type name',//额度类型名称
             dataIndex: "name"
         }, {
-            title: '关联评分卡',
+            title: 'Associated scorecard',//关联评分卡
             dataIndex: "cardName"
         }, {
-            title: '关联额度等级',
+            title: 'Linkage level',//关联额度等级
             dataIndex: "rankName"
         }, {
-            title: '关联借款类型',
+            title: 'Associated loan type',//关联借款类型
             dataIndex: "borrowTypeName"
         }, {
-            title: "操作",
+            title: "Operating",//操作
             width: 100,
             dataIndex: "",
             render(text, record) {
                 return (
                     <div style={{ textAlign: "left" }}>
-                        <a href="#" onClick={me.showModal.bind(me, '编辑', record, true)}>编辑</a>
+                        <a href="#" onClick={me.showModal.bind(me, 'Edit', record, true)}>{/*编辑*/}Edit</a>
                         <span className="ant-divider"></span>
-                        <a href="#" onClick={me.showModal.bind(me, '查看', record, false)}>查看</a>
+                        <a href="#" onClick={me.showModal.bind(me, 'View', record, false)}>{/*查看*/}View</a>
                     </div>
                 )
             }
@@ -241,8 +241,8 @@ export default React.createClass({
         return (
             <div className="block-panel">
                 <div className="actionBtns" style={{ marginBottom: 16 }}>
-                    <button className="ant-btn" onClick={this.showModal.bind(this, '新增额度类型', record, true)}>
-                        新增额度类型
+                    <button className="ant-btn" onClick={this.showModal.bind(this, 'New quota type', record, true)}>
+                        {/*新增额度类型*/}New quota type
                     </button>
                 </div>
                 <Table columns={columns} rowKey={this.rowKey} size="middle"

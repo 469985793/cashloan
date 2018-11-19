@@ -47,7 +47,7 @@ export default React.createClass({
           id: record.id
         },
         callback: (result) => {
-          result.data.state = result.data.state == 20 ? '已确认' : '待确认';
+          result.data.state = result.data.state == 20 ? 'Confirmed' : 'To Be Confirmed';//'已确认' : '待确认'
           this.refs.Lookdetails.setFieldsValue(result.data);
         }
 
@@ -141,13 +141,13 @@ export default React.createClass({
     };
     const hasSelected = selectedRowKeys.length > 0;
     var columns = [{
-      title: '真实姓名',
+      title: 'Real Name',//'真实姓名'
       dataIndex: 'userRealName',
     }, {
-      title: '手机号码',
+      title: 'Phone',//手机号码
       dataIndex: 'phone',
     }, {
-      title: '意见',
+      title: 'Opinion',//意见
       dataIndex: 'opinion',
       render: (text, record) => {
         if (text&&text.length >= 15) {
@@ -159,16 +159,16 @@ export default React.createClass({
         }
       }
     }, {
-      title: '意见提交时间',
+      title: 'Opinion Submission Time',//意见提交时间
       dataIndex: "createTime",
     }, {
-      title: '状态',
+      title: 'Status',//状态
       dataIndex: "stateStr",
     }, {
-      title: '管理员',
+      title: 'Administrator',//管理员
       dataIndex: "sysUserRealName",
     }, {
-      title: '反馈',
+      title: 'Feedback',//反馈
       dataIndex: 'feedback',
       render: (text, record) => {
         if (text&&text.length >= 15) {
@@ -180,16 +180,16 @@ export default React.createClass({
         }
       }
     }, {
-      title: '反馈时间',
+      title: 'Feedback Time',//反馈时间
       dataIndex: "confirmTime",
     }, {
-      title: '操作',
+      title: 'Operating',//操作
       dataIndex: '',
       render: (text, record) => {
-        if (record.stateStr == '已确认') {
+        if (record.stateStr == 'Confirmed') {//已确认
           return "-"
         } else {
-          return <div><a href="#" onClick={me.addModal.bind(me, '处理', record, true)}>处理</a></div>
+          return <div><a href="#" onClick={me.addModal.bind(me, 'Deal With', record, true)}>{/*处理*/}Deal With</a></div>
         }
       }
     }];

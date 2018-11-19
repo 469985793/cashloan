@@ -179,22 +179,22 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '代理商(手机号码)',
+            title: 'Agent(Phone)',//代理商(手机号码)
             dataIndex: 'agentName',
         }, {
-            title: '借款人(手机号码)',
+            title: 'Borrower(Phone)',//借款人(手机号码)
             dataIndex: 'userName',
         }, {
-            title: '借款金额(元)',
+            title: 'Loan Amount(KSH)',//借款金额(元)
             dataIndex: "money",
         }, {
-            title: '借款综合费用(元)',
+            title: 'Comprehensive Cost Of Borrowing(KSH)',//借款综合费用(元)
             dataIndex: "fee",
         }, {
-            title: '奖励金额(元)',
+            title: 'Reward Amount(KSH)',//奖励金额(元)
             dataIndex: 'amount',
         }, {
-            title: '还款时间',
+            title: 'Repayment Time',//还款时间
             dataIndex: "repayTime",
         }]
         // },{

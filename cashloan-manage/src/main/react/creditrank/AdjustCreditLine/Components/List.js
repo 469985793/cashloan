@@ -92,6 +92,13 @@ export default React.createClass({
         pagination.current = params.current;
         pagination.pageSize = params.pageSize;
         pagination.total = result.page.total;
+        // console.log(result);
+        if(result.data){
+          for(var i = 0 ; i<result.data.length ; i++){
+            result.data[i].total = result.data[i].total/100;
+            result.data[i].unuse = result.data[i].unuse/100;
+          }
+        }
         if (!pagination.current) {
           pagination.current = 1
         };
@@ -139,42 +146,43 @@ export default React.createClass({
     }; 
     const hasSelected = selectedRowKeys.length > 0;
     var columns = [{
-      title: '姓名',
+      title: 'Name',//姓名
       dataIndex: 'realName'
     }, {
-      title: '手机号码',
+      title: 'Phone',//手机号码
       dataIndex: "phone"
     }, {
-      title: '身份证号码',
+      title: 'Identification Number',//身份证号码
       dataIndex: 'idNo'
     }, {
-      title: '授信总额度(元)',
+      title: 'Total Credit(KSH)',//授信总额度(元)
       dataIndex: "total",
        render(text,record){
         return Utils.number(text);
       }
     },{
-      title: '已使用额度(元)',
+      title: 'Used Quota(KSH)',//已使用额度(元)
       dataIndex: "totalUnuse",
        render(text,record){
+        //  console.log(record);
         return Utils.number(record.total-record.unuse);
       }
     }, {
-      title: '剩余额度(元)',
+      title: 'Remaining Amount(KSH)',//剩余额度(元)
       dataIndex: "unuse",
        render(text,record){
         return Utils.number(text);
       }
     }, {
-        title: '额度状态',
+        title: 'Amount Status',//额度状态
         dataIndex: "stateStr"
     }, {
-        title: '操作',
+        title: 'Operating ',//操作
         dataIndex: "",
         render(text, record) {
           return  (
                <div >
-                <a href="javascript:;" onClick={me.showModalAc.bind(me,'查看详情', record, true) }>查看详情</a>
+                <a href="javascript:;" onClick={me.showModalAc.bind(me,'See Details', record, true) }>{/*查看详情*/}See Details</a>
                </div>
           )
         }

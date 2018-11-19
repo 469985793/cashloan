@@ -44,14 +44,14 @@ let SeachForm = React.createClass({
         return (
             <Form inline>
             <input type="hidden" {...getFieldProps('state',{initialValue: '15'})}/>
-             <FormItem label="收款人姓名:">
+             <FormItem label="Payee Name:">{/*收款人姓名*/}
                   <Input  {...getFieldProps('realName',{initialValue: ''})} />
              </FormItem>
-             <FormItem label="手机号码:">
+             <FormItem label="Phone:">{/*手机号码*/}
                   <Input  {...getFieldProps('phone',{initialValue: ''})} />
              </FormItem>
-             <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
-             <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+             <FormItem><Button type="primary" onClick={this.handleQuery}>{/*查询*/}Search</Button></FormItem>
+             <FormItem><Button type="reset" onClick={this.handleReset}>{/*重置*/}Reset</Button></FormItem>
             </Form>
         );
     }

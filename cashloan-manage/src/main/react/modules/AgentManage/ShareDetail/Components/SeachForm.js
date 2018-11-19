@@ -32,11 +32,11 @@ let SeachForm = React.createClass({
 
         return (
             <Form inline>
-                <FormItem label="代理商(手机号码):">
+                <FormItem label="Agent(Phone):">{/*代理商(手机号码)*/}
                     <Input  {...getFieldProps('userName')} />
                 </FormItem>
-                <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
-                <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+                <FormItem><Button type="primary" onClick={this.handleQuery}>Search{/*查询*/}</Button></FormItem>
+                <FormItem><Button type="reset" onClick={this.handleReset}>Reset{/*重置*/}</Button></FormItem>
             </Form>
         );
     }

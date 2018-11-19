@@ -57,40 +57,40 @@ var Lookdetails = React.createClass({
       }
       if (values.amount > this.props.record.repayAmount) {
         Modal.error({
-          title: "还款金额过多",
+          title: "Too much repayment amount",//还款金额过多
         });
         return;
       }
       if (values.amount && !re1.test(values.amount)) {
         Modal.error({
-          title: "还款金额必须是大于等于零的数",
+          title: "The repayment amount must be a number greater than or equal to zero",//还款金额必须是大于等于零的数
         });
         return;
       }
       if (values.penaltyAmout1 && !re1.test(values.penaltyAmout1)) {
         Modal.error({
-          title: "逾期罚金必须是大于等于零的数",
+          title: "Overdue fines must be greater than or equal to zero",//逾期罚金必须是大于等于零的数
         });
         return;
       }
       if (values.penaltyAmout1 > this.props.record.penaltyAmout) {
         Modal.error({
-          title: "逾期罚金过多",
+          title: "Overdue fines",//逾期罚金过多
         });
         return;
       }
       if (re.test(values.repayAccount) && values.repayWay != '30') {
         Modal.error({
-          title: "账号与方式不符,请核对",
+          title: "The account number does not match the method. Please check",//账号与方式不符,请核对
         });
         return;
       }
-      var tips = "您是否确定提交";
-      if(this.props.title == "手动划款"){
+      var tips = "Are you sure to submit";//您是否确定提交
+      if(this.props.title == "Manual Transfer"){//手动划款
           console.log("commit:"+values);
           if (values.repayMoney <= 1000) {
               Modal.error({
-                  title: "分批还款不走手动划款",
+                  title: "Batch repayment does not take manual payment",//分批还款不走手动划款
               });
               return;
           }
@@ -103,7 +103,7 @@ var Lookdetails = React.createClass({
                   me.handleCancel();
                   let resType = 'success';
                   Modal[resType]({
-                      title: "操作成功,请到借款进度查询结果!",
+                      title: "The operation is successful, please go to the loan progress inquiry result!",//操作成功,请到借款进度查询结果!
                   });
               },
               onCancel: function () { }
@@ -123,7 +123,7 @@ var Lookdetails = React.createClass({
                               serialNumber: values.serialNumber,
                               amount: me.state.value == 1 ? me.props.record.balance : values.amount,
                               penaltyAmout: me.state.value == 1 ? me.props.record.overdueFee : values.penaltyAmout1,
-                              state: me.state.value == 1 ? values.status == 5 ? 6 : 22 : 22,
+                              state: me.state.value == 1 ? values.status == 5 ? 6 : 21 : 22,
                           },
                           callback: (result) => {
                           if (result.code == 200) {
@@ -152,31 +152,31 @@ var Lookdetails = React.createClass({
     } = this.props.form;
     var props = this.props;
     var state = this.state;
-
+    console.log(props.title);
     const formItemLayout = {
       labelCol: {
-        span: 4
+        span:0
       },
       wrapperCol: {
-        span: 20
+        span: 24
       },
     };
     var modalBtns = [
-      <Button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</Button>,
+      <Button key="back" className="ant-btn" onClick={this.handleCancel}>Back{/*返 回*/}</Button>,
       <Button key="button" className="ant-btn ant-btn-primary" onClick={this.handleOk}>
-        提 交
+        {/*提 交*/}Submit
             </Button>
     ];
     return (
-      <Modal title={props.title} visible={props.visible} onCancel={this.handleCancel} width="500" footer={modalBtns} maskClosable={false} >
-      {props.title == "手动划款" ? (
+      <Modal title={props.title} visible={props.visible} onCancel={this.handleCancel} width="500" footer={modalBtns} maskClosable={false} >{/*手动划款*/}
+      {props.title == "Manual Transfer" ? (
       <Form horizontal form={this.props.form}>
   <Input  {...getFieldProps('id', { initialValue: '' }) } type="hidden" />
-  <Input  {...getFieldProps('status', { initialValue: '' }) } type="hidden" />
+  <Input  {...getFieldProps('borrowId', { initialValue: '' }) } type="hidden" />
           <Row>
           <Col span="24">
-          <FormItem {...formItemLayout} label="划款金额:">
-          <Input type="text" placeholder="请输入划款金额" {...getFieldProps('repayMoney', { rules: [{ required: true, message: "输入过多或者未输", max: 20 }] }) } />
+          <FormItem {...formItemLayout} label="Amount Of Payment:">{/*划款金额*/}
+          <Input type="text" placeholder="Please enter the amount of the transfer"{...getFieldProps('repayMoney', { rules: [{ required: true, message: "Too much input or not lost", max: 20 }] }) } /> {/*请输入划款金额     输入过多或者未输*/}
   </FormItem>
           </Col>
           </Row></Form>)
@@ -188,41 +188,41 @@ var Lookdetails = React.createClass({
   <Input  {...getFieldProps('status', { initialValue: '' }) } type="hidden" />
           <Row>
           <Col span="24">
-          <FormItem {...formItemLayout} label="还款选择:">
+          <FormItem {...formItemLayout} label="Repayment Option:">{/*还款选择*/}
           <RadioGroup onChange={this.onChange1} value={this.state.value}>
-  <Radio key="a" value={1}>正常还款</Radio>
-          <Radio key="b" value={2}>金额减免</Radio>
+  <Radio key="a" value={1}>Normal repayment{/*正常还款*/}</Radio>
+          <Radio key="b" value={2}>Amount reduction{/*金额减免*/}</Radio>
           </RadioGroup>
           </FormItem>
           </Col>
           </Row>
           <Row>
           <Col span="24">
-          <FormItem {...formItemLayout} label="还款账号:">
-          <Input type="text" placeholder="请输入银行卡号或者支付宝账号" {...getFieldProps('repayAccount', { rules: [{ required: true, message: "输入过多或者未输", max: 20 }] }) } />
+          <FormItem {...formItemLayout} label="Repayment Account:">{/*还款账号*/}
+          <Input type="text" placeholder="Please enter your bank card number or Alipay account number" {...getFieldProps('repayAccount', { rules: [{ required: true, message: "Too much input or not lost", max: 20 }] }) } />{/*请输入银行卡号或者支付宝账号   输入过多或者未输*/}
   </FormItem>
       </Col>
       </Row>
       <Row>
       <Col span="24">
-          <FormItem {...formItemLayout} label="还款方式:">
-          <Select placeholder="请选择" {...getFieldProps('repayWay', { rules: [{ required: true, message: '必填', type: 'string' }] }) } >
-  <Option value="20">银行卡转账</Option>
+          <FormItem {...formItemLayout} label="Repayment method:">{/*还款方式*/}
+          <Select placeholder="Please Choose" {...getFieldProps('repayWay', { rules: [{ required: true, message: '必填', type: 'string' }] }) } >{/*请选择*/}
+  <Option value="20">Bank card transfer</Option>{/*银行卡转账*/}
           </Select>
           </FormItem>
           </Col>
           </Row>
           <Row>
           <Col span="24">
-          <FormItem {...formItemLayout} label="流水号:">
-          <Input type="text" placeholder="请输入流水号" {...getFieldProps('serialNumber', { rules: [{ required: true, message: "输入过多或者未输", max: 50 }] }) } />
+          <FormItem {...formItemLayout} label="Serial Number:">{/*流水号*/}
+          <Input type="text" placeholder="Please enter the serial number" {...getFieldProps('serialNumber', { rules: [{ required: true, message: "Too much input or not lost", max: 50 }] }) } />{/*请输入流水号    输入过多或者未输*/}
   </FormItem>
       </Col>
       </Row>
       <Row>
       <Col span="24">
-          <FormItem {...formItemLayout} label="还款时间:">
-          <DatePicker format="yyyy-MM-dd HH:mm:ss" disabledDate={this.disabledStartDate} value={this.state.startValue} {...getFieldProps('repayTimes', { rules: [{ required: true, message: '必填', type: 'date' }], onChange: (value) => { this.setState({ startValue: value }) } }) } />
+          <FormItem {...formItemLayout} label="Repayment Time:">{/*还款时间*/}
+          <DatePicker format="yyyy-MM-dd HH:mm:ss" disabledDate={this.disabledStartDate} value={this.state.startValue} {...getFieldProps('repayTimes', { rules: [{ required: true, message: 'Required', type: 'date' }], onChange: (value) => { this.setState({ startValue: value }) } }) } />{/*必填*/}
   </FormItem>
       </Col>
       </Row>
@@ -230,15 +230,15 @@ var Lookdetails = React.createClass({
   <div>
       <Row>
       <Col span="24">
-          <FormItem {...formItemLayout} label="还款金额:">
-          <Input type="text" placeholder="请输入还款金额" {...getFieldProps('amount', { rules: [{ required: true, message: '必填' }] }) } />
+          <FormItem {...formItemLayout} label="Repayment Amount:">{/*还款金额*/}
+          <Input type="text" placeholder="Please enter the repayment amount" {...getFieldProps('amount', { rules: [{ required: true, message: 'Required' }] }) } />{/*请输入还款金额   必填*/}
   </FormItem>
       </Col>
       </Row>
       {this.state.startValue && DateFormat.formatDate(this.state.startValue).substring(0, 10) > this.props.record.repayTime.substring(0, 10) ? <Row>
       <Col span="24">
-          <FormItem {...formItemLayout} label="逾期罚金:">
-          <Input type="text" placeholder="请输入逾期罚金" {...getFieldProps('penaltyAmout1') } />
+          <FormItem {...formItemLayout} label="Overdue fine:">{/*逾期罚金*/}
+          <Input type="text" placeholder="Please enter an overdue penalty" {...getFieldProps('penaltyAmout1') } />{/*请输入逾期罚金*/}
   </FormItem>
       </Col>
       </Row> : ''}

@@ -76,48 +76,48 @@ var Drop = React.createClass({
     } = state;
     const hasSelected = selectedRowKeys.length > 0;
     var columns = [{
-      title: '结果评分',
+      title: 'Result Score',//结果评分
       dataIndex: 'formula',
     }, {
-      title: '分数',
+      title: 'Score',//分数
       dataIndex: 'integral'
     },{
-      title:'结果',
+      title:'Result',//结果
       dataIndex:'result',
     },{
-      title:'权重',
+      title:'Weights',//权重
       dataIndex:'sort',
     }];
     var columns1 = [{
-      title: '表字段',
+      title: 'Table Field',//表字段
       dataIndex: 'columnComment',
     }, {
-      title: '表达式',
+      title: 'Expression',//表达式
       dataIndex: 'formula'
     },{
-      title:'值',
+      title:'Value',//值
       dataIndex:'cvalue',
     }, {
-      title: '分数',
+      title: 'Score',//分数
       dataIndex: 'integral',
     }, {
-      title: '权重',
+      title: 'Weights',//权重
       dataIndex: 'sort',
     }];
     var columns2 = [{
-      title: '表字段',
+      title: 'Table Field',//表字段
       dataIndex: 'columnComment',
     }, {
-      title: '表达式',
+      title: 'Expression',//表达式
       dataIndex: 'formula'
     },{
-      title:'值',
+      title:'Value',//值
       dataIndex:'cvalue',
     }, {
-      title: '结果',
+      title: 'Result',//结果
       dataIndex: 'result',
     }, {
-      title: '权重',
+      title: 'Weights',//权重
       dataIndex: 'sort',
     }];
     return (

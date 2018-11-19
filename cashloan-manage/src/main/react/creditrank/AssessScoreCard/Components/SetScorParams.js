@@ -23,9 +23,9 @@ var SetScorParams = React.createClass({
       selectVlaue: 1,
       tableInfo: [],
       num: 1,
-      itemOne:true,
-      nnid:20,
-      number:[]
+      itemOne: true,
+      nnid: 20,
+      number: []
     };
   },
   handleCancel() {
@@ -33,22 +33,22 @@ var SetScorParams = React.createClass({
     this.setState({
       keys: [],
       selectVlaue: 1,
-      number:[]
+      number: []
 
     });
     this.formData = {};
     this.state.num = 1;
     this.props.form.resetFields();
   },
-  hideModal(){
+  hideModal() {
     this.setState({
       visible: false,
     });
   },
-  showModal(title){
+  showModal(title) {
     this.setState({
       visible: true,
-      title:title
+      title: title
     })
   },
   handleOk(e) {
@@ -57,9 +57,9 @@ var SetScorParams = React.createClass({
     var props = me.props;
     var record = props.record;
     var title = props.title;
-    var tableInfo=this.state.tableInfo;
-    var cardRecord=JSON.parse(localStorage.record);
-   // //console.log("tableInfo44444444444",tableInfo);
+    var tableInfo = this.state.tableInfo;
+    var cardRecord = JSON.parse(localStorage.record);
+    // //console.log("tableInfo44444444444",tableInfo);
     this.props.form.validateFields((errors, values) => {
       if (!!errors) {
         //console.log('Errors in form!!!');
@@ -68,122 +68,123 @@ var SetScorParams = React.createClass({
       var data = values;
       var params = {};
       var req = [];
-      var res=[];
+      var res = [];
       var url = '';
-      var paramsData='';
-      if(data['table']){
-        data.ctable=data['table'][0];
-        data.ccolumn=data['table'][1];
+      var paramsData = '';
+      if (data['table']) {
+        data.ctable = data['table'][0];
+        data.ccolumn = data['table'][1];
       }
-      
-      var corresData=this.state.corresData;
-      for(var i=0;i<corresData.length;i++){
-          if(corresData[i].tbNid==data.ctable) {
-            data.ctableName=corresData[i].tbName;
+
+      var corresData = this.state.corresData;
+      for (var i = 0; i < corresData.length; i++) {
+        if (corresData[i].tbNid == data.ctable) {
+          data.ctableName = corresData[i].tbName;
+        }
+        for (var j = 0; j < corresData[i].children.length; j++) {
+          if (corresData[i].children[j].nid == data.ccolumn) {
+            data.ccolumnName = corresData[i].children[j].name;
+            data.ctype = corresData[i].children[j].type;
           }
-          for(var j=0;j<corresData[i].children.length;j++){
-            if(corresData[i].children[j].nid==data.ccolumn) {
-               data.ccolumnName=corresData[i].children[j].name;
-               data.ctype= corresData[i].children[j].type;
-            }
-         }
+        }
       }
-      var itemIdData=this.props.itemIdData;
-      var itemIdTxt='';
-      itemIdData.map((item,index)=>{
-          if(item.itemName==data.itemName){
-            return itemIdTxt=item.id
-          }
-      })      
+      var itemIdData = this.props.itemIdData;
+      var itemIdTxt = '';
+      itemIdData.map((item, index) => {
+        if (item.itemName == data.itemName) {
+          return itemIdTxt = item.id
+        }
+      })
       //req
       let obj = {};
-     if(data['01formula']){
-          obj.formula = data['01formula'];
-          obj.cvalue = data['0cvalue'];
-          obj.paramScore=data['0paramScore'];
-          obj.id=data['0id'];
-          obj.paramName=data['0paramName'];
-          obj.factorId=data['0factorId'];
-          obj.factorName=data['0factorName'];
-          req.push(obj)
-      if (data.keys.length != 0) {
-        data.keys.forEach(item => {
-          let obj = {};
-          obj.formula = data[item + '1formula'];
-          obj.cvalue = data[item + 'cvalue'];
-          obj.paramScore=data[item+'paramScore'];
-          obj.id=data[item+'id'];
-          obj.paramName=data[item+'paramName'];
-          obj.factorId=data[item+'factorId'];
-          obj.factorName=data[item+'factorName'];
-          req.push(obj)
-        });
-      };
-      }else if(data['0formula']){
-            obj.formula = data['0formula'];
-            obj.cvalue = data['0cvalue'];
-            obj.paramScore=data['0paramScore'];
-            obj.id=data['0id'];
-            obj.paramName=data['0paramName'];
-            obj.factorId=data['0factorId'];
-            obj.factorName=data['0factorName'];
+      if (data['01formula']) {
+        obj.formula = data['01formula'];
+        obj.cvalue = data['0cvalue'];
+        obj.paramScore = data['0paramScore'];
+        obj.id = data['0id'];
+        obj.paramName = data['0paramName'];
+        obj.factorId = data['0factorId'];
+        obj.factorName = data['0factorName'];
+        req.push(obj)
+        if (data.keys.length != 0) {
+          data.keys.forEach(item => {
+            let obj = {};
+            obj.formula = data[item + '1formula'];
+            obj.cvalue = data[item + 'cvalue'];
+            obj.paramScore = data[item + 'paramScore'];
+            obj.id = data[item + 'id'];
+            obj.paramName = data[item + 'paramName'];
+            obj.factorId = data[item + 'factorId'];
+            obj.factorName = data[item + 'factorName'];
             req.push(obj)
+          });
+        };
+      } else if (data['0formula']) {
+        obj.formula = data['0formula'];
+        obj.cvalue = data['0cvalue'];
+        obj.paramScore = data['0paramScore'];
+        obj.id = data['0id'];
+        obj.paramName = data['0paramName'];
+        obj.factorId = data['0factorId'];
+        obj.factorName = data['0factorName'];
+        req.push(obj)
         if (data.keys.length != 0) {
           data.keys.forEach(item => {
             let obj = {};
             obj.formula = data[item + 'formula'];
             obj.cvalue = data[item + 'cvalue'];
-            obj.paramScore=data[item+'paramScore'];
-            obj.id=data[item+'id'];
-            obj.paramName=data[item+'paramName'];
-            obj.factorId=data[item+'factorId'];
-            obj.factorName=data[item+'factorName'];
+            obj.paramScore = data[item + 'paramScore'];
+            obj.id = data[item + 'id'];
+            obj.paramName = data[item + 'paramName'];
+            obj.factorId = data[item + 'factorId'];
+            obj.factorName = data[item + 'factorName'];
             req.push(obj)
           });
         };
-      }else{
-         if (data.keys.length != 0) {
+      } else {
+        if (data.keys.length != 0) {
           data.keys.forEach(item => {
             let obj = {};
             obj.formula = data[item + 'formula'];
             obj.cvalue = data[item + 'cvalue'];
-            obj.paramScore=data[item+'paramScore'];
-            obj.id=data[item+'id'];
-            obj.paramName=data[item+'paramName'];
-            obj.factorId=data[item+'factorId'];
-            obj.factorName=data[item+'factorName'];
+            obj.paramScore = data[item + 'paramScore'];
+            obj.id = data[item + 'id'];
+            obj.paramName = data[item + 'paramName'];
+            obj.factorId = data[item + 'factorId'];
+            obj.factorName = data[item + 'factorName'];
             req.push(obj)
           });
         };
       }
-      
-      params.search =req;
-      var factorModel ={"itemName":data.itemName,
-           "factorName":data.factorName,
-           "type":data.type,
-           "factorScore":data.factorScore,
-           "cardId":record.cardId,
-           "id":record.id,
-           "itemId":itemIdTxt?(itemIdTxt):"",
-           "nnid":20,
-           "cardName":cardRecord.cardName?(cardRecord.cardName):"",
-           "ccolumnName":data.ccolumnName?(data.ccolumnName):"",
-           "ccolumn":data.ccolumn?(data.ccolumn):"",
-           "ctable":data.ctable?(data.ctable):"",
-           "ctableName":data.ctableName?(data.ctableName):"",
-           "ctype":data.ctype?(data.ctype):""
-          };
-           
-      
-        url = '/modules/manage/cr/factor/update.htm';  
-         paramsData={
-           "factorModel":JSON.stringify(factorModel), 
-           "secreditrankh":JSON.stringify(params.search)
+
+      params.search = req;
+      var factorModel = {
+        "itemName": data.itemName,
+        "factorName": data.factorName,
+        "type": data.type,
+        "factorScore": data.factorScore,
+        "cardId": record.cardId,
+        "id": record.id,
+        "itemId": itemIdTxt ? (itemIdTxt) : "",
+        "nnid": 20,
+        "cardName": cardRecord.cardName ? (cardRecord.cardName) : "",
+        "ccolumnName": data.ccolumnName ? (data.ccolumnName) : "",
+        "ccolumn": data.ccolumn ? (data.ccolumn) : "",
+        "ctable": data.ctable ? (data.ctable) : "",
+        "ctableName": data.ctableName ? (data.ctableName) : "",
+        "ctype": data.ctype ? (data.ctype) : ""
+      };
+
+
+      url = '/modules/manage/cr/factor/update.htm';
+      paramsData = {
+        "factorModel": JSON.stringify(factorModel),
+        "secreditrankh": JSON.stringify(params.search)
       };
       Utils.ajaxData({
         url: url,
-        data:paramsData,
-        method:"post",
+        data: paramsData,
+        method: "post",
         callback: (result) => {
           if (result.code == 200) {
             this.handleCancel();
@@ -195,8 +196,8 @@ var SetScorParams = React.createClass({
           //   duration: 2
           // });
           Modal.success({
-              title: result.msg,
-            });
+            title: result.msg,
+          });
         }
       });
     });
@@ -209,7 +210,7 @@ var SetScorParams = React.createClass({
     var me = this;
     if (me.formData[`${k}id`]) {
       confirm({
-        title: '是否确认要删除这项内容',
+        title: 'Are you sure you want to delete this content?',//是否确认要删除这项内容
         onOk: function () {
           Utils.ajaxData({
             url: "/modules/manage/cr/factor/delete.htm",
@@ -240,31 +241,31 @@ var SetScorParams = React.createClass({
       form.setFieldsValue({
         keys,
       });
-    } 
+    }
 
-      //console.log("uuuuuuuuuuuuuuu",form.getFieldValue([k + 'paramScore']))
-    var max=this.state.number.filter((key) => {
+    //console.log("uuuuuuuuuuuuuuu",form.getFieldValue([k + 'paramScore']))
+    var max = this.state.number.filter((key) => {
       return key !== form.getFieldValue([k + 'paramScore']);
     });
     this.setState({
-      number:max
+      number: max
     })
-     //console.log("iiiiiiiiiii",max);
-     var maxnumber=Math.max.apply(Math, max)
-     this.props.form.setFieldsValue({
-          factorScore: maxnumber,
-        });
+    //console.log("iiiiiiiiiii",max);
+    var maxnumber = Math.max.apply(Math, max)
+    this.props.form.setFieldsValue({
+      factorScore: maxnumber,
+    });
 
   },
-  removeFirst(){
+  removeFirst() {
     const {
       form
     } = this.props;
     var me = this;
     let keys = form.getFieldValue('keys');
-    if(keys.length>0){
+    if (keys.length > 0) {
       confirm({
-        title: '是否确认要删除这项内容',
+        title: 'Are you sure you want to delete this content?',//是否确认要删除这项内容
         onOk: function () {
           Utils.ajaxData({
             url: "/modules/manage/cr/factorParam/delete.htm",
@@ -286,17 +287,17 @@ var SetScorParams = React.createClass({
     }
 
     //console.log("uuuuuuuuuuuuuuu",form.getFieldValue([k + 'paramScore']))
-    var max=this.state.number.filter((key) => {
+    var max = this.state.number.filter((key) => {
       return key !== form.getFieldValue([0 + 'paramScore']);
     });
     this.setState({
-      number:max
+      number: max
     })
-     //console.log("iiiiiiiiiii",max);
-     var maxnumber=Math.max.apply(Math, max)
-     this.props.form.setFieldsValue({
-          factorScore: maxnumber,
-        });
+    //console.log("iiiiiiiiiii",max);
+    var maxnumber = Math.max.apply(Math, max)
+    this.props.form.setFieldsValue({
+      factorScore: maxnumber,
+    });
   },
   add() {
     const {
@@ -315,32 +316,32 @@ var SetScorParams = React.createClass({
   transformeData(data) {
     var formData = {};
     var keys = [];
-    if(data['01formula']){
+    if (data['01formula']) {
       data.forEach((item, index) => {
-      let k = index;
-      keys.push(k);
+        let k = index;
+        keys.push(k);
 
-      formData[`${k}1formula`] = item.formula;
-      formData[`${k}cvalue`] = item.cvalue;
-      formData[`${k}paramScore`] = item.paramScore.toString();
-      formData[`${k}id`] = item.id;
-      formData[`${k}factorId`] = item.factorId;
-      formData[`${k}factorName`] = item.factorName;
-      formData[`${k}paramName`] = item.paramName;
-    })
-    }else{
-       data.forEach((item, index) => {
-      let k = index;
-      keys.push(k);
+        formData[`${k}1formula`] = item.formula;
+        formData[`${k}cvalue`] = item.cvalue;
+        formData[`${k}paramScore`] = item.paramScore.toString();
+        formData[`${k}id`] = item.id;
+        formData[`${k}factorId`] = item.factorId;
+        formData[`${k}factorName`] = item.factorName;
+        formData[`${k}paramName`] = item.paramName;
+      })
+    } else {
+      data.forEach((item, index) => {
+        let k = index;
+        keys.push(k);
 
-      formData[`${k}formula`] = item.formula;
-      formData[`${k}cvalue`] = item.cvalue;
-      formData[`${k}paramScore`] = item.paramScore.toString();
-      formData[`${k}id`] = item.id;
-      formData[`${k}factorId`] = item.factorId;
-      formData[`${k}factorName`] = item.factorName;
-      formData[`${k}paramName`] = item.paramName;
-    })
+        formData[`${k}formula`] = item.formula;
+        formData[`${k}cvalue`] = item.cvalue;
+        formData[`${k}paramScore`] = item.paramScore.toString();
+        formData[`${k}id`] = item.id;
+        formData[`${k}factorId`] = item.factorId;
+        formData[`${k}factorName`] = item.factorName;
+        formData[`${k}paramName`] = item.paramName;
+      })
     }
     let keys1 = keys.splice(0, 1);
     formData["keys"] = keys;
@@ -349,10 +350,10 @@ var SetScorParams = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.visible) {
-      if (nextProps.title == '编辑评分因子' && this.state.num == 1) {
+      if (nextProps.title == 'Edit score factor' && this.state.num == 1) {//编辑评分因子
         var data = nextProps.ruleData[0].children;
 
-        var data3= nextProps.ruleData;
+        var data3 = nextProps.ruleData;
         this.formData = this.transformeData(data);
         this.props.form.setFieldsValue({
           keys: this.formData.keys,
@@ -360,47 +361,47 @@ var SetScorParams = React.createClass({
         this.setState({
           selectVlaue: this.formData.keys.length + 1,
           keys: this.formData.keys,
-          typeResultStatus:data3.typeResultStatus,
-          type:data3.type
+          typeResultStatus: data3.typeResultStatus,
+          type: data3.type
         });
         this.state.num = 2;
-      } else if (nextProps.title == '新增评分因子') {
+      } else if (nextProps.title == 'New scoring factor') {//新增评分因子
         this.formData = {};
-      }else if (nextProps.ruleData[0].children,length <0) {
+      } else if (nextProps.ruleData[0].children, length < 0) {
         this.formData = {};
       }
     };
   },
   componentDidMount() {
-     var search={
-      state:'10'
-     } 
-     Utils.ajaxData({
-       url: '/modules/manage/cr/card/findAll.htm',
-       callback: (result) => {
-         //console.log("ooooo",result.data);
-         var data=result.data;
-         var cardName=[];
-         cardName=data.map((item)=>{
-             return(<Option key={item.id} value={String(item.id)}>{item.cardName}</Option>)
-         })
-         this.setState({
-           cardName:cardName
-         })
+    var search = {
+      state: '10'
+    }
+    Utils.ajaxData({
+      url: '/modules/manage/cr/card/findAll.htm',
+      callback: (result) => {
+        //console.log("ooooo",result.data);
+        var data = result.data;
+        var cardName = [];
+        cardName = data.map((item) => {
+          return (<Option key={item.id} value={String(item.id)}>{item.cardName}</Option>)
+        })
+        this.setState({
+          cardName: cardName
+        })
 
-       }
+      }
     });
     Utils.ajaxData({
       url: '/modules/manage/cr/info/page.htm',
       data: {
         pageSize: 10,
         current: 1,
-        search:JSON.stringify(search)
+        search: JSON.stringify(search)
       },
       callback: (result) => {
         if (result.code == 200) {
           var tableInfo = [];
-          var corresData=[];
+          var corresData = [];
           var data = result.data;
           data.forEach((item) => {
             let col1 = {};
@@ -418,21 +419,21 @@ var SetScorParams = React.createClass({
           });
           this.setState({
             tableInfo: tableInfo,
-            corresData:result.data
+            corresData: result.data
           });
         }
 
       }
     });
   },
-  onChange(value){
+  onChange(value) {
     this.setState({
-       nnid:value,
+      nnid: value,
     })
   },
-  onTypeChange(value){
-   this.setState({
-       type:value,
+  onTypeChange(value) {
+    this.setState({
+      type: value,
     })
   },
   handleFactorScoreBlur(e) {
@@ -463,26 +464,26 @@ var SetScorParams = React.createClass({
     //  else {
     //   callback();
     // }
-  
-     this.state.number.push(value);
+
+    this.state.number.push(value);
     // //console.log("999999999999999",this.state.number);
-     var maxnumber=Math.max.apply(Math, this.state.number)
-     this.props.form.setFieldsValue({
-          factorScore: maxnumber,
-        });
-        callback();
+    var maxnumber = Math.max.apply(Math, this.state.number)
+    this.props.form.setFieldsValue({
+      factorScore: maxnumber,
+    });
+    callback();
   },
   checkParamScore(rule, value, callback) {
-      const form = this.props.form;
-      var keyAry = this.state.keys;
-      if (value && this.state.passwordDirty) {
-        if (keyAry.length == 0) {
-          form.validateFields(['0paramScore'], { force: true });
-        } else {
-          for (var k = 0; k <= keyAry.length;k++){
-          form.validateFields([k+'paramScore'], { force: true });
-         }      
-      }   
+    const form = this.props.form;
+    var keyAry = this.state.keys;
+    if (value && this.state.passwordDirty) {
+      if (keyAry.length == 0) {
+        form.validateFields(['0paramScore'], { force: true });
+      } else {
+        for (var k = 0; k <= keyAry.length; k++) {
+          form.validateFields([k + 'paramScore'], { force: true });
+        }
+      }
     }
     callback();
   },
@@ -496,9 +497,9 @@ var SetScorParams = React.createClass({
     var props = this.props;
     var state = this.state;
     var modalBtns = [
-      <button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</button>,
-      <button key="button" className="ant-btn ant-btn-primary"  onClick={this.handleOk}>
-          提 交
+      <button key="back" className="ant-btn" onClick={this.handleCancel}>{/*返 回*/}Back</button>,
+      <button key="button" className="ant-btn ant-btn-primary" onClick={this.handleOk}>
+        {/*提 交*/}Submit
       </button>
     ];
     const formItemLayout = {
@@ -508,95 +509,97 @@ var SetScorParams = React.createClass({
       wrapperCol: {
         span: 22
       },
-    };   
+    };
     //console.log("uuuuuuuuuuu",this.state,this.props)
     const formItems = state.keys.map((k) => {
       return (<div key={k}>
-          <Row>  
+        <Row>
           <Col span="3" className='col_h'></Col>
-             {this.state.nnid=='20'||this.props.form.getFieldValue('nnid')=='20'? 
-              <Col span="5" className='col_h'>
-                <FormItem  {...formItemLayout}>
-                  <Select style={{ width: '100%' }}  placeholder="请选择因子参数描述"  disabled={props.canEdit}
-                    {...getFieldProps(`${k}1formula`,{initialValue:this.formData?this.formData[`${k}formula`]:'',rules: [{required:true,message: '必填'}]})}>
-                    <Option  value='>'>></Option>
-                    <Option  value='<'>{'<'}</Option>
-                    <Option  value='='>=</Option>
-                    <Option  value='>='>>=</Option>
-                    <Option  value='<='>{'<='}</Option>
-                    <Option  value='!='>!=</Option>
-                    <Option  value='<and<'>{'<and<'}</Option>
-                    <Option  value='<=and<'>{'<=and<'}</Option>
-                    <Option  value='<=and<='>{'<=and<='}</Option>
-                    <Option  value='<and<='>{'<and<='}</Option>
-                    <Option  value='include'>包含</Option>
-                    <Option  value='exclude'>不包含</Option>
-                  </Select>
-                </FormItem> 
-              </Col>         
-                    :
-              <Col span="5" className='col_h'>
-                  <FormItem {...formItemLayout}>
-                  <Input  {...getFieldProps(`${k}formula`,{initialValue:this.formData?this.formData[`${k}formula`]:'',rules: [{required:true,message: '必填'}]})} type="text" autoComplete="off" placeholder="请输入因子参数描述" disabled={props.canEdit}/>
-                  </FormItem> 
-                </Col>}
+          {this.state.nnid == '20' || this.props.form.getFieldValue('nnid') == '20' ?
+            <Col span="5" className='col_h'>
+              <FormItem  {...formItemLayout}>
+                <Select style={{ width: '100%' }} placeholder="Please select a factor parameter description" disabled={props.canEdit}
+                  {...getFieldProps(`${k}1formula`, { initialValue: this.formData ? this.formData[`${k}formula`] : '', rules: [{ required: true, message: 'Required' }] })}>{/*请选择因子参数描述   必填*/}
+                  <Option value='>'>></Option>
+                  <Option value='<'>{'<'}</Option>
+                  <Option value='='>=</Option>
+                  <Option value='>='>>=</Option>
+                  <Option value='<='>{'<='}</Option>
+                  <Option value='!='>!=</Option>
+                  <Option value='<and<'>{'<and<'}</Option>
+                  <Option value='<=and<'>{'<=and<'}</Option>
+                  <Option value='<=and<='>{'<=and<='}</Option>
+                  <Option value='<and<='>{'<and<='}</Option>
+                  <Option value='include'>{/*包含*/}contain</Option>
+                  <Option value='exclude'>{/*不包含*/}Not included</Option>
+                </Select>
+              </FormItem>
+            </Col>
+            :
+            <Col span="5" className='col_h'>
+              <FormItem {...formItemLayout}>
+                <Input  {...getFieldProps(`${k}formula`, { initialValue: this.formData ? this.formData[`${k}formula`] : '', rules: [{ required: true, message: 'Required' }] })} type="text" autoComplete="off" placeholder="Please enter a factor parameter description" disabled={props.canEdit} />{/*必填 请输入因子参数描述*/}
+              </FormItem>
+            </Col>}
           <Col span="5" className='col_h'>
-            <FormItem  {...formItemLayout}> 
-              <Input  {...getFieldProps(`${k}cvalue`,{initialValue:this.formData?this.formData[`${k}cvalue`]:'',rules: [{required:true,message: '必填'}]})} type="text" disabled={props.canEdit} autoComplete="off" placeholder="请输入因子参数数值"/>
+            <FormItem  {...formItemLayout}>
+              <Input  {...getFieldProps(`${k}cvalue`, { initialValue: this.formData ? this.formData[`${k}cvalue`] : '', rules: [{ required: true, message: 'Required' }] })} type="text" disabled={props.canEdit} autoComplete="off" placeholder="Please enter the factor parameter value" />{/*必填 请输入因子参数数值*/}
             </FormItem>
           </Col>
-                <Col span="5" className="col_h">
-                <FormItem  {...formItemLayout}>
-                 <Input   type="text"  {...getFieldProps(`${k}paramScore`,{initialValue:this.formData?this.formData[`${k}paramScore`]:'',rules: [{required:true,message: '必填'},
-                   { validator: this.checkFactorScore}]})} placeholder="分值" />
-                </FormItem>
-             </Col>
-             
-            <Col span="2" className='col_h'>
-                <Button className="ant-btn" icon="plus" onClick={this.add}></Button>
-                  <span style={{padding:"0 5px"}}></span>
-                <Button className="ant-btn" shape="circle" icon="minus"  onClick={this.remove.bind(this,k)}></Button>
-            </Col>
-          </Row>
-              <Input  {...getFieldProps(`${k}factorId`,{initialValue:this.formData[`${k}factorId`]?this.formData[`${k}factorId`]:localStorage.id})} type="hidden" />
-              <Input  {...getFieldProps(`${k}paramName`,{initialValue:this.formData[`${k}paramName`]?this.formData[`${k}paramName`]:localStorage.factorName})} type="hidden" />
-              <Input  {...getFieldProps(`${k}factorName`,{initialValue:this.formData[`${k}factorName`]?this.formData[`${k}factorName`]:localStorage.factorName})} type="hidden" />
-              <Input  {...getFieldProps(`${k}id`,{initialValue:this.formData[`${k}id`]?this.formData[`${k}id`]:0})} type="hidden" />
-        </div>);
+          <Col span="5" className="col_h">
+            <FormItem  {...formItemLayout}>
+              <Input type="text"  {...getFieldProps(`${k}paramScore`, {
+                initialValue: this.formData ? this.formData[`${k}paramScore`] : '', rules: [{ required: true, message: 'Required' },
+                { validator: this.checkFactorScore }]
+              })} placeholder="Score" />{/*必填 分值*/}
+            </FormItem>
+          </Col>
+
+          <Col span="2" className='col_h'>
+            <Button className="ant-btn" icon="plus" onClick={this.add}></Button>
+            <span style={{ padding: "0 5px" }}></span>
+            <Button className="ant-btn" shape="circle" icon="minus" onClick={this.remove.bind(this, k)}></Button>
+          </Col>
+        </Row>
+        <Input  {...getFieldProps(`${k}factorId`, { initialValue: this.formData[`${k}factorId`] ? this.formData[`${k}factorId`] : localStorage.id })} type="hidden" />
+        <Input  {...getFieldProps(`${k}paramName`, { initialValue: this.formData[`${k}paramName`] ? this.formData[`${k}paramName`] : localStorage.factorName })} type="hidden" />
+        <Input  {...getFieldProps(`${k}factorName`, { initialValue: this.formData[`${k}factorName`] ? this.formData[`${k}factorName`] : localStorage.factorName })} type="hidden" />
+        <Input  {...getFieldProps(`${k}id`, { initialValue: this.formData[`${k}id`] ? this.formData[`${k}id`] : 0 })} type="hidden" />
+      </div>);
     });
 
     return (
-      <Modal maskClosable={false} title={props.title} visible={props.visible} onCancel={this.handleCancel} width={900}  footer={modalBtns} >
-          <Form  horizontal  form={this.props.form}>
-              <Row>
-                  <Col span="12" className='col_h'>
-                      <FormItem  {...{ labelCol: {span:6},wrapperCol: {span: 14}}} 
-                        label="所属评分项目：">
-                         <Select style={{ width: '100%' }} {...getFieldProps('itemName', {initialValue:this.props.record?this.props.record.itemName:'',rules: [{required:true,message: '请选择所属评分项目'}]})}  placeholder="请选择所属评分项目">
-                           {this.props.projectList}
-                         </Select>                             
-                      </FormItem>
-                  </Col>
-                  
-                  <Col span="12" className='col_h'>
-                      <FormItem  {...{ labelCol: {span: 6},wrapperCol: {span: 14}}}
-                        label="评分因子名称：">
-                        <Input  {...getFieldProps('factorName', { rules: [{required:true,message: '请填入因子名称'}]})} disabled={props.canEdit} type="text" autoComplete="off" />
-                      </FormItem>
-                  </Col>
-              </Row>
-              <Row>
-                  <Col span="12" className='col_h'>
-                    <FormItem  {...{ labelCol: {span:6},wrapperCol: {span: 14}}}
-                      label="维护类型：">
-                        <Select style={{ width: '100%' }} {...getFieldProps('type', {onChange:this.onTypeChange,rules: [{required:true,message: '请选择维护类型'}]})} disabled={props.canEdit}>
-                        <Option  value={'10'}>系统读取</Option>
-                        <Option  value={'20'}>人工维护</Option>
-                        <Option  value={'30'}>关联评分卡</Option>
-                      </Select>
-                    </FormItem>
-                  </Col>  
-                  {/**<Col span="12" className='col_h'>
+      <Modal maskClosable={false} title={props.title} visible={props.visible} onCancel={this.handleCancel} width={900} footer={modalBtns} >
+        <Form horizontal form={this.props.form}>
+          <Row>
+            <Col span="12" className='col_h'>
+              <FormItem  {...{ labelCol: { span: 6 }, wrapperCol: { span: 14 } }}
+                label="Rating item:">{/*所属评分项目：*/}
+                <Select style={{ width: '100%' }} {...getFieldProps('itemName', { initialValue: this.props.record ? this.props.record.itemName : '', rules: [{ required: true, message: 'Please select a rating item' }] })} placeholder="Please select a rating item">{/*请选择所属评分项目 请选择所属评分项目*/}
+                  {this.props.projectList}
+                </Select>
+              </FormItem>
+            </Col>
+
+            <Col span="12" className='col_h'>
+              <FormItem  {...{ labelCol: { span: 6 }, wrapperCol: { span: 14 } }}
+                label="Rating factor name:">{/*评分因子名称：*/}
+                <Input  {...getFieldProps('factorName', { rules: [{ required: true, message: 'Please fill in the factor name' }] })} disabled={props.canEdit} type="text" autoComplete="off" />{/*请填入因子名称*/}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span="12" className='col_h'>
+              <FormItem  {...{ labelCol: { span: 6 }, wrapperCol: { span: 14 } }}
+                label="Maintenance type:">{/*维护类型：*/}
+                <Select style={{ width: '100%' }} {...getFieldProps('type', { onChange: this.onTypeChange, rules: [{ required: true, message: 'Please select the type of maintenance' }] })} disabled={props.canEdit}>{/*请选择维护类型*/}
+                  <Option value={'10'}>{/*系统读取*/}System read</Option>
+                  <Option value={'20'}>{/*人工维护*/}Manual maintenance</Option>
+                  <Option value={'30'}>{/*关联评分卡*/}Associated scorecard</Option>
+                </Select>
+              </FormItem>
+            </Col>
+            {/**<Col span="12" className='col_h'>
                     <FormItem  {...{ labelCol: {span:6},wrapperCol: {span: 14}}}label="信息类型：">
                         <Select style={{ width: '100%' }} {...getFieldProps('nnid', {onChange:this.onChange,rules: [{required:true,message: '请选择信息类型'}]})} disabled={props.canEdit}>
                         <Option  value={'10'}>定性</Option>
@@ -604,111 +607,115 @@ var SetScorParams = React.createClass({
                       </Select>
                     </FormItem>
                   </Col>   */}
-                   <Input  {...getFieldProps('nnid', { initialValue: '20' }) } type="hidden"   />
-              </Row>
-           
-              <Row>  
-                {this.state.type=='10'||this.props.form.getFieldValue('type')=='10'?
-                <Col span="12" className='col_h'>
-                  <FormItem  {...{ labelCol: {span:6},wrapperCol: {span: 14}}} label="系统参数：">            
-                    <Cascader options={this.state.tableInfo} {...getFieldProps('table', {rules: [{required:true,message: '请选择系统参数',type:'array'}]})} disabled={props.canEdit}  />
-                  </FormItem>
-                </Col>:null  
-               }
-               {this.state.type=='30'||this.props.form.getFieldValue('type')=='30'?
-                <Col span="12" className='col_h'>
-                  <FormItem  {...{ labelCol: {span:6},wrapperCol: {span: 14}}} label="关联评分卡:">            
-                    <Select  {...getFieldProps('cardname', { rules: [{required:true,message: '请填入评分卡',type:"string"}]})}  placeholder="请选择评分卡" >
-                      {this.state.cardName}
+            <Input  {...getFieldProps('nnid', { initialValue: '20' })} type="hidden" />
+          </Row>
+
+          <Row>
+            {this.state.type == '10' || this.props.form.getFieldValue('type') == '10' ?
+              <Col span="12" className='col_h'>
+                <FormItem  {...{ labelCol: { span: 6 }, wrapperCol: { span: 14 } }} label="System parameters:">{/*系统参数：*/}
+                  <Cascader options={this.state.tableInfo} {...getFieldProps('table', { rules: [{ required: true, message: 'Please select system parameters', type: 'array' }] })} disabled={props.canEdit} />{/*请选择系统参数*/}
+                </FormItem>
+              </Col> : null
+            }
+            {this.state.type == '30' || this.props.form.getFieldValue('type') == '30' ?
+              <Col span="12" className='col_h'>
+                <FormItem  {...{ labelCol: { span: 6 }, wrapperCol: { span: 14 } }} label="Associated scorecard:"> {/*关联评分卡*/}
+                  <Select  {...getFieldProps('cardname', { rules: [{ required: true, message: 'Please fill in the scorecard', type: "string" }] })} placeholder="Please select a rating card" >{/*请填入评分卡   请选择评分卡*/}
+                    {this.state.cardName}
+                  </Select>
+                </FormItem>
+              </Col> : null
+
+            }
+            <Col span="12" className='col_h'>
+              <FormItem  {...{ labelCol: { span: 6 }, wrapperCol: { span: 14 } }}
+                label="Factor score:">{/*因子分值：*/}
+                <InputNumber  {...getFieldProps('factorScore', {
+                  rules: [{ required: true, message: 'Please fill in the factor score', type: 'number' },
+                  { validator: this.checkParamScore }]
+                })} style={{ width: '253px' }} disabled={true} onBlur={this.handleFactorScoreBlur} />{/*请填入因子分值*/}
+              </FormItem>
+            </Col>
+          </Row>
+
+
+
+          <div>
+            <p style={{ width: "100%", borderBottom: "1px solid #d9d9d9", marginBottom: '15px' }}></p>
+            <Row>
+              <Col span="3" className='col_h'></Col>
+              <Col span="5" className='col_h'>
+                <FormItem  {...{ labelCol: { span: 8 }, wrapperCol: { span: 0 } }}
+                  label="Expression:"></FormItem>{/*表达式：*/}
+              </Col>
+              <Col span="5" className='col_h'>
+                <FormItem  {...{ labelCol: { span: 2 }, wrapperCol: { span: 0 } }}
+                  label="Value:"></FormItem>{/*值*/}
+              </Col>
+              <Col span="5" className='col_h'>
+                <FormItem  {...{ labelCol: { span: 6 }, wrapperCol: { span: 0 } }}
+                  label="Score:"></FormItem>{/*分值*/}
+              </Col>
+            </Row>
+            {this.state.itemOne ? <Row>
+              <Col span="3" className='col_h'></Col>
+              {this.state.nnid == '20' || this.props.form.getFieldValue('nnid') == '20' ?
+                <Col span="5" className='col_h'>
+                  <FormItem {...formItemLayout}>
+                    <Select style={{ width: '100%' }} placeholder="Please select a factor parameter description" disabled={props.canEdit}
+                      {...getFieldProps('01formula', { initialValue: this.formData ? this.formData["0formula"] : '', rules: [{ required: true, message: 'Required' }] })} >{/*请选择因子参数描述 必填*/}
+                      <Option value='>'>></Option>
+                      <Option value='<'>{'<'}</Option>
+                      <Option value='='>=</Option>
+                      <Option value='>='>>=</Option>
+                      <Option value='<='>{'<='}</Option>
+                      <Option value='!='>!=</Option>
+                      <Option value='<and<'>{'<and<'}</Option>
+                      <Option value='<=and<'>{'<=and<'}</Option>
+                      <Option value='<=and<='>{'<=and<='}</Option>
+                      <Option value='<and<='>{'<and<='}</Option>
+                      <Option value='include'>{/*包含*/}Contain</Option>
+                      <Option value='exclude'>{/*不包含*/}Not Included</Option>
                     </Select>
                   </FormItem>
-                </Col>:null
-                  
-               }
-                <Col span="12" className='col_h'>
-                      <FormItem  {...{ labelCol: {span: 6},wrapperCol: {span: 14}}}
-                        label="因子分值：">
-                        <InputNumber  {...getFieldProps('factorScore', { rules: [{required:true,message: '请填入因子分值',type:'number'},
-                        { validator: this.checkParamScore}]})} style={{width:'253px'}} disabled={true}   onBlur={this.handleFactorScoreBlur} />
-                      </FormItem>
-                  </Col>
-              </Row>
+                </Col>
+                :
+                <Col span="5" className='col_h'>
+                  <FormItem {...formItemLayout}>
+                    <Input  {...getFieldProps('0formula', { initialValue: this.formData ? this.formData["0formula"] : '', rules: [{ required: true, message: 'Required' }] })} type="text" autoComplete="off" placeholder="Please enter a factor parameter description" disabled={props.canEdit} />{/*必填 请输入因子参数描述*/}
+                  </FormItem>
+                </Col>
 
-             
-             
-                <div>
-                  <p style={{width:"100%",borderBottom:"1px solid #d9d9d9",marginBottom:'15px'}}></p>
-                  <Row>
-                  <Col span="3" className='col_h'></Col>
-                    <Col span="5" className='col_h'>
-                        <FormItem  {...{ labelCol: {span: 8},wrapperCol: {span: 0}}}
-                        label="表达式："></FormItem>
-                    </Col>
-                    <Col span="5" className='col_h'>
-                        <FormItem  {...{ labelCol: {span: 2},wrapperCol: {span: 0}}}
-                        label="值："></FormItem>
-                    </Col>
-                    <Col span="5" className='col_h'>
-                        <FormItem  {...{ labelCol: {span: 6},wrapperCol: {span: 0}}}
-                        label="分值："></FormItem>
-                    </Col>
-                  </Row>
-                 {this.state.itemOne? <Row>
-                    <Col span="3" className='col_h'></Col>
-                      {this.state.nnid=='20'||this.props.form.getFieldValue('nnid')=='20'? 
-                    <Col span="5" className='col_h'>
-                      <FormItem {...formItemLayout}>
-                        <Select style={{ width: '100%' }}   placeholder="请选择因子参数描述" disabled={props.canEdit}
-                          {...getFieldProps('01formula',{initialValue:this.formData?this.formData["0formula"]:'',rules: [{required:true,message: '必填'}]})} >
-                          <Option  value='>'>></Option>
-                          <Option  value='<'>{'<'}</Option>
-                          <Option  value='='>=</Option>
-                          <Option  value='>='>>=</Option>
-                          <Option  value='<='>{'<='}</Option>
-                          <Option  value='!='>!=</Option>
-                          <Option  value='<and<'>{'<and<'}</Option>
-                          <Option  value='<=and<'>{'<=and<'}</Option>
-                          <Option  value='<=and<='>{'<=and<='}</Option>
-                          <Option  value='<and<='>{'<and<='}</Option>
-                          <Option  value='include'>包含</Option>
-                          <Option  value='exclude'>不包含</Option>
-                        </Select>
-                      </FormItem> 
-                    </Col>
-                    :
-                     <Col span="5" className='col_h'>
-                      <FormItem {...formItemLayout}>
-                       <Input  {...getFieldProps('0formula',{initialValue:this.formData?this.formData["0formula"]:'',rules: [{required:true,message: '必填'}]})} type="text" autoComplete="off" placeholder="请输入因子参数描述" disabled={props.canEdit}/>
-                      </FormItem> 
-                    </Col>
-       
-                     }
-                    <Col span="5" className='col_h'>
-                      <FormItem  {...formItemLayout}  >
-                        <Input  {...getFieldProps('0cvalue',{initialValue:this.formData?this.formData["0cvalue"]:'',rules: [{required:true,message: '必填'}]})} type="text" autoComplete="off" placeholder="请输入因子参数数值" disabled={props.canEdit}/>
-                      </FormItem>
-                    </Col>
-                    <Col span="5" className='col_h'>
-                      <FormItem {...formItemLayout}>
-                        <Input  {...getFieldProps('0paramScore',{initialValue:this.formData?this.formData["0paramScore"]:'',rules: [{required:true,message: '必填'},
-                          { validator: this.checkFactorScore}]})} type="text" autoComplete="off"  placeholder="分值" />
-                      </FormItem>
-                    </Col>                    
-                        <Input  {...getFieldProps('0id',{initialValue:this.formData["0id"]?this.formData["0id"]:0})} type="hidden" />
-                        <Input  {...getFieldProps('0paramName',{initialValue:this.formData["0paramName"]?this.formData["0paramName"]:localStorage.factorName})} type="hidden" />
-                        <Input  {...getFieldProps('0factorId',{initialValue:this.formData["0factorId"]?this.formData["0factorId"]: localStorage.id})} type="hidden" />
-                        <Input  {...getFieldProps('0factorName',{initialValue:this.formData["0factorName"]?this.formData["0factorName"]:localStorage.factorName})} type="hidden" />
-                    <Col span="2">
-                      <Button className="ant-btn" icon="plus" onClick={this.add}></Button>
-                       {this.state.keys.length>0?<Button className="ant-btn" shape="circle" icon="minus" style={{marginLeft:'10px'}} onClick={this.removeFirst}></Button>:null} 
-                    </Col>
-                  </Row>:null}
-                  <span style={{'color': '#2db7f5', 'position': 'absolute','right': '89px', 'top': '231px', 'cursor': 'pointer'}} 
-                   onClick={this.showModal.bind(this,'因子参数描述区间值填写示例',false)}>填写示例</span>
-                  {this.state.keys.length ? formItems : null}
-                </div>    
-          </Form>
-          <DemoModal ref="DemoModal"  visible={state.visible}  title={state.title} hideModal={this.hideModal}  />
+              }
+              <Col span="5" className='col_h'>
+                <FormItem  {...formItemLayout}  >
+                  <Input  {...getFieldProps('0cvalue', { initialValue: this.formData ? this.formData["0cvalue"] : '', rules: [{ required: true, message: 'Required' }] })} type="text" autoComplete="off" placeholder="Please enter the factor parameter value" disabled={props.canEdit} />
+                </FormItem>
+              </Col>
+              <Col span="5" className='col_h'>
+                <FormItem {...formItemLayout}>
+                  <Input  {...getFieldProps('0paramScore', {
+                    initialValue: this.formData ? this.formData["0paramScore"] : '', rules: [{ required: true, message: 'Required' },
+                    { validator: this.checkFactorScore }]
+                  })} type="text" autoComplete="off" placeholder="Score" />{/*必填 分值*/}
+                </FormItem>
+              </Col>
+              <Input  {...getFieldProps('0id', { initialValue: this.formData["0id"] ? this.formData["0id"] : 0 })} type="hidden" />
+              <Input  {...getFieldProps('0paramName', { initialValue: this.formData["0paramName"] ? this.formData["0paramName"] : localStorage.factorName })} type="hidden" />
+              <Input  {...getFieldProps('0factorId', { initialValue: this.formData["0factorId"] ? this.formData["0factorId"] : localStorage.id })} type="hidden" />
+              <Input  {...getFieldProps('0factorName', { initialValue: this.formData["0factorName"] ? this.formData["0factorName"] : localStorage.factorName })} type="hidden" />
+              <Col span="2">
+                <Button className="ant-btn" icon="plus" onClick={this.add}></Button>
+                {this.state.keys.length > 0 ? <Button className="ant-btn" shape="circle" icon="minus" style={{ marginLeft: '10px' }} onClick={this.removeFirst}></Button> : null}
+              </Col>
+            </Row> : null}
+            <span style={{ 'color': '#2db7f5', 'position': 'absolute', 'right': '89px', 'top': '231px', 'cursor': 'pointer' }}
+              onClick={this.showModal.bind(this, 'Factor parameter description interval value filling example', false)}>{/*因子参数描述区间值填写示例*/}{/*填写示例*/}Fill in the example</span>
+            {this.state.keys.length ? formItems : null}
+          </div>
+        </Form>
+        <DemoModal ref="DemoModal" visible={state.visible} title={state.title} hideModal={this.hideModal} />
       </Modal>
     );
   }

@@ -158,10 +158,10 @@ var AdjustRecord = React.createClass({
         var msg = "";
         var tips = "";
         var trueurl = "";
-        if (title == '解冻') {
-              msg = '解冻成功';
+        if (title == 'Thaw') {//解冻
+              msg = 'Thawing succeeded';//解冻成功
               status = "10";
-              tips = '您是否解冻';
+              tips = 'Are you thawed?';//您是否解冻
               trueurl = "/modules/manage/user/credit/updateState.htm";
               confirm({
                 title: tips,
@@ -190,10 +190,10 @@ var AdjustRecord = React.createClass({
                 },
                 onCancel: function() { }
             });
-        } else if (title == '冻结'){
-              msg = '冻结成功';
+        } else if (title == 'Thaw'){//冻结
+              msg = 'Freeze frozen';//冻结成功
               status = "20";
-              tips = '您是否冻结';
+              tips = 'Are you thawed?';//您是否冻结
               trueurl = "/modules/manage/user/credit/updateState.htm"
               confirm({
                 title: tips,
@@ -225,7 +225,7 @@ var AdjustRecord = React.createClass({
         }
         else{
              status = "30";
-             tips = '您确定要审批授信额度吗？';
+             tips = 'Are you sure you want to approve the credit line?';//您确定要审批授信额度吗？
              this.ExaminationAndApproval(record,canEdit,title);
         }
          
@@ -259,49 +259,49 @@ var AdjustRecord = React.createClass({
     } = state;
     const hasSelected = selectedRowKeys.length > 0;
     var columns = [{
-      title: '额度类型',
+      title: 'Limit type',//额度类型
       dataIndex: 'creditName'
     }, {
-      title: '评分',
+      title: 'Score',//评分
       dataIndex: "grade"
     }, {
-      title: '授信额度(元)',
+      title: 'Credit line (KSH)',//授信额度(元)
       dataIndex: 'total'
     }, {
-      title: '当前可用',
+      title: 'Currently available',//当前可用
       dataIndex: 'unuse'
     },{
-      title: '额度状态',
+      title: 'Amount status',//额度状态
       dataIndex: 'state',
       render(text,record){
         if(text ==10){
-         return <span>正常</span>
+         return <span>{/*正常*/}Normal</span>
         }else if(text == 20){
-          return <span>冻结</span>
+          return <span>{/*冻结*/}Freeze</span>
         }else if(text == 30){
-          return <span>待审批</span>
+          return <span>{/*待审批*/}Pending</span>
         }else if(text == 40){
-          return <span>审批不通过</span>
+          return <span>{/*审批不通过*/}Approval not passed</span>
         }
       }
     }, {
-      title: '操作',
+      title: 'Operating',//操作
       dataIndex: '',
       render(text,record){
     	  if (record.state == 30){
-              return <span><a href="#" onClick={me.changeStatus.bind(me ,record,'审批')}>审批</a></span>  
+              return <span><a href="#" onClick={me.changeStatus.bind(me ,record,'Approval')}>{/*审批*/}</a></span>  
             }else if (record.state == 40){
-               return <span><a href="javascript:;"  onClick={me.showModal.bind(me,'人工干预记录', record, true) } >人工干预记录</a></span>
+               return <span><a href="javascript:;"  onClick={me.showModal.bind(me,'Manual intervention record', record, true) } >Manual intervention record{/*人工干预记录*/}</a></span>
             }else {
               return (
                  <span>
-                    <a href="javascript:;"  onClick={me.showModal.bind(me,'人工干预记录', record, true) } >人工干预记录</a>
+                    <a href="javascript:;"  onClick={me.showModal.bind(me,'Manual intervention record', record, true) } >Manual intervention record{/*人工干预记录*/}</a>
                     <span className="ant-divider"></span>
-                    <a href="javascript:;" onClick={me.showModalAc.bind(me,'手动调整额度', record, true) }>手动调整</a>
+                    <a href="javascript:;" onClick={me.showModalAc.bind(me,'Manually adjust the amount', record, true) }>Manually adjust the amount{/*手动调整额度*/}</a>
                     <span className="ant-divider"></span>
                     {record.state== 20 ?
-                            <a href="#" onClick={me.changeStatus.bind(me ,record,'解冻')}>解冻</a>:
-                            <a href="#" onClick={me.changeStatus.bind(me,record,'冻结')}>冻结</a> } 
+                            <a href="#" onClick={me.changeStatus.bind(me ,record,'Thaw')}>Thaw{/*解冻*/}</a>:
+                            <a href="#" onClick={me.changeStatus.bind(me,record,'Freeze')}>Freeze{/*冻结*/}</a> } 
                 </span>
               )
             }

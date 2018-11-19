@@ -79,6 +79,7 @@ export default React.createClass({
             data:params,
             method: 'post',
             callback: (result) => {
+                console.log(result);
                 const pagination = this.state.pagination;
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;

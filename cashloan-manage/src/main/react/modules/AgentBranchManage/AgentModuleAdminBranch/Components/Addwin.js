@@ -97,9 +97,9 @@ var AddWin = React.createClass({
             },
         };
         var modalBtns = [
-            <Button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</Button>,
+            <Button key="back" className="ant-btn" onClick={this.handleCancel}>Back{/*返 回*/}</Button>,
             <Button key="button" className="ant-btn ant-btn-primary" loading={state.loading} onClick={this.handleOk}>
-                提 交
+                {/*提 交*/}Submit
             </Button>
         ];
         return (
@@ -107,10 +107,10 @@ var AddWin = React.createClass({
                 <Form horizontal form={this.props.form}>
                     <Row>
                         <Col span="12">
-                            <FormItem  {...formItemLayout} label="分润率:">
-                                <Input type="text" {...getFieldProps('rate', { rules: [{ required: true, message: '必填' }] }) } />
-                                <span ref='span' style={{ display: 'none', color: 'red' }}>必须填纯数字</span>
-                                <span ref='span1' style={{ display: 'none', color: 'red' }}>必须范围在6到19之间</span>
+                            <FormItem  {...formItemLayout} label="Separation rate:">{/*分润率*/}
+                                <Input type="text" {...getFieldProps('rate', { rules: [{ required: true, message: 'Required' }] }) } />{/*必填*/}
+                                <span ref='span' style={{ display: 'none', color: 'red' }}>Must fill in the number{/*必须填纯数字*/}</span>
+                                <span ref='span1' style={{ display: 'none', color: 'red' }}>Must range between 6 and 19{/*必须范围在6到19之间*/}</span>
                             </FormItem>
                         </Col>
                     </Row>

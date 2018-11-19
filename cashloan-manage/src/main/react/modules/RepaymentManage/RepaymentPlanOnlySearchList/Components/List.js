@@ -1,7 +1,7 @@
 import React from 'react'
 import {Table, Modal, Icon} from 'antd';
 import Lookdetails from "./Lookdetails";
-var repaymentTypeText={'10':'待审核', '20': '审核中' ,'30': '通过','40' :'已拒绝' ,'50': '还款中', '60' :'还款完成', '70': '逾期'}
+var repaymentTypeText={'10':'Pending Review', '20': 'Under Review' ,'30': 'Pass','40' :'Rejected' ,'50': 'Repayment', '60' :'Repayment Completed', '70': 'Overdue'} //{'10':'待审核', '20': '审核中' ,'30': '通过','40' :'已拒绝' ,'50': '还款中', '60' :'还款完成', '70': '逾期'}
 const objectAssign = require('object-assign');
 import AddWin from "./AddWin";
 export default React.createClass({
@@ -181,40 +181,40 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '真实姓名',
+            title: 'Real Name',//真实姓名
             dataIndex: 'realName'
         }, {
-            title: '手机号码',
+            title: 'Phone',//手机号码
             dataIndex: "phone",
         }, {
-            title: '订单号',
+            title: 'Order Number',//订单号
             dataIndex: 'orderNo'
         }, {
-            title: '借款金额(元)',
+            title: 'Loan Amount(KSH)',//借款金额(元)
             dataIndex: 'borrowAmount'
         }, {
-            title: '逾期罚金(元)',
+            title: 'Overdue Fine(KSH)',//逾期罚金(元)
             dataIndex: 'penaltyAmout'
         },{
-            title: '逾期天数',
+            title: 'Days Overdue',//逾期天数
             dataIndex: "penaltyDay"
         }, {
-            title: '应还款金额(元)',
+            title: 'Repayment Amount(KSH)',//应还款金额(元)
             dataIndex: 'repayAmount'
         }, {
-            title: '应还款总额(元)',
+            title: 'Total Amount Of Repayment(KSH)',//应还款总额(元)
             dataIndex: 'repayTotal'
         }, {
-            title: '应还款日期',
+            title: 'Repayment Date',//应还款日期
             dataIndex: 'repayTime'
         }, {
-            title: '还款状态',
+            title: 'Repayment Status',//还款状态
             dataIndex: "state",
             render: (text, record)=>{
                 if(record.state==10){
-                    return "已还款"
+                    return "Repaid"//已还款
                 }else if(record.state==20){
-                    return "未还款"
+                    return "Unpaid"//未还款
                 }else{
                     return "-"
                 }
@@ -225,11 +225,11 @@ export default React.createClass({
         return (
             <div className="block-panel">
                 <div className="actionBtns" style={{ marginBottom: 16 }}>
-                    <button onClick={me.addModal.bind(me,'批量')} className="ant-btn"> 
-                        批量还款
+                    <button onClick={me.addModal.bind(me,'Batch')} className="ant-btn"> 
+                        {/*批量还款*/}Batch Repayment
                     </button>
-                    <button onClick={me.download.bind(me,'下载')} className="ant-btn"> 
-                        下载模板
+                    <button onClick={me.download.bind(me,'Download')} className="ant-btn"> 
+                    Download Template
                     </button>
                 </div>
                 <Table columns={columns} rowKey={this.rowKey} ref="table" 

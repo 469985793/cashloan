@@ -52,7 +52,12 @@ var AddWin = React.createClass({
                 data:{
                     id: values.id,
                     state: values.state1,
-                    remark:values.remark
+                    remark:values.remark,
+                    indentNo:values.indentNo,
+                    uid:values.uid,
+                    PartyB:values.mobile,
+                    fee:values.fee,
+                    amount:values.balance
                 },
                 method: 'post',
                 callback: (result) => {
@@ -122,6 +127,8 @@ var AddWin = React.createClass({
       <Modal style={{ left: '-100px'}} title={props.title} visible={props.visible} onCancel={this.handleCancel} width="900" footer={modalBtns} maskClosable={false} >
          <Form horizontal  form={this.props.form}>
           <Input  {...getFieldProps('id', { initialValue: '' }) } type="hidden"   />
+          <Input  {...getFieldProps('uid', { initialValue: '' }) } type="hidden"   />
+          <Input  {...getFieldProps('fee', { initialValue: '' }) } type="hidden"   />
           <Row>
             <Col span="12">
                <FormItem  {...formItemLayout} label="姓名:">
@@ -161,7 +168,7 @@ var AddWin = React.createClass({
           <Row>  
            <Col span="12">
                <FormItem {...formItemLayout} label="金额:">
-                <Input  type="text" disabled={true} {...getFieldProps('balance') }/>
+                <Input  type="text" disabled={true} {...getFieldProps('balance')}/>
               </FormItem>
             </Col> 
             <Col span="12">

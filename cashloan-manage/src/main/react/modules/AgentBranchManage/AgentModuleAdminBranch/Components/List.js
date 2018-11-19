@@ -170,7 +170,7 @@ export default React.createClass({
         //console.log(11111);
         //console.log(record);
         confirm({
-            title: "是否取消二级代理",
+            title: "Whether to cancel the secondary agent",//是否取消二级代理
             onOk: function () {
                 Utils.ajaxData({
                     url: "/modules/manage/profit/freezeAgent.htm",
@@ -207,41 +207,41 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '代理商(手机号码)',
+            title: 'Agent(Phone)',//代理商(手机号码)
             dataIndex: 'userName',
         }, 
         {
-            title: '被邀请人(手机号码)',
+            title: 'Invitees(Phone)',//被邀请人(手机号码)
             dataIndex: 'inviteName',
         }, {
-            title: '是否为二级代理商',
+            title: 'Is it a secondary agent',//是否为二级代理商
             dataIndex: 'level',
             render: (text, record) => {
                 if (record.level == 2) {
-                    return "是"
+                    return "Yes"
                 } else {
-                    return "否"
+                    return "No"
                 }
             }
         }, {
-            title: '分润率(%)',
+            title: 'Separation rate(%)',//分润率(%)
             dataIndex: "rate"
         }, {
-            title: '邀请时间',
+            title: 'Invitation time',//邀请时间
             dataIndex: 'addTime',
         }, {
-            title: '操作',
+            title: 'Operating',//操作
             render: (value, record) => {
                 if (record.level != 2) {
                     return (
                         <div style={{ textAlign: "left" }}>
-                            <a href="#" onClick={me.addModal.bind(this, "设置为二级代理商", record)}>设置为二级代理商</a>
+                            <a href="#" onClick={me.addModal.bind(this, "Set as a secondary agent", record)}>Set as a secondary agent{/*设置为二级代理商*/}</a>
                         </div>
                     )
                 } else {
                     return (
                         <div style={{ textAlign: "left" }}>
-                            <a href="#" onClick={me.SetAgent.bind(this, record, "取消二级代理")}>取消二级代理</a>
+                            <a href="#" onClick={me.SetAgent.bind(this, record, "Cancel secondary agent")}>Cancel secondary agent{/*取消二级代理*/}</a>
                         </div>
                     )
                 }

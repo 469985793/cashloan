@@ -9,7 +9,7 @@ var TabListStore = require('./frame/stores/TabListStore');
 const App = React.createClass({ 
   getInitialState() {
     return {
-        activeKey:'工作台',
+        activeKey:'工作台',//'工作台'
         fold:false
     }
   },
@@ -34,6 +34,7 @@ const App = React.createClass({
           url: '/modules/manage/system/dict/list.htm',
           callback: (data) => {
             if (data.code == 200) {
+              // console.log(data);
               window.dic = data
             } else {
               Modal.error({

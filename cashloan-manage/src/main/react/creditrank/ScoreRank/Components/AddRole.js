@@ -81,7 +81,7 @@ var AddRole = React.createClass({
       //console.log("values0000000",values)
       
      
-      if (this.props.title == '额度维护') {
+      if (this.props.title == 'Amount maintenance') {
         var data = values;
         var params = {};
         var req = [];
@@ -155,7 +155,7 @@ var AddRole = React.createClass({
           };
           let resType = result.code == 200 ? 'success' : 'warning';
          Modal.success({
-              title: "成功",
+              title: "success",//成功
             });
         }
       });
@@ -218,7 +218,7 @@ var AddRole = React.createClass({
    componentWillReceiveProps(nextProps) {
    
     if(nextProps.visible){
-    if (nextProps.title == '额度维护'  && this.state.num == 1) {
+    if (nextProps.title == 'Amount maintenance'  && this.state.num == 1) {//额度维护
        var data = nextProps.rankData
        //console.log("-----------",data);
        this.formData = this.transformeData(data);
@@ -235,13 +235,13 @@ var AddRole = React.createClass({
         rank:nextProps.rank,
       })
     }
-     else if (nextProps.title == '新增评分等级') {
+     else if (nextProps.title == 'Add rating') {//新增评分等级
       this.formData = {};
       this.setState({
         rank:nextProps.rank,
         itemValue:nextProps.itemValue
       })
-    }else if(nextProps.title == '查看'  && this.state.num == 1){
+    }else if(nextProps.title == 'View'  && this.state.num == 1){//查看
 
        var data = nextProps.rankData
        
@@ -287,9 +287,9 @@ var AddRole = React.createClass({
     var state = this.state;
     var lookIcon = props.canEdit ? true:false;
     var modalBtns = [
-      <button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</button>,
+      <button key="back" className="ant-btn" onClick={this.handleCancel}>{/*返 回*/}Back</button>,
       <button key="button" className="ant-btn ant-btn-primary"  onClick={this.handleOk}>
-          提 交
+          {/*提 交*/}Submit
       </button>
     ];
   
@@ -297,29 +297,29 @@ var AddRole = React.createClass({
       return (<tr key={k}>
                 <td key={`k1`}>
                 <FormItem>
-                    <InputNumber type="number" {...getFieldProps( `${k}scoreMin`, { initialValue:this.formData?this.formData[`${k}scoreMin`]:"" }) } disabled={!props.canEdit}/>至 <InputNumber type="number" {...getFieldProps(`${k}scoreMax`, { initialValue: this.formData?this.formData[`${k}scoreMax`]:"" }) } disabled={!props.canEdit} />
+                    <InputNumber type="number" {...getFieldProps( `${k}scoreMin`, { initialValue:this.formData?this.formData[`${k}scoreMin`]:"" }) } disabled={!props.canEdit}/>{/*至*/} - <InputNumber type="number" {...getFieldProps(`${k}scoreMax`, { initialValue: this.formData?this.formData[`${k}scoreMax`]:"" }) } disabled={!props.canEdit} />
                 </FormItem>
                 </td>
                 <td key={`k2`}>
                     <FormItem>
-                        <Select style={{ width: 80, border:"1px solid #D9D9D9",borderRadius:"3px" }}  placeholder="是否可用" {...getFieldProps( `${k}state`, { initialValue: this.formData?this.formData[`${k}state`]:"" }) } disabled={!props.canEdit} >
-                          <Option value={"10"}>是</Option>
-                          <Option value={"20"}>否</Option>
+                        <Select style={{ width: 80, border:"1px solid #D9D9D9",borderRadius:"3px" }}  placeholder="it's usable or not" {...getFieldProps( `${k}state`, { initialValue: this.formData?this.formData[`${k}state`]:"" }) } disabled={!props.canEdit} >{/*是否可用*/}
+                          <Option value={"10"}>{/*是*/}Yes</Option>
+                          <Option value={"20"}>{/*否*/}No</Option>
                         </Select>
                     </FormItem>
                 </td>
                 <td key={`k3`}>
                     <FormItem>
-                      <Select style={{ width: 80, border:"1px solid #D9D9D9",borderRadius:"3px" }}  placeholder="额度类别" {...getFieldProps( `${k}rtype`, { initialValue:this.formData?this.formData[`${k}rtype`]:"" ,onChange:this.change.bind(this,k)}) }  disabled={!props.canEdit}>
-                        <Option value={"10"}>区间</Option>
-                        <Option value={"20"}>固定值</Option>
+                      <Select style={{ width: 80, border:"1px solid #D9D9D9",borderRadius:"3px" }}  placeholder="Amount category" {...getFieldProps( `${k}rtype`, { initialValue:this.formData?this.formData[`${k}rtype`]:"" ,onChange:this.change.bind(this,k)}) }  disabled={!props.canEdit}>{/*额度类别*/}
+                        <Option value={"10"}>{/*区间*/}Interval</Option>
+                        <Option value={"20"}>{/*固定值*/}Fixed value</Option>
                       </Select>
                     </FormItem>
                 </td>
                 <td key={`k4`}>
                   {this.state[k+'rtype']=="10"?(
                         <FormItem>
-                          <InputNumber type="number" disabled={!props.canEdit} {...getFieldProps( `${k}amountMin`, { initialValue: this.formData?this.formData[`${k}amountMin`]:""}) } />至 <InputNumber type="number" disabled={!props.canEdit} {...getFieldProps( `${k}amountMax`, { initialValue: this.formData?this.formData[`${k}amountMax`]:"" }) }/>
+                          <InputNumber type="number" disabled={!props.canEdit} {...getFieldProps( `${k}amountMin`, { initialValue: this.formData?this.formData[`${k}amountMin`]:""}) } />{/*至*/} - <InputNumber type="number" disabled={!props.canEdit} {...getFieldProps( `${k}amountMax`, { initialValue: this.formData?this.formData[`${k}amountMax`]:"" }) }/>
                            <InputNumber type='hidden' disabled={!props.canEdit} {...getFieldProps( `${k}id`, { initialValue:this.formData?this.formData[`${k}id`]:"" }) } style={{width:"0px",diaplay:"none",border:"none"}}/>
                         </FormItem>
                     ):(
@@ -331,29 +331,29 @@ var AddRole = React.createClass({
                </td>
                <td key={`k5`}>
                   <FormItem>
-                      <Select style={{ width: 80, border:"1px solid #D9D9D9",borderRadius:"3px" }} placeholder="授信等级" disabled={!props.canEdit} {...getFieldProps( `${k}rank`, { initialValue:this.formData?this.formData[`${k}rank`]:"" }) }  >
+                      <Select style={{ width: 80, border:"1px solid #D9D9D9",borderRadius:"3px" }} placeholder="Credit rating" disabled={!props.canEdit} {...getFieldProps( `${k}rank`, { initialValue:this.formData?this.formData[`${k}rank`]:"" }) }  >{/*授信等级*/}
                          {this.state.rankArray}
                       </Select>
                     </FormItem>
                 </td>
-                {this.props.title=="查看"?"":(
+                {this.props.title=="View"?"":(
                   <td key={`k6`}>
-                     <a onClick={() => this.add()}>增加</a>
+                     <a onClick={() => this.add()}>{/*增加*/}Add</a>
                      <span className="ant-divider"></span>
-                     <a onClick={() => this.remove(k)}>删除</a>
+                     <a onClick={() => this.remove(k)}>{/*删除*/}Delete</a>
                   </td>
-                )}
+                )}{/*查看*/}
               
             </tr >);
     });
     return (
-      <Modal maskClosable={false} title={props.title} visible={props.visible} onCancel={this.handleCancel} width={1050}  footer={this.props.title=="查看"?[<button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</button>]:modalBtns} >
+      <Modal maskClosable={false} title={props.title} visible={props.visible} onCancel={this.handleCancel} width={1050}  footer={this.props.title=="View"?[<button key="back" className="ant-btn" onClick={this.handleCancel}>{/*返 回*/}Back</button>]:modalBtns} >{/*查看*/}
           <Form horizontal form={this.props.form}>
            <Input  {...getFieldProps('id', { initialValue: '' }) } type="hidden"   />
               <Row> 
                 <Col span="8">
-                  <FormItem {...formItemLayout}  label="评分等级名称:">
-                    <Input style={{ width: '100%' }} placeholder="请输入评分等级名称" {...getFieldProps('rankName', { initialValue: this.formData?this.formData['rankName']:"",rules: [{required:lookIcon,message: '必填'}]}) } disabled={!props.canEdit}/>
+                  <FormItem {...formItemLayout}  label="Rating level name:">{/*评分等级名称*/}
+                    <Input style={{ width: '100%' }} placeholder="Please enter a rating name" {...getFieldProps('rankName', { initialValue: this.formData?this.formData['rankName']:"",rules: [{required:lookIcon,message: 'Required'}]}) } disabled={!props.canEdit}/>{/*请输入评分等级名称 必填*/}
                   </FormItem>
                 </Col>
               </Row>
@@ -361,26 +361,26 @@ var AddRole = React.createClass({
                 <tbody>
                     <tr style={{ width: '16%'}}>
                         <td>
-                            分值区间
+                            {/*分值区间*/}Score interval
                         </td>
                         <td>
-                            是否可用
+                            {/*是否可用*/}It's usable or not
                         </td>
                         <td>
-                            额度类别
+                            {/*额度类别*/}Amount category
                         </td>
                          <td>
-                            授信额度
+                            {/*授信额度*/}Credit line
                         </td>
                         <td >
-                            授信等级
+                            {/*授信等级*/}Credit rating
                         </td>
-                        {this.props.title=="查看"?"":
+                        {this.props.title=="View"?"":
                         <td >
-                            操作
+                            Operating
                         </td>}
                     </tr>
-                     {getFieldValue('keys').length ? formItems :<tr className="noData"><td colSpan='6'>暂无数据</td></tr> }
+                     {getFieldValue('keys').length ? formItems :<tr className="noData"><td colSpan='6'>No data</td></tr> }{/*查看 操作 暂无数据*/}
                 </tbody>
              </table>
         </Form>

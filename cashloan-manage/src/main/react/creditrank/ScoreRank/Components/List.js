@@ -70,7 +70,7 @@ export default React.createClass({
 //新增编辑查看弹窗
    showModal(title, record,canEdit) {
     
-        if (title == "新增评分等级") {
+        if (title == "Add rating") {//新增评分等级
             this.setState({
                 visible: true,
                 title: title,
@@ -178,19 +178,19 @@ export default React.createClass({
         var state = this.state;
         var props = this.props;
         var columns = [{
-            title: '评分等级名称',
+            title: 'Rating level name',//评分等级名称
             dataIndex: 'rankName'
         },{
-            title:"区间数量",
+            title:"Number of intervals",//区间数量
             dataIndex:"num"
         }, {
-            title: '操作',
+            title: 'Opeating',//操作
             dataIndex: '',
             render: (text, record) => {
                 return  <div>
-                           <a onClick={me.showModal.bind(me,'额度维护',record,true)}>额度维护</a>
+                           <a onClick={me.showModal.bind(me,'Amount maintenance',record,true)}>Amount maintenance{/*额度维护*/}</a>
                                <span className="ant-divider"></span>
-                           <a onClick={me.showModal.bind(me,'查看',record,false)}>查看</a>
+                           <a onClick={me.showModal.bind(me,'View',record,false)}>{/*查看*/}View</a>
                         </div>
             }
         }];
@@ -199,8 +199,8 @@ export default React.createClass({
         return (
             <div className="block-panel">
                 <div className="actionBtns" style={{ marginBottom: 16 }}>
-                    <button className="ant-btn" onClick={me.showModal.bind(me,'新增评分等级',true)}>
-                        新增评分等级
+                    <button className="ant-btn" onClick={me.showModal.bind(me,'Add rating',true)}>
+                        {/*新增评分等级*/}Add rating
                     </button>    
                 </div>
                 <Table columns={columns} rowKey={this.rowKey} ref="table"

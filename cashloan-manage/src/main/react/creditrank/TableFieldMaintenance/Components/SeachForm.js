@@ -33,18 +33,18 @@ let SeachForm = React.createClass({
         } = this.props.form;
         return (
             <Form inline>
-                <FormItem label="表名:">
+                <FormItem label="Table Name:">{/*表名*/}
                     <Input type="text" {...getFieldProps('tbName') } />
                 </FormItem>
-                <FormItem label="状态:">
+                <FormItem label="Status:">{/*状态*/}
                     <Select style={{ width: 100 }}  placeholder="请选择" {...getFieldProps('state',{initialValue:""}) }>
-                        <Option value={""}>全部</Option>
-                        <Option value={"20"}>启用</Option>
-                        <Option value={"10"}>禁用</Option>
+                        <Option value={""}>{/*全部*/}All</Option>
+                        <Option value={"20"}>Enable{/*启用*/}</Option>
+                        <Option value={"10"}>Disable{/*禁用*/}</Option>
                     </Select>
                 </FormItem>
-                <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
-                <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+                <FormItem><Button type="primary" onClick={this.handleQuery}>{/*查询*/}Search</Button></FormItem>
+                <FormItem><Button type="reset" onClick={this.handleReset}>{/*重置*/}Reset</Button></FormItem>
             </Form>
         );
     }

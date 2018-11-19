@@ -179,7 +179,7 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '代理商(手机号码)',
+            title: 'Agent(Phone)',//代理商(手机号码)
             dataIndex: 'userName',
         }, {
             title: '被邀请人(手机号码)',

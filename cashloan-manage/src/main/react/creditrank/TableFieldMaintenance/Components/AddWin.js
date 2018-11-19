@@ -51,7 +51,7 @@ var AddWin = React.createClass({
     },
     componentWillReceiveProps(nextProps, nextState) {
 
-      if(nextProps.title=="编辑"){
+      if(nextProps.title=="Edit"){//编辑
           //console.log("999999",this.state.data);
        var dataArray=[];
         if(this.state.data){
@@ -84,7 +84,7 @@ var AddWin = React.createClass({
             }
             values.tbName=this.state.tableComment;
           //console.log("99999",values);
-          if(this.props.title=="新增"){       
+          if(this.props.title=="Add"){//新增       
               var res=[];
             columndata.forEach(item=>{
                 let obj={}
@@ -98,7 +98,7 @@ var AddWin = React.createClass({
             var url= '/modules/manage/cr/info/save.htm';
             var params=values;
           }   
-         if(this.props.title=="编辑"){
+         if(this.props.title=="Edit"){//编辑
              var paramsData=this.props.form.getFieldsValue();
              var paramsArr=[];
              var req=[];
@@ -205,9 +205,9 @@ var AddWin = React.createClass({
         var props = this.props;
         var state = this.state;
         var modalBtns = [
-            <Button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</Button>,
+            <Button key="back" className="ant-btn" onClick={this.handleCancel}>{/*返 回*/}Back</Button>,
             <Button key="button" className="ant-btn ant-btn-primary" loading={state.loading}  onClick={this.handleOk}>
-                提 交
+                {/*提 交*/}Submit
             </Button>
         ];
         const formItemLayout = {
@@ -237,24 +237,24 @@ var AddWin = React.createClass({
                        <Input  {...getFieldProps('id', { initialValue: this.state.dataRecord.id }) } type="hidden" />
                             <Row>
                                 <Col span="10">
-                                    <FormItem  {...formItemLayout} label="表:">
-                                    {this.props.title=="编辑"?(
+                                    <FormItem  {...formItemLayout} label="Table:">{/*表*/}
+                                    {this.props.title=="Edit"?(
                                         <Input type="text" disabled={true} {...getFieldProps('tbName', {initialValue:this.state.dataRecord.tbName,})} />
                                     ):(
-                                          <Select style={{ width: 100 }}   placeholder="请选择" {...getFieldProps('tbName', {initialValue:"",onChange:this.change}) } style={{width:"200px"}}>
+                                          <Select style={{ width: 100 }}   placeholder="Please Choose" {...getFieldProps('tbName', {initialValue:"",onChange:this.change}) } style={{width:"200px"}}>
                                             {this.state.tableCommentList}
                                          </Select>
-                                    )}
+                                    )}{/*编辑 请选择*/}
                                       
                                     </FormItem>
                                 </Col>
                                         <Input disabled={true}  type="hidden" {...getFieldProps('tbNid', { initialValue: this.state.tableName==""?this.state.dataRecord.tbNid:this.state.tableName}) }/>
                             
                                <Col span="12">
-                                    <FormItem  {...formItemLayoutone} label="字段:">
-                                     <Select disabled={props.title=="编辑"?props.canEdit:this.state.canEdit}  multiple onSelect={this.select} {...getFieldProps('detail', {  initialValue:this.state.dataName ,rules: [{required:true,message:'必填',type:'array'}]})} > 
+                                    <FormItem  {...formItemLayoutone} label="Field:">{/*字段*/}
+                                     <Select disabled={props.title=="Edit"?props.canEdit:this.state.canEdit}  multiple onSelect={this.select} {...getFieldProps('detail', {  initialValue:this.state.dataName ,rules: [{required:true,message:'Required',type:'array'}]})} > 
                                            {state.dataArray}
-                                     </Select> 
+                                     </Select> {/*编辑  必填*/}
                                     </FormItem>
                               </Col>
                             </Row>

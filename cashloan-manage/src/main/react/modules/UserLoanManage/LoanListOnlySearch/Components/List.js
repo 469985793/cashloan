@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Modal, Icon } from 'antd';
 import Check from "./Check";
-var repaymentTypeText = { '10': '待审核', '20': '审核中', '30': '通过', '40': '已拒绝', '50': '还款中', '60': '还款完成', '70': '逾期' }
+var repaymentTypeText = { '10': 'Pending Review', '20': 'Under Review', '30': 'Pass', '40': 'Rejected', '50': 'Repayment', '60': 'Repayment Completed', '70': 'Overdue' };//{ '10': '待审核', '20': '审核中', '30': '通过', '40': '已拒绝', '50': '还款中', '60': '还款完成', '70': '逾期' }
 const objectAssign = require('object-assign');
 const confirm = Modal.confirm;
 import AddWin from "./AddWin";
@@ -57,6 +57,10 @@ export default React.createClass({
             method: "post",
             data: params,
             callback: (result) => {
+                console.log(result);
+                if(result.data[0]){
+                    result.data[0].fee = result.data[0].fee/100;
+                }
                 const pagination = this.state.pagination;
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
@@ -90,6 +94,7 @@ export default React.createClass({
                     borrowId: record.id,
                 },
                 callback: (result) => {
+                    
                     if(result.data){
                         this.setState({
                         dataRecord: result.data
@@ -104,6 +109,7 @@ export default React.createClass({
                     userId: record.userId
                 },
                 callback: (result) => {
+
                     if (result.code == 200) {
                         var dataForm = {};
                         dataForm.realName = result.data.userbase.realName;
@@ -151,32 +157,32 @@ export default React.createClass({
                         }
                         if (result.data.userAuth) {
                             if (result.data.userAuth.bankCardState == 10) {
-                                dataForm.bankCardState = "未认证"
+                                dataForm.bankCardState = "Not Certified"//未认证
                             } else if (result.data.userAuth.bankCardState == 20) {
-                                dataForm.bankCardState = "认证中"
+                                dataForm.bankCardState = "In Certification"//认证中
                             } else if (result.data.userAuth.bankCardState == 30) {
-                                dataForm.bankCardState = "已认证"
+                                dataForm.bankCardState = "Verified"//已认证
                             }
                             if (result.data.userAuth.idState == 10) {
-                                dataForm.idState = "未认证"
+                                dataForm.idState = "Not Certified"//未认证
                             } else if (result.data.userAuth.idState == 20) {
-                                dataForm.idState = "认证中"
+                                dataForm.idState = "In Certification"//认证中
                             } else if (result.data.userAuth.idState == 30) {
-                                dataForm.idState = "已认证"
+                                dataForm.idState = "Verified"//已认证
                             }
                             if (result.data.userAuth.phoneState == 10) {
-                                dataForm.phoneState = "未认证"
+                                dataForm.phoneState = "Not Certified"//未认证
                             } else if (result.data.userAuth.phoneState == 20) {
-                                dataForm.phoneState = "认证中"
+                                dataForm.phoneState = "In Certification"//认证中
                             } else if (result.data.userAuth.phoneState == 30) {
-                                dataForm.phoneState = "已认证"
+                                dataForm.phoneState = "Verified"//已认证
                             }
                             if (result.data.userAuth.zhimaState == 10) {
-                                dataForm.zhimaState = "未认证"
+                                dataForm.zhimaState = "Not Certified"//未认证
                             } else if (result.data.userAuth.zhimaState == 20) {
-                                dataForm.zhimaState = "认证中"
+                                dataForm.zhimaState = "In Certification"//认证中
                             } else if (result.data.userAuth.zhimaState == 30) {
-                                dataForm.zhimaState = "已认证"
+                                dataForm.zhimaState = "Verified"//已认证
                             }
                         }
                         me.setState({
@@ -231,7 +237,7 @@ export default React.createClass({
 
     refreshList() {
         var pagination = this.state.pagination;
-        //console.log(this.props.params)
+        // console.log(this.props.params)
         var params = objectAssign({}, this.props.params, {
             current: pagination.current,
             pageSize: pagination.pageSize,
@@ -277,7 +283,7 @@ export default React.createClass({
     	var record = record;
         var me = this;
         confirm({
-            title: '你是否确定',
+            title: 'Are you sure?',//你是否确定
             onOk: function () {
             	
                 Utils.ajaxData({
@@ -322,31 +328,31 @@ export default React.createClass({
             openEdit = false;
         }
         var columns = [{
-            title: '真实姓名',
+            title: 'RealName',//真实姓名
             dataIndex: 'realName'
         }, {
-            title: '手机号码',
+            title: 'Phone',//手机号码
             dataIndex: 'phone'
         }, {
-            title: '订单号',
+            title: 'OrderNumber',//订单号
             dataIndex: 'orderNo'
         }, {
-            title: '借款金额(元)',
+            title: 'LoanAmount',//借款金额(元)
             dataIndex: 'amount'
         }, {
-            title: '借款期限(天)',
+            title: 'BorrowingPeriod',//借款期限(天)
             dataIndex: "timeLimit",
         }, {
-            title: '订单生成时间',
+            title: 'OrderGenerationTime',//订单生成时间
             dataIndex: 'createTime'
         }, {
-            title: '综合费用(元)',
+            title: 'ComprehensiveCost',//综合费用(元)
             dataIndex: "fee"
         }, {
-            title: '实际到账金额(元)',
+            title: 'ActualArrivalAmount',//实际到账金额(元)
             dataIndex: 'realAmount'
         }, {
-            title: '实际还款金额(元)',
+            title: 'ActualRepaymentAmount',//实际还款金额(元)
             dataIndex: 'repayAmount'
         }/*, {
             title: '订单状态',
