@@ -57,7 +57,7 @@ var Lookdetails = React.createClass({
         onOk: function () {
           Utils.ajaxData({
             url: '/modules/manage/borrow/verifyBorrow.htm',
-            data: { borrowId: record.id, state: params.state, remark: params.remark },
+            data: { borrowId: record.id, state: params.state,unstate:params.unstate, remark: params.remark },
             callback: (result) => {
               if (result.code == 200) {
                 me.handleCancel();
@@ -147,13 +147,22 @@ var Lookdetails = React.createClass({
               </FormItem>
             </Col>
           </Row>
-          {/*<Row>
+          {<Row>
             <Col span="24">
+            <FormItem  {...formItemLayout} label="Audit Opinion:">
+                {props.title != "拒绝方式" ? (
+                  <Select {...getFieldProps('unstate', { initialValue: "3" }) } disabled={!props.canEdit} >
+                    <Option value="3">通过，并完成授信</Option>
+                    <Option value="33">拒绝，可以立即申请</Option>
+                    <Option value="32">拒绝，15天后可以再次申请</Option>
+                    <Option value="34">拒绝，纳入黑名单</Option>
+                  </Select>) : (<Input type="text" disabled={!props.canEdit} {...getFieldProps('unstateStr') } />)}
+              </FormItem>
               <FormItem  {...formItemLayout} label="备注说明:">
                 <Input disabled={!props.canEdit} type="textarea" placeholder="" rows={4} style={{ width: "500px", height: "40px" }}   {...getFieldProps('remark', { initialValue: '' }) } />
               </FormItem>
             </Col>
-          </Row>*/}
+          </Row>}
         </Form>
       </Modal>
     );

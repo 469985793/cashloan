@@ -4,13 +4,39 @@ import {
   Form,
   Input,
   Select,
-  DatePicker
+  DatePicker,
+  Upload,
+  message,
+  Icon,
+  Modal,
+  Row,
+  Col,
+  Checkbox,
 } from 'antd';
 const createForm = Form.create;
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RangePicker = DatePicker.RangePicker;
-
+const confirm = Modal.confirm;
+const objectAssign = require('object-assign');
+const Dragger = Upload.Dragger;
+const props = {
+  name: 'Excle',
+  action: '/modules/manage/cl/cluser/saveUsers.htm',
+  headers: {
+    authorization: 'authorization-text',
+  },
+  onChange(info) {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  },
+};
 let SeachForm = React.createClass({
   getInitialState() {
         return {
@@ -69,6 +95,7 @@ let SeachForm = React.createClass({
       })
     }
     return (
+      <div>
       <Form inline >
         <FormItem label="LastName：">
           <Input  {...getFieldProps('realName') } />
@@ -88,7 +115,13 @@ let SeachForm = React.createClass({
         </FormItem>
         <FormItem><Button type="primary" onClick={this.handleQuery}>Search</Button></FormItem>
         <FormItem><Button type="reset" onClick={this.handleReset}>Reset</Button></FormItem>
+        <Upload {...props}>
+        <Button>
+          <Icon type="upload" /> Click to Upload
+        </Button>
+      </Upload>
       </Form>
+      </div>
     );
   }
 });

@@ -174,7 +174,7 @@ export default React.createClass({
                             dataForm.jobMonthIncome = "--";
                         }
                         if (result.data.userbase.marryStatus == 1) {
-                            dataForm.marryStatus = "Marited";
+                            dataForm.marryStatus = "Maried";
                         } else if (result.data.userbase.marryStatus == 2) {
                             dataForm.marryStatus = "Single";
                         } else if (result.data.userbase.marryStatus == 3) {
@@ -206,6 +206,17 @@ export default React.createClass({
                         dataForm.liveCity = result.data.userbase.liveCity;
                         dataForm.rentYear = result.data.userbase.rentYear;
                         dataForm.liveTime = result.data.userbase.liveTime;
+                        if(result.data.userbase.liveBelong ==1){
+                            dataForm.typeOfResidence='Living with parents';
+                        }else if(result.data.userbase.liveBelong ==2){
+                            dataForm.typeOfResidence='Tenant';
+                        }else if(result.data.userbase.liveBelong ==3){
+                            dataForm.typeOfResidence='Owner';
+                        }else if(result.data.userbase.liveBelong ==4){
+                            dataForm.typeOfResidence='Other';
+                        }else if(result.data.userbase.liveBelong ==5){
+                            dataForm.typeOfResidence='Boarder';
+                        }
                         dataForm.companyName = result.data.userbase.companyName;
                         dataForm.companyPhone = result.data.userbase.companyEmail;
                         dataForm.companyAddr = result.data.userbase.officeAddress;
@@ -214,11 +225,11 @@ export default React.createClass({
                         dataForm.otherName = result.data.userbase.otherContactName;
                         dataForm.otherPhone = result.data.userbase.otherContactMobile;
                         if (result.data.userbase.otheContact == 1) {
-                            dataForm.otherRelation = "farther";
+                            dataForm.otherRelation = "friend";
                         } else if (result.data.userbase.otheContact == 2) {
-                            dataForm.otherRelation = "mother";
+                            dataForm.otherRelation = "colleague";
                         } else if (result.data.userbase.otheContact == 3) {
-                            dataForm.otherRelation = "borther";
+                            dataForm.otherRelation = "schoolmate";
                         } else if (result.data.userbase.otheContact == 4) {
                             dataForm.otherRelation = "sister";
                         } else if (result.data.userbase.otheContact == 5) {
@@ -362,7 +373,29 @@ export default React.createClass({
             dataIndex: 'fee'
         }, {
             title: 'Status',
-            dataIndex: "status",
+            render(text, record) {
+                if (record.status == '2') {
+                    return (
+                        <p>需要审核</p>
+                    )
+                } else if(record.status == '3') {
+                    return (
+                        <p>通过审核</p>
+                    )
+                } else if(record.status == '32') {
+                    return (
+                        <p>15天后可再次申请</p>
+                    )
+                } else if(record.status == '33') {
+                    return (
+                        <p>可立即再次申请</p>
+                    )
+                } else if(record.status == '34') {
+                    return (
+                        <p>加入黑名单</p>
+                    )
+                }
+            }
         }, {
             title: 'Operation',
             render(text, record) {
