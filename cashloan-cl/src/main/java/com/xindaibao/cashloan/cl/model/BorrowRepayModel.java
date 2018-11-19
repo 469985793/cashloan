@@ -27,8 +27,9 @@ public class BorrowRepayModel extends BorrowRepay {
 	public static final String OVERDUE_RELIEF = "20";
 
 	/** 还款方式 - 逾期正常还款 */
-	public static final String OVERDUE_REPAYMENT = "30";
-	
+	//public static final String OVERDUE_REPAYMENT = "30";
+	public static final String OVERDUE_REPAYMENT = "21";
+
 	/** 还款方式 - 续期申请-原来订单还款 */
 	public static final String RENEW_APPLY_REPAYMENT = "40";
 	

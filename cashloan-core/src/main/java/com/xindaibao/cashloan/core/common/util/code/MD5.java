@@ -405,26 +405,26 @@ public class MD5 {
 		return stringBuffer.toString();
 	}
 
-	/**
-	 * sha256, 请用此方式进行加密
-	 * 全大写
-	 */
-	public static String sha256HexUpC(String data){
-		return DigestUtils.sha256Hex(data).toUpperCase();
-	}
-	/**
-	 * 密码加密
-	 * @param md5 明文密码使用sha256Hex加密之后的字符串
-	 * @return
-	 */
-	public static String md5Pwd(String md5) {
-		if (md5.length() != 64) {
-			return null;
-		}
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < pwd_salt.length; i++) {
-			sb.append(md5.charAt(pwd_salt[i]));
-		}
-		return sha256HexUpC(sb.toString());
-	}
+//	/**
+//	 * sha256, 请用此方式进行加密
+//	 * 全大写
+//	 */
+//	public static String sha256HexUpC(String data){
+//		return DigestUtils.sha256Hex(data).toUpperCase();
+//	}
+//	/**
+//	 * 密码加密
+//	 * @param md5 明文密码使用sha256Hex加密之后的字符串
+//	 * @return
+//	 */
+//	public static String md5Pwd(String md5) {
+//		if (md5.length() != 64) {
+//			return null;
+//		}
+//		StringBuilder sb = new StringBuilder();
+//		for (int i = 0; i < pwd_salt.length; i++) {
+//			sb.append(md5.charAt(pwd_salt[i]));
+//		}
+//		return sha256HexUpC(sb.toString());
+//	}
 }

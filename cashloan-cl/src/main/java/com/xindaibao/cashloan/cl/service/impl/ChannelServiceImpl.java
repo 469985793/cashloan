@@ -68,8 +68,7 @@ public class ChannelServiceImpl extends BaseServiceImpl<Channel, Long> implement
 	public Page<ChannelModel> page(int current, int pageSize,
 			Map<String, Object> searchMap) {
 		PageHelper.startPage(current, pageSize);
-		Page<ChannelModel> page = (Page<ChannelModel>) channelMapper
-				.page(searchMap);
+		Page<ChannelModel> page = (Page<ChannelModel>) channelMapper.page(searchMap);
 		return page;
 	}
 

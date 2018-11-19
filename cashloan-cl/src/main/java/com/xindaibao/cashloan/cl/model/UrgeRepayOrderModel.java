@@ -65,12 +65,10 @@ public class UrgeRepayOrderModel extends UrgeRepayOrder {
 	public static String getLevelByDay(Long penaltyDay) {
 		String level = "M1";
 		if (penaltyDay != null) {
-			if (0 <= penaltyDay && penaltyDay <= 15) {
+			if (0 <= penaltyDay && penaltyDay <= 30) {
 				level = ("M1");
-			} else if (16 <= penaltyDay && penaltyDay <= 30) {
+			} else if (31 <= penaltyDay && penaltyDay <= 60) {
 				level = ("M2");
-			} else if (31 <= penaltyDay) {
-				level = ("M3");
 			}
 		}
 		return level;

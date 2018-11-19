@@ -6,7 +6,6 @@ import java.util.*;
 import com.xindaibao.cashloan.cl.Util.SmsCmSendUtil;
 import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
-import com.xindaibao.cashloan.cl.Util.SmsCmSendUtil;
 import com.xindaibao.cashloan.manage.domain.QuartzInfo;
 import com.xindaibao.cashloan.manage.model.OverDueSMSModel;
 import org.apache.log4j.Logger;
@@ -87,7 +86,7 @@ public class QuartzLate implements Job{
 							}else if(Math.abs(day)>30){
 								percent = 0.5;
 							}
-							double overdueFee = penaltyFee(amout,percent);
+							double overdueFee = penaltyFee(amout,percent,list.get(i).getOverdueFee());
 							amout = repaymentAmount(amout,overdueFee);
 							LoanRecord br = new LoanRecord();
 							br.setId(list.get(i).getId());
@@ -119,7 +118,7 @@ public class QuartzLate implements Job{
 								UrgeRepayOrder uro =  urgeRepayOrderService.findByBorrowId(list.get(i).getId());
 								if (StringUtil.isBlank(uro)) {
 									urgeRepayOrderService.saveOrder(list.get(i).getId());
-									clSmsService.overdue(list.get(i).getId());//逾期第一天发送短信通知
+									result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(), OverDueSMSModel.OVER_DUE_ONE);
 								}else {
 									Map<String,Object> uroMap = new HashMap<>();
 									uroMap.put("penaltyAmout", Long.valueOf(new Double(overdueFee+1000l).longValue()));
@@ -162,11 +161,11 @@ public class QuartzLate implements Job{
 					String SMS = "Dear friend,tomorrow will be due date for the loan you applied for at   "+list.get(i).getShouldbackTime()+". Please confirm that your M-Pesa account is fully funded before 18:00PM  tomorrow to avoid additional charges for overdue repayment.[JumboPesa]";
 					if(day==1){
 						result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
-						if(result == true){
-							logger.info("提醒短信发送成功。");
-						}else{
-							logger.error("短信发送失败。请联系管理员!");
-						}
+					}
+					if(result == true){
+						logger.info("提醒短信发送成功。");
+					}else{
+						logger.error("短信发送失败。请联系管理员!");
 					}
 					succeed++;
 					total++;
@@ -214,9 +213,13 @@ public class QuartzLate implements Job{
 	}
 
 	//逾期费计算
-	public double penaltyFee(double amount,double percent){
+	public double penaltyFee(double amount,double percent,double overdue){
 		BigDecimal amounts = new BigDecimal(new Double(amount).toString());
 		BigDecimal percents = new BigDecimal(new Double(percent).toString());
+		BigDecimal overdues = new BigDecimal(new Double(overdue).toString());
+		if(overdue != 0){
+			return new Double((amounts.multiply(percents)).add((overdues.subtract(new BigDecimal(1000)))).doubleValue());
+		}
 		return new Double(amounts.multiply(percents).doubleValue());
 	}
 

@@ -250,6 +250,10 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 			if (lr.getOverdueFee() < penaltyAmount) {
 				throw new BussinessException("逾期罚金不能大于原逾期罚金");
 			}
+		}else if(BorrowRepayModel.OVERDUE_REPAYMENT.equals(state)){
+			state = BorrowModel.STATE_DELAY_FINISH;
+			param.put("amount", StringUtil.isNull(lr.getBalance()+lr.getOverdueFee()+percent));
+			param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
 		}
 //		else if (BorrowRepayModel.RENEW_APPLY_REPAYMENT.equals(state)) { // 续期申请-原订单还款
 //			isReBorrow = false;

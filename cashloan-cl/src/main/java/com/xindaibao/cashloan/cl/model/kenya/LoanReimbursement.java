@@ -7,7 +7,7 @@ public class LoanReimbursement {
 
     private String indentNo;
 
-    private Integer rtnAmount;
+    private double rtnAmount;
 
     private String rtnCode;
 
@@ -20,6 +20,12 @@ public class LoanReimbursement {
     private Date createdTime;
 
     private Date updatedTime;
+
+    private String type;
+
+    public String getType() {
+        return type;
+    }
 
     public Long getId() {
         return id;
@@ -34,14 +40,14 @@ public class LoanReimbursement {
     }
 
     public void setIndentNo(String indentNo) {
-        this.indentNo = indentNo == null ? null : indentNo.trim();
+        this.indentNo = indentNo;
     }
 
-    public Integer getRtnAmount() {
+    public double getRtnAmount() {
         return rtnAmount;
     }
 
-    public void setRtnAmount(Integer rtnAmount) {
+    public void setRtnAmount(double rtnAmount) {
         this.rtnAmount = rtnAmount;
     }
 
@@ -50,7 +56,7 @@ public class LoanReimbursement {
     }
 
     public void setRtnCode(String rtnCode) {
-        this.rtnCode = rtnCode == null ? null : rtnCode.trim();
+        this.rtnCode = rtnCode;
     }
 
     public String getRtnMsg() {
@@ -58,7 +64,7 @@ public class LoanReimbursement {
     }
 
     public void setRtnMsg(String rtnMsg) {
-        this.rtnMsg = rtnMsg == null ? null : rtnMsg.trim();
+        this.rtnMsg = rtnMsg;
     }
 
     public String getRtnOrderNo() {
@@ -66,7 +72,7 @@ public class LoanReimbursement {
     }
 
     public void setRtnOrderNo(String rtnOrderNo) {
-        this.rtnOrderNo = rtnOrderNo == null ? null : rtnOrderNo.trim();
+        this.rtnOrderNo = rtnOrderNo;
     }
 
     public Byte getStatus() {
@@ -91,5 +97,9 @@ public class LoanReimbursement {
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
