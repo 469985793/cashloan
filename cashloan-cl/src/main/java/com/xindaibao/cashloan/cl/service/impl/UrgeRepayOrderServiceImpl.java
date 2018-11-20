@@ -1,10 +1,14 @@
 package com.xindaibao.cashloan.cl.service.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.annotation.Resource;
 
@@ -87,6 +91,16 @@ public class UrgeRepayOrderServiceImpl extends BaseServiceImpl<UrgeRepayOrder, L
 			int pageSize) {
 		PageHelper.startPage(current, pageSize);
 		List<UrgeRepayOrder> list = urgeRepayOrderMapper.listSelective(params);
+			for (int i=0;i<list.size();i++){
+				Long OrderNo=Long.parseLong(list.get(i).getOrderNo());
+				String indenNo;
+				if(loanRecordMapper.findByPrimary(OrderNo)==null){
+					indenNo=" ";
+				}else {
+					indenNo=loanRecordMapper.findByPrimary(OrderNo).getIndentNo();
+				}
+				list.get(i).setOrderNo(indenNo);
+			}
 		return (Page<UrgeRepayOrder>)list;
 	}
 	
@@ -401,6 +415,19 @@ public class UrgeRepayOrderServiceImpl extends BaseServiceImpl<UrgeRepayOrder, L
 	@Override
 	public List<?> listUrgeRepayOrder(Map<String, Object> params) {
 		List<UrgeRepayOrder> list = urgeRepayOrderMapper.listSelective(params);
+		for (int i=0;i<list.size();i++){
+			list.get(i).setAmount(divide(list.get(i).getAmount(),100.00,2));
+			list.get(i).setPenaltyAmout(divide(list.get(i).getPenaltyAmout(),100.00,2));
+			Long OrderNo=Long.parseLong(list.get(i).getOrderNo());
+			String indenNo;
+			if(loanRecordMapper.findByPrimary(OrderNo)==null){
+				indenNo=" ";
+			}else {
+				indenNo=loanRecordMapper.findByPrimary(OrderNo).getIndentNo();
+			}
+			list.get(i).setOrderNo(indenNo);
+		}
+
 		for (UrgeRepayOrder uro : list) {
 			uro.setState(UrgeRepayOrderModel.change(uro.getState()));
 		}
@@ -448,5 +475,12 @@ public class UrgeRepayOrderServiceImpl extends BaseServiceImpl<UrgeRepayOrder, L
 		}
 		return null;
 	}
-	
+	public static Double divide(Double dividend, Double divisor, Integer scale) {
+		         if (scale < 0) {
+			             throw new IllegalArgumentException("The scale must be a positive integer or zero");
+		}
+		         BigDecimal b1 = new BigDecimal(Double.toString(dividend));
+		         BigDecimal b2 = new BigDecimal(Double.toString(divisor));
+		         return b1.divide(b2, scale,RoundingMode.HALF_UP).doubleValue();
+		     }
 }

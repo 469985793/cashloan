@@ -162,7 +162,7 @@
      select   a.cl_channel_id, a.`code`,a.`name`, 0  as  registerCount ,sum(a.borrowMember) as borrowMember ,SUM(a.borrowCount) as borrowCount ,SUM(a.borrowAmout) as borrowAmout, sum(a.badRate) as badRate, sum(a.payCount) as payCount, sum(a.payAccount) as payAccount,sum(a.userBorrowCount) AS userBorrowCount
        from  (
         select u.id,c.`code`,c.`name`,c.id as cl_channel_id,0 as registerCount ,b.borrowMember,b.borrowCount ,b.borrowAmout,b.badRate,b.payCount,b.payAccount,b.userBorrowCount
-		     from  cl_channel c   JOIN  cl_user u  on c.id=u.channel_id    join  
+		     from  cl_channel c   JOIN  cl_user u  on c.id=u.channel_id    join
          (select b.user_id,1 as borrowMember, sum(b.amount) as borrowAmout,count(1)  as borrowCount,count(distinct(b.user_id)) as userBorrowCount ,sum(CASE b.state  when 50  THEN 1   when 90  THEN 1  ELSE  0 end ) as badRate,
           sum(CASE  when  b.state in (30,40,41,50,90)  THEN  1    ELSE  0 end ) as	payCount,sum(CASE  when  b.state in (30,40,41,50,90)  THEN  b.real_amount    ELSE  0 end ) as payAccount  
           from   cl_borrow  b  group by b.user_id ) b  on u.id=b.user_id

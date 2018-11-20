@@ -55,9 +55,9 @@ public final class ExportConstant {
 		"serviceFee","infoAuthFee","interest","realAmount", "state", "address", "loanTime", "repayTime", "repayAmount","penaltyDay","penaltyAmout"};
 	
 	/** 催收订单导出 表头*/
-	public static final String[] EXPORT_REPAYORDER_LIST_HEARDERS = {"真实姓名","手机号码","金额","借款时间","预计还款时间","逾期天数","逾期等级","罚息","催收人","订单状态"};
+	public static final String[] EXPORT_REPAYORDER_LIST_HEARDERS = {"真实姓名","手机号码","订单号","贷款金额","借款时间","预计还款时间","借款期限(天)","逾期天数","逾期等级","罚息","催收人","订单状态"};
 	/** 催收订单导出 属性*/
-	public static final String[] EXPORT_REPAYORDER_LIST_FIELDS = {"borrowName","phone","amount","borrowTime","repayTime","penaltyDay","level",
+	public static final String[] EXPORT_REPAYORDER_LIST_FIELDS = {"borrowName","phone","orderNo","amount","borrowTime","repayTime","timeLimit","penaltyDay","level",
 		"penaltyAmout","userName","state"};
 	
 	/** 催收反馈导出 表头*/

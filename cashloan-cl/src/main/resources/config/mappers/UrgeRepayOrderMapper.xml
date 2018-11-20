@@ -33,7 +33,7 @@
     
     <!--基本的sql查询字段 公共引用...-->
     <sql id="Base_Column_List">
-        id,user_id,user_name,phone,borrow_id,order_no,amount,time_limit,borrow_time,repay_time,penalty_day,penalty_amout,state,count,create_time,success_time,borrow_name,level 
+        id,user_id,user_name,phone,borrow_id,order_no,amount,time_limit,borrow_time,repay_time,penalty_day,penalty_amout,state,count,create_time,success_time,borrow_name,level
     </sql>
     
     <!-- 基本的sql查询条件公共引用 -->

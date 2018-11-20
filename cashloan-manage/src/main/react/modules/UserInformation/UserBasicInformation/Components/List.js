@@ -61,9 +61,9 @@ export default React.createClass({
             dataForm.registTime = result.data.userbase.createdTime;
             dataForm.registerAddr = result.data.userbase.registerAddr;
             dataForm.registerClient = result.data.userbase.registerClient;
-            if(result.data.userbase.channelCode == 10000){
+            if(result.data.userbase.channelCode.substr(0,5)=='10000'){
               dataForm.channelName = "android";
-            }else{
+            }else if(result.data.userbase.channelCode.substr(0,5)=='20000'){
             dataForm.channelName = "PC";
             }
             dataForm.score = result.data.userbase.score;
@@ -463,10 +463,10 @@ export default React.createClass({
 	  title: 'RegistrationClient',
 	  dataIndex: 'channelCode',
       render: (text, record) => {
-      if (text==20000) {
-      return "pc"
-    } else {
+      if (text.substr(0,5)=='10000') {
       return "android"
+    } else if(text.substr(0,5)=='20000') {
+      return "pc"
     }
   }
 	}, /*{
