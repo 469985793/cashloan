@@ -58,7 +58,7 @@ export default React.createClass({
                 if (result.data) {
                     for (var i = 0; i < result.data.length; i++) {
                         result.data[i].accountManage=result.data[i].accountManage/100;
-                        result.data[i].balance=(result.data[i].balance*100/1000000).toFixed(2);
+                        result.data[i].balance=(result.data[i].balance*10000/1000000).toFixed(2);
                         result.data[i].cuoheFee=result.data[i].cuoheFee/100;
                         result.data[i].fee=result.data[i].fee/100;
                         result.data[i].profit=result.data[i].profit/100;
