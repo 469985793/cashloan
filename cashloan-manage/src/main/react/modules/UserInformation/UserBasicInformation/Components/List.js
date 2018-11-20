@@ -463,10 +463,10 @@ export default React.createClass({
 	  title: 'RegistrationClient',
 	  dataIndex: 'channelCode',
       render: (text, record) => {
-      if (text == 10000) {
-      return "android"
-    } else {
+      if (text==20000) {
       return "pc"
+    } else {
+      return "android"
     }
   }
 	}, /*{

@@ -122,6 +122,8 @@ public class ManageBorrowController extends ManageBaseController {
 					params.put("stateList", stateList);
 					params.put("state", "");
 					page = clBorrowService.listBorrowModel(params,currentPage,pageSize);
+				}else{
+					page = clBorrowService.listBorrowModel(params,currentPage,pageSize);
 				}
 			}else {
 				stateList = Arrays.asList(BorrowModel.STATE_NEED_REVIEW,

@@ -31,6 +31,19 @@ public class CloanUserModel {
 	 */
 	private Date registTime;
 
+
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	private Date startTime;
+
+	private Date endTime;
+
 	/**
 	 * 注册客户端
 	 */

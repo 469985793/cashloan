@@ -121,7 +121,7 @@
         and icon_imgcode = #{iconImgcode,jdbcType=VARCHAR}
       </if>
       <if test="registerClient != null and channelCode != '' ">
-        and channel_code = #{registerClient,jdbcType=VARCHAR}
+        and channel_code like CONCAT('%',(#{registerClient,jdbcType=VARCHAR}),'%')
       </if>
       <if test="inviteCode != null and inviteCode != '' ">
         and invite_code = #{inviteCode,jdbcType=VARCHAR}
@@ -132,8 +132,11 @@
       <if test="status != null and status != '' ">
         and status = #{status,jdbcType=TINYINT}
       </if>
-      <if test="createdTime != null and createdTime != '' ">
-        and created_time = #{createdTime,jdbcType=TIMESTAMP}
+      <if test="endTime != null and endTime != '' ">
+        <![CDATA[ and date_format(u.created_time,'%Y-%m-%d') <= #{endTime,jdbcType=TIMESTAMP}]]>
+      </if>
+      <if test="startTime != null and startTime != '' ">
+        <![CDATA[ and date_format(u.created_time,'%Y-%m-%d') >= #{startTime,jdbcType=TIMESTAMP}]]>
       </if>
       <if test="updatedTime != null and updatedTime != '' ">
         and updated_time = #{updatedTime,jdbcType=TIMESTAMP}
