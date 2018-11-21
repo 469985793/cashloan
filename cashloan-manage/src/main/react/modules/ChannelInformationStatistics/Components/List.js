@@ -183,7 +183,7 @@ export default React.createClass({
             title: '渠道供应商',
             dataIndex: "linker"
         },{
-            title: '渠道标识',
+            title: '渠道编码',
             dataIndex: "code"
         },{
             title: '渠道名称',
