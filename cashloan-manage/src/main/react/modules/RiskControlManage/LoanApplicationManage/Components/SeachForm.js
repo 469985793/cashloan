@@ -42,7 +42,7 @@ let SeachForm = React.createClass({
                   <Input  {...getFieldProps('phone', {initialValue: ''})} />
              </FormItem>
              <FormItem label="Order State:">
-                 <Select style={{ width: 170 }} {...getFieldProps('state', { initialValue: '2' }) }>
+                 <Select style={{ width: 250 }} {...getFieldProps('state', { initialValue: '2' }) }>
                      <Option value="2">Pending</Option>
                      <Option value="3">Approved</Option>
                      <Option value="33">Rejected & Reapply Immediately</Option>
