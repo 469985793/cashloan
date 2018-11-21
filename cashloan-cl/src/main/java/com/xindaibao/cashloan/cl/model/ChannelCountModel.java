@@ -15,6 +15,19 @@ public class ChannelCountModel {
 	 * 统计时间---注册时间
 	 */
 	private Date time;
+
+	public String getLinker() {
+		return linker;
+	}
+
+	public void setLinker(String linker) {
+		this.linker = linker;
+	}
+
+	/**
+	 * 渠道供应商
+	 */
+	private String linker;
 	/**
 	 * 渠道编码
 	 */

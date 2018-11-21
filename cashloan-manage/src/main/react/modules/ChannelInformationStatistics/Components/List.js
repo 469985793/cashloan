@@ -180,6 +180,9 @@ export default React.createClass({
         };              
         const hasSelected = selectedRowKeys.length > 0;
         var columns = [{
+            title: '渠道供应商',
+            dataIndex: "linker"
+        },{
             title: '渠道标识',
             dataIndex: "code"
         },{

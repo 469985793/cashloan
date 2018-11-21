@@ -187,7 +187,7 @@ export default React.createClass({
             title: '渠道名称',
             dataIndex: "name"
         },{
-            title: '联系人',
+            title: '渠道供应商',
             dataIndex: "linker"
         },{
             title: '联系方式',

@@ -155,24 +155,23 @@
 		select c.id, c.name from cl_channel c where not exists (select DISTINCT
 		a.channel_id from cl_channel_app a where a.channel_id = c.id) and state = 10
 	</select>
-	
+
 	<select id="channelUserList" resultType="com.xindaibao.cashloan.cl.model.ChannelCountModel" parameterType="java.util.HashMap">
-	  select   `code`,`name`, sum(registerCount) as registerCount ,sum(borrowMember) as borrowMember, sum(borrowCount) as borrowCount,sum(borrowAmout) as borrowAmout,sum(badRate) as badRate ,sum(payCount) as payCount, sum(payAccount) as payAccount,sum(userBorrowCount) AS userBorrowCount from
-	(
-     select   a.cl_channel_id, a.`code`,a.`name`, 0  as  registerCount ,sum(a.borrowMember) as borrowMember ,SUM(a.borrowCount) as borrowCount ,SUM(a.borrowAmout) as borrowAmout, sum(a.badRate) as badRate, sum(a.payCount) as payCount, sum(a.payAccount) as payAccount,sum(a.userBorrowCount) AS userBorrowCount
-       from  (
-        select u.id,c.`code`,c.`name`,c.id as cl_channel_id,0 as registerCount ,b.borrowMember,b.borrowCount ,b.borrowAmout,b.badRate,b.payCount,b.payAccount,b.userBorrowCount
-		     from  cl_channel c   JOIN  cl_user u  on c.id=u.channel_id    join
-         (select b.user_id,1 as borrowMember, sum(b.amount) as borrowAmout,count(1)  as borrowCount,count(distinct(b.user_id)) as userBorrowCount ,sum(CASE b.state  when 50  THEN 1   when 90  THEN 1  ELSE  0 end ) as badRate,
-          sum(CASE  when  b.state in (30,40,41,50,90)  THEN  1    ELSE  0 end ) as	payCount,sum(CASE  when  b.state in (30,40,41,50,90)  THEN  b.real_amount    ELSE  0 end ) as payAccount  
-          from   cl_borrow  b  group by b.user_id ) b  on u.id=b.user_id
-          
+        select  linker ,`code`,`name`, sum(registerCount) as registerCount ,sum(borrowMember) as borrowMember, sum(borrowCount) as borrowCount,sum(borrowAmout) as borrowAmout,sum(badRate) as badRate ,sum(payCount) as payCount, sum(payAccount) as payAccount,sum(userBorrowCount) AS userBorrowCount from
+        (
+        select  a.linker, a.cl_channel_code, a.`code`,a.`name`, 0  as  registerCount ,sum(a.borrowMember) as borrowMember ,SUM(a.borrowCount) as borrowCount ,SUM(a.borrowAmout) as borrowAmout, sum(a.badRate) as badRate, sum(a.payCount) as payCount, sum(a.payAccount) as payAccount,sum(a.userBorrowCount) AS userBorrowCount
+        from  (
+        select u.id,c.linker,c.`code`,c.`name`,c.code as cl_channel_code,0 as registerCount ,b.borrowMember,b.borrowCount ,b.borrowAmout,b.badRate,b.payCount,b.payAccount,b.userBorrowCount
+        from  cl_channel c   JOIN  k_user u  on c.code=u.channel_code    join
+        (select b.uid,1 as borrowMember, sum(b.balance) as borrowAmout,count(1)  as borrowCount,count(distinct(b.uid)) as userBorrowCount ,sum(CASE b.status  when 21  THEN 1   when 51  THEN 1  ELSE  0 end ) as badRate,
+        sum(CASE  when  b.status in (5,6,21,22,51)  THEN  1    ELSE  0 end ) as	payCount,sum(CASE  when  b.status in (5,6,21,22,51)  THEN  b.actual_balance    ELSE  0 end ) as payAccount
+        from   k_loan_record  b  group by b.uid ) b  on u.id=b.uid
            <trim prefix="where" prefixOverrides="and|or">
 			 <if test=" beforeTime !=null ">
-			    date_format(u.regist_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP} 
+			    date_format(u.created_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP}
 			 </if>
 			  <if test=" afterTime !=null ">
-			    and  date_format(u.regist_time, '%Y-%m-%d')  &lt;= #{afterTime,jdbcType=TIMESTAMP}
+			    and  date_format(u.created_time, '%Y-%m-%d')  &lt;= #{afterTime,jdbcType=TIMESTAMP}
 			 </if>
 			 <if test="name !='' and name !=null">
 	            and c.name like  concat("%",#{name,jdbcType=VARCHAR},"%")   
@@ -181,20 +180,20 @@
                    and c.linker like  concat("%",#{linker,jdbcType=VARCHAR},"%")
                </if>
 		 </trim>
-          ) a  
-		  group by a.cl_channel_id  
-		   
-	     UNION all
-		
-		 select  c.id as cl_channel_id,c.`code`,c.`name`,count(1) as registerCount ,  0 as borrowMember,0 as borrowCount,0 as borrowAmout,0 as badRate,0 as payCount,0 as payAccount,0 as userBorrowCount
-		  from    cl_user u  JOIN   cl_channel c    on c.id=u.channel_id 
+        ) a
+        group by a.cl_channel_code
+
+        UNION all
+
+        select c.linker, c.code as cl_channel_code,c.`code`,c.`name`,count(1) as registerCount ,  0 as borrowMember,0 as borrowCount,0 as borrowAmout,0 as badRate,0 as payCount,0 as payAccount,0 as userBorrowCount
+        from    k_user u  JOIN   cl_channel c    on c.code=u.channel_code
 		  
 		    <trim prefix="where" prefixOverrides="and|or">
 			 <if test=" beforeTime !=null ">
-			    date_format(u.regist_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP} 
+			    date_format(u.created_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP}
 			 </if>
 			  <if test=" afterTime !=null ">
-			    and  date_format(u.regist_time, '%Y-%m-%d')  &lt;= #{afterTime,jdbcType=TIMESTAMP}
+			    and  date_format(u.created_time, '%Y-%m-%d')  &lt;= #{afterTime,jdbcType=TIMESTAMP}
 			 </if>
 			 <if test="name !='' and name !=null">
 	            and c.name like  concat("%",#{name,jdbcType=VARCHAR},"%")   
@@ -203,13 +202,13 @@
                     and c.linker like  concat("%",#{linker,jdbcType=VARCHAR},"%")
                 </if>
 		 </trim>
-		  
-		  
-		  group by c.id 	
-		
-		 ) b
-	 
-	group by  cl_channel_id   
-	</select>
- 
+
+
+        group by c.code
+
+        ) b
+
+        group by  cl_channel_code
+    </select>
+
 </mapper>
