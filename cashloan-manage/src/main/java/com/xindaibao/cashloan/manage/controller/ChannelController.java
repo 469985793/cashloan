@@ -73,7 +73,7 @@ public class ChannelController extends ManageBaseController {
 			}
 		}else{
 			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-			result.put(Constant.RESPONSE_CODE_MSG, "渠道编码重复！");
+			result.put(Constant.RESPONSE_CODE_MSG, "Channel coding repetition！");
 		}
 
 		ServletUtils.writeToResponse(response, result);
@@ -160,7 +160,7 @@ public class ChannelController extends ManageBaseController {
 			}
 		}else {
 			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-			result.put(Constant.RESPONSE_CODE_MSG, "渠道编码重复！");
+			result.put(Constant.RESPONSE_CODE_MSG, "Channel coding repetition！");
 		}
 
 		ServletUtils.writeToResponse(response, result);
