@@ -55,21 +55,27 @@ public class ChannelController extends ManageBaseController {
 			@RequestParam(value="name") String name,
 			@RequestParam(value="linker") String linker,
 			@RequestParam(value="phone") String phone) throws Exception {
-		Channel channel=new Channel();
-		channel.setCode(code);
-		channel.setLinker(linker);
-		channel.setName(name);
-		channel.setPhone(phone);
-		boolean flag = channelService.save(channel);
-
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (flag) {
-			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-			result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_SUCCESS);
-		} else {
+		if(channelService.findByCode(code)==null){
+			Channel channel=new Channel();
+			channel.setCode(code);
+			channel.setLinker(linker);
+			channel.setName(name);
+			channel.setPhone(phone);
+			boolean flag = channelService.save(channel);
+
+			if (flag) {
+				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
+				result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_SUCCESS);
+			} else {
+				result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
+				result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_FAIL);
+			}
+		}else{
 			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-			result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_FAIL);
+			result.put(Constant.RESPONSE_CODE_MSG, "渠道编码重复！");
 		}
+
 		ServletUtils.writeToResponse(response, result);
 	}
 
@@ -136,20 +142,27 @@ public class ChannelController extends ManageBaseController {
 			@RequestParam(value="linker") String linker,
 			@RequestParam(value="phone") String phone) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("id", id);
-		paramMap.put("code", code);
-		paramMap.put("name", name);
-		paramMap.put("linker", linker);
-		paramMap.put("phone", phone);
-		boolean flag = channelService.update(paramMap);
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (flag) {
-			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-			result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_SUCCESS);
-		} else {
+		if(channelService.findByCode(code)==null){
+			paramMap.put("id", id);
+			paramMap.put("code", code);
+			paramMap.put("name", name);
+			paramMap.put("linker", linker);
+			paramMap.put("phone", phone);
+			boolean flag = channelService.update(paramMap);
+
+			if (flag) {
+				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
+				result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_SUCCESS);
+			} else {
+				result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
+				result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_FAIL);
+			}
+		}else {
 			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-			result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_FAIL);
+			result.put(Constant.RESPONSE_CODE_MSG, "渠道编码重复！");
 		}
+
 		ServletUtils.writeToResponse(response, result);
 	}
 

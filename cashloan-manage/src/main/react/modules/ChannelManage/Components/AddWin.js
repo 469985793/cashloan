@@ -131,8 +131,8 @@ var AddWin = React.createClass({
                             </Row>
                             <Row>
                             <Col span="24">
-                                <FormItem  {...formItemLayout} label="联系人:">
-                                    <Input type="text" placeholder="请输入联系人" disabled={!props.canEdit} {...getFieldProps('linker',{rules:[{ required: true, message: '未填或长度过长', max: '16' }]})} />                                 
+                                <FormItem  {...formItemLayout} label="渠道供应商:">
+                                    <Input type="text" placeholder="请输入渠道供应商" disabled={!props.canEdit} {...getFieldProps('linker',{rules:[{ required: true, message: '未填或长度过长', max: '16' }]})} />                                 
                                 </FormItem>
                             </Col>
                         </Row>

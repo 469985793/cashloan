@@ -40,8 +40,8 @@ let SeachForm = React.createClass({
                 <FormItem label="渠道编码:">
                     <Input type="text" placeholder='请输入渠道编码' {...getFieldProps('code') } />
                 </FormItem>
-                <FormItem label="联系人姓名:">
-                    <Input type="text" placeholder='请输入联系人姓名' {...getFieldProps('linker') } />
+                <FormItem label="渠道供应商:">
+                    <Input type="text" placeholder='请输入渠道供应商' {...getFieldProps('linker') } />
                 </FormItem>
                 <FormItem label="渠道名称:">
                     <Input type="text" placeholder='请输入渠道名称' {...getFieldProps('name') } />

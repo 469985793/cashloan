@@ -117,6 +117,13 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="findIdByCode" resultMap="BaseResultMap">
+        select
+        id
+        from cl_channel
+        where code = #{code,jdbcType=VARCHAR}
+    </select>
+
 	<select id="findIdSelective" resultType="java.lang.Long" parameterType="java.util.HashMap">
         select
         id 
