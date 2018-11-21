@@ -376,23 +376,23 @@ export default React.createClass({
             render(text, record) {
                 if (record.status == '2') {
                     return (
-                        <p>需要审核</p>
+                        <p>Pending</p>
                     )
                 } else if(record.status == '3') {
                     return (
-                        <p>通过审核</p>
+                        <p>Approved</p>
                     )
                 } else if(record.status == '32') {
                     return (
-                        <p>15天后可再次申请</p>
+                        <p>Rejected & Reapply Immediately</p>
                     )
                 } else if(record.status == '33') {
                     return (
-                        <p>可立即再次申请</p>
+                        <p>Rejected & Reapply In 15 Days</p>
                     )
                 } else if(record.status == '34') {
                     return (
-                        <p>加入黑名单</p>
+                        <p>Rejected & Blacklist</p>
                     )
                 }
             }

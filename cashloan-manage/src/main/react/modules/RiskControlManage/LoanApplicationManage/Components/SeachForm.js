@@ -44,10 +44,10 @@ let SeachForm = React.createClass({
              <FormItem label="Order State:">
                  <Select style={{ width: 170 }} {...getFieldProps('state', { initialValue: '2' }) }>
                      <Option value="2">Pending</Option>
-                     <Option value="3">Manual Approved</Option>
-                     <Option value="33">拒绝，可立即申请</Option>
-                     <Option value="32">拒绝，15天后可再次申请</Option>
-                     <Option value="34">拒绝，加入黑名单</Option>
+                     <Option value="3">Approved</Option>
+                     <Option value="33">Rejected & Reapply Immediately</Option>
+                     <Option value="32">Rejected & Reapply In 15 Days</Option>
+                     <Option value="34">Rejected & Blacklist</Option>
                  </Select>
              </FormItem>
                 <FormItem><Button type="primary" onClick={this.handleQuery}>Search</Button></FormItem>
