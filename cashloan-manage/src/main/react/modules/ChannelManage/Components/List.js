@@ -34,7 +34,7 @@ export default React.createClass({
         });
      this.refreshList();
     },
-    //新增跟编辑弹窗
+    //NEW跟Edit弹窗
     showModal(title, record, canEdit) {
        var record = record;
        var me = this;
@@ -44,7 +44,7 @@ export default React.createClass({
             title: title,
             record: record
         }, () => {
-        if(title == '编辑'){
+        if(title == 'Edit'){
             me.refs.AddWin.setFieldsValue(me.state.record);
         }
         
@@ -181,21 +181,21 @@ export default React.createClass({
         };
         const hasSelected = selectedRowKeys.length > 0;
         var columns = [{
-            title: '渠道编码',
+            title: 'Channel code',
             dataIndex: "code"
         },{
-            title: '渠道名称',
+            title: 'Channel Name',
             dataIndex: "name"
         },{
-            title: '渠道供应商',
+            title: 'Channel supplier',
             dataIndex: "linker"
         },{
-            title: '联系方式',
+            title: 'Phone',
             dataIndex: "phone"
         },{
-            title: '创建时间',
+            title: 'CreateTime',
             dataIndex: "createTime"
-        },{
+        /*},{
             title:"状态",
             dataIndex:"stateStr",
         },{
@@ -205,12 +205,12 @@ export default React.createClass({
             render(text,record){
                 return  (
                     <div style={{ textAlign: "left" }}>
-                        <a href="#" onClick={me.showModal.bind(me, '编辑',record, true)}>编辑</a>
+                        <a href="#" onClick={me.showModal.bind(me, 'Edit',record, true)}>Edit</a>
                           <span className="ant-divider"></span>       
                          {record.state=="20"?(<a href="#" onClick={me.changeStatus.bind(me ,record,'启用')}>启用</a>):(<a href="#" onClick={me.changeStatus.bind(me,record,'禁用')}>禁用</a>)}            
                    </div>
                 )
-            }
+            }*/
         }];
        
         var state = this.state;
@@ -218,8 +218,8 @@ export default React.createClass({
         return (
             <div className="block-panel">
                 <div className="actionBtns" style={{ marginBottom: 16 }}>
-                    <button className="ant-btn" onClick={this.showModal.bind(this, '新增', record, true)}>
-                        新增
+                    <button className="ant-btn" onClick={this.showModal.bind(this, 'NEW', record, true)}>
+                        NEW
                     </button>    
                 </div>
                 <Table columns={columns} rowKey={this.rowKey} size="middle"

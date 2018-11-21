@@ -49,7 +49,7 @@ var AddWin = React.createClass({
                 //console.log('Errors in form!!!');
                 return;
             }
-          if(this.props.title=="新增"){       
+          if(this.props.title=="NEW"){       
             var url= '/modules/manage/promotion/channel/save.htm';
             var params={
                 linker: values.linker,
@@ -58,7 +58,7 @@ var AddWin = React.createClass({
                 name: values.name
             };
           }   
-         if(this.props.title=="编辑"){
+         if(this.props.title=="Edit"){
             var url= '/modules/manage/promotion/channel/update.htm';
             var params={
                 id: me.props.record.id,
@@ -99,9 +99,9 @@ var AddWin = React.createClass({
         var props = this.props;
         var state = this.state;
         var modalBtns = [
-            <Button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</Button>,
+            <Button key="back" className="ant-btn" onClick={this.handleCancel}>Return</Button>,
             <Button key="button" className="ant-btn ant-btn-primary" loading={state.loading}  onClick={this.handleOk}>
-                提 交
+                Submit
             </Button>
         ];
         const formItemLayout = {
@@ -117,29 +117,29 @@ var AddWin = React.createClass({
                 <Form horizontal form={this.props.form} style={{ marginTop: "20px" }}>
                         <Row>
                             <Col span="24">
-                                <FormItem  {...formItemLayout} label="渠道编码:">
-                                    <Input type="text" placeholder="请输入渠道编码" disabled={false} {...getFieldProps('code',{rules:[{ required: true, message: '未填或长度过长', max: '16' }]})} />                                 
+                                <FormItem  {...formItemLayout} label="Channel code:">
+                                    <Input type="text" placeholder="Please enter the Channel code" disabled={false} {...getFieldProps('code',{rules:[{ required: true, message: 'Long or unfilled', max: '16' }]})} />                                 
                                 </FormItem>
                             </Col>
                             </Row>
                             <Row>
                             <Col span="24">
-                                <FormItem  {...formItemLayout} label="渠道名称:">
-                                    <Input type="text" placeholder="请输入渠道名称" disabled={!props.canEdit} {...getFieldProps('name',{rules:[{ required: true, message: '未填或长度过长', max: '16' }]})} />                                 
+                                <FormItem  {...formItemLayout} label="Channel Name:">
+                                    <Input type="text" placeholder="Please enter the Channel Name" disabled={!props.canEdit} {...getFieldProps('name',{rules:[{ required: true, message: 'Long or unfilled', max: '16' }]})} />                                 
                                 </FormItem>
                             </Col>
                             </Row>
                             <Row>
                             <Col span="24">
-                                <FormItem  {...formItemLayout} label="联系人:">
-                                    <Input type="text" placeholder="请输入联系人" disabled={!props.canEdit} {...getFieldProps('linker',{rules:[{ required: true, message: '未填或长度过长', max: '16' }]})} />                                 
+                                <FormItem  {...formItemLayout} label="Channel supplier:">
+                                    <Input type="text" placeholder="Please enter the Channel supplier" disabled={!props.canEdit} {...getFieldProps('linker',{rules:[{ required: true, message: 'Long or unfilled', max: '16' }]})} />                                 
                                 </FormItem>
                             </Col>
                         </Row>
                         <Row>                         
                             <Col span="24">
-                                <FormItem  {...formItemLayout} label="联系方式:">
-                                    <Input type="text" placeholder="请输入联系方式" disabled={false} {...getFieldProps('phone',{rules:[{ required: true, message: '未填或长度过长', max: '16' }]})} />                                 
+                                <FormItem  {...formItemLayout} label="Phone:">
+                                    <Input type="text" placeholder="Please enter the Phone" disabled={false} {...getFieldProps('phone',{rules:[{ required: true, message: 'Long or unfilled', max: '16' }]})} />                                 
                                 </FormItem>
                             </Col>
                         </Row>
