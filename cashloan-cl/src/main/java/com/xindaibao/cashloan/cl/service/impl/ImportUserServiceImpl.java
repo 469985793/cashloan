@@ -18,9 +18,7 @@ import com.xindaibao.cashloan.cl.model.kenya.KanyaUserIntegral;
 import com.xindaibao.cashloan.cl.model.kenya.KanyaUserObtainState;
 import com.xindaibao.cashloan.cl.model.kenya.KanyaUserState;
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -95,16 +93,16 @@ public class ImportUserServiceImpl extends BaseServiceImpl<KanyaUser, Long> impl
 		KanyaUser kanyaUser4=kanyaUserMapper.findByMobile(mobile);
 		Long uid=kanyaUser4.getId();
 		KanyaUserInfo kanyaUserInfo1=kanyaUserInfoMapper.selectByNationId(nationId);
-		if (kanyaUserInfo1 != null && kanyaUserInfo1.getId() > 0) {
-			return false;
-		}
 		//创建用户基本信息
 		KanyaUserInfo kanyaUserInfo=new KanyaUserInfo();
 		kanyaUserInfo.setUid(uid);
 		kanyaUserInfo.setFirstName(firstName);
 		kanyaUserInfo.setLastName(lastName);
-		if(nationId.equals(9)){
-		}else{
+		if(nationId.equals("9")){
+		    //身份证缺省，跳过为null
+		}else if(kanyaUserInfo1 != null){
+		    //身份证重复，跳过为null
+        }else{
             kanyaUserInfo.setNationalId(nationId);
         }
 		kanyaUserInfo.setCreatedTime(new Date());

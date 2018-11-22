@@ -84,6 +84,14 @@ export default React.createClass({
             data:params,
             method: 'post',
             callback: (result) => {
+                // console.log(result);
+                if(result.data){
+                    for(var i=0 ; i<result.data.length;i++){
+                        result.data[i].borrowAmout=result.data[i].borrowAmout/100;
+                        result.data[i].payAccount=result.data[i].payAccount/100;
+
+                    }
+                }
                 const pagination = this.state.pagination;
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
