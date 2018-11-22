@@ -52,6 +52,7 @@ var AddWin = React.createClass({
                 data:{
                     id: values.id,
                     state: values.state1,
+                    lineType:values.lineType,
                     remark:values.remark,
                     indentNo:values.indentNo,
                     uid:values.uid,
@@ -131,63 +132,66 @@ var AddWin = React.createClass({
           <Input  {...getFieldProps('fee', { initialValue: '' }) } type="hidden"   />
           <Row>
             <Col span="12">
-               <FormItem  {...formItemLayout} label="姓名:">
+               <FormItem  {...formItemLayout} label="LastName:">
                  <Input  type="text" disabled={true} {...getFieldProps('lastName') }/>
                </FormItem>
             </Col>
             <Col span="12">
-               <FormItem {...formItemLayout} label="手机号码:">
+               <FormItem {...formItemLayout} label="Phone:">
                 <Input   type="text" disabled={true} {...getFieldProps('mobile') }/>
               </FormItem>
             </Col>
           </Row>
           <Row>
             <Col span="12">
-               <FormItem  {...formItemLayout} label="银行卡号:">
-                 <Input  type="text" disabled={true} {...getFieldProps('mobile') }/>
+               <FormItem  {...formItemLayout} label="Bank Card No:">
+                 <Input  type="text" disabled={true} {...getFieldProps('bankCardNo') }/>
                </FormItem>
             </Col>
             <Col span="12">
-               <FormItem  {...formItemLayout} label="借款时间:">
+               <FormItem  {...formItemLayout} label="Borrow Time:">
                  <Input  type="text" disabled={true} {...getFieldProps('createdTime') }/>
                </FormItem>
             </Col>
           </Row>
           <Row>   
             <Col span="12">
-               <FormItem {...formItemLayout} label="支付流水:">
+               <FormItem {...formItemLayout} label="Payment Stream:">
                 <Input  type="text" disabled={false} {...getFieldProps('remark') }/>
               </FormItem>
             </Col>
             <Col span="12">
-               <FormItem {...formItemLayout} label="支付方式:">
-                <Input  type="text" disabled={true} value= "放款"/>
+               <FormItem {...formItemLayout} label="Method of payment:">
+                <Input  type="text" disabled={true} value= "Lending"/>
               </FormItem>
             </Col>
           </Row>
           <Row>  
            <Col span="12">
-               <FormItem {...formItemLayout} label="金额:">
+               <FormItem {...formItemLayout} label="Amount:">
                 <Input  type="text" disabled={true} {...getFieldProps('balance')}/>
               </FormItem>
             </Col> 
             <Col span="12">
-               <FormItem {...formItemLayout} label="订单号:">
+               <FormItem {...formItemLayout} label="OrderNo:">
                 <Input  type="text" disabled={true} {...getFieldProps('indentNo') }/>
               </FormItem>
             </Col>
           </Row>
           <Row>   
             <Col span="12">
-               <FormItem {...formItemLayout} label="资金来源:">
-                <Input  type="text" disabled={true} value="线下打款"/>
+               <FormItem {...formItemLayout} label="Sources of funding:">
+               <Select type="text" {...getFieldProps('lineType') } >
+                              <Option value="offline">Offline lending</Option>
+                              <Option value="online">Online lending</Option>
+                        </Select>
               </FormItem>
             </Col>
             <Col span="12">
-               <FormItem {...formItemLayout} label="审核:">
+               <FormItem {...formItemLayout} label="Review:">
                         <Select type="text" {...getFieldProps('state1') } >
-                              <Option value="5">审核通过</Option>
-                              <Option value="42">审核不通过</Option>
+                              <Option value="5">Approved</Option>
+                              <Option value="42">Rejected</Option>
                         </Select>
               </FormItem>
             </Col>

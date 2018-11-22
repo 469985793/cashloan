@@ -12,7 +12,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import com.google.common.collect.Maps;
+import com.xindaibao.cashloan.cl.Util.FlowNumber;
+import com.xindaibao.cashloan.cl.Util.HttpClientUtil;
 import com.xindaibao.cashloan.cl.mapper.*;
+import com.xindaibao.cashloan.cl.model.kenya.KanyaPayFlow;
+import com.xindaibao.cashloan.cl.model.kenya.KanyaPayRecord;
 import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.PaymentModel;
@@ -101,6 +105,8 @@ import com.xindaibao.creditrank.cr.domain.Credit;
 import com.xindaibao.creditrank.cr.mapper.CreditMapper;
 import com.xindaibao.cashloan.core.mapper.KanyaUserMapper;
 
+import static com.xindaibao.cashloan.cl.Util.HttpClientUtil.CONTENT_TYPE_JSON_URL;
+
 /**
  * 借款信息表ServiceImpl
  * 
@@ -136,6 +142,10 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 	private UserInviteMapper userInviteMapper;
 	@Resource
 	private ProfitAgentMapper profitAgentMapper;
+	@Resource
+	private KanyaPayFlowMapper kanyaPayFlowMapper;
+	@Resource
+	private KanyaPayRecordMapper kanyaPayRecordMapper;
 	@Resource
 	private UserMapper userMapper;
 	@Resource
@@ -1326,10 +1336,12 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 	 * 人工复审
 	 */
 	@Override
-	public int manualVerifyBorrow(Long borrowId, String state, String remark) {
+	public int manualVerifyBorrow(Long borrowId, String state, String remark,String lineType) {
 		int code = 0;
 		//Borrow borrow = clBorrowMapper.findByPrimary(borrowId);
 		PayLog payLog = new PayLog();
+		KanyaPayFlow kanyaPayFlow=new KanyaPayFlow();
+		KanyaPayRecord kanyaPayRecord=new KanyaPayRecord();
 		LoanRecord loanRecord = loanRecordMapper.findByPrimary(borrowId);
 		if (loanRecord != null) {
 			if(loanRecord.getStatus().equals(BorrowModel.STATE_NEED_REVIEW)){
@@ -1351,22 +1363,64 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 			if ("34".equals(state)){
 				kanyaUserMapper.addBlackList(loanRecord.getUid());
 			}
-			//保存线下支付流水号
+
 			Long amount = loanRecord.getBalance()/100;
+
 			if(state.equals(BorrowModel.STATE_REPAYING)){
-				payLog.setAmount(amount.doubleValue());
-				payLog.setOrderNo(remark);
-				payLog.setUserId(loanRecord.getUid());
-				payLog.setCardNo(loanRecord.getBankCardNo());
-				payLog.setBank(loanRecord.getBankNo());
-				payLog.setSource("10");
-				payLog.setType("30");
-				payLog.setScenes("10");
-				payLog.setState("40");
-				payLog.setRemark(loanRecord.getIndentNo());
-				payLog.setUpdateTime(new Date());
-				payLog.setCreateTime(new Date());
-				payLogMapper.save(payLog);
+				if(lineType.equals("online")){
+					//保存线上放款记录
+					kanyaPayRecord.setLoanRecordId(loanRecord.getId());
+					kanyaPayRecord.setLoanRecordNo(loanRecord.getIndentNo());
+					kanyaPayRecord.setIndentNo(FlowNumber.getNewFlowNumber("PR"));
+					kanyaPayRecord.setWayCode("M-PESA");
+					kanyaPayRecord.setPayTime(new Date());
+					kanyaPayRecord.setAmount(new BigDecimal((loanRecord.getBalance()-loanRecord.getFee())/100));
+					kanyaPayRecord.setStatus((byte)1);
+					kanyaPayRecord.setCreatedTime(new Date());
+					kanyaPayRecord.setUpdatedTime(new Date());
+					kanyaPayRecordMapper.save(kanyaPayRecord);
+					KanyaPayRecord kanyaPayRecord1=kanyaPayRecordMapper.findByLoanRecordId(loanRecord.getId());
+					//保存线上放款流水
+					kanyaPayFlow.setLoanRecordId(loanRecord.getId());
+					kanyaPayFlow.setLoanRecordNo(loanRecord.getIndentNo());
+					kanyaPayFlow.setPayRecordId(kanyaPayRecord1.getId());
+					kanyaPayFlow.setPayRecordNo(kanyaPayRecord1.getIndentNo());
+					kanyaPayFlow.setIndentNo(FlowNumber.getNewFlowNumber("PF"));
+					kanyaPayFlow.setWayCode("M-PESA");
+					kanyaPayFlow.setAmount(new BigDecimal((loanRecord.getBalance()-loanRecord.getFee())/100));
+					kanyaPayFlow.setStatus((byte)1);
+					kanyaPayFlow.setCreatedTime(new Date());
+					kanyaPayFlow.setUpdatedTime(new Date());
+					kanyaPayFlowMapper.save(kanyaPayFlow);
+					KanyaPayFlow kanyaPayFlow1=kanyaPayFlowMapper.findByLoanRecordId(loanRecord.getId());
+					BigDecimal amount1 = new BigDecimal((loanRecord.getBalance()-loanRecord.getFee())/100);
+					String mobile1 = loanRecord.getMobile();
+					String orderNo1 = kanyaPayFlow1.getIndentNo();
+					Map<String, Object> param=new HashMap<>();
+					param.put("amount",amount1);
+					param.put("mobile","254"+mobile1);//测试时去掉254
+					param.put("orderNo",orderNo1);
+					//调用接口(测试)
+					String mes=HttpClientUtil.sendPost("http://10.0.51.38:6082/mpesa/b2c/send",JSONObject.toJSONString(param),CONTENT_TYPE_JSON_URL,null);
+					System.out.println(mes);
+					code=1;
+					return code;
+				}else{
+					//保存线下支付流水号
+					payLog.setAmount(amount.doubleValue());
+					payLog.setOrderNo(remark);
+					payLog.setUserId(loanRecord.getUid());
+					payLog.setCardNo(loanRecord.getBankCardNo());
+					payLog.setBank(loanRecord.getBankNo());
+					payLog.setSource("10");
+					payLog.setType("30");
+					payLog.setScenes("10");
+					payLog.setState("40");
+					payLog.setRemark(loanRecord.getIndentNo());
+					payLog.setUpdateTime(new Date());
+					payLog.setCreateTime(new Date());
+					payLogMapper.save(payLog);
+				}
 			}
 //			savePressState(borrow, state);
 //			if (BorrowModel.STATE_REFUSED.equals(state)|| BorrowModel.STATE_AUTO_REFUSED.equals(state)) {

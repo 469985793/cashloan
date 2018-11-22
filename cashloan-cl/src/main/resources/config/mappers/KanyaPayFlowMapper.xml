@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- cl_adver表:广告管理模块 -->
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.KanyaPayFlowMapper">
+    <!--返回Map-->        
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.kenya.KanyaPayFlow">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="loan_record_id" property="loanRecordId" jdbcType="BIGINT" />
+        <result column="loan_record_no" property="loanRecordNo" jdbcType="VARCHAR" />
+        <result column="pay_record_id" property="payRecordId" jdbcType="BIGINT" />
+        <result column="pay_record_no" property="payRecordNo" jdbcType="VARCHAR" />
+        <result column="indent_no" property="indentNo" jdbcType="VARCHAR" />
+        <result column="way_code" property="wayCode" jdbcType="VARCHAR" />
+        <result column="amount" property="amount" jdbcType="DECIMAL" />
+        <result column="conversation_no" property="conversationNo" jdbcType="VARCHAR" />
+        <result column="transaction_amount" property="transactionAmount" jdbcType="DECIMAL" />
+        <result column="transaction_no" property="transactionNo" jdbcType="VARCHAR" />
+        <result column="completion_time" property="completionTime" jdbcType="TIMESTAMP" />
+        <result column="rtn_msg" property="rtnMsg" />
+        <result column="status" property="status" jdbcType="TINYINT" />
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP" />
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <!--基本的sql查询字段 公共引用...-->
+    <sql id="Base_Column_List">
+        id,loan_record_id,loan_record_no,pay_record_id,pay_record_no,indent_no,way_code,amount,conversation_no,transaction_amount,transaction_no,completion_time,rtn_msg,status,created_time,updated_time
+    </sql>
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaPayFlow">
+        insert into k_pay_flow(loan_record_id,loan_record_no,pay_record_id,pay_record_no,indent_no,way_code,amount,status,created_time,updated_time)
+        values(#{loanRecordId,jdbcType=BIGINT},#{loanRecordNo,jdbcType=VARCHAR},#{payRecordId,jdbcType=BIGINT},#{payRecordNo,jdbcType=VARCHAR},#{indentNo,jdbcType=VARCHAR},#{wayCode,jdbcType=VARCHAR},#{amount,jdbcType=DECIMAL},#{status,jdbcType=TINYINT},#{createdTime,jdbcType=TIMESTAMP},#{updatedTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <select id="findByLoanRecordId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from k_pay_flow
+        where loan_record_id = #{loanRecordId,jdbcType=BIGINT}
+    </select>
+
+    
+</mapper>

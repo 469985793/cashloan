@@ -205,7 +205,6 @@ public class HttpClientUtil {
 		if (DataUtil.isNull(charset)) {
 			charset = ENCODE_CHARSET;
 		}
-		
 		HttpPost httpPost = new HttpPost(reqUrl);
 		httpPost.setHeader(HTTP.CONTENT_TYPE, contentType + "; charset=" + charset);
 		

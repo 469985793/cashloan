@@ -60,8 +60,11 @@ export default React.createClass({
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
-                if (result.data[0]) {
-                    result.data[0].balance = result.data[0].balance / 100;
+                if(result.data){
+
+                    for(let i = 0 ; i < result.data.length;i++){
+                        result.data[i].balance = result.data[i].balance / 100;
+                    }
                 }
                 if (!pagination.current) {
                     pagination.current = 1
