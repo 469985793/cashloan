@@ -103,6 +103,9 @@ public class ImportUserServiceImpl extends BaseServiceImpl<KanyaUser, Long> impl
 		kanyaUserInfo.setUid(uid);
 		kanyaUserInfo.setFirstName(firstName);
 		kanyaUserInfo.setLastName(lastName);
+		if(nationId.equals(9)){
+			nationId=null;
+		}
 		kanyaUserInfo.setNationalId(nationId);
 		kanyaUserInfo.setCreatedTime(new Date());
 		kanyaUserInfo.setStatus((byte) 1);
