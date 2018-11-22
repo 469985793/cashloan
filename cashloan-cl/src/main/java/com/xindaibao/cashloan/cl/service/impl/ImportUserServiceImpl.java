@@ -142,6 +142,7 @@ public class ImportUserServiceImpl extends BaseServiceImpl<KanyaUser, Long> impl
 		//创建用户额度表
 		KanyaUserCredit userCredit=new KanyaUserCredit();
 		userCredit.setUid(uid);
+		userCredit.setLimits(200000);
 		userCredit.setCreatedTime(new Date());
 		userCredit.setStatus((byte) 1);
 		kanyaUserCreditMapper.save(userCredit);
