@@ -147,13 +147,36 @@
     </select>
     
     <select id="listInviteBorrow" resultMap="InviteBorrowModel" parameterType="java.util.HashMap">
-        SELECT cui.id,cui.invite_id, cui.invite_name,cui.invite_time,
+
+
+       /* SELECT cui.id,cui.invite_id, cui.invite_name,cui.invite_time,
 		(SELECT SUM(amount) FROM cl_borrow WHERE user_id = cui.invite_id)AS borrowAmout,
 		(SELECT SUM(penalty_amout) FROM cl_borrow_repay WHERE user_id = cui.invite_id) AS penaltyAmout,
 		(SELECT SUM(amount) FROM cl_borrow_repay_log WHERE user_id = cui.invite_id) AS repayAmount,
 		(SELECT SUM(amount) FROM cl_profit_log WHERE agent_id = cui.invite_id) AS agentAmount
 		FROM `cl_user_invite` AS cui
 		WHERE cui.user_id = #{userId,jdbcType=INTEGER}
+		*/
     </select>
-    
+    <select id="inviteRecord" resultMap="InviteBorrowModel" parameterType="java.util.HashMap">
+         select registerCount,borrowMember,repayMember from(
+select
+(select count(u.id) from k_user u where u.register_code=(select u.invite_code from k_user u where
+id = #{userId,jdbcType=BIGINT}
+))
+as registerCount,
+(select count(distinct l.uid) from k_loan_record l join
+(select id from k_user u where u.register_code=(select u.invite_code from k_user u where
+id = #{userId,jdbcType=BIGINT}
+ )) as a
+on l.uid=a.id)
+as borrowMember,
+(select count(distinct l.uid)  from k_loan_record l join
+(select u.id from k_user u where u.register_code=(select u.invite_code from k_user u where
+id = #{userId,jdbcType=BIGINT}
+ )) as a
+on l.uid=a.id
+and l.`status` in (6,22))
+as repayMember) as c
+    </select>
 </mapper>

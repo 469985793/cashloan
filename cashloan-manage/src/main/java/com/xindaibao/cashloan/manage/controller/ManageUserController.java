@@ -410,12 +410,11 @@ public class ManageUserController extends ManageBaseController{
 			@RequestParam(value="userId") long userId,
 			@RequestParam(value = "current") int current,
 			@RequestParam(value = "pageSize") int pageSize) throws Exception {
-		Page<InviteBorrowModel> page = userInviteService.listInviteBorrow(userId,current,pageSize);
+		InviteBorrowModel ibm = userInviteService.listInviteBorrow(userId,current,pageSize);
 		Map<String, Object> data = new HashMap<>();
-		data.put("list", page.getResult());
+		data.put("list", ibm);
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put(Constant.RESPONSE_DATA, data);
-		result.put(Constant.RESPONSE_DATA_PAGE, new RdPage(page));
 		result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 		result.put(Constant.RESPONSE_CODE_MSG, "查询成功");
 		ServletUtils.writeToResponse(response,result);

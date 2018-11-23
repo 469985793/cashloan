@@ -124,12 +124,13 @@ public class UserInviteServiceImpl extends BaseServiceImpl<UserInvite, Long> imp
 	}
 
 	@Override
-	public Page<InviteBorrowModel> listInviteBorrow(long userId, int current, int pageSize) {
+	public InviteBorrowModel listInviteBorrow(long userId, int current, int pageSize) {
 		PageHelper.startPage(current, pageSize);
 		Map<String,Object> map = new HashMap<>();
 		map.put("userId", userId);
-		List<InviteBorrowModel> list = userInviteMapper.listInviteBorrow(map);
-		return (Page<InviteBorrowModel>)list;
+		//List<InviteBorrowModel> list = userInviteMapper.listInviteBorrow(map);
+        InviteBorrowModel ibm=userInviteMapper.inviteRecord(map);
+		return ibm;
 	}
 
 

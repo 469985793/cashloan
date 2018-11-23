@@ -372,7 +372,9 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="queryInvited" resultMap="BaseResultMap">
-		select i.first_name,
+
+
+		/*select i.first_name,
 		i.last_name,
 		count(r.id) as borrowingCount,
 		(select count(re.id)
@@ -389,6 +391,6 @@
 		on u.id=r.uid
 		left join k_user_info i
 		on u.id=i.uid
-		where register_code=#{inviteCode}
+		where register_code=#{inviteCode}*/
 	</select>
 </mapper>

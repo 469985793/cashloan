@@ -52,4 +52,5 @@ public interface UserInviteMapper extends BaseMapper<UserInvite,Long> {
 	 */
 	List<InviteBorrowModel> listInviteBorrow(Map<String, Object> map);
 
+	InviteBorrowModel inviteRecord(Map<String, Object> map);
 }

@@ -13,6 +13,34 @@ public class InviteBorrowModel extends UserInvite{
 	private double repayAmount;
 	
 	private double agentAmount;
+	private int registerCount;
+	private int borrowMember;
+	private int repayMember;
+	public int getRegisterCount() {
+		return registerCount;
+	}
+
+	public void setRegisterCount(int registerCount) {
+		this.registerCount = registerCount;
+	}
+
+	public int getBorrowMember() {
+		return borrowMember;
+	}
+
+	public void setBorrowMember(int borrowMember) {
+		this.borrowMember = borrowMember;
+	}
+
+	public int getRepayMember() {
+		return repayMember;
+	}
+
+	public void setRepayMember(int repayMember) {
+		this.repayMember = repayMember;
+	}
+
+
 
 	/**
 	 * @return the borrowAmout

@@ -56,7 +56,7 @@ public interface UserInviteService extends BaseService<UserInvite, Long>{
 	 * @param pageSize
 	 * @return
 	 */
-	Page<InviteBorrowModel> listInviteBorrow(long userId, int current,
+	InviteBorrowModel listInviteBorrow(long userId, int current,
                                              int pageSize);
 
 
