@@ -271,7 +271,11 @@ export default React.createClass({
                 } else if (text == 31) {
                     return "Risk control audit did not pass"//风控审核不通过
                 } else if (text == 32) {
-                    return "Review not approved"//复审不通过
+                    return "Review not approved,Reapply In 15 Days"//复审不通过,15天后可申请
+                } else if (text == 33) {
+                    return "Review not approved,Reapply Immediately"//复审不通过，可立即申请
+                } else if (text == 34) {
+                    return "Review not approved,Blacklist"//复审不通过，并加入黑名单
                 } else if (text == 41) {
                     return "Loan failure"//放款失败
                 } else if (text == 42) {
