@@ -95,10 +95,11 @@ public class QuartzLate implements Job{
 
 							if (msg>0) {
 								KanyaUserState kanyaUserState=new KanyaUserState();
-								kanyaUserState.setUid(br.getUid());
+                                kanyaUserState.setUid(list.get(i).getUid());
 								kanyaUserState.setCurrentState((byte)6);
 								//更改userCurrentState为逾期
 								kanyaUserStateService.updateCurrentState(kanyaUserState);
+
 								//保存逾期进度
 								logger.info("---------添加逾期进度---------");
 								BorrowProgress bp = new BorrowProgress();
