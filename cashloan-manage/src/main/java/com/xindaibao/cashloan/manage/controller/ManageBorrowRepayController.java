@@ -15,9 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.xindaibao.cashloan.cl.mapper.KanyaUserStateMapper;
+import com.xindaibao.cashloan.cl.model.kenya.KanyaUserState;
 import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
 import com.xindaibao.cashloan.cl.service.ClBorrowService;
+import com.xindaibao.cashloan.cl.service.KanyaUserStateService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -61,7 +64,8 @@ public class ManageBorrowRepayController extends ManageBaseController {
 	private BorrowRepayService borrowRepayService;
 	@Resource
 	private BorrowRepayLogService borrowRepayLogService;
-
+	@Resource
+	private KanyaUserStateService kanyaUserStateService;
 	@Resource
 	private ClBorrowService clBorrowService;
 	/**
@@ -168,6 +172,7 @@ public class ManageBorrowRepayController extends ManageBaseController {
 			@RequestParam(value = "state") String state) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Map<String, Object> result = new HashMap<String, Object>();
+		KanyaUserState kanyaUserState=new KanyaUserState();
 		try{
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id", id);
@@ -182,6 +187,9 @@ public class ManageBorrowRepayController extends ManageBaseController {
 			if (lr != null) {
 				if (!lr.getStatus().equals(BorrowRepayModel.STATE_REPAY_YES)) {
 					borrowRepayService.confirmRepay(param);
+					kanyaUserState.setUid(lr.getUid());
+					kanyaUserState.setCurrentState((byte)5);
+					kanyaUserStateService.updateCurrentState(kanyaUserState);
 					resultMap.put("Code", Constant.SUCCEED_CODE_VALUE);
 					resultMap.put("Msg", "还款成功");
 				} else {

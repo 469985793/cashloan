@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import com.xindaibao.cashloan.cl.Util.SmsCmSendUtil;
+import com.xindaibao.cashloan.cl.mapper.KanyaUserStateMapper;
+import com.xindaibao.cashloan.cl.model.kenya.KanyaUserState;
 import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
+import com.xindaibao.cashloan.cl.service.*;
 import com.xindaibao.cashloan.manage.domain.QuartzInfo;
 import com.xindaibao.cashloan.manage.model.OverDueSMSModel;
 import org.apache.log4j.Logger;
@@ -25,11 +28,6 @@ import com.xindaibao.cashloan.cl.domain.BorrowRepay;
 import com.xindaibao.cashloan.cl.domain.UrgeRepayOrder;
 import com.xindaibao.cashloan.cl.model.BorrowRepayModel;
 import com.xindaibao.cashloan.cl.model.UrgeRepayOrderModel;
-import com.xindaibao.cashloan.cl.service.BorrowProgressService;
-import com.xindaibao.cashloan.cl.service.BorrowRepayService;
-import com.xindaibao.cashloan.cl.service.ClBorrowService;
-import com.xindaibao.cashloan.cl.service.ClSmsService;
-import com.xindaibao.cashloan.cl.service.UrgeRepayOrderService;
 import com.xindaibao.cashloan.core.common.context.Global;
 import com.xindaibao.cashloan.core.common.exception.ServiceException;
 import com.xindaibao.cashloan.core.domain.Borrow;
@@ -44,7 +42,6 @@ import com.xindaibao.cashloan.manage.service.QuartzLogService;
 public class QuartzLate implements Job{
 	
 	private static final Logger logger = Logger.getLogger(QuartzLate.class);
-	
 	/**
 	 * 定时计算逾期
 	 * @throws ServiceException 
@@ -55,7 +52,7 @@ public class QuartzLate implements Job{
 		ClBorrowService clBorrowService = (ClBorrowService)BeanUtil.getBean("clBorrowService");
 		UrgeRepayOrderService urgeRepayOrderService = (UrgeRepayOrderService)BeanUtil.getBean("urgeRepayOrderService");
 		ClSmsService clSmsService = (ClSmsService)BeanUtil.getBean("clSmsService");
-
+		KanyaUserStateService kanyaUserStateService = (KanyaUserStateService) BeanUtil.getBean("kanyaUserStateService");
 
 		logger.info("进入逾期计算...");
 		String quartzRemark = null;
@@ -97,6 +94,11 @@ public class QuartzLate implements Job{
 							int msg  = borrowRepayService.updateLate(br);
 
 							if (msg>0) {
+								KanyaUserState kanyaUserState=new KanyaUserState();
+								kanyaUserState.setUid(br.getUid());
+								kanyaUserState.setCurrentState((byte)6);
+								//更改userCurrentState为逾期
+								kanyaUserStateService.updateCurrentState(kanyaUserState);
 								//保存逾期进度
 								logger.info("---------添加逾期进度---------");
 								BorrowProgress bp = new BorrowProgress();

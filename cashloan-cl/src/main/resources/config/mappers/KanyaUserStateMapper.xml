@@ -266,7 +266,7 @@
         status = #{status,jdbcType=TINYINT},
       </if>
       <if test="currentState != null">
-        current_state = #{status,jdbcType=TINYINT},
+        current_state = #{currentState,jdbcType=TINYINT},
       </if>
       <if test="createdTime != null">
         created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -276,6 +276,14 @@
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateCurrentState">
+    update k_user_state
+    <set>
+      current_state = #{currentState,jdbcType=TINYINT},
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
   </update>
   <update id="update" parameterType="com.xindaibao.cashloan.cl.model.kenya.KanyaUserState">
     update k_user_state

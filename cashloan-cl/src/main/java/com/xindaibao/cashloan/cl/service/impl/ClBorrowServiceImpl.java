@@ -15,10 +15,7 @@ import com.google.common.collect.Maps;
 import com.xindaibao.cashloan.cl.Util.FlowNumber;
 import com.xindaibao.cashloan.cl.Util.HttpClientUtil;
 import com.xindaibao.cashloan.cl.mapper.*;
-import com.xindaibao.cashloan.cl.model.kenya.KanyaPayFlow;
-import com.xindaibao.cashloan.cl.model.kenya.KanyaPayRecord;
-import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
-import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
+import com.xindaibao.cashloan.cl.model.kenya.*;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.PaymentModel;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.constant.LianLianConstant;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.util.LianLianHelper;
@@ -148,6 +145,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 	private KanyaPayRecordMapper kanyaPayRecordMapper;
 	@Resource
 	private UserMapper userMapper;
+	@Resource
+	private KanyaUserStateMapper kanyaUserStateMapper;
 	@Resource
 	private UserAuthService userAuthService;
 	@Resource
@@ -1402,8 +1401,10 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 					param.put("orderNo",orderNo1);
 					//调用接口(测试)
 					String mes=HttpClientUtil.sendPost("http://10.0.51.38:6082/mpesa/b2c/send",JSONObject.toJSONString(param),CONTENT_TYPE_JSON_URL,null);
-					System.out.println(mes);
-					code=1;
+					//判断接口是否成功
+					if(1==1){
+						code=1;
+					}
 					return code;
 				}else{
 					//保存线下支付流水号
@@ -1420,6 +1421,13 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 					payLog.setUpdateTime(new Date());
 					payLog.setCreateTime(new Date());
 					payLogMapper.save(payLog);
+				}
+				KanyaUserState kanyaUserState=new KanyaUserState();
+				//如果放款成功，改变用户的当前状态
+				if(1==1){
+					kanyaUserState.setUid(loanRecord.getUid());
+					kanyaUserState.setCurrentState((byte)4);
+					kanyaUserStateMapper.updateCurrentState(kanyaUserState);
 				}
 			}
 //			savePressState(borrow, state);

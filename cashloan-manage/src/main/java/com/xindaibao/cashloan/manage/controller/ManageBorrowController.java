@@ -44,7 +44,7 @@ import com.xindaibao.cashloan.system.permission.annotation.RequiresPermission;
 public class ManageBorrowController extends ManageBaseController {
 
 	private static final Logger logger = Logger.getLogger(ManageBorrowController.class);
-	
+
 	@Resource
 	private ClBorrowService clBorrowService;
 	@Resource
@@ -596,10 +596,10 @@ public class ManageBorrowController extends ManageBaseController {
 		    int msg =clBorrowService.auditBorrowLoan(borrowId, state, remark,userId);
 			if(msg==1){
 				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-				result.put(Constant.RESPONSE_CODE_MSG, "Operate successfully");//操作成功
+				result.put(Constant.RESPONSE_CODE_MSG, "操作完成");
 			}else{
 				result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-				result.put(Constant.RESPONSE_CODE_MSG, "The operation failure");//操作失败
+				result.put(Constant.RESPONSE_CODE_MSG, "操作失败");
 			}
 		} catch (Exception e) {
 			logger.error(e);
