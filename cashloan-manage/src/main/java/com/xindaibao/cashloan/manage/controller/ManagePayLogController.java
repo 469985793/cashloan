@@ -176,15 +176,16 @@ public class ManagePayLogController extends ManageBaseController {
 	 *
 	 * @param id
 	 */
+	//@RequestParam(value = "lineType") String lineType,
 	@RequestMapping(value = "/modules/manage/pay/log/auditPay.htm", method = RequestMethod.POST)
 	public void audit(@RequestParam(value = "id") Long id,
-					  @RequestParam(value = "lineType") String lineType,
 					  @RequestParam(value = "state") String state,
 					  @RequestParam(value = "remark") String remark) throws Exception {
 
 		Map<String,Object> result = new HashMap<String,Object>();
 		try{
-			int msg =clBorrowService.manualVerifyBorrow(id, state, remark,lineType);
+			//,lineType
+			int msg =clBorrowService.manualVerifyBorrow(id, state, remark);
 			if(msg==1){
 				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 				result.put(Constant.RESPONSE_CODE_MSG, "放款成功");
