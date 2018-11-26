@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- cl_urge_repay_order表:催款计划表模块 -->
 <mapper namespace="com.xindaibao.cashloan.cl.mapper.UrgeRepayOrderMapper">
-    <!--返回Map-->         
+    <!--返回Map-->
     <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.domain.UrgeRepayOrder">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -22,20 +22,22 @@
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="success_time" property="successTime" jdbcType="TIMESTAMP" />
         <result column="level" property="level" jdbcType="VARCHAR" />
+        <result column="account_manage" property="accountManage" jdbcType="INTEGER" />
+        <result column="profit" property="profit" jdbcType="INTEGER" />
     </resultMap>
-    
+
     <resultMap id="urgeRepayCountResultMap" type="com.xindaibao.cashloan.cl.model.UrgeRepayCountModel">
         <id column="id" property="userId" jdbcType="BIGINT" />
         <result column="name" property="name" />
-		<result column="user_name" property="userName" />
-		<result column="job_num" property="jobNumber" />
+        <result column="user_name" property="userName" />
+        <result column="job_num" property="jobNumber" />
     </resultMap>
-    
+
     <!--基本的sql查询字段 公共引用...-->
     <sql id="Base_Column_List">
         id,user_id,user_name,phone,borrow_id,order_no,amount,time_limit,borrow_time,repay_time,penalty_day,penalty_amout,state,count,create_time,success_time,borrow_name,level
     </sql>
-    
+
     <!-- 基本的sql查询条件公共引用 -->
     <sql id="searchBy">
         <trim prefix="where" prefixOverrides="and|or">
@@ -46,10 +48,10 @@
                 and user_id = #{userId,jdbcType=BIGINT}
             </if>
             <if test="userName !='' and userName !=null">
-                and user_name  like  concat("%",#{userName,jdbcType=VARCHAR},"%") 
+                and user_name  like  concat("%",#{userName,jdbcType=VARCHAR},"%")
             </if>
             <if test="phone !='' and phone !=null">
-                and phone like  concat("%",#{phone,jdbcType=VARCHAR},"%") 
+                and phone like  concat("%",#{phone,jdbcType=VARCHAR},"%")
             </if>
             <if test="borrowId !='' and borrowId !=null">
                 and borrow_id = #{borrowId,jdbcType=BIGINT}
@@ -87,30 +89,30 @@
             <if test="successTime !=null">
                 and success_time = #{successTime,jdbcType=TIMESTAMP}
             </if>
-              <if test="borrowName !='' and borrowName !=null">
-                and borrow_name    like  concat("%",#{borrowName,jdbcType=VARCHAR},"%") 
+            <if test="borrowName !='' and borrowName !=null">
+                and borrow_name    like  concat("%",#{borrowName,jdbcType=VARCHAR},"%")
             </if>
-             <if test="level !='' and level !=null">
+            <if test="level !='' and level !=null">
                 and level = #{level,jdbcType=VARCHAR}
             </if>
             <!-- 添加未分配已分配查询,10已分配20未分配 -->
             <if test="isDestribute != null and isDestribute != ''">
-				<if test="isDestribute =='10' ">
-					and user_id is not null
-				</if>
-				<if test="isDestribute =='20' ">
-					and user_id is null
-				</if>
-			</if>
+                <if test="isDestribute =='10' ">
+                    and user_id is not null
+                </if>
+                <if test="isDestribute =='20' ">
+                    and user_id is null
+                </if>
+            </if>
         </trim>
     </sql>
-    
-    
+
+
     <insert id="save" parameterType="com.xindaibao.cashloan.cl.domain.UrgeRepayOrder">
         insert into cl_urge_repay_order(user_id,user_name,phone,borrow_id,order_no,amount,time_limit,borrow_time,repay_time,penalty_day,penalty_amout,state,count,create_time,success_time,borrow_name,level)values(#{userId,jdbcType=BIGINT},#{userName,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{borrowId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{amount,jdbcType=DECIMAL},#{timeLimit,jdbcType=VARCHAR},#{borrowTime,jdbcType=TIMESTAMP},#{repayTime,jdbcType=TIMESTAMP},#{penaltyDay,jdbcType=BIGINT},#{penaltyAmout,jdbcType=DECIMAL},#{state,jdbcType=VARCHAR},#{count,jdbcType=BIGINT},#{createTime,jdbcType=TIMESTAMP},#{successTime,jdbcType=TIMESTAMP},#{borrowName,jdbcType=VARCHAR},#{level,jdbcType=VARCHAR})
     </insert>
 
-    
+
     <update id="update" parameterType="com.xindaibao.cashloan.cl.domain.UrgeRepayOrder">
         update cl_urge_repay_order set 
             user_id = #{userId,jdbcType=BIGINT},
@@ -136,59 +138,59 @@
 
     <update id="updateSelective"  parameterType="java.util.HashMap">
         update cl_urge_repay_order
-          <set>
-            <if test="userId != null and userId != '' ">        
-                user_id = #{userId,jdbcType=BIGINT},                
+        <set>
+            <if test="userId != null and userId != '' ">
+                user_id = #{userId,jdbcType=BIGINT},
             </if>
-            <if test="userName != null and userName != '' ">        
-                user_name = #{userName,jdbcType=VARCHAR},                
+            <if test="userName != null and userName != '' ">
+                user_name = #{userName,jdbcType=VARCHAR},
             </if>
-            <if test="phone != null and phone != '' ">        
-                phone = #{phone,jdbcType=VARCHAR},                
+            <if test="phone != null and phone != '' ">
+                phone = #{phone,jdbcType=VARCHAR},
             </if>
-            <if test="borrowId != null and borrowId != '' ">        
-                borrow_id = #{borrowId,jdbcType=BIGINT},                
+            <if test="borrowId != null and borrowId != '' ">
+                borrow_id = #{borrowId,jdbcType=BIGINT},
             </if>
             <if test="orderNo !='' and orderNo !=null">
                 order_no = #{orderNo,jdbcType=VARCHAR}
             </if>
-            <if test="amount != null and amount != '' ">        
-                amount = #{amount,jdbcType=DECIMAL},                
+            <if test="amount != null and amount != '' ">
+                amount = #{amount,jdbcType=DECIMAL},
             </if>
-            <if test="timeLimit != null and timeLimit != '' ">        
-                time_limit = #{timeLimit,jdbcType=VARCHAR},                
+            <if test="timeLimit != null and timeLimit != '' ">
+                time_limit = #{timeLimit,jdbcType=VARCHAR},
             </if>
-            <if test="borrowTime != null ">        
-                borrow_time = #{borrowTime,jdbcType=TIMESTAMP},                
+            <if test="borrowTime != null ">
+                borrow_time = #{borrowTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="repayTime != null ">        
-                repay_time = #{repayTime,jdbcType=TIMESTAMP},                
+            <if test="repayTime != null ">
+                repay_time = #{repayTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="penaltyDay != null and penaltyDay != '' ">        
-                penalty_day = #{penaltyDay,jdbcType=BIGINT},                
+            <if test="penaltyDay != null and penaltyDay != '' ">
+                penalty_day = #{penaltyDay,jdbcType=BIGINT},
             </if>
-            <if test="penaltyAmout != null and penaltyAmout != '' ">        
-                penalty_amout = #{penaltyAmout,jdbcType=DECIMAL},                
+            <if test="penaltyAmout != null and penaltyAmout != '' ">
+                penalty_amout = #{penaltyAmout,jdbcType=DECIMAL},
             </if>
-            <if test="state != null and state != '' ">        
-                state = #{state,jdbcType=VARCHAR},                
+            <if test="state != null and state != '' ">
+                state = #{state,jdbcType=VARCHAR},
             </if>
-            <if test="count != null and count != '' ">        
-                count = #{count,jdbcType=BIGINT},                
+            <if test="count != null and count != '' ">
+                count = #{count,jdbcType=BIGINT},
             </if>
-            <if test="createTime != null ">        
-                create_time = #{createTime,jdbcType=TIMESTAMP}                
+            <if test="createTime != null ">
+                create_time = #{createTime,jdbcType=TIMESTAMP}
             </if>
             <if test="successTime !=null">
                 success_time = #{successTime,jdbcType=TIMESTAMP}
             </if>
-             <if test="borrowName !='' and borrowName !=null">
+            <if test="borrowName !='' and borrowName !=null">
                 borrow_name = #{borrowName,jdbcType=VARCHAR}
             </if>
             <if test="level !='' and level !=null">
                 level = #{level,jdbcType=VARCHAR}
             </if>
-        </set>    
+        </set>
         where id = #{id ,jdbcType=BIGINT}
     </update>
 
@@ -200,13 +202,13 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
         <include refid="Base_Column_List" />
         from cl_urge_repay_order
         <include refid="searchBy"/>  limit 0,1
     </select>
-               
+
     <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
         <include refid="Base_Column_List" />
@@ -214,176 +216,183 @@
         <include refid="searchBy"/>
         ORDER BY repay_time DESC
     </select>
-    
+
     <select id="listOrder" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         SELECT * FROM cl_urge_repay_order GROUP BY user_name
     </select>
-    
+
     <select id="newOrderByUser" resultType="java.lang.String" parameterType="java.util.HashMap">
-        SELECT count(*) 
-        FROM `cl_urge_repay_order` 
+        SELECT count(*)
+        FROM `cl_urge_repay_order`
         WHERE DATE_FORMAT(create_time,'%y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d')
         <if test="userId !='' and userId !=null">
-               and user_id = #{userId,jdbcType=VARCHAR}
+            and user_id = #{userId,jdbcType=VARCHAR}
         </if>
     </select>
-    
+
     <select id="repayOrderByUser" resultType="java.lang.String" parameterType="java.util.HashMap">
         SELECT COUNT(DISTINCT borrow_id)
-		FROM `cl_urge_repay_log` 
-		WHERE DATE_FORMAT(create_time,'%y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d') AND state = 30
+        FROM `cl_urge_repay_log`
+        WHERE DATE_FORMAT(create_time,'%y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d') AND state = 30
         <if test="userId !='' and userId !=null">
-               and user_id = #{userId,jdbcType=VARCHAR}
+            and user_id = #{userId,jdbcType=VARCHAR}
         </if>
     </select>
-    
+
     <select id="successOrderByUser" resultType="java.lang.String" parameterType="java.util.HashMap">
-        SELECT COUNT(1) 
+        SELECT COUNT(1)
         FROM cl_urge_repay_order uro LEFT JOIN cl_borrow_progress bp ON bp.borrow_id = uro.borrow_id
-		WHERE DATE_FORMAT(bp.create_time,'%y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d')
-		AND bp.state = 40
+        WHERE DATE_FORMAT(bp.create_time,'%y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d')
+        AND bp.state = 40
         <if test="userId !='' and userId !=null">
-               and uro.user_id = #{userId,jdbcType=VARCHAR}
+            and uro.user_id = #{userId,jdbcType=VARCHAR}
         </if>
     </select>
-    
+
     <select id="failOrderByUser" resultType="java.lang.String" parameterType="java.util.HashMap">
-        SELECT COUNT(1) 
+        SELECT COUNT(1)
         FROM cl_urge_repay_order uro LEFT JOIN cl_borrow_progress bp ON bp.borrow_id = uro.borrow_id
-		WHERE DATE_FORMAT(bp.create_time,'%y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d')
-		AND bp.state = 90
+        WHERE DATE_FORMAT(bp.create_time,'%y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d')
+        AND bp.state = 90
         <if test="userId !='' and userId !=null">
-               and uro.user_id = #{userId,jdbcType=VARCHAR}
+            and uro.user_id = #{userId,jdbcType=VARCHAR}
         </if>
     </select>
-    
+
     <select id="countByUser" resultType="java.lang.String" parameterType="java.util.HashMap">
-        SELECT count(1) 
+        SELECT count(1)
         FROM cl_urge_repay_log
         WHERE DATE_FORMAT(create_time,'%y-%m-%d') = DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d')
         <if test="userId !='' and userId !=null">
-               and user_id = #{userId,jdbcType=VARCHAR}
+            and user_id = #{userId,jdbcType=VARCHAR}
         </if>
     </select>
-    
+
     <select id="allOrderSum" resultType="java.lang.String" parameterType="java.util.HashMap">
     	SELECT COUNT(DISTINCT borrow_id) FROM cl_urge_repay_order WHERE TO_DAYS(create_time) <![CDATA[<=]]> TO_DAYS(#{date,jdbcType=TIMESTAMP})
     </select>
-    
+
     <select id="allSuccessSum" resultType="java.lang.String" parameterType="java.util.HashMap">
     	SELECT COUNT(DISTINCT borrow_id) FROM cl_urge_repay_order WHERE TO_DAYS(create_time) <![CDATA[<=]]> TO_DAYS(#{date,jdbcType=TIMESTAMP}) AND state = 40
     </select>
-    
+
     <select id="allFailSum" resultType="java.lang.String" parameterType="java.util.HashMap">
     	SELECT COUNT(DISTINCT borrow_id) FROM cl_urge_repay_order WHERE TO_DAYS(create_time) <![CDATA[<=]]> TO_DAYS(#{date,jdbcType=TIMESTAMP}) AND state = 50
     </select>
-    
-    
-    
+
+
+
     <select id="listAll" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select * from cl_urge_repay_order
     </select>
-    
-   <resultMap id="modelMap"  extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.UrgeRepayOrderModel">
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select c.*,p.account_manage,p.profit from cl_urge_repay_order c
+  join k_loan_record r on c.borrow_id=r.id
+  join k_loan_product p on r.product_id=p.id
+  where c.id=#{id,jdbcType=BIGINT}
+    </select>
+
+    <resultMap id="modelMap"  extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.UrgeRepayOrderModel">
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
         <result column="promise_time" property="promiseTime" jdbcType="TIMESTAMP" />
         <result column="way" property="way" jdbcType="VARCHAR" />
     </resultMap>
-    
-     <sql id="searchModelBy">
+
+    <sql id="searchModelBy">
         <trim prefix="where" prefixOverrides="and|or">
             <if test="userId !='' and userId !=null">
-                 o.user_id = #{userId,jdbcType=BIGINT}
+                o.user_id = #{userId,jdbcType=BIGINT}
             </if>
             <if test="userName !='' and userName !=null">
-                and o.user_name  like  concat("%",#{userName,jdbcType=VARCHAR},"%") 
+                and o.user_name  like  concat("%",#{userName,jdbcType=VARCHAR},"%")
             </if>
-             <if test="orderNo !='' and orderNo !=null">
+            <if test="orderNo !='' and orderNo !=null">
                 and o.order_no  = (select id from k_loan_record where indent_no =#{orderNo,jdbcType=VARCHAR})
             </if>
             <if test="phone !='' and phone !=null">
-                and o.phone    like  concat("%",#{phone,jdbcType=VARCHAR},"%") 
+                and o.phone    like  concat("%",#{phone,jdbcType=VARCHAR},"%")
             </if>
             <if test="state !='' and state !=null">
                 and o.state = #{state,jdbcType=VARCHAR}
             </if>
-              <if test="borrowName !='' and borrowName !=null">
-                and o.borrow_name   like  concat("%",#{borrowName,jdbcType=VARCHAR},"%") 
+            <if test="borrowName !='' and borrowName !=null">
+                and o.borrow_name   like  concat("%",#{borrowName,jdbcType=VARCHAR},"%")
             </if>
             <if test="level !='' and level !=null">
-               and  level = #{level,jdbcType=VARCHAR}
+                and  level = #{level,jdbcType=VARCHAR}
             </if>
         </trim>
     </sql>
-    
+
     <select id="listModel" resultMap="modelMap" parameterType="java.util.HashMap">
-        select   
+        select
         o.user_id,o.user_name,o.phone,o.borrow_id,k.indent_no as order_no,o.amount,o.time_limit,o.borrow_time,o.repay_time,o.penalty_day,o.penalty_amout,o.borrow_name,o.count,o.level,
-        l.id,l.create_time,l.remark,l.promise_time,l.way,l.state 
+        l.id,l.create_time,l.remark,l.promise_time,l.way,l.state
         from cl_urge_repay_order o    join   cl_urge_repay_log l   on    o.id=l.due_id
         left join k_loan_record k on o.order_no=k.id
         <include refid="searchModelBy"/>
         order by   l.create_time  desc
-        
+
     </select>
-    
+
     <sql id="searchMemberCountBy">
         <trim prefix="where" prefixOverrides="and|or">
             <if test="userName !='' and userName !=null">
-                 c.userName  like  concat("%",#{userName,jdbcType=VARCHAR},"%")   
+                c.userName  like  concat("%",#{userName,jdbcType=VARCHAR},"%")
             </if>
             <if test="loginName !='' and loginName !=null">
-                and c.loginName  like  concat("%",#{loginName,jdbcType=VARCHAR},"%")  
+                and c.loginName  like  concat("%",#{loginName,jdbcType=VARCHAR},"%")
             </if>
             <if test="jobNum !='' and jobNum !=null">
-                and c.jobNum  like  concat("%",#{jobNum,jdbcType=VARCHAR},"%")  
+                and c.jobNum  like  concat("%",#{jobNum,jdbcType=VARCHAR},"%")
             </if>
         </trim>
     </sql>
-    
+
     <resultMap id="countMap"  type="com.xindaibao.cashloan.cl.model.UrgeRepayCountModel">
     </resultMap>
-    
+
     <select id="allOrderCount" resultType="java.lang.String" parameterType="java.util.HashMap">
     	SELECT count(id) FROM `cl_urge_repay_order` WHERE DATE_FORMAT(create_time,'%y-%m-%d')<![CDATA[<=]]>DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d') AND state !=40 OR DATE_FORMAT(create_time,'%y-%m-%d')=DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d');
     </select>
-    
+
     <select id="successCount" resultType="java.lang.String" parameterType="java.util.HashMap">
     	SELECT SUM(CASE WHEN state=40 THEN 1 ELSE 0 END) stateCount FROM `cl_urge_repay_order` WHERE DATE_FORMAT(create_time,'%y-%m-%d')<![CDATA[=]]>DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d');
     </select>
-    
+
     <select id="count" resultType="java.lang.String" parameterType="java.util.HashMap">
     	SELECT count(1) FROM `cl_urge_repay_log` WHERE DATE_FORMAT(create_time,'%y-%m-%d')=DATE_FORMAT(#{date,jdbcType=TIMESTAMP},'%y-%m-%d');
     </select>
-    
+
     <select id="countOrder" resultType="java.lang.Integer" parameterType="java.util.HashMap">
-    	SELECT count(1) FROM cl_urge_repay_order 
-    	<trim prefix="where" prefixOverrides="and|or">
+        SELECT count(1) FROM cl_urge_repay_order
+        <trim prefix="where" prefixOverrides="and|or">
             <if test="userId != null and userId != '' and userId != '0' ">
-                 user_id = #{userId,jdbcType=BIGINT}
+                user_id = #{userId,jdbcType=BIGINT}
             </if>
             <if test="state != null and state != ''">
-                 and state = #{state,jdbcType=VARCHAR}
+                and state = #{state,jdbcType=VARCHAR}
             </if>
         </trim>
     </select>
-    
+
     <select id="listSysUserByRole" resultMap="urgeRepayCountResultMap" parameterType="java.util.HashMap">
-        select u.id,u.name,u.user_name,u.job_num from arc_sys_user u, arc_sys_role r, arc_sys_user_role ur 
-        where ur.role_id = r.id and ur.user_id = u.id and u.status = 0 
-		<if test="roleNid != null and roleNid != '' ">
-			and r.nid = #{roleNid, jdbcType=VARCHAR}
-		</if>
-		<if test="name != null and name != '' ">
-			and u.name like concat("%",#{name, jdbcType=VARCHAR},"%")
-		</if>
-		<if test="userName != null and userName != '' ">
-			and u.user_name like concat("%",#{userName, jdbcType=VARCHAR},"%")
-		</if>
-		<if test="jobNum != null and jobNum != '' ">
-			and u.job_num like concat("%",#{jobNum, jdbcType=VARCHAR},"%")
-		</if>
+        select u.id,u.name,u.user_name,u.job_num from arc_sys_user u, arc_sys_role r, arc_sys_user_role ur
+        where ur.role_id = r.id and ur.user_id = u.id and u.status = 0
+        <if test="roleNid != null and roleNid != '' ">
+            and r.nid = #{roleNid, jdbcType=VARCHAR}
+        </if>
+        <if test="name != null and name != '' ">
+            and u.name like concat("%",#{name, jdbcType=VARCHAR},"%")
+        </if>
+        <if test="userName != null and userName != '' ">
+            and u.user_name like concat("%",#{userName, jdbcType=VARCHAR},"%")
+        </if>
+        <if test="jobNum != null and jobNum != '' ">
+            and u.job_num like concat("%",#{jobNum, jdbcType=VARCHAR},"%")
+        </if>
     </select>
-    
+
 </mapper>

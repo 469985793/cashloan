@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.DateFormat;
@@ -162,16 +163,16 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 				if (smsNo != null) {
 					logger.info("开始批量发送逾期短信。。");
 					for (int i = 0; i < ids.length; i++) {
-						UrgeRepayOrder uro = urgeRepayOrderMapper.findByPrimary(ids[i]);
+						UrgeRepayOrder uro = urgeRepayOrderMapper.findById(ids[i]);
 						Map<String, Object> map = new HashMap<>();
 						map.put("platform", uro.getBorrowTime());
-						map.put("loan", uro.getAmount()/100);
+						map.put("loan", div(uro.getAmount(),100,1));
 						map.put("time", uro.getRepayTime());
 						map.put("overdueDay", uro.getPenaltyDay());
-						map.put("amercement", uro.getPenaltyAmout()/100);
+						map.put("amercement", div(uro.getPenaltyAmout(),100,1));
 						map.put("phone", uro.getPhone());
                         map.put("borrowTime", uro.getBorrowTime());
-                        map.put("amount",uro.getAmount()/100+uro.getPenaltyAmout()/100);
+                        map.put("amount",div(uro.getAmount(),100,1)+div(uro.getPenaltyAmout(),100,1)+div(uro.getAccountManage(),100,1)+div(uro.getProfit(),100,1));
 
 						Map<String, Object> payload = new HashMap<>();
 						payload.put("mobile", uro.getPhone());
@@ -955,4 +956,9 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 		}
 		return status;
 	}
+    public double div(double d1,double d2,int len) {// 进行除法运算
+        BigDecimal b1 = new BigDecimal(d1);
+        BigDecimal b2 = new BigDecimal(d2);
+        return b1.divide(b2,len,BigDecimal.ROUND_HALF_UP).doubleValue();
+    }
 }

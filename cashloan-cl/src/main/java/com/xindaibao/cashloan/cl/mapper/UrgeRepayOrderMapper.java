@@ -57,5 +57,5 @@ public interface UrgeRepayOrderMapper extends BaseMapper<UrgeRepayOrder,Long> {
 	List<UrgeRepayCountModel> listSysUserByRole(Map<String, Object> params);
 	
 	int countOrder(Map<String, Object> params);
-	
+	UrgeRepayOrder findById(Long id);
 }

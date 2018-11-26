@@ -98,7 +98,37 @@ import java.util.Date;
      * 逾期等级       M1 (1-30天)  M2 (31-60天)  M3 (61以上)
      */
      private String level;
-     
+   /**
+    * 管理费
+    */
+   private int accountManage;
+
+   /**
+    * 利息
+    */
+   private int profit;
+
+
+
+   public int getAccountManage() {
+      return accountManage;
+   }
+
+   public void setAccountManage(int accountManage) {
+      this.accountManage = accountManage;
+   }
+
+   public int getProfit() {
+      return profit;
+   }
+
+   public void setProfit(int profit) {
+      this.profit = profit;
+   }
+
+
+
+
     /**
     * 获取主键Id
     *
