@@ -61,10 +61,10 @@ public final class ExportConstant {
 		"penaltyAmout","userName","state"};
 	
 	/** 催收反馈导出 表头*/
-	public static final String[] EXPORT_URGELOG_LIST_HEARDERS = {"借款人姓名","手机号码","金额","借款时间","预计还款时间","逾期天数","逾期等级","罚息","催收人","订单状态",
+	public static final String[] EXPORT_URGELOG_LIST_HEARDERS = {"借款人姓名","订单号","手机号码","金额","借款时间","预计还款时间","逾期天数","逾期等级","罚息","催收人","订单状态",
 		"催收方式","承诺还款时间","催收反馈","催收时间"};
 	/** 催收反馈导出 属性*/
-	public static final String[] EXPORT_URGELOG_LIST_FIELDS = {"borrowName","phone","amount","borrowTime","repayTime","penaltyDay","level",
+	public static final String[] EXPORT_URGELOG_LIST_FIELDS = {"borrowName","orderNo","phone","amount","borrowTime","repayTime","penaltyDay","level",
 		"penaltyAmout","userName","state","way","promiseTime","remark","createTime"};
 	
 	/** 同盾审核记录导出 表头*/

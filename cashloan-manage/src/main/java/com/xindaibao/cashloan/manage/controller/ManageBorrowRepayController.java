@@ -128,6 +128,8 @@ public class ManageBorrowRepayController extends ManageBaseController {
 			if (StringUtil.isBlank(params.get("state"))) {
 				status = BorrowModel.STATE_REPAYING;
 				stateList.add(status);
+				status=BorrowModel.STATE_FINISH;
+				stateList.add(status);
 				params.put("stateList",stateList);
 			}
 		}else {

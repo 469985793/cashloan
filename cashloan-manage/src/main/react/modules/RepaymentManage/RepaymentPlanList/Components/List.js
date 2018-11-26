@@ -57,9 +57,27 @@ export default React.createClass({
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
                 // console.log(result);
-                if(result.data[0]){
-                    result.data[0].overdueFee=result.data[0].overdueFee/100;
-                    result.data[0].balance=result.data[0].balance/100;
+                if(result.data){
+                    for (var i = 0; i < result.data.length; i++) {
+                    result.data[i].overdueFee=result.data[i].overdueFee/100;
+                    result.data[i].balance=result.data[i].balance/100;
+                    if(result.data[i].repayAmount=result.data[i].repayAmount/100){
+                        result.data[i].repayAmount=result.data[i].repayAmount/100
+                    }else{
+                        result.data[i].repayAmount="";
+                    }
+                    if(result.data[i].repayTotal=result.data[i].repayTotal/100){
+                        result.data[i].repayTotal=result.data[i].repayTotal/100
+                    }else{
+                        result.data[i].repayTotal="";
+                    }
+                    if(result.data[i].actualRepayment=result.data[i].actualRepayment/100){
+                        result.data[i].actualRepayment=result.data[i].actualRepayment/100
+                    }else{
+                        result.data[i].actualRepayment="";
+                    }
+                        // console.log(result.data[0].balance);
+                    }
                 }
                 if (!pagination.current) {
                     pagination.current = 1

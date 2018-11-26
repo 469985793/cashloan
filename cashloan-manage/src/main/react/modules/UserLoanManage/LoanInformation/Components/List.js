@@ -59,11 +59,14 @@ export default React.createClass({
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
                 // console.log(result);
-                if (result.data[0]) {
-                    result.data[0].balance = result.data[0].balance / 100;
-                    result.data[0].totalFee = result.data[0].totalFee / 100;
-                    result.data[0].actualBalance = result.data[0].actualBalance / 100;
-                    result.data[0].actualbackAmt = result.data[0].actualbackAmt / 100;
+                if(result.data){
+                    for (var i = 0; i < result.data.length; i++) {
+                        result.data[i].balance = result.data[i].balance / 100;
+                        result.data[i].totalFee = result.data[i].totalFee / 100;
+                        result.data[i].actualBalance = result.data[i].actualBalance / 100;
+                        result.data[i].actualbackAmt = result.data[i].actualbackAmt / 100;
+                        // console.log(result.data[0].balance);
+                    }
                 }
                 if (!pagination.current) {
                     pagination.current = 1

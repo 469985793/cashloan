@@ -55,7 +55,7 @@
                 and borrow_id = #{borrowId,jdbcType=BIGINT}
             </if>
             <if test="orderNo !='' and orderNo !=null">
-                and order_no  like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")   
+                and order_no  like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")
             </if>
             <if test="amount !='' and amount !=null">
                 and amount = #{amount,jdbcType=DECIMAL}
@@ -300,7 +300,7 @@
                 and o.user_name  like  concat("%",#{userName,jdbcType=VARCHAR},"%") 
             </if>
              <if test="orderNo !='' and orderNo !=null">
-                and o.order_no  like  concat("%",#{orderNo,jdbcType=VARCHAR},"%") 
+                and o.order_no  = (select id from k_loan_record where indent_no =#{orderNo,jdbcType=VARCHAR})
             </if>
             <if test="phone !='' and phone !=null">
                 and o.phone    like  concat("%",#{phone,jdbcType=VARCHAR},"%") 
@@ -319,9 +319,10 @@
     
     <select id="listModel" resultMap="modelMap" parameterType="java.util.HashMap">
         select   
-        o.user_id,o.user_name,o.phone,o.borrow_id,o.order_no,o.amount,o.time_limit,o.borrow_time,o.repay_time,o.penalty_day,o.penalty_amout,o.borrow_name,o.count,o.level,
+        o.user_id,o.user_name,o.phone,o.borrow_id,k.indent_no as order_no,o.amount,o.time_limit,o.borrow_time,o.repay_time,o.penalty_day,o.penalty_amout,o.borrow_name,o.count,o.level,
         l.id,l.create_time,l.remark,l.promise_time,l.way,l.state 
         from cl_urge_repay_order o    join   cl_urge_repay_log l   on    o.id=l.due_id
+        left join k_loan_record k on o.order_no=k.id
         <include refid="searchModelBy"/>
         order by   l.create_time  desc
         

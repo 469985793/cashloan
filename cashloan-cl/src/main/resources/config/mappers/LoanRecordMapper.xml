@@ -594,6 +594,7 @@
     update k_loan_record set
     overdue_fee = #{overdueFee},
     updated_time = #{updatedTime},
+    overdue_percent=#{overduePercent},
     status = #{status}
     where id = #{id ,jdbcType=BIGINT}
   </update>
