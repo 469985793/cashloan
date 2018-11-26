@@ -165,11 +165,13 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 						UrgeRepayOrder uro = urgeRepayOrderMapper.findByPrimary(ids[i]);
 						Map<String, Object> map = new HashMap<>();
 						map.put("platform", uro.getBorrowTime());
-						map.put("loan", uro.getAmount());
+						map.put("loan", uro.getAmount()/100);
 						map.put("time", uro.getRepayTime());
 						map.put("overdueDay", uro.getPenaltyDay());
-						map.put("amercement", uro.getPenaltyAmout());
+						map.put("amercement", uro.getPenaltyAmout()/100);
 						map.put("phone", uro.getPhone());
+                        map.put("borrowTime", uro.getBorrowTime());
+                        map.put("amount",uro.getAmount()/100+uro.getPenaltyAmout()/100);
 
 						Map<String, Object> payload = new HashMap<>();
 						payload.put("mobile", uro.getPhone());
@@ -241,8 +243,9 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 		if ("overdue".equals(smsType)) {
 			message = ret(smsType);
 			message = message.replace("{$platform}",StringUtil.isNull(DateUtil.dateStr8((Date) map.get("platform"))))
-					.replace("{$loan}",
-							StringUtil.isNull(map.get("loan")))
+					.replace("{$loan}", StringUtil.isNull(map.get("loan")))
+                    .replace("{$borrowTime}", StringUtil.isNull(DateUtil.dateStr8((Date) map.get("borrowTime"))))
+                    .replace("{$amount}", StringUtil.isNull(map.get("amount")))
 					.replace("{$time}",StringUtil.isNull(DateUtil.dateStr8((Date) map.get("time"))))
 					.replace("{$overdueDay}", StringUtil.isNull(map.get("overdueDay")))
 					.replace("{$amercement}", StringUtil.isNull(map.get("amercement")));
@@ -587,7 +590,7 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 
 	/**
 	 * 创蓝短信
-	 * 
+	 *
 	 * @param url
 	 *            应用地址，类似于http://ip:port/msg/
 	 * @param un
@@ -869,7 +872,7 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 			logger.info("短信发送结果" + resultJson);
 
 			Integer code;
-			
+
 			if (StringUtil.isNotBlank(resultJson)) {
 				code = resultJson.getInteger("code");
 				logger.info("code:" + code);
@@ -904,7 +907,7 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 				}
 			}
 		}else if("20".equals(sms_passageway)){
-			
+
 		}else{//大汉三通
 			String reportURL=Global.getValue("dh_sms_report");
 			JSONObject dhSMSObj =JSONObject.parseObject(Global.getValue("dh_sms_value"));
@@ -947,8 +950,8 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 					logger.info("短信报告获取结果：短信报告尚未获取成功");
 				}
 			}
-			
-			
+
+
 		}
 		return status;
 	}
