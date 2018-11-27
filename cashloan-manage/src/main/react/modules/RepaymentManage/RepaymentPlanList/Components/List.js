@@ -241,15 +241,15 @@ export default React.createClass({
                     return "Unpaid"//未还款
                 }else if(record.status==21){
                     return "Overdue"//已逾期
-                }else{
-                    return "-"
+                }else if(record.status==22){
+                    return "Terms for late"//逾期还款
         }
             }
         },{
             title: 'Operating',
             dataIndex: "",
             render: (text,record) => {
-                if(record.state == 10){
+                if(record.status == 6|record.status == 22){
                     return "-"
                 }else{
                     return(

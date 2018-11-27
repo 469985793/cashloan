@@ -382,11 +382,11 @@ export default React.createClass({
                     return (
                         <p>Approved</p>
                     )
-                } else if(record.status == '32') {
+                } else if(record.status == '33') {
                     return (
                         <p>Rejected & Reapply Immediately</p>
                     )
-                } else if(record.status == '33') {
+                } else if(record.status == '32') {
                     return (
                         <p>Rejected & Reapply In 15 Days</p>
                     )

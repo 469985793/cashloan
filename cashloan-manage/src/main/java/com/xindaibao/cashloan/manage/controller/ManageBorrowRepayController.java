@@ -124,20 +124,30 @@ public class ManageBorrowRepayController extends ManageBaseController {
 		//Page<ManageBRepayLogModel> page = borrowRepayLogService.listModel(params, currentPage, pageSize);
 		String status = null;
 		List stateList = new ArrayList();
+		if(params==null){
+			params=new HashMap<>();
+			status = BorrowModel.STATE_REPAYING;
+			stateList.add(status);
+			status=BorrowModel.STATE_FINISH;
+			stateList.add(status);
+			status=BorrowModel.STATE_DELAY;
+			stateList.add(status);
+			status=BorrowModel.STATE_DELAY_FINISH;
+			stateList.add(status);
+			params.put("stateList",stateList);
+		}
 		if(StringUtil.isNotBlank(params)) {
 			if (StringUtil.isBlank(params.get("state"))) {
 				status = BorrowModel.STATE_REPAYING;
 				stateList.add(status);
 				status=BorrowModel.STATE_FINISH;
 				stateList.add(status);
+				status=BorrowModel.STATE_DELAY;
+				stateList.add(status);
+				status=BorrowModel.STATE_DELAY_FINISH;
+				stateList.add(status);
 				params.put("stateList",stateList);
 			}
-		}else {
-			params = new HashMap<>();
-			status = BorrowModel.STATE_REPAYING;
-			stateList.add(status);
-			stateList.add(21);
-			params.put("stateList",stateList);
 		}
 		Page<LoanProduct> page = clBorrowService.listBorrowModel(params,currentPage,pageSize);
 		//Page<ManageBRepayModel> page = borrowRepayService.listModel(params,currentPage, pageSize);
