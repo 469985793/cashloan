@@ -17,6 +17,7 @@ import java.util.Date;
     public static final String PAY_LOG = "支付记录";
     public static final String LOAN_LOG = "借款订单";
     public static final String REPAY_LOG = "还款记录";
+   public static final String REPAYPLAN_LOG = "还款计划";
     public static final String TONGDUN_LOG = "同盾贷前审核记录";
     public static final String PAY_CHECK_LOG = "支付对账记录";
     public static final String EXPORT_LOG = "已逾期订单";

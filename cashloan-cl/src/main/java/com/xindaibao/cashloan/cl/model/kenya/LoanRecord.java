@@ -81,6 +81,16 @@ public class LoanRecord {
 
     private Date updatedTime;
 
+    private Long repayTotal;
+
+    public Long getRepayTotal() {
+        return repayTotal;
+    }
+
+    public void setRepayTotal(Long repayTotal) {
+        this.repayTotal = repayTotal;
+    }
+
     public Long getId() {
         return id;
     }

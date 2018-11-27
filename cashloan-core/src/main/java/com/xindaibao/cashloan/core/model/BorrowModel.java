@@ -73,7 +73,7 @@ public class BorrowModel extends Borrow {
 	//public static final String STATE_DELAY = "50";
 	public static final String STATE_DELAY = "21";
 	/** 坏账 */
-	public static final String STATE_BAD = "90";
+	public static final String STATE_BAD = "51";
 	
 	/** 续借标位 - 原借款 */
 	public static final Integer RENEW_MARK_ORIGINAL = 0;

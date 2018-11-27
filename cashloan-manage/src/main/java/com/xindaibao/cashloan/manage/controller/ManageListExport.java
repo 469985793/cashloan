@@ -1,5 +1,6 @@
 package com.xindaibao.cashloan.manage.controller;
 
+import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.service.*;
 import com.xindaibao.cashloan.core.common.context.ExportConstant;
 import com.xindaibao.cashloan.core.common.util.DateUtil;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import tool.util.StringUtil;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,6 +67,72 @@ public class ManageListExport extends ManageBaseController{
 		JsGridReportBase report = new JsGridReportBase(request, response);
 		report.exportExcel(list,title,hearders,fields,user.getName());
 		saveLog(list, user.getUserName(), SysDownloadLog.REPAY_LOG);
+	}
+
+	/**
+	 * 导出还款计划报表
+	 *
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/modules/manage/repaymentPlanList/export.htm")
+	public void repaymentPlanListExport(
+			@RequestParam(value="searchParams",required = false) String searchParams) throws Exception {
+		Map<String, Object> params = JsonUtil.parse(searchParams, Map.class);
+		String status = null;
+		List stateList = new ArrayList();
+		if(params==null){
+			params=new HashMap<>();
+			status = BorrowModel.STATE_REPAYING;
+			stateList.add(status);
+			status=BorrowModel.STATE_FINISH;
+			stateList.add(status);
+			status=BorrowModel.STATE_DELAY;
+			stateList.add(status);
+			status=BorrowModel.STATE_DELAY_FINISH;
+			stateList.add(status);
+			status=BorrowModel.STATE_BAD;
+			stateList.add(status);
+			params.put("stateList",stateList);
+		}
+		if(StringUtil.isNotBlank(params)) {
+			if (StringUtil.isBlank(params.get("state"))) {
+				status = BorrowModel.STATE_REPAYING;
+				stateList.add(status);
+				status=BorrowModel.STATE_FINISH;
+				stateList.add(status);
+				status=BorrowModel.STATE_DELAY;
+				stateList.add(status);
+				status=BorrowModel.STATE_DELAY_FINISH;
+				stateList.add(status);
+				status=BorrowModel.STATE_BAD;
+				stateList.add(status);
+				params.put("stateList",stateList);
+			}
+		}
+		List<Object> list = clBorrowService.repayLogPlanExport(params);
+//		for(int i=0;i<list.size();i++){
+//			LoanProduct p=(LoanProduct)list.get(i);
+//			Long balance=Math.round(div(p.getBalance()==null?0:p.getBalance(),100,3));
+//			Long overdueFee=Math.round(div(p.getOverdueFee()==null?0:p.getOverdueFee(),100,3));
+//			Long actualBalance=Math.round(div(p.getActualBalance()==null?0:p.getActualBalance(),100,3));
+//			Long actualbackAmt=Math.round(div(p.getActualbackAmt()==null?0:p.getActualbackAmt(),100,3));
+//			Long repayTotal=Math.round(div(p.getRepayTotal()==null?0:p.getRepayTotal(),100,3));
+//			p.setBalance(balance);
+//			p.setOverdueFee(overdueFee);
+//			p.setActualBalance(actualBalance);
+//			p.setActualbackAmt(actualbackAmt);
+//			p.setRepayTotal(repayTotal);
+//			list.set(i,p);
+//		}
+		SysUser user = (SysUser) request.getSession().getAttribute("SysUser");
+		response.setContentType("application/msexcel;charset=UTF-8");
+		// 记录取得
+		String title = "还款计划Excel表";
+		String[] hearders =  ExportConstant.EXPORT_REPAYLOGPLAN_LIST_HEARDERS;
+		String[] fields = ExportConstant.EXPORT_REPAYLOGPLAN_LIST_FIELDS;
+		JsGridReportBase report = new JsGridReportBase(request, response);
+		report.exportExcel(list,title,hearders,fields,user.getName());
+		saveLog(list, user.getUserName(), SysDownloadLog.REPAYPLAN_LOG);
 	}
 	
 	/**
@@ -234,5 +303,9 @@ public class ManageListExport extends ManageBaseController{
 		sysDownloadLog.setDownload_menu(menuName);
 		sysDownloadLogService.insert(sysDownloadLog);
 	}
-
+	public double div(double d1,double d2,int len) {// 进行除法运算
+		BigDecimal b1 = new BigDecimal(d1);
+		BigDecimal b2 = new BigDecimal(d2);
+		return b1.divide(b2,len,BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
 }

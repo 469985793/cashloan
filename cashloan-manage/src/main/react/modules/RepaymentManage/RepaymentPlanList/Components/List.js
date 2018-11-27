@@ -59,25 +59,42 @@ export default React.createClass({
                 // console.log(result);
                 if(result.data){
                     for (var i = 0; i < result.data.length; i++) {
-                    result.data[i].overdueFee=result.data[i].overdueFee/100;
-                    result.data[i].balance=result.data[i].balance/100;
-                    if(result.data[i].repayAmount=result.data[i].repayAmount/100){
-                        result.data[i].repayAmount=result.data[i].repayAmount/100
-                    }else{
-                        result.data[i].repayAmount="";
-                    }
-                    if(result.data[i].repayTotal=result.data[i].repayTotal/100){
-                        result.data[i].repayTotal=result.data[i].repayTotal/100
-                    }else{
-                        result.data[i].repayTotal="";
-                    }
-                    if(result.data[i].actualRepayment=result.data[i].actualRepayment/100){
-                        result.data[i].actualRepayment=result.data[i].actualRepayment/100
-                    }else{
-                        result.data[i].actualRepayment="";
-                    }
-                        // console.log(result.data[0].balance);
-                    }
+                        if(result.data[i].overdueFee){
+                            result.data[i].overdueFee=result.data[i].overdueFee/100;
+                        }else{
+                            result.data[i].overdueFee=="";
+                        }
+                        if(result.data[i].balance){
+                            result.data[i].balance=result.data[i].balance/100;
+                        }else{
+                            result.data[i].balance="";
+                        }
+                        if(result.data[i].repayAmount){
+                            result.data[i].repayAmount=result.data[i].repayAmount/100
+                        }else{
+                            result.data[i].repayAmount="";
+                        }
+                        if(result.data[i].repayTotal){
+                            result.data[i].repayTotal=result.data[i].repayTotal/100
+                        }else{
+                            result.data[i].repayTotal="";
+                        }
+                        if(result.data[i].actualRepayment){
+                            result.data[i].actualRepayment=result.data[i].actualRepayment/100
+                        }else{
+                            result.data[i].actualRepayment="";
+                        }
+                        if(result.data[i].actualBalance){
+                            result.data[i].actualBalance=result.data[i].actualBalance/100
+                        }else{
+                            result.data[i].actualBalance="";
+                        }
+                        if(result.data[i].actualbackAmt){
+                            result.data[i].actualbackAmt=result.data[i].actualbackAmt/100
+                        }else{
+                            result.data[i].actualbackAmt="";
+                        }
+                        }
                 }
                 if (!pagination.current) {
                     pagination.current = 1
@@ -220,8 +237,8 @@ export default React.createClass({
             title: 'Overdue Fine',//逾期罚金
             dataIndex: 'overdueFee'
         }, {
-            title: 'Repayment Amount(KSh)',//应还款金额
-            dataIndex: 'repayAmount'
+            title: 'Actual Amount Received(KSh)',//实际到账金额
+            dataIndex: 'actualBalance'
         }, {
             title: 'Total Amount Of Repayment(KSh)',//应还款总额
             dataIndex: 'repayTotal'
@@ -230,7 +247,7 @@ export default React.createClass({
             dataIndex: 'shouldbackTime'
         }, {
             title: 'Actual Repayment Amount',//实际还款金额(新增)
-            dataIndex: 'actualRepayment'
+            dataIndex: 'actualbackAmt'
         },{
             title: 'Repayment Status',//还款状态
             dataIndex: "status",
@@ -243,9 +260,11 @@ export default React.createClass({
                     return "Overdue"//已逾期
                 }else if(record.status==22){
                     return "Terms for late"//逾期还款
-        }
+                }else if(record.status==51){
+                     return "Bad debts"//坏账
             }
-        },{
+            }
+            },{
             title: 'Operating',
             dataIndex: "",
             render: (text,record) => {

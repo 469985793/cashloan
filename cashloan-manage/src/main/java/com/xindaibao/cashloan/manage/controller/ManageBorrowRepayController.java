@@ -21,6 +21,10 @@ import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
 import com.xindaibao.cashloan.cl.service.ClBorrowService;
 import com.xindaibao.cashloan.cl.service.KanyaUserStateService;
+import com.xindaibao.cashloan.core.common.context.ExportConstant;
+import com.xindaibao.cashloan.core.common.util.excel.JsGridReportBase;
+import com.xindaibao.cashloan.system.domain.SysDownloadLog;
+import com.xindaibao.cashloan.system.domain.SysUser;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -68,6 +72,7 @@ public class ManageBorrowRepayController extends ManageBaseController {
 	private KanyaUserStateService kanyaUserStateService;
 	@Resource
 	private ClBorrowService clBorrowService;
+
 	/**
 	 * 还款计划列表
 	 * 
@@ -85,18 +90,35 @@ public class ManageBorrowRepayController extends ManageBaseController {
 		//Page<ManageBRepayLogModel> page = borrowRepayLogService.listModel(params, currentPage, pageSize);
 		String status = null;
 		List stateList = new ArrayList();
+		if(params==null){
+			params=new HashMap<>();
+			status = BorrowModel.STATE_REPAYING;
+			stateList.add(status);
+			status=BorrowModel.STATE_FINISH;
+			stateList.add(status);
+			status=BorrowModel.STATE_DELAY;
+			stateList.add(status);
+			status=BorrowModel.STATE_DELAY_FINISH;
+			stateList.add(status);
+			status=BorrowModel.STATE_BAD;
+			stateList.add(status);
+			params.put("stateList",stateList);
+		}
 		if(StringUtil.isNotBlank(params)) {
 			if (StringUtil.isBlank(params.get("state"))) {
 				status = BorrowModel.STATE_REPAYING;
 				stateList.add(status);
+				status=BorrowModel.STATE_FINISH;
+				stateList.add(status);
+				status=BorrowModel.STATE_DELAY;
+				stateList.add(status);
+				status=BorrowModel.STATE_DELAY_FINISH;
+				stateList.add(status);
+				status=BorrowModel.STATE_BAD;
+				stateList.add(status);
+				params.put("stateList",stateList);
 			}
-		}else {
-			params = new HashMap<>();
-			status = BorrowModel.STATE_REPAYING;
-			stateList.add(status);
 		}
-		stateList.add(21);
-		params.put("stateList",stateList);
 		Page<LoanProduct> page = clBorrowService.listBorrowModel(params,currentPage,pageSize);
 		//Page<ManageBRepayModel> page = borrowRepayService.listModel(params,currentPage, pageSize);
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -134,6 +156,8 @@ public class ManageBorrowRepayController extends ManageBaseController {
 			stateList.add(status);
 			status=BorrowModel.STATE_DELAY_FINISH;
 			stateList.add(status);
+			status=BorrowModel.STATE_BAD;
+			stateList.add(status);
 			params.put("stateList",stateList);
 		}
 		if(StringUtil.isNotBlank(params)) {
@@ -145,6 +169,8 @@ public class ManageBorrowRepayController extends ManageBaseController {
 				status=BorrowModel.STATE_DELAY;
 				stateList.add(status);
 				status=BorrowModel.STATE_DELAY_FINISH;
+				stateList.add(status);
+				status=BorrowModel.STATE_BAD;
 				stateList.add(status);
 				params.put("stateList",stateList);
 			}

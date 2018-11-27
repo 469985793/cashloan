@@ -124,6 +124,14 @@ public interface ClBorrowMapper extends BaseMapper<Borrow, Long> {
 	List<LoanProduct> searchBorrowModelByKenya(Map<String, Object> params);
 
 	/**
+	 * 还款计划信息导出
+	 *
+	 * @param params
+	 * @return
+	 */
+	List<Object> repayLogPlanExport(Map<String, Object> params);
+
+	/**
 	 * 查询失败记录
 	 * 
 	 * @param searchMap

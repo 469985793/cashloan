@@ -21,7 +21,14 @@ public final class ExportConstant {
 	/** 还款记录导出 属性数组*/
 	public static final String[] EXPORT_REPAYLOG_LIST_FIELDS = {"realName","phone","orderNo", "borrowAmount","fee","repayAmount", "penaltyDay","repayPenalty","repayTotal","repayLogAmount","penaltyAmout", "repayYesTotal",
 	 "repayAccount", "serialNumber", "repayWay", "repayPlanTime", "repayTime"};
-	
+
+	/** 还款计划导出 表头*/
+	public static final String[] EXPORT_REPAYLOGPLAN_LIST_HEARDERS = {"Real Name","Phone","Order Number", "Loan Amount","Overdue Fine","Actual Amount Received(KSh)","Total Amount Of Repayment(KSh)", "Repayment Date",  "Actual Repayment Amount",
+			"Repayment Status"};
+	/** 还款计划导出 属性数组*/
+	public static final String[] EXPORT_REPAYLOGPLAN_LIST_FIELDS = {"lastName","mobile","indentNo", "balance","overdueFee","actualBalance", "repayTotal","shouldbackTime","actualbackAmt","status"};
+
+
 	/** 借款订单导出 表头*/
 	public static final String[] EXPORT_BORROW_LIST_HEARDERS = {"真实姓名","手机号","订单号","借款金额(元)","借款期限","订单生成时间","综合费用","居间服务费","信息认证费","利息",
 		"实际到账金额","订单状态","借款地址","放款时间","实际还款时间","实际还款金额(元)","逾期天数","逾期罚金(元)"};
