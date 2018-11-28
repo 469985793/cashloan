@@ -37,38 +37,36 @@ let SeachForm = React.createClass({
 
         return (
             <Form inline>
-             <FormItem label="Actual Name:">
+             <FormItem label="真实姓名:">
                   <Input  {...getFieldProps('realName',{initialValue: ''})} />
              </FormItem>
-             <FormItem label="Phone:">
+             <FormItem label="手机号码:">
                   <Input  {...getFieldProps('phone',{initialValue: ''})} />
              </FormItem>
-             <FormItem label="Order Number:">
+             <FormItem label="订单号:">
                   <Input  {...getFieldProps('orderNo',{initialValue: ''})} />
              </FormItem>
-             <FormItem label="Order Status:">
-             <Select style={{ width: 350 }} {...getFieldProps('state',{initialValue: ''})}>
-			             <Option value="">All</Option>
-			             <Option value="1">In the application, pending risk control review</Option>
-			             <Option value="2">Wind control audit passed, pending review</Option>
-			             <Option value="3">Review and approval, pending payment</Option>
-			             <Option value="4">In the lending</Option>
-			             <Option value="5">Loaned, pending payment</Option>
-			             <Option value="6">Normal reimbursement</Option>
-			             <Option value="21">Overdue</Option>
-			             <Option value="22">Terms for late</Option>
-			             <Option value="31">Risk control audit did not pass</Option>
-			             <Option value="32">Review not approved,Reapply In 15 Days</Option>
-                         <Option value="33">Review not approved,Reapply Immediately</Option>
-                         <Option value="34">Review not approved,Blacklist</Option>
-			             <Option value="41">Loan failure</Option>
-			             <Option value="42">Lending was rejected</Option>
-			             <Option value="51">Bad debt</Option>
+             <FormItem label="订单状态:">
+             <Select style={{ width: 170 }} {...getFieldProps('state',{initialValue: ''})}>
+			             <Option value="">全部</Option>
+			             <Option value="1">申请,待风控审核</Option>
+			             <Option value="2">风控审核通过,待复审</Option>
+			             <Option value="3">复审通过,待放款</Option>
+			             <Option value="4">放款中</Option>
+			             <Option value="5">已放款,待还款</Option>
+			             <Option value="6">正常还款</Option>
+			             <Option value="21">已逾期</Option>
+			             <Option value="22">逾期还款</Option>
+			             <Option value="31">风控审核不通过</Option>
+			             <Option value="32">复审不通过</Option>
+			             <Option value="41">放款失败</Option>
+			             <Option value="42">放款被拒</Option>
+			             <Option value="51">坏账</Option>
              </Select>
              </FormItem>
-             <FormItem><Button type="primary" onClick={this.handleQuery}>Search</Button></FormItem>
-             <FormItem><Button type="reset" onClick={this.handleReset}>Reset</Button></FormItem>
-             <FormItem><Button onClick={this.handleOut}>Export</Button></FormItem>
+             <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
+             <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+             <FormItem><Button onClick={this.handleOut}>导出</Button></FormItem>
             </Form>
         );
     }

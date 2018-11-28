@@ -139,10 +139,10 @@ var Lookdetails = React.createClass({
           <Row>
             <Col span="24">
               <FormItem  {...formItemLayout} label="Audit Opinion:">
-                {props.title != " Recommended  Decision" ? (
+                {props.title != "查看" ? (
                   <Select  {...getFieldProps('state', { initialValue: "3" }) } disabled={!props.canEdit}>
-                    <Option value="3"> Approved</Option>
-                    <Option value="32">Rejected</Option>
+                    <Option value="3"> Manual Approved</Option>
+                    <Option value="32">No manual approval</Option>
                   </Select>) : (<Input type="text" disabled={!props.canEdit} {...getFieldProps('stateStr') } />)}
               </FormItem>
             </Col>
@@ -150,15 +150,15 @@ var Lookdetails = React.createClass({
           {<Row>
             <Col span="24">
             <FormItem  {...formItemLayout} label="Audit Opinion:">
-                {props.title != "Approval Result" ? (
+                {props.title != "拒绝方式" ? (
                   <Select {...getFieldProps('unstate', { initialValue: "3" }) } disabled={!props.canEdit} >
-                    <Option value="3">Approved</Option>
-                    <Option value="33">Rejected & Reapply Immediately</Option>
-                    <Option value="32">Rejected & Reapply In 15 Days</Option>
-                    <Option value="34">Rejected & Blacklist</Option>
+                    <Option value="3">通过，并完成授信</Option>
+                    <Option value="33">拒绝，可以立即申请</Option>
+                    <Option value="32">拒绝，15天后可以再次申请</Option>
+                    <Option value="34">拒绝，纳入黑名单</Option>
                   </Select>) : (<Input type="text" disabled={!props.canEdit} {...getFieldProps('unstateStr') } />)}
               </FormItem>
-              <FormItem  {...formItemLayout} label="Remark:">
+              <FormItem  {...formItemLayout} label="备注说明:">
                 <Input disabled={!props.canEdit} type="textarea" placeholder="" rows={4} style={{ width: "500px", height: "40px" }}   {...getFieldProps('remark', { initialValue: '' }) } />
               </FormItem>
             </Col>

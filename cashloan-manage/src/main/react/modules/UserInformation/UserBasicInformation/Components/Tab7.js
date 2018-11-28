@@ -48,22 +48,18 @@ var Tab7 = React.createClass({
       url: '/modules/manage/invite/listInviteBorrow.htm',
       data: params,
       callback: (result) => {
-        //console.log(result.data.list);
         const pagination = this.state.pagination;
-        // pagination.current = params.current;
-        // pagination.pageSize = params.pageSize;
-        // pagination.total = result.page.total;
-        // if (!pagination.current) {
-        //   pagination.current = 1
-        // };
+        pagination.current = params.current;
+        pagination.pageSize = params.pageSize;
+        pagination.total = result.page.total;
+        if (!pagination.current) {
+          pagination.current = 1
+        };
         this.setState({
           loading: false,
-          data: [result.data.list],
+          data: result.data.list,
           pagination
         });
-        // this.setState({
-        //   recordSoure: result.data
-        // })
       }
     });
   },
@@ -78,19 +74,7 @@ var Tab7 = React.createClass({
     const rowSelection = {
         selectedRowKeys: this.state.selectedRowKeys,
     };
-    var columns = [
-      {
-        title: 'RegisterCount',
-        dataIndex: "registerCount",
-      },{
-        title: 'BorrowMember',
-        dataIndex: "borrowMember",
-      },{
-        title: 'RepayMember',
-        dataIndex: "repayMember",
-      }
-      
-      /*{
+    var columns = [{
       title: '被邀请人',
       dataIndex: "inviteName",
     }, {
@@ -108,7 +92,7 @@ var Tab7 = React.createClass({
     }, {
       title: '收益总奖金（元）',
       dataIndex: "agentAmount",
-    }*/];
+    }];
     return (<div className="block-panel">
               <Table columns={columns} rowKey={this.rowKey}  
               dataSource={this.state.data}
@@ -117,12 +101,6 @@ var Tab7 = React.createClass({
               loading={this.state.loading}
               onChange={this.handleTableChange}  />
               {/**<Tab7 records={this.state.records} ref="Tab7" /> */}
-              {/* <Table columns={columns} rowKey={this.rowKey}  
-              dataSource={this.state.data}
-              onRowClick={this.onRowClick}
-              pagination={this.state.pagination}
-              loading={this.state.loading}
-              onChange={this.handleTableChange}  /> */}
           </div>
     );
   }

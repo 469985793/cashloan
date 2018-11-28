@@ -96,13 +96,6 @@ export default React.createClass({
       method: 'post',
       callback: (result) => {
         //console.log("params", params)
-        if (result.data) {
-          for (var i = 0; i < result.data.length; i++) {
-              result.data[i].amount=result.data[i].amount/100;
-              result.data[i].penaltyAmout=result.data[i].penaltyAmout/100;
-              // console.log(result.data[0].balance);
-          }
-      }
         const pagination = this.state.pagination;
         pagination.current = params.current;
         pagination.pageSize = params.pageSize;

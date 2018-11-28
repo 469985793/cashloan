@@ -111,7 +111,7 @@ let SeachForm = React.createClass({
           </Select>
         </FormItem>
         <FormItem label="RegistrationTime：">
-            <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('registTime', { initialValue: '' }) } />
+            <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('createdTime', { initialValue: '' }) } />
         </FormItem>
         <FormItem><Button type="primary" onClick={this.handleQuery}>Search</Button></FormItem>
         <FormItem><Button type="reset" onClick={this.handleReset}>Reset</Button></FormItem>

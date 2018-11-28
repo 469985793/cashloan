@@ -93,7 +93,7 @@ export default React.createClass({
       render:(text) => text.substring(0,10)
     },{
       title: '催收员姓名',
-      dataIndex: 'name'
+      dataIndex: 'userName'
     },{
       title: '今日新增订单数',
       dataIndex: "orderCount"
