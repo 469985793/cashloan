@@ -34,7 +34,7 @@ export default React.createClass({
         });
      this.refreshList();
     },
-    //新增跟编辑弹窗
+    //NEW跟Edit弹窗
     showModal(title, record, canEdit) {
        var record = record;
        var me = this;
@@ -44,7 +44,7 @@ export default React.createClass({
             title: title,
             record: record
         }, () => {
-        if(title == '编辑'){
+        if(title == 'Edit'){
             me.refs.AddWin.setFieldsValue(me.state.record);
         }
         
@@ -84,6 +84,14 @@ export default React.createClass({
             data:params,
             method: 'post',
             callback: (result) => {
+                // console.log(result);
+                if(result.data){
+                    for(var i=0 ; i<result.data.length;i++){
+                        result.data[i].borrowAmout=result.data[i].borrowAmout/100;
+                        result.data[i].payAccount=result.data[i].payAccount/100;
+
+                    }
+                }
                 const pagination = this.state.pagination;
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
@@ -180,31 +188,34 @@ export default React.createClass({
         };              
         const hasSelected = selectedRowKeys.length > 0;
         var columns = [{
-            title: '渠道标识',
+            title: 'Channel supplier',
+            dataIndex: "linker"
+        },{
+            title: 'Channel code',
             dataIndex: "code"
         },{
-            title: '渠道名称',
+            title: 'Channel Name',
             dataIndex: "name"
         },{
-            title: '注册人数',
+            title: 'RegisterCount',
             dataIndex: "registerCount"
         },{
-            title: '借款人数',
+            title: 'BorrowMember',
             dataIndex: "borrowMember"
         },{
-            title:"借款次数",
+            title:"BorrowCount",
             dataIndex:"borrowCount",
         },{
-            title:"借款金额",
+            title:"BorrowAmout",
             dataIndex:"borrowAmout",
         },{
-            title:"放款笔数",
+            title:"PayCount",
             dataIndex:"payCount",
         },{
-            title:'放款成功金额',
+            title:'PayAccount',
             dataIndex: 'payAccount'
         },{
-            title:'申请借款',
+            title:'UserBorrowCount',
             dataIndex: 'userBorrowCount'
         /*},{
             title:"操作",
@@ -213,7 +224,7 @@ export default React.createClass({
             render(text,record){
                 return  (
                     <div style={{ textAlign: "left" }}>
-                        <a href="#" onClick={me.showModal.bind(me, '编辑',record, true)}>编辑</a>
+                        <a href="#" onClick={me.showModal.bind(me, 'Edit',record, true)}>Edit</a>
                           <span className="ant-divider"></span>       
                          {record.state=="20"?(<a href="#" onClick={me.changeStatus.bind(me ,record,'启用')}>启用</a>):(<a href="#" onClick={me.changeStatus.bind(me,record,'禁用')}>禁用</a>)}            
                    </div>
@@ -226,8 +237,8 @@ export default React.createClass({
         return (
             <div className="block-panel">
                 {/*<div className="actionBtns" style={{ marginBottom: 16 }}>
-                    <button className="ant-btn" onClick={this.showModal.bind(this, '新增', record, true)}>
-                        新增
+                    <button className="ant-btn" onClick={this.showModal.bind(this, 'NEW', record, true)}>
+                        NEW
                     </button>    
                 </div>*/}
                 <Table columns={columns} rowKey={this.rowKey} size="middle"

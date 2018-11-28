@@ -25,6 +25,12 @@ let SeachForm = React.createClass({
             current: 1,
         });
     },
+    handleOut() {
+        var params = this.props.form.getFieldsValue();
+        var json = JSON.stringify(params);
+        window.open("/modules/manage/repaymentPlanList/export.htm?searchParams="+encodeURI(json));
+
+    },
     render() {
 
         const { getFieldProps } = this.props.form;
@@ -35,20 +41,24 @@ let SeachForm = React.createClass({
                     <Input  {...getFieldProps('realName') } />
                 </FormItem>
                 <FormItem label="Phone:">{/*手机号码*/}
-                    <Input  {...getFieldProps('phone') } /> 
+                    <Input  {...getFieldProps('phone') } />
                 </FormItem>
                 <FormItem label="Order Number:">{/*订单号*/}
                     <Input  {...getFieldProps('orderNo') } />
                 </FormItem>
                 <FormItem label="Repayment Status:">{/*还款状态*/}
-                    <Select style={{ width: 100 }} {...getFieldProps('state', { initialValue: '' }) }>
-                        <Option value="">{/*全部*/}All</Option>
-                        <Option value="10">{/*已还款*/}Repaid</Option>
-                        <Option value="20">{/*未还款*/}Unpaid</Option>
+                    <Select style={{ width: 150 }} {...getFieldProps('state', { initialValue: '' }) }>
+                        <Option value="">All</Option>{/*全部*/}
+                        <Option value="6">Repaid</Option>{/*已还款*/}
+                        <Option value="5">Unpaid</Option>{/*未还款*/}
+                        <Option value="21">Overdue</Option>{/*逾期*/}
+                        <Option value="22">Terms for late</Option>{/*逾期还款*/}
+                        <Option value="51">Bad debts</Option>{/*坏账*/}
                     </Select>
                 </FormItem>
-                <FormItem><Button type="primary" onClick={this.handleQuery}>{/*查询*/}Search</Button></FormItem>
-                <FormItem><Button type="reset" onClick={this.handleReset}>{/*重置*/}Reset</Button></FormItem>
+                <FormItem><Button type="primary" onClick={this.handleQuery}>Search{/*查询*/}</Button></FormItem>
+                <FormItem><Button type="reset" onClick={this.handleReset}>Reset{/*重置*/}</Button></FormItem>
+                <FormItem><Button onClick={this.handleOut}>导出</Button></FormItem>
             </Form>
         );
     }

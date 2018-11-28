@@ -19,7 +19,7 @@ let SeachForm = React.createClass({
     },
   handleQuery() {
     var params = this.props.form.getFieldsValue();
-    var json = {afterTime:'',beforeTime:'',name:params.name};
+    var json = {afterTime:'',beforeTime:'',linker:params.linker,name:params.name};
     if(params.registTime[0]){
       json.beforeTime = (DateFormat.formatDate(params.registTime[0])).substring(0,10);
       json.afterTime = (DateFormat.formatDate(params.registTime[1])).substring(0,10);
@@ -51,14 +51,17 @@ let SeachForm = React.createClass({
     var date = new Date();
     return (
       <Form inline >
-        <FormItem label="日期：">
+        <FormItem label="Date：">
             <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('registTime', {initialValue: [date,date]}) } />
         </FormItem>
-        <FormItem label="渠道名称：">
+        <FormItem label="Channel supplier：">
+          <Input  {...getFieldProps('linker') } />
+        </FormItem>  
+        <FormItem label="Channel Name：">
           <Input  {...getFieldProps('name') } />
         </FormItem>       
-        <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
-        <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+        <FormItem><Button type="primary" onClick={this.handleQuery}>Search</Button></FormItem>
+        <FormItem><Button type="reset" onClick={this.handleReset}>Reset</Button></FormItem>
       </Form>
     );
   }

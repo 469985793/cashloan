@@ -59,11 +59,14 @@ export default React.createClass({
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
                 // console.log(result);
-                if (result.data[0]) {
-                    result.data[0].balance = result.data[0].balance / 100;
-                    result.data[0].totalFee = result.data[0].totalFee / 100;
-                    result.data[0].actualBalance = result.data[0].actualBalance / 100;
-                    result.data[0].actualbackAmt = result.data[0].actualbackAmt / 100;
+                if(result.data){
+                    for (var i = 0; i < result.data.length; i++) {
+                        result.data[i].balance = result.data[i].balance / 100;
+                        result.data[i].totalFee = result.data[i].totalFee / 100;
+                        result.data[i].actualBalance = result.data[i].actualBalance / 100;
+                        result.data[i].actualbackAmt = result.data[i].actualbackAmt / 100;
+                        // console.log(result.data[0].balance);
+                    }
                 }
                 if (!pagination.current) {
                     pagination.current = 1
@@ -271,7 +274,11 @@ export default React.createClass({
                 } else if (text == 31) {
                     return "Risk control audit did not pass"//风控审核不通过
                 } else if (text == 32) {
-                    return "Review not approved"//复审不通过
+                    return "Review not approved,Reapply In 15 Days"//复审不通过,15天后可申请
+                } else if (text == 33) {
+                    return "Review not approved,Reapply Immediately"//复审不通过，可立即申请
+                } else if (text == 34) {
+                    return "Review not approved,Blacklist"//复审不通过，并加入黑名单
                 } else if (text == 41) {
                     return "Loan failure"//放款失败
                 } else if (text == 42) {

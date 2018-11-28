@@ -1,7 +1,7 @@
 import React from 'react'
 import {Table, Modal, Icon} from 'antd';
 import Lookdetails from "./Lookdetails";
-var repaymentTypeText={'10':'Pending Review', '20': 'Under Review' ,'30': 'Pass','40' :'Rejected' ,'50': 'Repayment', '60' :'Repayment Completed', '70': 'Overdue'} //{'10':'待审核', '20': '审核中' ,'30': '通过','40' :'已拒绝' ,'50': '还款中', '60' :'还款完成', '70': '逾期'}
+var repaymentTypeText={'10':'待审核', '20': '审核中' ,'30': '通过','40' :'已拒绝' ,'50': '还款中', '60' :'还款完成', '70': '逾期'}
 const objectAssign = require('object-assign');
 import AddWin from "./AddWin";
 export default React.createClass({
@@ -56,6 +56,46 @@ export default React.createClass({
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
+                // console.log(result);
+                if(result.data){
+                    for (var i = 0; i < result.data.length; i++) {
+                    if(result.data[i].overdueFee){
+                        result.data[i].overdueFee=result.data[i].overdueFee/100;
+                    }else{
+                        result.data[i].overdueFee=="";
+                    }
+                    if(result.data[i].balance){
+                        result.data[i].balance=result.data[i].balance/100;
+                    }else{
+                        result.data[i].balance="";
+                    }
+                    if(result.data[i].repayAmount){
+                        result.data[i].repayAmount=result.data[i].repayAmount/100
+                    }else{
+                        result.data[i].repayAmount="";
+                    }
+                    if(result.data[i].repayTotal){
+                        result.data[i].repayTotal=result.data[i].repayTotal/100
+                    }else{
+                        result.data[i].repayTotal="";
+                    }
+                    if(result.data[i].actualRepayment){
+                        result.data[i].actualRepayment=result.data[i].actualRepayment/100
+                    }else{
+                        result.data[i].actualRepayment="";
+                    }
+                    if(result.data[i].actualBalance){
+                        result.data[i].actualBalance=result.data[i].actualBalance/100
+                    }else{
+                        result.data[i].actualBalance="";
+                    }
+                    if(result.data[i].actualbackAmt){
+                        result.data[i].actualbackAmt=result.data[i].actualbackAmt/100
+                    }else{
+                        result.data[i].actualbackAmt="";
+                    }
+                    }
+                }
                 if (!pagination.current) {
                     pagination.current = 1
                 }
@@ -71,6 +111,7 @@ export default React.createClass({
 
     //查看弹窗
     showModal(title,record, canEdit) {
+       console.log("list:"+record);
         this.setState({
             visible: true,
             canEdit: canEdit,
@@ -182,56 +223,52 @@ export default React.createClass({
         }
         var columns = [{
             title: 'Real Name',//真实姓名
-            dataIndex: 'realName'
+            dataIndex: 'lastName'
         }, {
             title: 'Phone',//手机号码
-            dataIndex: "phone",
+            dataIndex: "mobile",
         }, {
             title: 'Order Number',//订单号
-            dataIndex: 'orderNo'
+            dataIndex: 'indentNo'
         }, {
-            title: 'Loan Amount(KSH)',//借款金额(元)
-            dataIndex: 'borrowAmount'
+            title: 'Loan Amount',//借款金额
+            dataIndex: 'balance'
         }, {
-            title: 'Overdue Fine(KSH)',//逾期罚金(元)
-            dataIndex: 'penaltyAmout'
-        },{
-            title: 'Days Overdue',//逾期天数
-            dataIndex: "penaltyDay"
+            title: 'Overdue Fine',//逾期罚金
+            dataIndex: 'overdueFee'
         }, {
-            title: 'Repayment Amount(KSH)',//应还款金额(元)
-            dataIndex: 'repayAmount'
+            title: 'Actual Amount Received(KSh)',//实际到账金额
+            dataIndex: 'actualBalance'
         }, {
-            title: 'Total Amount Of Repayment(KSH)',//应还款总额(元)
+            title: 'Total Amount Of Repayment(KSh)',//应还款总额
             dataIndex: 'repayTotal'
         }, {
             title: 'Repayment Date',//应还款日期
-            dataIndex: 'repayTime'
+            dataIndex: 'shouldbackTime'
         }, {
+            title: 'Actual Repayment Amount',//实际还款金额(新增)
+            dataIndex: 'actualbackAmt'
+        },{
             title: 'Repayment Status',//还款状态
-            dataIndex: "state",
+            dataIndex: "status",
             render: (text, record)=>{
-                if(record.state==10){
+                if(record.status==6){
                     return "Repaid"//已还款
-                }else if(record.state==20){
+                }else if(record.status==5){
                     return "Unpaid"//未还款
-                }else{
-                    return "-"
-                }
+                }else if(record.status==21){
+                    return "Overdue"//已逾期
+                }else if(record.status==22){
+                    return "Terms for late"//逾期还款
+                }else if(record.status==51){
+                     return "Bad debts"//坏账
             }
-        }]
+            }
+            }]
 
         var state = this.state;
         return (
             <div className="block-panel">
-                <div className="actionBtns" style={{ marginBottom: 16 }}>
-                    <button onClick={me.addModal.bind(me,'Batch')} className="ant-btn"> 
-                        {/*批量还款*/}Batch Repayment
-                    </button>
-                    <button onClick={me.download.bind(me,'Download')} className="ant-btn"> 
-                    Download Template
-                    </button>
-                </div>
                 <Table columns={columns} rowKey={this.rowKey} ref="table" 
                        onRowClick={this.onRowClick}
                        dataSource={this.state.data}

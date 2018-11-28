@@ -58,7 +58,7 @@ export default React.createClass({
                 if (result.data) {
                     for (var i = 0; i < result.data.length; i++) {
                         result.data[i].accountManage=result.data[i].accountManage/100;
-                        result.data[i].balance=(result.data[i].balance*100/1000000).toFixed(2);
+                        result.data[i].balance=(result.data[i].balance*10000/1000000).toFixed(2);
                         result.data[i].cuoheFee=result.data[i].cuoheFee/100;
                         result.data[i].fee=result.data[i].fee/100;
                         result.data[i].profit=result.data[i].profit/100;
@@ -376,23 +376,23 @@ export default React.createClass({
             render(text, record) {
                 if (record.status == '2') {
                     return (
-                        <p>需要审核</p>
+                        <p>Pending</p>
                     )
                 } else if(record.status == '3') {
                     return (
-                        <p>通过审核</p>
-                    )
-                } else if(record.status == '32') {
-                    return (
-                        <p>15天后可再次申请</p>
+                        <p>Approved</p>
                     )
                 } else if(record.status == '33') {
                     return (
-                        <p>可立即再次申请</p>
+                        <p>Rejected & Reapply Immediately</p>
+                    )
+                } else if(record.status == '32') {
+                    return (
+                        <p>Rejected & Reapply In 15 Days</p>
                     )
                 } else if(record.status == '34') {
                     return (
-                        <p>加入黑名单</p>
+                        <p>Rejected & Blacklist</p>
                     )
                 }
             }

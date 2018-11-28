@@ -60,8 +60,11 @@ export default React.createClass({
                 pagination.current = params.current;
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
-                if (result.data[0]) {
-                    result.data[0].balance = result.data[0].balance / 100;
+                if(result.data){
+
+                    for(let i = 0 ; i < result.data.length;i++){
+                        result.data[i].balance = result.data[i].balance / 100;
+                    }
                 }
                 if (!pagination.current) {
                     pagination.current = 1
@@ -217,7 +220,42 @@ export default React.createClass({
             }
         }, {
             title: 'status',
-            dataIndex: 'status'
+            dataIndex: 'status',
+            render: (text, record) => {
+                if (text == 1) {
+                    return "In the application, pending risk control review"//申请中,待风控审核
+                } else if (text == 2) {
+                    return "Wind control audit passed, pending review"//风控审核通过,待复审
+                } else if (text == 3) {
+                    return "Review and approval, pending payment"//复审通过,待放款
+                } else if (text == 4) {
+                    return "In the lending"//放款中
+                } else if (text == 5) {
+                    return "Loaned, pending payment"//已放款,待还款
+                } else if (text == 6) {
+                    return "Normal reimbursement"//正常还款
+                } else if (text == 21) {
+                    return "Overdue"//已逾期
+                } else if (text == 22) {
+                    return "Terms for late"//逾期还款
+                } else if (text == 31) {
+                    return "Risk control audit did not pass"//风控审核不通过
+                } else if (text == 32) {
+                    return "Review not approved,Reapply In 15 Days"//复审不通过,15天后可申请
+                } else if (text == 33) {
+                    return "Review not approved,Reapply Immediately"//复审不通过，可立即申请
+                } else if (text == 34) {
+                    return "Review not approved,Blacklist"//复审不通过，并加入黑名单
+                } else if (text == 41) {
+                    return "Loan failure"//放款失败
+                } else if (text == 42) {
+                    return "Lending was rejected"//放款被拒
+                } else if (text == 51) {
+                    return "Bad debt"//坏账
+                } else {
+                    return " "
+                }
+            }
         }, {
             title: 'operation',
             dataIndex: "",

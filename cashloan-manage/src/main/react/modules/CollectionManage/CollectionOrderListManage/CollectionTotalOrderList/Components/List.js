@@ -203,7 +203,7 @@ export default React.createClass({
       title: '手机号码',
       dataIndex: "phone",
     }, {
-      title: '金额',
+      title: '贷款金额',
       dataIndex: 'amount'
     }, {
       title: '借款时间',
@@ -211,6 +211,9 @@ export default React.createClass({
     }, {
       title: '预计还款时间',
       dataIndex: 'repayTime',
+    }, {
+      title: '贷款期限',
+      dataIndex: "timeLimit",
     }, {
       title: '逾期天数',
       dataIndex: "penaltyDay",

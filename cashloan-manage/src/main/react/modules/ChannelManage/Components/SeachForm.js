@@ -37,20 +37,20 @@ let SeachForm = React.createClass({
         } = this.props.form;
         return (
             <Form inline>
-                <FormItem label="渠道编码:">
-                    <Input type="text" placeholder='请输入渠道编码' {...getFieldProps('code') } />
+                <FormItem label="Channel code:">
+                    <Input type="text" placeholder='Please enter the Channel code' {...getFieldProps('code') } />
                 </FormItem>
-                <FormItem label="联系人姓名:">
-                    <Input type="text" placeholder='请输入联系人姓名' {...getFieldProps('linker') } />
+                <FormItem label="Channel supplier:">
+                    <Input type="text" placeholder='Please enter the Channel supplier' {...getFieldProps('linker') } />
                 </FormItem>
-                <FormItem label="渠道名称:">
-                    <Input type="text" placeholder='请输入渠道名称' {...getFieldProps('name') } />
+                <FormItem label="Channel Name:">
+                    <Input type="text" placeholder='Please enter the Channel Name' {...getFieldProps('name') } />
                 </FormItem>
-                <FormItem label="联系方式:">
-                    <Input type="text" placeholder='请输入联系方式'{...getFieldProps('phone') } />
+                <FormItem label="Phone:">
+                    <Input type="text" placeholder='Please enter the Phone'{...getFieldProps('phone') } />
                 </FormItem>
-                <FormItem><Button type="primary" onClick={this.handleQuery}>查询</Button></FormItem>
-                <FormItem><Button type="reset" onClick={this.handleReset}>重置</Button></FormItem>
+                <FormItem><Button type="primary" onClick={this.handleQuery}>Search</Button></FormItem>
+                <FormItem><Button type="reset" onClick={this.handleReset}>Reset</Button></FormItem>
             </Form>
         );
     }
