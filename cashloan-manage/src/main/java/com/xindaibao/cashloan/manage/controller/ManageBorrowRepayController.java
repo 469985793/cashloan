@@ -3,6 +3,7 @@ package com.xindaibao.cashloan.manage.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -217,7 +218,8 @@ public class ManageBorrowRepayController extends ManageBaseController {
 			param.put("repayTime",DateUtil.valueOf(repayTime, DateUtil.DATEFORMAT_STR_001));
 			param.put("repayWay", repayWay);
 			param.put("repayAccount", repayAccount);
-			param.put("actualbackAmt", actualbackAmt);
+			BigDecimal actualbackAmtBD =new BigDecimal(actualbackAmt).multiply(new BigDecimal(100));
+			param.put("actualbackAmt",String.valueOf(actualbackAmtBD));
 			param.put("serialNumber", serialNumber);
 			param.put("penaltyAmout", penaltyAmout);
 			param.put("state", state);
