@@ -603,8 +603,8 @@
     update k_loan_record
     <set>
       status = #{state,jdbcType=VARCHAR} ,
-      <if test="amount !=null">
-        actualback_amt = #{amount,jdbcType=DECIMAL} ,
+      <if test="actualbackAmt !=null">
+        actualback_amt = #{actualbackAmt,jdbcType=DECIMAL} ,
       </if>
       <if test="repayAccount !=null">
         bank_card_no = #{repayAccount,jdbcType=DECIMAL} ,

@@ -238,11 +238,10 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 		
 		if (BorrowRepayModel.NORMAL_REPAYMENT.equals(state)) {
 			state = BorrowModel.STATE_FINISH;
-			param.put("amount", StringUtil.isNull(lr.getBalance()+lr.getOverdueFee()+percent));
 			param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
 		} else if (BorrowRepayModel.OVERDUE_RELIEF.equals(state)) {
 			state = BorrowModel.STATE_DELAY_REMISSION_FINISH;
-			double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("amount")));
+			double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("actualbackAmt")));
 			double penaltyAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("penaltyAmout")));
 			if (lr.getBalance() < repayAmount) {
 				throw new BussinessException("还款金额不能大于应还金额");
@@ -252,7 +251,6 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 			}
 		}else if(BorrowRepayModel.OVERDUE_REPAYMENT.equals(state)){
 			state = BorrowModel.STATE_DELAY_FINISH;
-			param.put("amount", StringUtil.isNull(lr.getBalance()+lr.getOverdueFee()+percent));
 			param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
 		}
 //		else if (BorrowRepayModel.RENEW_APPLY_REPAYMENT.equals(state)) { // 续期申请-原订单还款
@@ -467,7 +465,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 			log.setBorrowId(lr.getId());
 			log.setRepayId(lr.getId());
 			log.setUserId(lr.getUid());
-			log.setAmount(Double.valueOf((String) param.get("amount")));// 实际还款金额
+			log.setAmount(Double.valueOf((String) param.get("actualbackAmt")));// 实际还款金额
 			log.setRepayTime(repayTime);// 实际还款时间
 			if(day < 0) {
 				log.setPenaltyDay(String.valueOf(Math.abs(day)));

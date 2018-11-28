@@ -353,6 +353,9 @@
               <if test="actualBalance != null and state != '' ">
                   actual_balance = #{actualBalance,jdbcType=VARCHAR},
             </if>
+              <if test="auditUserReson != null and state != '' ">
+                  audit_user_reson = #{auditUserReson,jdbcType=VARCHAR},
+              </if>
               <if test="shouldbackTime != null and state != '' ">
                   shouldback_time = #{shouldbackTime,jdbcType=TIMESTAMP},
             </if>

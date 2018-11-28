@@ -201,7 +201,7 @@ public class ManageBorrowRepayController extends ManageBaseController {
 	@RequiresPermission(code = "modules:manage:borrow:repay:confirmRepay", name = "确认还款")
 	public void confirmRepay(
 			@RequestParam(value = "id") Long id,
-			@RequestParam(value = "amount", required = false) String amount,
+			@RequestParam(value = "actualbackAmt") String actualbackAmt,
 			@RequestParam(value = "penaltyAmout", required = false) String penaltyAmout,
 			@RequestParam(value = "repayTime") String repayTime,
 			@RequestParam(value = "repayWay") String repayWay,
@@ -217,7 +217,7 @@ public class ManageBorrowRepayController extends ManageBaseController {
 			param.put("repayTime",DateUtil.valueOf(repayTime, DateUtil.DATEFORMAT_STR_001));
 			param.put("repayWay", repayWay);
 			param.put("repayAccount", repayAccount);
-			param.put("amount", amount);
+			param.put("actualbackAmt", actualbackAmt);
 			param.put("serialNumber", serialNumber);
 			param.put("penaltyAmout", penaltyAmout);
 			param.put("state", state);

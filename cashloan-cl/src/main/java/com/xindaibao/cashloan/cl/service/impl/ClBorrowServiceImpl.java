@@ -1351,6 +1351,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 			Map<String,Object> map = new HashMap<>();
 			map.put("id", loanRecord.getIndentNo());
 			map.put("state", state);
+			map.put("auditUserReson",remark);
 			if(state.equals(BorrowModel.STATE_REPAYING)) {
 				map.put("arriveTime", new Date());
 				map.put("actualBalance", (loanRecord.getBalance() - loanRecord.getFee()));
