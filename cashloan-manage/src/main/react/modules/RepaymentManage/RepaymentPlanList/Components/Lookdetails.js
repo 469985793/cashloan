@@ -120,6 +120,7 @@ var Lookdetails = React.createClass({
                               repayTime: DateFormat.formatDate(values.repayTimes),
                               repayAccount: values.repayAccount,
                               repayWay: values.repayWay,
+                              actualbackAmt:values.actualbackAmt,
                               serialNumber: values.serialNumber,
                               amount: me.state.value == 1 ? me.props.record.balance : values.amount,
                               penaltyAmout: me.state.value == 1 ? me.props.record.overdueFee : values.penaltyAmout1,
@@ -212,6 +213,13 @@ var Lookdetails = React.createClass({
           </FormItem>
           </Col>
           </Row>
+          <Row>
+          <Col span="24">
+          <FormItem {...formItemLayout} label="Actual amount of repayment:">{/*实际还款金额*/}
+          <Input type="text" placeholder="Please enter the actual amount of repayment" {...getFieldProps('actualbackAmt', { rules: [{ required: true, message: "Too much input or not lost", max: 50 }] }) } />{/*请输入实际还款金额    输入过多或者未输*/}
+  </FormItem>
+      </Col>
+      </Row>
           <Row>
           <Col span="24">
           <FormItem {...formItemLayout} label="Serial Number:">{/*流水号*/}
