@@ -87,20 +87,10 @@ public class UrgeRepayOrderServiceImpl extends BaseServiceImpl<UrgeRepayOrder, L
 
 
 	@Override
-	public Page<UrgeRepayOrder> list(Map<String, Object> params, int current,
+	public Page<UrgeRepayOrder> listItem(Map<String, Object> params, int current,
 			int pageSize) {
 		PageHelper.startPage(current, pageSize);
-		List<UrgeRepayOrder> list = urgeRepayOrderMapper.listSelective(params);
-			for (int i=0;i<list.size();i++){
-				Long OrderNo=Long.parseLong(list.get(i).getOrderNo());
-				String indenNo;
-				if(loanRecordMapper.findByPrimary(OrderNo)==null){
-					indenNo=" ";
-				}else {
-					indenNo=loanRecordMapper.findByPrimary(OrderNo).getIndentNo();
-				}
-				list.get(i).setOrderNo(indenNo);
-			}
+		List<UrgeRepayOrder> list = urgeRepayOrderMapper.listItem(params);
 		return (Page<UrgeRepayOrder>)list;
 	}
 	

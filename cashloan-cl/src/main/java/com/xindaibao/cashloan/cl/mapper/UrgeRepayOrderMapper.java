@@ -26,6 +26,8 @@ public interface UrgeRepayOrderMapper extends BaseMapper<UrgeRepayOrder,Long> {
 
 	List<UrgeRepayOrder> listSelective(Map<String, Object> paramMap);
 
+    List<UrgeRepayOrder> listItem(Map<String, Object> paramMap);
+
 	List<UrgeRepayOrderModel> listModel(Map<String, Object> params);
 
 	List<UrgeRepayOrder> listAll(Map<String, Object> params);

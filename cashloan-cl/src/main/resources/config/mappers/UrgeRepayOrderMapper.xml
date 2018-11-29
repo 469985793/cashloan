@@ -209,6 +209,39 @@
         <include refid="searchBy"/>  limit 0,1
     </select>
 
+    <select id="listItem" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        uro.borrow_name,lr.indent_no as order_no,uro.phone,uro.amount,uro.borrow_time,uro.repay_time,uro.time_limit,uro.penalty_day,uro.level,uro.penalty_amout,uro.user_name,uro.state
+        from cl_urge_repay_order uro
+        left join k_loan_record lr on uro.order_no=lr.id
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="borrowName !='' and borrowName !=null">
+                borrow_name  = #{borrowName,jdbcType=VARCHAR}
+            </if>
+            <if test="orderNo !='' and orderNo !=null">
+                and lr.indent_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+            <if test="phone !='' and phone !=null">
+                and phone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="state !='' and state !=null">
+                and state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="level !='' and level !=null">
+                and level = #{level,jdbcType=VARCHAR}
+            </if>
+            <!-- 添加未分配已分配查询,10已分配20未分配 -->
+            <if test="isDestribute != null and isDestribute != ''">
+                <if test="isDestribute =='10' ">
+                    and user_id is not null
+                </if>
+                <if test="isDestribute =='20' ">
+                    and user_id is null
+                </if>
+            </if>
+        </trim>
+    </select>
+
     <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
         <include refid="Base_Column_List" />

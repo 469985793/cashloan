@@ -29,7 +29,7 @@ public interface UrgeRepayOrderService extends BaseService<UrgeRepayOrder, Long>
 	 * @param pageSize
 	 * @return
 	 */
-	Page<UrgeRepayOrder> list(Map<String, Object> params, int current,
+	Page<UrgeRepayOrder> listItem(Map<String, Object> params, int current,
 			int pageSize);
 
 	/**
