@@ -22,6 +22,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const TabPane = Tabs.TabPane;
 var confirm = Modal.confirm;
+
 var Lookdetails = React.createClass({
   getInitialState() {
     return {
@@ -30,11 +31,17 @@ var Lookdetails = React.createClass({
       data: "",
       timeString: "",
       record: "",
+      firstValue: "3"
     };
   },
   handleCancel() {
     this.props.form.resetFields();
     this.props.hideModal();
+  },
+  handleChangeOption(v) {
+    this.setState({
+      firstValue: v
+    })
   },
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -57,7 +64,7 @@ var Lookdetails = React.createClass({
         onOk: function () {
           Utils.ajaxData({
             url: '/modules/manage/borrow/verifyBorrow.htm',
-            data: { borrowId: record.id, state: params.state,unstate:params.unstate, remark: params.remark },
+            data: { borrowId: record.id, state: params.state, unstate: params.unstate, remark: params.remark },
             callback: (result) => {
               if (result.code == 200) {
                 me.handleCancel();
@@ -135,32 +142,39 @@ var Lookdetails = React.createClass({
           </TabPane>
         </Tabs>
         <Form horizontal form={this.props.form}>
-          <Input  {...getFieldProps('id', { initialValue: '' }) } type="hidden" />
+          <Input  {...getFieldProps('id', { initialValue: '' })} type="hidden" />
           <Row>
             <Col span="24">
               <FormItem  {...formItemLayout} label="Audit Opinion:">
                 {props.title != " Recommended  Decision" ? (
-                  <Select  {...getFieldProps('state', { initialValue: "3" }) } disabled={!props.canEdit}>
+                  <Select  {...getFieldProps('state', { initialValue: "3" })} disabled={!props.canEdit} value={this.state.firstValue} onChange={this.handleChangeOption}>
                     <Option value="3"> Approved</Option>
                     <Option value="32">Rejected</Option>
-                  </Select>) : (<Input type="text" disabled={!props.canEdit} {...getFieldProps('stateStr') } />)}
+                  </Select>) : (<Input type="text" disabled={!props.canEdit} {...getFieldProps('stateStr')} />)}
               </FormItem>
             </Col>
           </Row>
           {<Row>
             <Col span="24">
-            <FormItem  {...formItemLayout} label="Audit Opinion:">
+              <FormItem  {...formItemLayout} label="Audit Opinion:">
                 {props.title != "Approval Result" ? (
-                  <Select {...getFieldProps('unstate', { initialValue: "3" }) } disabled={!props.canEdit} >
-                    <Option value="3">Approved</Option>
-                    <Option value="33">Rejected & Reapply Immediately</Option>
-                    <Option value="32">Rejected & Reapply In 15 Days</Option>
-                    <Option value="34">Rejected & Blacklist</Option>
-                  </Select>) : (<Input type="text" disabled={!props.canEdit} {...getFieldProps('unstateStr') } />)}
+                  this.state.firstValue == "3" ?
+                    <Select {...getFieldProps('unstate', { initialValue: "3" })} value="3" disabled={!props.canEdit} >
+                      <Option value="3">Approved</Option>
+                    </Select> :
+                    <Select {...getFieldProps('unstate', { initialValue: "33" })} disabled={!props.canEdit} >
+                      <Option value="33">Rejected & Reapply Immediately</Option>
+                      <Option value="32">Rejected & Reapply In 15 Days</Option>
+                      <Option value="34">Rejected & Blacklist</Option>
+                    </Select>
+                ) : (<Input type="text" disabled={!props.canEdit} {...getFieldProps('unstateStr')} />)}
               </FormItem>
+              {this.state.firstValue == "3"?'':
               <FormItem  {...formItemLayout} label="Remark:">
-                <Input disabled={!props.canEdit} type="textarea" placeholder="" rows={4} style={{ width: "500px", height: "40px" }}   {...getFieldProps('remark', { initialValue: '' }) } />
+                <Input disabled={!props.canEdit} type="textarea" placeholder="" rows={4} style={{ width: "500px", height: "40px" }}   {...getFieldProps('remark', { initialValue: '' })} />
+
               </FormItem>
+              }
             </Col>
           </Row>}
         </Form>
