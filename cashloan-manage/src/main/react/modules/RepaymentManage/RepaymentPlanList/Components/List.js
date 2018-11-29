@@ -259,7 +259,7 @@ export default React.createClass({
                 }else if(record.status==21){
                     return "Overdue"//已逾期
                 }else if(record.status==22){
-                    return "Terms for late"//逾期还款
+                    return "Overdue payment"//逾期还款
                 }else if(record.status==51){
                      return "Bad debts"//坏账
             }
