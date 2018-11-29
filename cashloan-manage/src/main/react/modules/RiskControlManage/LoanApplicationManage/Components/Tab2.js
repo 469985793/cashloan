@@ -12,7 +12,7 @@ var Tab2 = React.createClass({
     };
   },
   rowKey(record) {
-    return record.id;
+    return record.uid;
   },
   componentWillReceiveProps(nextProps){
     if(nextProps.activeKey == '3'){
@@ -25,7 +25,7 @@ var Tab2 = React.createClass({
   handleTableChange(pagination, filters, sorter) {
     const pager = this.state.pagination;
     pager.current = pagination.current;
-    pager.userId = this.props.record.userId,
+    pager.userId = this.props.record.uid,
     this.setState({
       pagination: pager,
     });
@@ -47,17 +47,9 @@ var Tab2 = React.createClass({
       url: '/modules/manage/msg/listContacts.htm',
       data: params,
       callback: (result) => {
-        const pagination = this.state.pagination;
-        pagination.current = params.current;
-        pagination.pageSize = params.pageSize;
-        pagination.total = result.page.total;
-        if (!pagination.current) {
-          pagination.current = 1
-        };
         this.setState({
           loading: false,
-          data: result.data.list,
-          pagination
+          data: result.data.list
         });
       }
     });

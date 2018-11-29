@@ -56,24 +56,44 @@ var Tab5 = React.createClass({
   },
   render() {
     var columns = [{
-      title: 'SMS Content',
-      dataIndex: "smsContent",
-    }/*, {
-      title: '对方号码',
+      title: 'date',
+      dataIndex: "date",
+      width: 30
+    }, {
+      title: 'phone number',
       dataIndex: "phone",
+      width: 30
     }, {
-      title: '收发时间',
-      dataIndex: "time",
-    }, {
-      title: '收发类型',
-      dataIndex: "type",
-    }*/];
+      title: 'name',
+      dataIndex: "name",
+      width: 20
+    },{
+      title: 'type',
+      width: 20,
+      render(text, record) {
+        if (record.type == '1') {
+            return (
+                <p>receive</p>
+            )
+        } else if(record.status == '2') {
+            return (
+                <p>send</p>
+            )
+        }
+    }
+    },{
+      title: 'sms content',
+      dataIndex: "smsContent",
+      width: 150
+    }];
     return (<div className="block-panel">
               <Table columns={columns} rowKey={this.rowKey}  
               dataSource={this.state.data}
               pagination={this.state.pagination}
               loading={this.state.loading}
-              onChange={this.handleTableChange}  />
+              onChange={this.handleTableChange}
+
+              />
           </div>
     );
   }

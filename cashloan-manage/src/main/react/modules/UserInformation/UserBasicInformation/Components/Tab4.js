@@ -44,7 +44,7 @@ var Tab4 = React.createClass({
       }
     }
     Utils.ajaxData({
-      url: '/modules/manage/msg/tdListRecords.htm',
+      url: '/modules/manage/msg/listRecords.htm',
       data: params,
       callback: (result) => {
         const pagination = this.state.pagination;
@@ -65,32 +65,34 @@ var Tab4 = React.createClass({
   render() {
     var columns = [{
         title: '用户号码',
-        dataIndex: "userMobile",
+        dataIndex: "date",
     }, {
         title: '对方号码',
-        dataIndex: "callOtherNumber",
+        dataIndex: "duration",
     }, {
         title: '通话时间',
-        dataIndex: "callStartTime",
+        dataIndex: "formatted_number",
     }, {
         title: '通话时长(秒)',
-        dataIndex: "callTime",
+        dataIndex: "location",
     }, {
         title: '通话地',
-        dataIndex: "callAddress",
+        dataIndex: "matched_number",
     }, {
         title: '通话状态',
-        dataIndex: "callLandType",
+        dataIndex: "name",
     }, {
         title: '通话类型',
-        dataIndex: "callTypeName",
+        dataIndex: "type",
     }];
     return (<div className="block-panel">
               <Table columns={columns} rowKey={this.rowKey}  
               dataSource={this.state.data}
               pagination={this.state.pagination}
               loading={this.state.loading}
-              onChange={this.handleTableChange}  />
+              onChange={this.handleTableChange}
+
+              />
           </div>
     );
   }

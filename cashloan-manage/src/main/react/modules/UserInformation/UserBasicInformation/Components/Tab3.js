@@ -56,9 +56,27 @@ var Tab3 = React.createClass({
   },
   render() {
     var columns = [{
-        title: '对方号码',
-        dataIndex: "callRecords",
-    }];
+      title: 'date',
+      dataIndex: "date",
+  }, {
+      title: 'duration',
+      dataIndex: "duration",
+  }, {
+      title: 'matched number',
+      dataIndex: "matched_number",
+  }, {
+      title: 'location',
+      dataIndex: "location",
+  }, {
+      title: 'formatted number',
+      dataIndex: "formatted_number",
+  }, {
+      title: 'name',
+      dataIndex: "name",
+  }, {
+      title: 'type',
+      dataIndex: "type",
+  }];
     return (<div className="block-panel">
               <Table columns={columns} rowKey={this.rowKey}  
               dataSource={this.state.data}

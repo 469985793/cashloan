@@ -12,7 +12,7 @@ var Tab5 = React.createClass({
     };
   },
   rowKey(record) {
-    return record.id;
+    return record.uid;
   },
   componentWillReceiveProps(nextProps){
     if(nextProps.activeKey == '6'){
@@ -25,7 +25,7 @@ var Tab5 = React.createClass({
   handleTableChange(pagination, filters, sorter) {
     const pager = this.state.pagination;
     pager.current = pagination.current;
-    pager.userId = this.props.record.userId,
+    pager.userId = this.props.record.uid,
     this.setState({
       pagination: pager,
     });
@@ -40,41 +40,51 @@ var Tab5 = React.createClass({
       params = {
         pageSize: 5,
         current: 1,
-        userId: this.props.record.userId,
+        userId: this.props.record.uid,
       }
     }
     Utils.ajaxData({
       url: '/modules/manage/msg/listMessages.htm',
       data: params,
       callback: (result) => {
-        const pagination = this.state.pagination;
-        pagination.current = params.current;
-        pagination.pageSize = params.pageSize;
-        pagination.total = result.page.total;
-        if (!pagination.current) {
-          pagination.current = 1
-        };
         this.setState({
           loading: false,
           data: result.data.list,
-          pagination
         });
       }
     });
   },
   render() {
     var columns = [{
-      title: '对方姓名',
-      dataIndex: "name",
+      title: 'date',
+      dataIndex: "date",
+      width: 30
     }, {
-      title: '对方号码',
+      title: 'phone number',
       dataIndex: "phone",
+      width: 30
     }, {
-      title: '收发时间',
-      dataIndex: "time",
-    }, {
-      title: '收发类型',
-      dataIndex: "type",
+      title: 'name',
+      dataIndex: "name",
+      width: 20
+    },{
+      title: 'type',
+      width: 20,
+      render(text, record) {
+        if (record.type == '1') {
+            return (
+                <p>receive</p>
+            )
+        } else if(record.status == '2') {
+            return (
+                <p>send</p>
+            )
+        }
+    }
+    },{
+      title: 'sms content',
+      dataIndex: "smsContent",
+      width: 150
     }];
     return (<div className="block-panel">
               <Table columns={columns} rowKey={this.rowKey}  

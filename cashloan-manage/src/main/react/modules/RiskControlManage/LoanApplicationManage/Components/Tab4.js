@@ -12,7 +12,7 @@ var Tab4 = React.createClass({
     };
   },
   rowKey(record) {
-    return record.id;
+    return record.uid;
   },
   componentWillReceiveProps(nextProps){
     if(nextProps.activeKey == '5'){
@@ -25,7 +25,7 @@ var Tab4 = React.createClass({
   handleTableChange(pagination, filters, sorter) {
     const pager = this.state.pagination;
     pager.current = pagination.current;
-    pager.userId = this.props.record.userId,
+    pager.userId = this.props.record.uid,
     this.setState({
       pagination: pager,
     });
@@ -40,11 +40,11 @@ var Tab4 = React.createClass({
       params = {
         pageSize: 5,
         current: 1,
-        userId: this.props.record.userId,
+        userId: this.props.record.uid,
       }
     }
     Utils.ajaxData({
-      url: '/modules/manage/msg/tdListRecords.htm',
+      url: '/modules/manage/msg/listRecords.htm',
       data: params,
       callback: (result) => {
         const pagination = this.state.pagination;

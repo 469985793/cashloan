@@ -12,7 +12,7 @@ var Tab3 = React.createClass({
     };
   },
   rowKey(record) {
-    return record.id;
+    return record.uid;
   },
   componentWillReceiveProps(nextProps){
     if(nextProps.activeKey == '4'){
@@ -25,7 +25,7 @@ var Tab3 = React.createClass({
   handleTableChange(pagination, filters, sorter) {
     const pager = this.state.pagination;
     pager.current = pagination.current;
-    pager.userId = this.props.record.userId,
+    pager.userId = this.props.record.uid,
     this.setState({
       pagination: pager,
     });
@@ -40,51 +40,43 @@ var Tab3 = React.createClass({
       params = {
         pageSize: 5,
         current: 1,
-        userId: this.props.record.userId,
+        userId: this.props.record.uid,
       }
     }
     Utils.ajaxData({
-      url: '/modules/manage/msg/tdListRecords.htm',
+      url: '/modules/manage/msg/listRecords.htm',
       data: params,
       callback: (result) => {
-        const pagination = this.state.pagination;
-        pagination.current = params.current;
-        pagination.pageSize = params.pageSize;
-        pagination.total = result.page.total;
-        if (!pagination.current) {
-          pagination.current = 1
-        };
         this.setState({
           loading: false,
           data: result.data.list,
-          pagination
         });
       }
     });
   },
   render() {
     var columns = [{
-        title: '用户号码',
-        dataIndex: "userMobile",
-    }, {
-        title: '对方号码',
-        dataIndex: "callOtherNumber",
-    }, {
-        title: '通话时间',
-        dataIndex: "callStartTime",
-    }, {
-        title: '通话时长(秒)',
-        dataIndex: "callTime",
-    }, {
-        title: '通话地',
-        dataIndex: "callAddress",
-    }, {
-        title: '通话状态',
-        dataIndex: "callLandType",
-    }, {
-        title: '通话类型',
-        dataIndex: "callTypeName",
-    }];
+      title: 'date',
+      dataIndex: "date",
+  }, {
+      title: 'duration',
+      dataIndex: "duration",
+  }, {
+      title: 'matched number',
+      dataIndex: "matched_number",
+  }, {
+      title: 'location',
+      dataIndex: "location",
+  }, {
+      title: 'formatted number',
+      dataIndex: "formatted_number",
+  }, {
+      title: 'name',
+      dataIndex: "name",
+  }, {
+      title: 'type',
+      dataIndex: "type",
+  }];
     return (<div className="block-panel">
               <Table columns={columns} rowKey={this.rowKey}  
               dataSource={this.state.data}
