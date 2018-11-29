@@ -239,19 +239,36 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 		if (BorrowRepayModel.NORMAL_REPAYMENT.equals(state)) {
 			state = BorrowModel.STATE_FINISH;
 			param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
+            double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("actualbackAmt")));
+            double penaltyAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("penaltyAmout")));
+            if (lr.getBalance() > repayAmount) {
+                throw new BussinessException("还款金额不能小于应还金额");
+            }
+            if (lr.getOverdueFee() > penaltyAmount) {
+                throw new BussinessException("逾期罚金不能小于原逾期罚金");
+            }
 		} else if (BorrowRepayModel.OVERDUE_RELIEF.equals(state)) {
 			state = BorrowModel.STATE_DELAY_REMISSION_FINISH;
+            param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
 			double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("actualbackAmt")));
 			double penaltyAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("penaltyAmout")));
-			if (lr.getBalance() < repayAmount) {
-				throw new BussinessException("还款金额不能大于应还金额");
+			if (lr.getBalance() > repayAmount) {
+				throw new BussinessException("还款金额不能小于应还金额");
 			}
-			if (lr.getOverdueFee() < penaltyAmount) {
-				throw new BussinessException("逾期罚金不能大于原逾期罚金");
+			if (lr.getOverdueFee() > penaltyAmount) {
+				throw new BussinessException("逾期罚金不能小于原逾期罚金");
 			}
 		}else if(BorrowRepayModel.OVERDUE_REPAYMENT.equals(state)){
 			state = BorrowModel.STATE_DELAY_FINISH;
 			param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
+            double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("actualbackAmt")));
+            double penaltyAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("penaltyAmout")));
+            if (lr.getBalance() > repayAmount) {
+                throw new BussinessException("还款金额不能小于应还金额");
+            }
+            if (lr.getOverdueFee() > penaltyAmount) {
+                throw new BussinessException("逾期罚金不能小于原逾期罚金");
+            }
 		}
 //		else if (BorrowRepayModel.RENEW_APPLY_REPAYMENT.equals(state)) { // 续期申请-原订单还款
 //			isReBorrow = false;

@@ -89,7 +89,8 @@ public class QuartzLate implements Job{
 							br.setId(list.get(i).getId());
 							br.setStatus((byte)21);//修改状态为逾期
 							br.setOverdueFee(Long.valueOf(new Double(overdueFee+1000l).longValue()));
-							br.setOverduePercent((int)percent*100);
+							Integer per=(int)penaltyFee(percent,100.00,0);
+							br.setOverduePercent(per);
 							br.setUpdatedTime(new Date());
 							logger.info("id--" + list.get(i).getId() + " ==> 已经逾期 " + Math.abs(day) + " 天,逾期费用 " + amout + "元");
 							int msg  = borrowRepayService.updateLate(br);

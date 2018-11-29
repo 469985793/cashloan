@@ -604,7 +604,7 @@
     <set>
       status = #{state,jdbcType=VARCHAR} ,
       <if test="actualbackAmt !=null">
-        actualback_amt = #{actualbackAmt,jdbcType=DECIMAL} ,
+        actualback_amt = #{actualbackAmt,jdbcType=DECIMAL},
       </if>
       <if test="repayAccount !=null">
         bank_card_no = #{repayAccount,jdbcType=DECIMAL} ,

@@ -85,7 +85,7 @@ public class ManageUrgeRepayOrderController extends ManageBaseController {
 				params.put("userId",sysUser.getId());	
 			}
 		} 
-		Page<UrgeRepayOrder> page =urgeRepayOrderService.list(params,current,pageSize);
+		Page<UrgeRepayOrderModel> page =urgeRepayOrderService.listModel(params,current,pageSize);
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put(Constant.RESPONSE_DATA, page);
 		result.put(Constant.RESPONSE_DATA_PAGE, new RdPage(page));

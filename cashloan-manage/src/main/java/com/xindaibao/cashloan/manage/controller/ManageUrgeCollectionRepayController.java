@@ -71,13 +71,13 @@ public class ManageUrgeCollectionRepayController extends ManageBaseController {
 		Map<String,Object> result = new HashMap<String,Object>();
 		Map<String, Object> params = JsonUtil.parse(searchParams, Map.class);
 		SysUser sysUser=getLoginUser(request);
-		Page<UrgeRepayOrder> page =new Page<UrgeRepayOrder>();
+		Page<UrgeRepayOrderModel> page =new Page<UrgeRepayOrderModel>();
 		if(sysUser!=null){
 			if(params==null){
 				params=new HashMap<String, Object>();
 			}
 			params.put("userId",sysUser.getId());
-		    page =urgeRepayOrderService.list(params,current,pageSize);
+		    page =urgeRepayOrderService.listModel(params,current,pageSize);
 			result.put(Constant.RESPONSE_DATA, page);
 			result.put(Constant.RESPONSE_DATA_PAGE, new RdPage(page));
 			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
