@@ -215,8 +215,11 @@
         from cl_urge_repay_order uro
         left join k_loan_record lr on uro.order_no=lr.id
         <trim prefix="where" prefixOverrides="and|or">
+            <if test="userId !='' and userId !=null">
+                user_id  = #{userId,jdbcType=VARCHAR}
+            </if>
             <if test="borrowName !='' and borrowName !=null">
-                borrow_name  = #{borrowName,jdbcType=VARCHAR}
+                and borrow_name  = #{borrowName,jdbcType=VARCHAR}
             </if>
             <if test="orderNo !='' and orderNo !=null">
                 and lr.indent_no = #{orderNo,jdbcType=VARCHAR}
