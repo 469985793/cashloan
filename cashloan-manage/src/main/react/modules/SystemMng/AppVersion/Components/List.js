@@ -19,7 +19,7 @@ export default React.createClass({
       },
       canEdit: true,
       visible: false,
-      condition: []
+      condition: [],
     };
   },
   componentWillReceiveProps(nextProps, nextState) {
@@ -70,6 +70,7 @@ export default React.createClass({
     this.refreshList();
   },
   componentDidMount() {
+
     this.fetch(this.props.params);
   },
   fetch(params = {}) {
@@ -169,34 +170,51 @@ export default React.createClass({
     };
     const hasSelected = selectedRowKeys.length > 0;
     var columns = [{
-      title: '用户姓名',
-      dataIndex: 'name'
+      title: 'app_code',
+      dataIndex: 'app_code'
+    }, {
+      title: 'app_type',
+      dataIndex: "app_type",
+    }, {
+      title: 'version_code',
+      dataIndex: 'version_code'
+    }, {
+      title: 'version_name',
+      dataIndex: "version_name"
+    }, {
+      title: 'force_flag',
+      dataIndex: 'force_flag'
+    }, {
+      title: 'down_url',
+      dataIndex: 'down_url'
     },{
-      title: '用户名',
-      dataIndex: "userName",
+      title: 'google_down_url',
+      dataIndex: "google_down_url"
     }, {
-      title: '访问码',
-      dataIndex: 'code'
+      title: 'spread_url',
+      dataIndex: "spread_url"
     }, {
-      title: '创建时间',
-      dataIndex: "createTime"
+      title: 'publish_uid',
+      dataIndex: "publish_uid"
     }, {
-      title: '过期时间',
-      dataIndex: 'exceedTime'
+      title: 'publish_time',
+      dataIndex: "publish_time"
     }, {
-      title: '状态',
-      dataIndex: "stateStr"
-    }, {
-      title: '操作',
-      dataIndex: "",
-      render(text, record) {
-        return (
-          <div style={{ textAlign: "left" }}>
-            {record.stateStr == "启用" ? <a href="#" onClick={me.changeStatus.bind(me, '禁用', record)}>禁用</a> : <a href="#" onClick={me.changeStatus.bind(me, '启用', record)}>启用</a>}
-          </div>
-        )
-      }
-    }];
+      title: 'status',
+      dataIndex: "status"
+    },
+    // {
+    //   title: '操作',
+    //   dataIndex: "",
+    //   render(text, record) {
+    //     return (
+    //       <div style={{ textAlign: "left" }}>
+    //         {record.stateStr == "启用" ? <a href="#" onClick={me.changeStatus.bind(me, '禁用', record)}>禁用</a> : <a href="#" onClick={me.changeStatus.bind(me, '启用', record)}>启用</a>}
+    //       </div>
+    //     )
+    //   }
+    // }
+  ];
     var state = this.state;
     return (
       <div className="block-panel">
@@ -205,9 +223,15 @@ export default React.createClass({
             新增
           </button>
         </div>
-        <Table columns={columns} rowKey={this.rowKey} size="middle" params={this.props.params}
-          dataSource={this.state.data} onRowClick={this.onRowClick}
-          pagination={this.state.pagination}
+        <Table 
+        columns={columns} 
+        rowKey={this.rowKey} 
+        size="middle" 
+        params={this.props.params}
+          dataSource={this.state.data} 
+          onRowClick={this.onRowClick}
+          // pagination={this.state.pagination}
+          pagination={false}
           loading={this.state.loading}
           onChange={this.handleTableChange} />
         <AddWin ref="AddWin" visible={state.visible} condition={state.condition} title={state.title} hideModal={me.hideModal} record={state.record}

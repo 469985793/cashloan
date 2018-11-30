@@ -55,6 +55,14 @@ var Tab1 = React.createClass({
         span: 19
       },
     };
+    const formItemLayout3 = {
+      labelCol: {
+        span: 14
+      },
+      wrapperCol: {
+        span: 9
+      },
+    };
     var aItem = [];
     if (props.recordSoure && props.recordSoure.workImgArr) {
       aItem = [];
@@ -311,7 +319,7 @@ var Tab1 = React.createClass({
                   </FormItem>
                 </Col>
                 <Col span="8">
-                  <FormItem {...formItemLayout} label="Live Time(YEAR,MONTH)：">
+                  <FormItem {...formItemLayout3} label="Live Time(YEAR,MONTH)：">
                     <Input {...getFieldProps('liveTime', { initialValue: '' }) } disabled={true} />
                   </FormItem>
                 </Col>

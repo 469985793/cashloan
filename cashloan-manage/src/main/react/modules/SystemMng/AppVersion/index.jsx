@@ -16,9 +16,9 @@ export default React.createClass({
   },
   render() {
     return <div>
-      <div className="block-panel">
+      {/* <div className="block-panel">
         <SeachForm passParams={this.passParams}/>
-      </div>
+      </div> */}
       <List params={this.state.params}/>
     </div>
   }
