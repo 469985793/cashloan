@@ -52,7 +52,7 @@ let SeachForm = React.createClass({
                         <Option value="6">Repaid</Option>{/*已还款*/}
                         <Option value="5">Unpaid</Option>{/*未还款*/}
                         <Option value="21">Overdue</Option>{/*逾期*/}
-                        <Option value="22">Terms for late</Option>{/*逾期还款*/}
+                        <Option value="22">Overdue payment</Option>{/*逾期还款*/}
                         <Option value="51">Bad debts</Option>{/*坏账*/}
                     </Select>
                 </FormItem>
