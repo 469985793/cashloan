@@ -31,12 +31,14 @@ var SystemConfig = require('../../SystemMng/SystemConfig/index');//系统配置
 var sysUserManage = require('../../SystemMng/UserMang/index');//用户管理
 var sysRoleManage = require('../../SystemMng/RoleMang/index');//角色管理
 var AccessCode = require('../../SystemMng/AccessCode/index');//访问码管理
+var AppVersion = require('../../SystemMng/AppVersion/index');//App版本管理
 var Druid = require('../../SystemMng/Druid/index');//Druid
 var sysMenuManage = require('../../SystemMng/MenuMang/index');//菜单管理
 var sysDicManage = require('../../SystemMng/DictionaryMang/index');//字典管理
 var SystemParameterSettings = require('../../SystemMng/SystemParameterSettings/index');//系统参数设置
 
 module.exports = {
+  AppVersion,
   RepaymentPlanList,
   RepaymentPlanOnlySearchList,
   PaymentHistory,

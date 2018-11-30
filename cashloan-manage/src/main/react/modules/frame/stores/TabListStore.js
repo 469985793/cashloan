@@ -25,7 +25,6 @@ export default Reflux.createStore({
 
 		if (!flag) { // 点击左侧菜单时，没有相应标签页
 			var Component = Workbench;
-
 			var routeNames1 = [
 					'CheckManagement',
 					'CheckManagementNoExport',
@@ -69,6 +68,7 @@ export default Reflux.createStore({
 				];
 
 			var routeNames2 = [
+					 'AppVersion',
 					'RepaymentPlanList',
 					'RepaymentPlanOnlySearchList',
 					'PaymentHistory',
