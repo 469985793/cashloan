@@ -85,40 +85,122 @@ var AddWin = React.createClass({
         return (
             <Modal title={props.title} visible={props.visible} onCancel={this.handleCancel} width="500" footer={modalBtns} >
                 <Form horizontal form={this.props.form}>
-                    <Input  {...getFieldProps('id', { initialValue: '' }) } type="hidden" />
+                    <Input  {...getFieldProps('id', { initialValue: '' })} type="hidden" />
+                    {/*app编号*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="访问码：">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('code', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10  }] }) } type="text" />
+                            <FormItem  {...formItemLayout} label="app_code：">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('app_name', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
+                    {/*app名称*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="绑定管理员：">
-                                <Select disabled={!props.canEdit}  {...getFieldProps('sysUserId', { rules: [{ required: true, message: '必填', type: 'number' }] }) }>
-                                    {optionItem}
+                            <FormItem  {...formItemLayout} label="app_name:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('app_name', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*app类型*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="app_type:">
+                                <Select disabled={!props.canEdit}  {...getFieldProps('app_type', { rules: [{ required: true, message: '必填' }] })} >
+                                    <Option value='10'>Android</Option>
+                                    <Option value='11'>Android Pad</Option>
+                                    <Option value='20'>IOS</Option>
+                                    <Option value='21'>IOS Pad</Option>
                                 </Select>
                             </FormItem>
                         </Col>
                     </Row>
+                    {/*版本号*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="有效时间：">
-                                <Select disabled={!props.canEdit}  {...getFieldProps('time', { rules: [{ required: true, message: '必填' }] }) } >
-                                    <Option value='01'>两小时</Option>
-                                    <Option value='02'>十二小时</Option>
-                                    <Option value='03'>一天</Option>
-                                    <Option value='04'>两天</Option>
-                                    <Option value='05'>七天</Option>
-                                    <Option value='06'>一个月</Option>
-                                    <Option value='07'>三个月</Option>
-                                    <Option value='08'>六个月</Option>
+                            <FormItem  {...formItemLayout} label="version_code:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('version_code', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*版本名称*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="version_name:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('version_name', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*是否强制变更*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="force_flag:">
+                                <Select disabled={!props.canEdit}  {...getFieldProps('force_flag', { rules: [{ required: true, message: '必填' }] })} >
+                                    <Option value='0'>不强制</Option>
+                                    <Option value='1'>强制</Option>
                                 </Select>
                             </FormItem>
                         </Col>
                     </Row>
-
+                    {/*APP下载地址*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="down_url:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('down_url', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*APP下载地址*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="google_down_url:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('google_down_url', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*Google play下载地址*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="google_down_url:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('google_down_url', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*推广主页*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="spread_url:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('spread_url', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*发布人id*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="publish_uid:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('publish_uid', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*发布时间*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="publish_time:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('publish_time', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*状态*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="status:">
+                                <Select disabled={!props.canEdit}  {...getFieldProps('force_flag', { rules: [{ required: true, message: '必填' }] })} >
+                                    <Option value='1'>正常</Option>
+                                    <Option value='-1'>删除</Option>
+                                </Select>
+                            </FormItem>
+                        </Col>
+                    </Row>
                 </Form>
             </Modal>
         );

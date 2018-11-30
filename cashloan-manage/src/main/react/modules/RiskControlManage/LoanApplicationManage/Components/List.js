@@ -101,9 +101,9 @@ export default React.createClass({
                         var dataForm = {};
                         dataForm.realName = result.data.userbase.firstName + ' ' + result.data.userbase.lastName;
                         if (result.data.userbase.gender == 1) {
-                            dataForm.sex = "Men";
+                            dataForm.sex = "Male";
                         } else {
-                            dataForm.sex = "Women";
+                            dataForm.sex = "Female";
                         }
                         dataForm.idNo = result.data.userbase.idNo;
                         dataForm.age = result.data.userbase.age;
