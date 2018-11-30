@@ -16,6 +16,7 @@ import Tab2 from './Tab2';
 import Tab3 from './Tab3';
 import Tab4 from './Tab4';
 import Tab5 from './Tab5';
+import Tab6 from './Tab6';
 
 const createForm = Form.create;
 const FormItem = Form.Item;
@@ -139,6 +140,9 @@ var Lookdetails = React.createClass({
           </TabPane>*/}
           <TabPane tab="短信记录" key="6">
             <Tab5 record={props.record} ref="Tab5" canEdit={props.canEdit} visible={props.visible} />
+          </TabPane>
+          <TabPane tab="借款记录" key="7">
+            <Tab6 record={props.record} ref="Tab6" canEdit={props.canEdit} visible={props.visible} />
           </TabPane>
         </Tabs>
         <Form horizontal form={this.props.form}>
