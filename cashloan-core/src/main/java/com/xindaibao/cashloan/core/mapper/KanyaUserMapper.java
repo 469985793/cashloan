@@ -26,4 +26,6 @@ public interface KanyaUserMapper extends BaseMapper<KanyaUser, Long> {
     KanyaUser findByMobile(String mobile);
     //添加黑名单
     void addBlackList(Long id);
+
+    void callAble();
 }

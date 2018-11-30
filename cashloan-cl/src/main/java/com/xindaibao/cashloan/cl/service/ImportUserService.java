@@ -26,5 +26,5 @@ public interface ImportUserService extends BaseService<KanyaUser, Long>{
 	 * @param mobile
 	 */
 	boolean saveUser(String firstName,String lastName,String nationId,String mobile);
-
+	void callAble();
 }

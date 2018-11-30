@@ -61,6 +61,13 @@ public class ImportUserServiceImpl extends BaseServiceImpl<KanyaUser, Long> impl
 	 * 导入用户
 	 */
 	@Override
+	public void callAble() {
+		kanyaUserMapper.callAble();
+	}
+	/**
+	 * 导入用户
+	 */
+	@Override
 	public boolean saveUser(String firstName,String lastName,String nationId,String mobile){
 		//密码MD5加密
 		//String password = MD5.md5Pwd(MD5.String2SHA256StrJava("1234"));
@@ -108,50 +115,6 @@ public class ImportUserServiceImpl extends BaseServiceImpl<KanyaUser, Long> impl
 		kanyaUserInfo.setCreatedTime(new Date());
 		kanyaUserInfo.setStatus((byte) 1);
 		kanyaUserInfoMapper.save(kanyaUserInfo);
-		//创建用户工作信息表
-		KanyaUserJob userJob=new KanyaUserJob();
-		userJob.setUid(uid);
-		userJob.setCreatedTime(new Date());
-		userJob.setStatus((byte) 1);
-		kanyaUserJobMapper.save(userJob);
-		//创建用户居住信息表
-		KanyaUserLive userLive=new KanyaUserLive();
-		userLive.setUid(uid);
-		userLive.setCreatedTime(new Date());
-		userLive.setStatus((byte) 1);
-		kanyaUserLiveMapper.save(userLive);
-		//创建用户联系人表
-		KanyaUserContactInfo userContactInfo=new KanyaUserContactInfo();
-		userContactInfo.setUid(uid);
-		userContactInfo.setCreatedTime(new Date());
-		userContactInfo.setStatus((byte) 1);
-		kanyaUserContactInfoMapper.save(userContactInfo);
-		//创建用户状态信息表
-		KanyaUserState userState=new KanyaUserState();
-		userState.setUid(uid);
-		userState.setStatus((byte) 1);
-		userState.setCreatedTime(new Date());
-		userState.setCurrentState((byte) 1);
-		kanyaUserStateMapper.save(userState);
-		//创建用户授权状态信息表
-		KanyaUserObtainState userObtainState=new KanyaUserObtainState();
-		userObtainState.setUid(uid);
-		userObtainState.setStatus((byte) 1);
-		userObtainState.setCreatedTime(new Date());
-		kanyaUserObtainStateMapper.save(userObtainState);
-		//创建用户额度表
-		KanyaUserCredit userCredit=new KanyaUserCredit();
-		userCredit.setUid(uid);
-		userCredit.setLimits(200000);
-		userCredit.setCreatedTime(new Date());
-		userCredit.setStatus((byte) 1);
-		kanyaUserCreditMapper.save(userCredit);
-		//创建用户积分表
-//		KanyaUserIntegral userIntegral=new KanyaUserIntegral();
-//		userIntegral.setUid(kanyaUser4.getId());
-//		userIntegral.setCreatedTime(new Date());
-//		userIntegral.setStatus((byte) 1);
-//		kanyaUserIntegralMapper.save(userIntegral);
 		return true;
 	}
 	

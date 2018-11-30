@@ -195,11 +195,11 @@ public class ManageUserController extends ManageBaseController{
 					 rows=rows+1;
 				 }
 			 }
-
 		 }
 		 	int importRows=rows;
 		 	int notImportRows=excleRows-importRows;
 		 	int test=notImportRows;
+			importUserService.callAble();
 	 }
 
 	/**

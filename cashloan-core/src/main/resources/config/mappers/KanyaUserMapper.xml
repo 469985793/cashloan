@@ -364,6 +364,10 @@
     where u.mobile= #{mobile,jdbcType=VARCHAR}
   </select>
 
+  <select id="callAble" statementType="CALLABLE" >
+    call importuser()
+  </select>
+
   <update id="addBlackList" parameterType="java.lang.Long">
     update k_user
     set
