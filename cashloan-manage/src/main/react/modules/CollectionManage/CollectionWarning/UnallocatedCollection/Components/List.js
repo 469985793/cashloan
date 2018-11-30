@@ -166,7 +166,7 @@ export default React.createClass({
       title: '手机号码',
       dataIndex: 'phone'
     },{
-      title: '借款金额(元)',
+      title: '借款金额',
       dataIndex: "amount"
     },{
       title: '借款时间',
