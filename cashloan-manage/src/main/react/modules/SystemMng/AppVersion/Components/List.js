@@ -85,20 +85,21 @@ export default React.createClass({
       }
     }
     Utils.ajaxData({
-      url: '/modules/manage/user/accessCode/list.htm',
+      url: '/modules/manage/user/appVersion/list.htm',
       data: params,
       method: 'post',
       callback: (result) => {
-        const pagination = this.state.pagination;
-        pagination.current = params.current;
-        pagination.total = result.page.total;
-        if (!pagination.current) {
-          pagination.current = 1
-        };
+        // console.log(result);
+        // const pagination = this.state.pagination;
+        // pagination.current = params.current;
+        // pagination.total = result.page.total;
+        // if (!pagination.current) {
+        //   pagination.current = 1
+        // };
         this.setState({
           loading: false,
-          data: result.data,
-          pagination,
+          data: [result.data],
+          // pagination,
         });
         this.clearList();
       }
@@ -118,40 +119,40 @@ export default React.createClass({
     //console.log("params",params)
     this.fetch(params);
   },
-  changeStatus(title, record) {
-    //console.log(record)
-    var me = this;
-    var url;
-    var data = {};
-    if (title == "禁用") {
-      data = {
-        id: record.id,
-      }
-      url = "/modules/manage/user/accessCode/disable.htm";
-    } else {
-      data = {
-        id: record.id,
-      }
-      url = "/modules/manage/user/accessCode/enable.htm";
-    }
-    confirm({
-      title: '是否确认',
-      onOk: function () {
-        Utils.ajaxData({
-          url: url,
-          data: data,
-          method: 'post',
-          callback: (result) => {
-            Modal.success({
-              title: result.msg,
-            });
-            me.refreshList();
-          }
-        });
-      },
-      onCancel: function () { }
-    });
-  },
+  // changeStatus(title, record) {
+  //   //console.log(record)
+  //   var me = this;
+  //   var url;
+  //   var data = {};
+  //   if (title == "禁用") {
+  //     data = {
+  //       id: record.id,
+  //     }
+  //     url = "/modules/manage/user/accessCode/disable.htm";
+  //   } else {
+  //     data = {
+  //       id: record.id,
+  //     }
+  //     url = "/modules/manage/user/accessCode/enable.htm";
+  //   }
+  //   confirm({
+  //     title: '是否确认',
+  //     onOk: function () {
+  //       Utils.ajaxData({
+  //         url: url,
+  //         data: data,
+  //         method: 'post',
+  //         callback: (result) => {
+  //           Modal.success({
+  //             title: result.msg,
+  //           });
+  //           me.refreshList();
+  //         }
+  //       });
+  //     },
+  //     onCancel: function () { }
+  //   });
+  // },
   onRowClick(record) {
     this.setState({
       selectedRowKeys: [record.id]
@@ -170,38 +171,48 @@ export default React.createClass({
     };
     const hasSelected = selectedRowKeys.length > 0;
     var columns = [{
-      title: 'app_code',
-      dataIndex: 'app_code'
+      title: 'App code',
+      dataIndex: 'appCode'
     }, {
-      title: 'app_type',
-      dataIndex: "app_type",
+      title: 'App type',
+      dataIndex: "appType",
     }, {
-      title: 'version_code',
-      dataIndex: 'version_code'
+      title: 'Version code',
+      dataIndex: 'versionCode'
     }, {
-      title: 'version_name',
-      dataIndex: "version_name"
+      title: 'Version name',
+      dataIndex: "versionName"
     }, {
-      title: 'force_flag',
-      dataIndex: 'force_flag'
+      title: 'Force flag',
+      dataIndex: 'forceFlag'
     }, {
-      title: 'down_url',
-      dataIndex: 'down_url'
+      title: 'Down url',
+      dataIndex: 'downUrl'
     },{
-      title: 'google_down_url',
-      dataIndex: "google_down_url"
+      title: 'Google down url',
+      dataIndex: "googleDownUrl"
     }, {
-      title: 'spread_url',
-      dataIndex: "spread_url"
+      title: 'Spread url',
+      dataIndex: "spreadUrl"
     }, {
-      title: 'publish_uid',
-      dataIndex: "publish_uid"
+      title: 'Publish uid',
+      dataIndex: "publishUid"
     }, {
-      title: 'publish_time',
-      dataIndex: "publish_time"
+      title: 'Publish time',
+      dataIndex: "publishTime"
     }, {
-      title: 'status',
-      dataIndex: "status"
+      title: 'Status',
+      dataIndex: "status",
+      render:(text,record)=>{
+          // console.log(text);
+          // console.log(record.status);        
+          if(record.status=='1'){
+            return '正常'
+          }
+          else if(record.status=='-1'){
+            return '删除'
+          }
+      }
     },
     // {
     //   title: '操作',

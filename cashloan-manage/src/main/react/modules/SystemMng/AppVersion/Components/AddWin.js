@@ -34,21 +34,36 @@ var AddWin = React.createClass({
         var record = props.record;
         var title = props.title;
         //console.log(record)
-        var url = "/modules/manage/user/accessCode/save.htm";
+        var url = "/modules/manage/user/appVersion/save.htm";
         this.props.form.validateFields((errors, values) => {
+                console.log(values);
             if (!!errors) {
+                // console.log(123);
                 //console.log('Errors in form!!!');
                 return;
             }
+            
+            
+        // console.log(123);
             Utils.ajaxData({
-                url: '/modules/manage/user/accessCode/save.htm',
+                url: '/modules/manage/user/appVersion/save.htm',
                 method: 'post',
                 data: {
-                    code: values.code,
-                    sysUserId: values.sysUserId,
-                    time: values.time
+                    appCode: values.appCode,
+                    appName: values.appName,
+                    appType: values.appType,
+                    versionCode:values.versionCode,
+                    versionName:values.versionName,
+                    versionText:values.versionText,
+                    forceFlag:values.forceFlag,
+                    downUrl:values.downUrl,
+                    googleDownUrl:values.googleDownUrl,
+                    spreadUrl:values.spreadUrl,
+                    publishUid:values.publishUid,
+                    status:values.status
                 },
                 callback: (result) => {
+                    console.log(result);
                     Modal.success({
                         title: result.msg,
                     });
@@ -89,24 +104,24 @@ var AddWin = React.createClass({
                     {/*app编号*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="app_code：">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('app_name', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="App code：">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('appCode', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*app名称*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="app_name:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('app_name', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="App name:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('appName', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*app类型*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="app_type:">
-                                <Select disabled={!props.canEdit}  {...getFieldProps('app_type', { rules: [{ required: true, message: '必填' }] })} >
+                            <FormItem  {...formItemLayout} label="App type:">
+                                <Select disabled={!props.canEdit}  {...getFieldProps('appType', { rules: [{ required: true, message: '必填' }] })} >
                                     <Option value='10'>Android</Option>
                                     <Option value='11'>Android Pad</Option>
                                     <Option value='20'>IOS</Option>
@@ -118,24 +133,24 @@ var AddWin = React.createClass({
                     {/*版本号*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="version_code:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('version_code', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="Version code:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionCode', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*版本名称*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="version_name:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('version_name', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="Version name:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionName', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*是否强制变更*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="force_flag:">
-                                <Select disabled={!props.canEdit}  {...getFieldProps('force_flag', { rules: [{ required: true, message: '必填' }] })} >
+                            <FormItem  {...formItemLayout} label="Force flag:">
+                                <Select disabled={!props.canEdit}  {...getFieldProps('forceFlag', { rules: [{ required: true, message: '必填' }] })} >
                                     <Option value='0'>不强制</Option>
                                     <Option value='1'>强制</Option>
                                 </Select>
@@ -145,56 +160,56 @@ var AddWin = React.createClass({
                     {/*APP下载地址*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="down_url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('down_url', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
-                            </FormItem>
-                        </Col>
-                    </Row>
-                    {/*APP下载地址*/}
-                    <Row>
-                        <Col span="24">
-                            <FormItem  {...formItemLayout} label="google_down_url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('google_down_url', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="Down url:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('downUrl', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*Google play下载地址*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="google_down_url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('google_down_url', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="Google down url:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('googleDownUrl', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*推广主页*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="spread_url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('spread_url', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="Spread url:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('spreadUrl', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*发布人id*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="publish_uid:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('publish_uid', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="Publish uid:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('publishUid', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*发布时间*/}
+                    {/* <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="Publish time:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('publishTime', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            </FormItem>
+                        </Col>
+                    </Row> */}
+                    {/*版本描述*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="publish_time:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('publish_time', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                            <FormItem  {...formItemLayout} label="Version text:">
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionText', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="textarea" />
                             </FormItem>
                         </Col>
                     </Row>
                     {/*状态*/}
                     <Row>
                         <Col span="24">
-                            <FormItem  {...formItemLayout} label="status:">
-                                <Select disabled={!props.canEdit}  {...getFieldProps('force_flag', { rules: [{ required: true, message: '必填' }] })} >
+                            <FormItem  {...formItemLayout} label="Status:">
+                                <Select disabled={!props.canEdit}  {...getFieldProps('status', { rules: [{ required: true, message: '必填' }] })} >
                                     <Option value='1'>正常</Option>
                                     <Option value='-1'>删除</Option>
                                 </Select>
