@@ -1,25 +1,17 @@
 package com.xindaibao.cashloan.manage.controller;
-
-import com.github.pagehelper.Page;
+import com.xindaibao.cashloan.cl.Util.DataUtil;
 import com.xindaibao.cashloan.core.common.context.Constant;
-import com.xindaibao.cashloan.core.common.util.JsonUtil;
-import com.xindaibao.cashloan.core.common.util.RdPage;
 import com.xindaibao.cashloan.core.common.util.ServletUtils;
 import com.xindaibao.cashloan.core.common.web.controller.BaseController;
-import com.xindaibao.cashloan.system.domain.SysAccessCode;
-import com.xindaibao.cashloan.system.domain.SysUser;
-import com.xindaibao.cashloan.system.model.SysAccessCodeModel;
-import com.xindaibao.cashloan.system.permission.annotation.RequiresPermission;
-import com.xindaibao.cashloan.system.service.SysAccessCodeService;
+import com.xindaibao.cashloan.system.domain.SysAppVersion;
+import com.xindaibao.cashloan.system.service.SysAppVersionService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,141 +30,70 @@ import java.util.Map;
 public class SysAppVersionController extends BaseController {
 
    @Resource
-   private SysAccessCodeService sysAccessCodeService;
-
+   private SysAppVersionService sysAppVersionService;
 
    /**
-    * 访问码信息列表
-    * @param searchParams
-    * @param current
-    * @param pageSize
+    * APP版本信息展示
     */
    @SuppressWarnings("unchecked")
    @RequestMapping(value="/modules/manage/user/appVersion/list.htm",method={RequestMethod.GET,RequestMethod.POST})
-   @RequiresPermission(code = "modules:manage:accessCode:list",name = "访问码信息列表")
-   public void list(@RequestParam(value="searchParams",required=false) String searchParams,
-           @RequestParam(value = "current") int current,
-           @RequestParam(value = "pageSize") int pageSize){
-       Map<String, Object> params = JsonUtil.parse(searchParams, Map.class);
-       Page<SysAccessCodeModel> page = sysAccessCodeService.listAccessCodeModel(params, current, pageSize);
+   public void list(){
+       SysAppVersion sysAppVersion  = sysAppVersionService.listSysAppVersion();
        Map<String,Object> result = new HashMap<String,Object>();
-       result.put(Constant.RESPONSE_DATA, page);
-       result.put(Constant.RESPONSE_DATA_PAGE, new RdPage(page));
+       result.put(Constant.RESPONSE_DATA, sysAppVersion);
        result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
        result.put(Constant.RESPONSE_CODE_MSG, "获取成功");
        ServletUtils.writeToResponse(response,result);
    }
 
    /**
-    * 新增访问码
-    * @param userName
-    * @param code
+    * 修改APP版本
     */
    @RequestMapping(value="/modules/manage/user/appVersion/save.htm",method={RequestMethod.GET,RequestMethod.POST})
-   @RequiresPermission(code = "modules:manage:accessCode:add",name = "新增访问码")
-   public void add(@RequestParam(value="sysUserId") long sysUserId,
-           @RequestParam(value="code") String code,
-           @RequestParam(value="time") String time){
+   public void add(SysAppVersion sysAppVersion){
        Map<String,Object> result = new HashMap<String,Object>();
-       int codeCount = sysAccessCodeService.countCode(sysUserId, code);
-       if(codeCount > 0){
-           result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-           result.put(Constant.RESPONSE_CODE_MSG, "添加失败，该用户已存在此访问码，请重新输入访问码");
-       } else {
-           SysAccessCode accessCode = new SysAccessCode();
-           accessCode.setSysUserId(sysUserId);
-           accessCode.setCode(code);
-           int msg = sysAccessCodeService.save(accessCode, time);
-
-           if (msg>0) {
-               result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-               result.put(Constant.RESPONSE_CODE_MSG, "添加成功");
-           } else {
-               result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-               result.put(Constant.RESPONSE_CODE_MSG, "添加失败");
-           }
+       SysAppVersion appVersion = new SysAppVersion();
+       if(DataUtil.isNull(sysAppVersion.getAppCode(),sysAppVersion.getAppName(),sysAppVersion.getAppType(),sysAppVersion.getDownUrl(),sysAppVersion.getForceFlag()
+       ,sysAppVersion.getGoogleDownUrl(),sysAppVersion.getPublishUid(),sysAppVersion.getSpreadUrl(),sysAppVersion.getStatus()
+       ,sysAppVersion.getVersionCode(),sysAppVersion.getVersionName())){
+           result.put(Constant.RESPONSE_CODE_MSG, "获取参数不完整");
+           ServletUtils.writeToResponse(response,result);
        }
-
-       ServletUtils.writeToResponse(response,result);
-   }
-
-   /**
-    * 启用访问码
-    * @param id
-    */
-   @RequestMapping(value="/modules/manage/user/appVersion/enable.htm",method={RequestMethod.GET,RequestMethod.POST})
-   @RequiresPermission(code = "modules:manage:accessCode:enable",name = "访问码启用")
-   public void enable(@RequestParam(value="id") Long id){
-       Map<String,Object> result = new HashMap<String,Object>();
-       SysAccessCode accessCode = sysAccessCodeService.getById(id);
-       accessCode.setState(SysAccessCodeModel.STATE_ENABLE);
-       int msg = sysAccessCodeService.updateState(accessCode);
-       if (msg > 0) {
+       appVersion.setAppCode(sysAppVersion.getAppCode());
+       appVersion.setAppName(sysAppVersion.getAppName());
+       appVersion.setAppType(sysAppVersion.getAppType());
+       appVersion.setVersionText(sysAppVersion.getVersionText());
+       appVersion.setDownUrl(sysAppVersion.getDownUrl());
+       appVersion.setForceFlag(sysAppVersion.getForceFlag());
+       appVersion.setGoogleDownUrl(sysAppVersion.getGoogleDownUrl());
+       appVersion.setPublishTime(sysAppVersion.getPublishTime());
+       appVersion.setPublishUid(sysAppVersion.getPublishUid());
+       appVersion.setSpreadUrl(sysAppVersion.getSpreadUrl());
+       appVersion.setStatus(sysAppVersion.getStatus());
+       appVersion.setVersionName(sysAppVersion.getVersionName());
+       appVersion.setVersionCode(sysAppVersion.getVersionCode());
+       appVersion.setPublishTime(new Date());
+       appVersion.setCreatedTime(new Date());
+       appVersion.setUpdatedTime(new Date());
+       int msg1 = sysAppVersionService.delete(sysAppVersion);
+       if (msg1>0) {
            result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-           result.put(Constant.RESPONSE_CODE_MSG, "启用成功");
-       }else {
-           result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-           result.put(Constant.RESPONSE_CODE_MSG, "启用失败");
+           result.put(Constant.RESPONSE_CODE_MSG, "删除成功");
        }
-       ServletUtils.writeToResponse(response,result);
-   }
-
-
-   /**
-    * 禁用访问码
-    * @param id
-    */
-   @RequestMapping(value="/modules/manage/user/appVersion/disable.htm",method={RequestMethod.GET,RequestMethod.POST})
-   @RequiresPermission(code = "modules:manage:accessCode:disable",name = "访问码禁用")
-   public void disable(@RequestParam(value="id") Long id){
-       Map<String,Object> result = new HashMap<String,Object>();
-       SysAccessCode accessCode = sysAccessCodeService.getById(id);
-       accessCode.setState(SysAccessCodeModel.STATE_DISABLE);
-       int msg = sysAccessCodeService.updateState(accessCode);
-       if (msg > 0) {
+       else {
+           result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
+           result.put(Constant.RESPONSE_CODE_MSG, "删除失败");
+       }
+       int msg = sysAppVersionService.save(sysAppVersion);
+       if (msg>0) {
            result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-           result.put(Constant.RESPONSE_CODE_MSG, "禁用成功");
-       }else {
+           result.put(Constant.RESPONSE_CODE_MSG, "添加成功");
+       }
+       else {
            result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-           result.put(Constant.RESPONSE_CODE_MSG, "禁用失败");
+           result.put(Constant.RESPONSE_CODE_MSG, "添加失败");
        }
        ServletUtils.writeToResponse(response,result);
    }
 
-
-   /**
-    * 修改访问码信息
-    * @param id
-    * @param code
-    */
-   @RequestMapping(value="/modules/manage/user/appVersion/modify.htm",method={RequestMethod.GET,RequestMethod.POST})
-   @RequiresPermission(code = "modules:manage:accessCode:modify",name = "修改访问码")
-   public void modify(@RequestParam(value="id") long id,
-           @RequestParam(value="time") String time){
-       SysAccessCode accessCode = sysAccessCodeService.getById(id);
-       int msg = sysAccessCodeService.update(accessCode,time);
-       Map<String,Object> result = new HashMap<String,Object>();
-       if (msg > 0) {
-           result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-           result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_SUCCESS);
-       }else {
-           result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
-           result.put(Constant.RESPONSE_CODE_MSG, Constant.OPERATION_FAIL);
-       }
-       ServletUtils.writeToResponse(response,result);
-   }
-
-   /**
-    * 用户名列表
-    */
-   @RequestMapping(value="/modules/manage/user/appVersion/listName.htm",method={RequestMethod.GET,RequestMethod.POST})
-   @RequiresPermission(code = "modules:manage:accessCode:listName",name = "用户名列表")
-   public void listUserName(){
-       List<SysUser> list = sysAccessCodeService.listUserName();
-       Map<String,Object> result = new HashMap<String,Object>();
-       result.put(Constant.RESPONSE_DATA, list);
-       result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
-       result.put(Constant.RESPONSE_CODE_MSG, "获取成功");
-       ServletUtils.writeToResponse(response,result);
-   }
 }

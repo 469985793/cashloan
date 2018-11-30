@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xindaibao.cashloan.system.mapper.SysAppVersionMapper">
+	<resultMap type="com.xindaibao.cashloan.system.domain.SysAppVersion"
+		id="sysAppVersionResult">
+		<id column="id" property="id" jdbcType="BIGINT"/>
+		<result column="app_code" property="appCode" />
+		<result column="app_name" property="appName" />
+		<result column="app_type" property="appType" />
+		<result column="version_code" property="versionCode" />
+		<result column="version_name" property="versionName" />
+		<result column="version_text" property="versionText" />
+		<result column="force_flag" property="forceFlag" />
+		<result column="down_url" property="downUrl" />
+		<result column="google_down_url" property="googleDownUrl" />
+		<result column="spread_url" property="spreadUrl" />
+		<result column="publish_uid" property="publishUid" />
+		<result column="publish_time" property="publishTime" />
+		<result column="status" property="status" />
+		<result column="created_time" property="createdTime" />
+		<result column="updated_time" property="updatedTime" />
+	</resultMap>
+
+
+	<select id="listSysAppVersion" parameterType="java.util.Map" resultMap="sysAppVersionResult">
+		select * from k_sys_app_version
+		where status = 1
+	</select>
+
+	<insert id="save"
+		parameterType="com.xindaibao.cashloan.system.domain.SysAppVersion">
+		insert into
+		k_sys_app_version(app_code,app_name,app_type,version_code,version_name,version_text,force_flag,down_url,google_down_url,spread_url,publish_uid,publish_time,status)
+		values(#{appCode},#{appName},#{appType},#{versionCode},#{versionName},#{versionText},#{forceFlag},#{downUrl},#{googleDownUrl},#{spreadUrl},
+		#{publishUid},#{publishTime},#{status})
+	</insert>
+
+	<update id="delete" parameterType="com.xindaibao.cashloan.system.domain.SysAppVersion">
+		update k_sys_app_version
+		set status= -1
+	</update>
+
+</mapper>     
