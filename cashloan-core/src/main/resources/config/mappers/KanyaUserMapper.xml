@@ -320,7 +320,7 @@
       c.family_member,c.family_member_name,c.family_mobile_phone,c.othe_contact,c.other_contact_name,c.other_contact_mobile
     from  k_user u left join k_user_info i on u.id=i.uid left join k_user_job j on u.id=j.uid left join k_user_live l on u.id=l.uid left join k_user_contact_info c on u.id=c.uid
     <include refid="searchBy"/>
-    and  i.status=1 and u.status=1  and j.status=1 and l.status=1 and c.status=1 order by u.created_time desc
+    and  i.status=1 and (u.status=1 or u.status=10)  and j.status=1 and l.status=1 and c.status=1 order by u.created_time desc
   </select>
 
   <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
