@@ -1548,6 +1548,12 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 		return (Page<LoanProduct>) list;
 	}
 	@Override
+	public List<LoanProduct> remitCheckLog(Map<String, Object> params) {
+		params.put("state",BorrowModel.STATE_PASS);
+		List<LoanProduct> list = clBorrowMapper.searchBorrowModelByKenya(params);
+		return  list;
+	}
+	@Override
 	public List<Object> repayLogPlanExport(Map<String, Object> params) {
 		List<Object> list = clBorrowMapper.repayLogPlanExport(params);
 		return list;

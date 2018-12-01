@@ -45,6 +45,10 @@ public class LoanProduct extends LoanRecord{
 
     private Byte status;
 
+    private String statusStr;
+
+    private String scenesStr;
+
     private Date createdTime;
 
     private Date updatedTime;
@@ -231,5 +235,21 @@ public class LoanProduct extends LoanRecord{
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+    public String getStatusStr() {
+        return statusStr;
+    }
+
+    public void setStatusStr(String statusStr) {
+        this.statusStr = statusStr;
+    }
+
+
+    public String getScenesStr() {
+        return scenesStr;
+    }
+
+    public void setScenesStr(String scenesStr) {
+        this.scenesStr = scenesStr;
     }
 }

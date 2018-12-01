@@ -529,6 +529,12 @@
             <if test="state != null and state != '' and renewState == null ">
                 and r.status = #{state,jdbcType=VARCHAR}
             </if>
+            <if test=" beforeTime !=null ">
+                and date_format(r.created_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test=" afterTime !=null ">
+                and  date_format(r.created_time, '%Y-%m-%d')  &lt;= #{afterTime,jdbcType=TIMESTAMP}
+            </if>
             <if test="stateList !=null">
                 and r.status  in
                 <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">

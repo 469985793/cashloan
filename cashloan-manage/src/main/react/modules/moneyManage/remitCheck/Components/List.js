@@ -237,7 +237,7 @@ export default React.createClass({
                 } else if (text == 21) {
                     return "Overdue"//已逾期
                 } else if (text == 22) {
-                    return "Terms for late"//逾期还款
+                    return "Overdue payment"//逾期还款
                 } else if (text == 31) {
                     return "Risk control audit did not pass"//风控审核不通过
                 } else if (text == 32) {

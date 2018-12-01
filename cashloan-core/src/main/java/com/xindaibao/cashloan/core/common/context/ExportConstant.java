@@ -22,6 +22,11 @@ public final class ExportConstant {
 	public static final String[] EXPORT_REPAYLOG_LIST_FIELDS = {"realName","phone","orderNo", "borrowAmount","fee","repayAmount", "penaltyDay","repayPenalty","repayTotal","repayLogAmount","penaltyAmout", "repayYesTotal",
 	 "repayAccount", "serialNumber", "repayWay", "repayPlanTime", "repayTime"};
 
+	/** 支付审核导出 表头*/
+	public static final String[] EXPORT_REMITCHECKLOG_LIST_HEARDERS = {"LastName","Phone","Amount", "Borrow Time","cycle","scenes","status"};
+	/** 支付审核导出 属性数组*/
+	public static final String[] EXPORT_REMITCHECKLOG_LIST_FIELDS = {"lastName","mobile","balance", "createdTime","cycle","scenesStr", "statusStr"};
+
 	/** 还款计划导出 表头*/
 	public static final String[] EXPORT_REPAYLOGPLAN_LIST_HEARDERS = {"Real Name","Phone","Order Number", "Loan Amount","Overdue Fine","Actual Amount Received(KSh)","Total Amount Of Repayment(KSh)", "Repayment Date",  "Actual Repayment Amount",
 			"Repayment Status"};

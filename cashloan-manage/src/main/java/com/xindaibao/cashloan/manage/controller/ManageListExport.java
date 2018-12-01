@@ -47,7 +47,36 @@ public class ManageListExport extends ManageBaseController{
 	private UrgeRepayOrderService urgeRepayOrderService;
 	@Autowired
 	private SysDownloadLogService sysDownloadLogService;
-	
+
+
+	/**
+	 * 导出支付审核报表
+	 *
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/modules/manage/remitCheckLog/export.htm")
+	public void remitCheckExport(
+			@RequestParam(value="searchParams",required = false) String searchParams) throws Exception {
+		Map<String, Object> params = JsonUtil.parse(searchParams, Map.class);
+		List list = clBorrowService.remitCheckLog(params);
+		for(int i=0;i<list.size();i++){
+			LoanProduct p=(LoanProduct)list.get(i);
+			p.setStatusStr("Review and approval, pending payment");
+			p.setScenesStr("Under line");
+			list.set(i,p);
+		}
+		SysUser user = (SysUser) request.getSession().getAttribute("SysUser");
+		response.setContentType("application/msexcel;charset=UTF-8");
+		// 记录取得
+		String title = "支付审核Excel表";
+		String[] hearders =  ExportConstant.EXPORT_REMITCHECKLOG_LIST_HEARDERS;
+		String[] fields = ExportConstant.EXPORT_REMITCHECKLOG_LIST_FIELDS;
+		JsGridReportBase report = new JsGridReportBase(request, response);
+		report.exportExcel(list,title,hearders,fields,user.getName());
+		saveLog(list, user.getUserName(), SysDownloadLog.REPAY_LOG);
+	}
+
+
 	/**
 	 * 导出还款记录报表
 	 * 
