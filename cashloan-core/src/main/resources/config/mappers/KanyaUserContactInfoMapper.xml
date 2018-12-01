@@ -216,4 +216,19 @@
     from k_user_contact_info
     <include refid="searchBy"/>
   </select>
+  <insert id="saveUsersContactInfo">
+    insert ignore into k_user_contact_info (
+    uid,
+    status,
+    created_time,
+    updated_time
+    )
+    values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (
+      #{item.uid},#{item.status},#{item.createdTime},#{item.updatedTime}
+      )
+    </foreach>
+  </insert>
 </mapper>

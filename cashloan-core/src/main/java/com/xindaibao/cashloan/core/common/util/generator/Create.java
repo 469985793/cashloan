@@ -14,7 +14,7 @@ public class Create {
 	public void test(){
 
 		// 数据库连接信息
-		String url = "jdbc:mysql://172.16.90.38:3306/cashloan_master1.0.1?useUnicode=true&characterEncoding=utf8";
+		String url = "jdbc:mysql://172.16.90.38:3306/cashloan_master1.0.1?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true";
 		String MysqlUser = "root";
 		String mysqlPassword = "erongdu.com";
 		

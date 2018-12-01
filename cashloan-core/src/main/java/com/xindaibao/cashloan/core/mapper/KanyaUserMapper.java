@@ -1,9 +1,8 @@
 package com.xindaibao.cashloan.core.mapper;
 
-import com.xindaibao.cashloan.core.model.KanyaUser;
+import com.xindaibao.cashloan.core.model.*;
 import com.xindaibao.cashloan.core.common.mapper.BaseMapper;
 import com.xindaibao.cashloan.core.common.mapper.RDBatisDao;
-import com.xindaibao.cashloan.core.model.KanyaUserLocation;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -26,6 +25,9 @@ public interface KanyaUserMapper extends BaseMapper<KanyaUser, Long> {
     KanyaUser findByMobile(String mobile);
     //添加黑名单
     void addBlackList(Long id);
+
+    int saveUsers(List<KanyaUser> list);
+
 
     void callAble();
 }

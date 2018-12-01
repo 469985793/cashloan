@@ -249,4 +249,19 @@
     from k_user_obtain_state
     <include refid="searchBy"/>
   </select>
+  <insert id="saveUsersObtainState">
+    insert ignore into k_user_obtain_state (
+    uid,
+    status,
+    created_time,
+    updated_time
+    )
+    values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (
+      #{item.uid},#{item.status},#{item.createdTime},#{item.updatedTime}
+      )
+    </foreach>
+  </insert>
 </mapper>

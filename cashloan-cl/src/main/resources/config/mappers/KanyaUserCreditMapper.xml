@@ -216,4 +216,20 @@
     from k_user_credit
     <include refid="searchBy"/>
   </select>
+  <insert id="saveUsersCredit">
+    insert ignore into k_user_credit (
+    uid,
+    limits,
+    status,
+    created_time,
+    updated_time
+    )
+    values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (
+      #{item.uid},#{item.limits},#{item.status},#{item.createdTime},#{item.updatedTime}
+      )
+    </foreach>
+  </insert>
 </mapper>

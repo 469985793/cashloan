@@ -365,6 +365,25 @@
   <select id="callAble" statementType="CALLABLE" >
     call importuser()
   </select>
+  <insert id="saveUsers" useGeneratedKeys="true" keyProperty="id">
+    insert ignore into k_user (
+    user_name,
+    mobile,
+    password,
+    channel_code,
+    invite_code,
+    status,
+    created_time,
+    updated_time
+    )
+    values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (
+      #{item.userName},#{item.mobile},#{item.password},#{item.channelCode},#{item.inviteCode},#{item.status},#{item.createdTime},#{item.updatedTime}
+      )
+    </foreach>
+  </insert>
 
   <update id="addBlackList" parameterType="java.lang.Long">
     update k_user

@@ -5,13 +5,16 @@ import java.io.InputStream;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import javax.annotation.Resource;
+
+import com.xindaibao.cashloan.cl.model.kenya.KanyaUserCredit;
+import com.xindaibao.cashloan.cl.model.kenya.KanyaUserObtainState;
+import com.xindaibao.cashloan.cl.model.kenya.KanyaUserState;
+import com.xindaibao.cashloan.core.model.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import com.xindaibao.cashloan.cl.service.*;
-import com.xindaibao.cashloan.core.model.KanyaUser;
-import com.xindaibao.cashloan.core.model.KanyaUserLocation;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -46,8 +49,6 @@ import com.xindaibao.cashloan.core.common.util.ServletUtils;
 import com.xindaibao.cashloan.core.domain.User;
 import com.xindaibao.cashloan.core.domain.UserBaseInfo;
 import com.xindaibao.cashloan.core.domain.UserOtherInfo;
-import com.xindaibao.cashloan.core.model.CloanUserModel;
-import com.xindaibao.cashloan.core.model.ManagerUserModel;
 import com.xindaibao.cashloan.core.service.CloanUserService;
 import com.xindaibao.cashloan.core.service.UserBaseInfoService;
 import com.xindaibao.cashloan.core.service.UserOtherInfoService;
@@ -162,44 +163,94 @@ public class ManageUserController extends ManageBaseController{
 		 }
 		 }
 		 int excleRows=result.size();
-		 for (int a=0;a<result.size();a++){
-		 	String fitstName;
-		 	String lastName;
-		 	String nationId;
-		 	String mobile;
-		 	if(result.get(a).get(2).trim().equals(" ")){
-				fitstName="fitstName";
-			}else {
-		 		fitstName=result.get(a).get(2).trim();
-			}
-			 if(result.get(a).get(3).trim().equals(" ")){
-				 lastName="lastName";
-			 }else {
-				 lastName=result.get(a).get(3).trim();
-			 }
-			 if(result.get(a).get(4).trim().equals(" ")){
-				 nationId="nationId";
-			 }else {
-				 nationId=result.get(a).get(4).trim();
-			 }
-			 if(result.get(a).get(5).trim().equals(" ")){
-				 mobile="mobile";
-			 }else {
-				 mobile=result.get(a).get(5).trim();
-			 }
-			 if(mobile.equals("mobile")){
 
-			 }else {
-				 boolean row=importUserService.saveUser(fitstName,lastName,nationId,mobile);
-				 if (row){
-					 rows=rows+1;
-				 }
-			 }
+		 List<KanyaUser> listUsers = new ArrayList<KanyaUser>();
+		 List<KanyaUserInfo> listUsersInfo = new ArrayList<KanyaUserInfo>();
+		 List<KanyaUserJob> listUsersJob = new ArrayList<KanyaUserJob>();
+		 List<KanyaUserLive> listUsersLive = new ArrayList<KanyaUserLive>();
+		 List<KanyaUserContactInfo> listUsersContactInfo = new ArrayList<KanyaUserContactInfo>();
+		 List<KanyaUserState> listUsersState = new ArrayList<KanyaUserState>();
+		 List<KanyaUserObtainState> listUsersObtainState = new ArrayList<KanyaUserObtainState>();
+		 List<KanyaUserCredit> listUsersCredit = new ArrayList<KanyaUserCredit>();
+		 for (int i=0;i<excleRows;i++){
+		 		KanyaUser u=new KanyaUser();
+		 		u.setUserName(result.get(i).get(2));
+		 		u.setMobile(result.get(i).get(5));
+		 		u.setPassword("96EF9496AD3AD87AC01293BFBB0FD46F625957C2F89704DF58056FA5AF30366C");
+		 		u.setStatus((byte) 1);
+		 		u.setChannelCode("HAKIKA");
+		 		u.setCreatedTime(new Date());
+		 		u.setUpdatedTime(new Date());
+				//生成自己的邀请码
+				String base = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+				Random random = new Random();
+				StringBuffer sb = new StringBuffer();
+				for (int k = 0; k < 6; k++) {
+					int number = random.nextInt(base.length());
+					sb.append(base.charAt(number));
+				}
+				u.setInviteCode(sb.toString());
+			 	listUsers.add(u);
 		 }
-		 	int importRows=rows;
-		 	int notImportRows=excleRows-importRows;
-		 	int test=notImportRows;
-			importUserService.callAble();
+
+		 int importUsersRow=importUserService.saveUser(listUsers);
+		 for(int i=0;i<listUsers.size();i++){
+		 	if (listUsers.get(i).getId()!=null){
+				KanyaUserInfo ui=new KanyaUserInfo();
+				KanyaUserJob uj=new KanyaUserJob();
+				KanyaUserLive ul=new KanyaUserLive();
+				KanyaUserContactInfo uci=new KanyaUserContactInfo();
+				KanyaUserState us=new KanyaUserState();
+				KanyaUserObtainState uos=new KanyaUserObtainState();
+				KanyaUserCredit uc=new KanyaUserCredit();
+				ui.setUid(listUsers.get(i).getId());
+				ui.setStatus((byte)1);
+				ui.setCreatedTime(new Date());
+				ui.setUpdatedTime(new Date());
+				listUsersInfo.add(ui);
+				uj.setUid(listUsers.get(i).getId());
+				uj.setStatus((byte)1);
+				uj.setCreatedTime(new Date());
+				uj.setUpdatedTime(new Date());
+				listUsersJob.add(uj);
+				ul.setUid(listUsers.get(i).getId());
+				ul.setStatus((byte)1);
+				ul.setCreatedTime(new Date());
+				ul.setUpdatedTime(new Date());
+				listUsersLive.add(ul);
+				uci.setUid(listUsers.get(i).getId());
+				uci.setStatus((byte)1);
+				uci.setCreatedTime(new Date());
+				uci.setUpdatedTime(new Date());
+				listUsersContactInfo.add(uci);
+				us.setUid(listUsers.get(i).getId());
+				us.setStatus((byte)1);
+				us.setCreatedTime(new Date());
+				us.setUpdatedTime(new Date());
+				listUsersState.add(us);
+				uos.setUid(listUsers.get(i).getId());
+				uos.setStatus((byte)1);
+				uos.setCreatedTime(new Date());
+				uos.setUpdatedTime(new Date());
+				listUsersObtainState.add(uos);
+				uc.setUid(listUsers.get(i).getId());
+				uc.setStatus((byte)1);
+				uc.setLimits(200000);
+				uc.setCreatedTime(new Date());
+				uc.setUpdatedTime(new Date());
+				listUsersCredit.add(uc);
+			}
+		 }
+		 int importUsersInfoRow=importUserService.saveUsersInfo(listUsersInfo);
+		 int importUsersJobRow=importUserService.saveUsersJob(listUsersJob);
+		 int importUsersLiveRow=importUserService.saveUsersLive(listUsersLive);
+		 int importUsersContactInfoRow=importUserService.saveUsersContactInfo(listUsersContactInfo);
+		 int importUsersStateRow=importUserService.saveUsersState(listUsersState);
+		 int importUsersObtainStateRow=importUserService.saveUsersObtainState(listUsersObtainState);
+		 int importUsersCreditRow=importUserService.saveUsersCredit(listUsersCredit);
+		 logger.info("导入用户共"+importUsersRow+"条。"+importUsersInfoRow+"///"+importUsersJobRow+"///"+importUsersLiveRow+"///"
+				 +importUsersContactInfoRow+"///"+importUsersStateRow+"///"+importUsersObtainStateRow+"///"+importUsersCreditRow);
+		 System.out.println("完成");
 	 }
 
 	/**
