@@ -43,7 +43,7 @@ var AddWin = React.createClass({
                 return;
             }
             
-            
+            var trueText = values.versionText.replace(/\r\n/g, '\n').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
         // console.log(123);
             Utils.ajaxData({
                 url: '/modules/manage/user/appVersion/save.htm',
@@ -54,7 +54,7 @@ var AddWin = React.createClass({
                     appType: values.appType,
                     versionCode:values.versionCode,
                     versionName:values.versionName,
-                    versionText:values.versionText,
+                    versionText:trueText,
                     forceFlag:values.forceFlag,
                     downUrl:values.downUrl,
                     googleDownUrl:values.googleDownUrl,
@@ -105,7 +105,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="App code：">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('appCode', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('appCode', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -113,7 +113,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="App name:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('appName', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('appName', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -134,7 +134,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Version code:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('versionCode', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionCode', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -142,7 +142,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Version name:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('versionName', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionName', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -161,7 +161,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Down url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('downUrl', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('downUrl', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -169,7 +169,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Google down url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('googleDownUrl', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('googleDownUrl', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -177,7 +177,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Spread url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('spreadUrl', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('spreadUrl', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -185,7 +185,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Publish uid:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('publishUid', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('publishUid', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -201,7 +201,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Version text:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('versionText', { rules: [{ required: true, message: '不能为空,且不超过十位', max: 10 }] })} type="textarea" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionText', { rules: [{ required: true, message: '不能为空,且不超过千位', max: 1000 }] })} type="textarea" />
                             </FormItem>
                         </Col>
                     </Row>
