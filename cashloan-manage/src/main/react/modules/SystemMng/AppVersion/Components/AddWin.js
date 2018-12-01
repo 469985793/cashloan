@@ -43,7 +43,7 @@ var AddWin = React.createClass({
                 return;
             }
             
-            var trueText = values.versionText.replace(/\r\n/g, '\n').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
+            var trueText = values.versionText.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
         // console.log(123);
             Utils.ajaxData({
                 url: '/modules/manage/user/appVersion/save.htm',
