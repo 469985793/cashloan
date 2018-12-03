@@ -107,5 +107,10 @@ public class ImportUserServiceImpl extends BaseServiceImpl<KanyaUser, Long> impl
 		int result=kanyaUserCreditMapper.saveUsersCredit(list);
 		return result;
 	}
+	@Override
+	public List completeUserInfo(){
+		List result=kanyaUserMapper.completeUserInfo();
+		return result;
+	}
 	
 }

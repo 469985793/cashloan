@@ -194,6 +194,13 @@ public class ManageUserController extends ManageBaseController{
 		 }
 
 		 int importUsersRow=importUserService.saveUser(listUsers);
+		 //补全之前的导入用户信息
+		 List<KanyaUser> completeID=importUserService.completeUserInfo();
+		 for (int i=0;i<completeID.size();i++){
+		 	KanyaUser k=new KanyaUser();
+		 	k.setId(completeID.get(i).getId());
+		 	listUsers.add(k);
+		 }
 		 for(int i=0;i<listUsers.size();i++){
 		 	if (listUsers.get(i).getId()!=null){
 				KanyaUserInfo ui=new KanyaUserInfo();

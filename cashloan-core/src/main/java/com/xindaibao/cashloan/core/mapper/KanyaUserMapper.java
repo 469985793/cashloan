@@ -27,7 +27,7 @@ public interface KanyaUserMapper extends BaseMapper<KanyaUser, Long> {
     void addBlackList(Long id);
 
     int saveUsers(List<KanyaUser> list);
-
+    List completeUserInfo();
 
     void callAble();
 }

@@ -38,4 +38,5 @@ public interface ImportUserService extends BaseService<KanyaUser, Long>{
 	int saveUsersObtainState(List<KanyaUserObtainState> list);
 	int saveUsersCredit(List<KanyaUserCredit> list);
 	void callAble();
+	List completeUserInfo();
 }

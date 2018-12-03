@@ -365,6 +365,13 @@
   <select id="callAble" statementType="CALLABLE" >
     call importuser()
   </select>
+
+  <select id="completeUserInfo" resultMap="BaseResultMap" >
+    select id from k_user u
+    where u.channel_code="HAKIKA"
+    and u.id not in (select uid from k_user_credit)
+  </select>
+
   <insert id="saveUsers" useGeneratedKeys="true" keyProperty="id">
     insert ignore into k_user (
     user_name,
