@@ -60,4 +60,11 @@
       </if>
     </trim>
   </sql>
+
+  <select id="listFlowModel" resultMap="BaseResultMap" >
+    select
+    *
+    from  k_repay_flow
+    where loan_record_id= #{loanRecordId,jdbcType=BIGINT}
+  </select>
 </mapper>

@@ -16,12 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.xindaibao.cashloan.cl.Util.FlowNumber;
 import com.xindaibao.cashloan.cl.mapper.KanyaUserStateMapper;
 import com.xindaibao.cashloan.cl.model.kenya.KanyaUserState;
 import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
-import com.xindaibao.cashloan.cl.service.ClBorrowService;
-import com.xindaibao.cashloan.cl.service.KanyaUserStateService;
+import com.xindaibao.cashloan.cl.model.kenya.RepayFlow;
+import com.xindaibao.cashloan.cl.service.*;
 import com.xindaibao.cashloan.core.common.context.ExportConstant;
 import com.xindaibao.cashloan.core.common.util.excel.JsGridReportBase;
 import com.xindaibao.cashloan.system.domain.SysDownloadLog;
@@ -46,8 +47,6 @@ import com.xindaibao.cashloan.cl.model.BorrowRepayModel;
 import com.xindaibao.cashloan.cl.model.ManageBRepayModel;
 import com.xindaibao.cashloan.cl.model.ManageBorrowModel;
 import com.xindaibao.cashloan.cl.model.RepayExcelModel;
-import com.xindaibao.cashloan.cl.service.BorrowRepayLogService;
-import com.xindaibao.cashloan.cl.service.BorrowRepayService;
 import com.xindaibao.cashloan.core.common.context.Constant;
 import com.xindaibao.cashloan.core.common.exception.BussinessException;
 import com.xindaibao.cashloan.core.common.util.JsonUtil;
@@ -73,6 +72,8 @@ public class ManageBorrowRepayController extends ManageBaseController {
 	private KanyaUserStateService kanyaUserStateService;
 	@Resource
 	private ClBorrowService clBorrowService;
+	@Resource
+	private RepayFlowService repayFlowService;
 
 	/**
 	 * 还款计划列表
@@ -351,6 +352,27 @@ public class ManageBorrowRepayController extends ManageBaseController {
 		} catch(Exception e){
 			logger.error(e.getMessage(),e);
 		}
+	}
+	/**
+	 * 还款流水列表(查)
+	 *
+	 * @param id
+	 * @param currentPage
+	 * @param pageSize
+	 */
+	@RequestMapping(value = "/modules/manage/borrow/repay/RepayFlow.htm")
+	@RequiresPermission(code = "modules:manage:borrow:repay:RepayFlow", name = "还款信息列表(查)")
+	public void RepayFlow(
+			@RequestParam(value = "id") Long id,
+			@RequestParam(value = "current") int currentPage,
+			@RequestParam(value = "pageSize") int pageSize) {
+		Page<RepayFlow> page = repayFlowService.listFlowModel(id,currentPage,pageSize);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put(Constant.RESPONSE_DATA, page);
+		result.put(Constant.RESPONSE_DATA_PAGE, new RdPage(page));
+		result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
+		result.put(Constant.RESPONSE_CODE_MSG, "获取成功");
+		ServletUtils.writeToResponse(response, result);
 	}
 	
 }
