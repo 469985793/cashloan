@@ -28,6 +28,11 @@
 		where status = 1
 	</select>
 
+	<select id="findAppById" parameterType="java.util.Map" resultMap="sysAppVersionResult">
+		select * from k_sys_app_version
+		where status = 1 and id=#{id}
+	</select>
+
 	<insert id="save"
 		parameterType="com.xindaibao.cashloan.system.domain.SysAppVersion">
 		insert into

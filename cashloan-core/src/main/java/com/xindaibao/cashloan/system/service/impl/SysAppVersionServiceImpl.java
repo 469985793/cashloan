@@ -8,6 +8,7 @@ import com.xindaibao.cashloan.system.service.SysAppVersionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 访问码ServiceImpl
@@ -27,9 +28,9 @@ public class SysAppVersionServiceImpl extends BaseServiceImpl<SysAppVersion, Lon
 		return sysAppVersionMapper;
 	}
 	@Override
-	public SysAppVersion listSysAppVersion() {
-		SysAppVersion sysAppVersion = sysAppVersionMapper.listSysAppVersion();
-		return sysAppVersion;
+	public List<SysAppVersion> listSysAppVersion() {
+		List<SysAppVersion> list  = sysAppVersionMapper.listSysAppVersion();
+		return list;
 	}
 
 	@Override

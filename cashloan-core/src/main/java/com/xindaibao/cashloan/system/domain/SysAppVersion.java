@@ -87,6 +87,11 @@ import java.util.Date;
 	private Date publishTime;
 
 	/**
+	 * APP分类：1：jumbopesa 2：pesapuls
+	 */
+	private Integer appClassification;
+
+	/**
 	 * 状态： -1删除， 1正常
 	 */
 	private Integer status;
@@ -202,6 +207,14 @@ import java.util.Date;
 
 	public void setPublishTime(Date publishTime) {
 		this.publishTime = publishTime;
+	}
+
+	public Integer getAppClassification() {
+		return appClassification;
+	}
+
+	public void setAppClassification(Integer appClassification) {
+		this.appClassification = appClassification;
 	}
 
 	public Integer getStatus() {

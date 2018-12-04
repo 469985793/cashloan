@@ -38,13 +38,17 @@ public interface SysAppVersionMapper extends BaseMapper<SysAppVersion,Long> {
 	 */
 	int delete(SysAppVersion ac);
 
-
+	/**
+	 * 查询列表
+	 * @return
+	 */
+	SysAppVersion  findAppById(Long id);
 
 	/**
 	 * 查询访问码列表
 	 * @return
 	 */
-	SysAppVersion listSysAppVersion();
+	List<SysAppVersion>  listSysAppVersion();
 
 
 }

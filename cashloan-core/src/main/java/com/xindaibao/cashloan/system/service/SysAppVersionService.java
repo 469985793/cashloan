@@ -2,6 +2,8 @@ package com.xindaibao.cashloan.system.service;
 import com.xindaibao.cashloan.core.common.service.BaseService;
 import com.xindaibao.cashloan.system.domain.SysAppVersion;
 
+import java.util.List;
+
 
 /**
  * 访问码Service
@@ -16,10 +18,11 @@ import com.xindaibao.cashloan.system.domain.SysAppVersion;
  */
 public interface SysAppVersionService extends BaseService<SysAppVersion, Long> {
 	/**
-	 * 访问码信息列表查询
+	 * app版本列表查询
 	 * @return
 	 */
-	SysAppVersion listSysAppVersion();
+	List<SysAppVersion> listSysAppVersion();
+
 
 	/**
 	 * 保存

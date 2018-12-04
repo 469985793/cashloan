@@ -4,6 +4,7 @@ import com.xindaibao.cashloan.core.common.context.Constant;
 import com.xindaibao.cashloan.core.common.util.ServletUtils;
 import com.xindaibao.cashloan.core.common.web.controller.BaseController;
 import com.xindaibao.cashloan.system.domain.SysAppVersion;
+import com.xindaibao.cashloan.system.mapper.SysAppVersionMapper;
 import com.xindaibao.cashloan.system.service.SysAppVersionService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +33,8 @@ public class SysAppVersionController extends BaseController {
 
    @Resource
    private SysAppVersionService sysAppVersionService;
+    @Resource
+    private SysAppVersionMapper sysAppVersionMapper;
 
    /**
     * APP版本信息展示
@@ -38,13 +42,27 @@ public class SysAppVersionController extends BaseController {
    @SuppressWarnings("unchecked")
    @RequestMapping(value="/modules/manage/user/appVersion/list.htm",method={RequestMethod.GET,RequestMethod.POST})
    public void list(){
-       SysAppVersion sysAppVersion  = sysAppVersionService.listSysAppVersion();
+       List<SysAppVersion> list  = sysAppVersionService.listSysAppVersion();
        Map<String,Object> result = new HashMap<String,Object>();
-       result.put(Constant.RESPONSE_DATA, sysAppVersion);
+       result.put(Constant.RESPONSE_DATA, list);
        result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
        result.put(Constant.RESPONSE_CODE_MSG, "获取成功");
        ServletUtils.writeToResponse(response,result);
    }
+
+    /**
+     * APP版本查找
+     */
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value="/modules/manage/user/appVersion/find.htm",method={RequestMethod.GET,RequestMethod.POST})
+    public void find(Long id){
+        SysAppVersion sysAppVersion = sysAppVersionMapper.findAppById(id);
+        Map<String,Object> result = new HashMap<String,Object>();
+        result.put(Constant.RESPONSE_DATA, sysAppVersion);
+        result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
+        result.put(Constant.RESPONSE_CODE_MSG, "获取成功");
+        ServletUtils.writeToResponse(response,result);
+    }
 
    /**
     * 修改APP版本
@@ -53,8 +71,8 @@ public class SysAppVersionController extends BaseController {
    public void add(SysAppVersion sysAppVersion){
        Map<String,Object> result = new HashMap<String,Object>();
        SysAppVersion appVersion = new SysAppVersion();
-       if(DataUtil.isNull(sysAppVersion.getAppCode(),sysAppVersion.getAppName(),sysAppVersion.getAppType(),sysAppVersion.getDownUrl(),sysAppVersion.getForceFlag()
-       ,sysAppVersion.getGoogleDownUrl(),sysAppVersion.getPublishUid(),sysAppVersion.getSpreadUrl(),sysAppVersion.getStatus()
+       if(DataUtil.isNull(sysAppVersion.getAppCode(),sysAppVersion.getAppName(),sysAppVersion.getAppType(),sysAppVersion.getForceFlag()
+       ,sysAppVersion.getPublishUid(),sysAppVersion.getSpreadUrl(),sysAppVersion.getStatus()
        ,sysAppVersion.getVersionCode(),sysAppVersion.getVersionName())){
            result.put(Constant.RESPONSE_CODE_MSG, "获取参数不完整");
            ServletUtils.writeToResponse(response,result);
