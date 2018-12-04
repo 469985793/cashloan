@@ -21,3 +21,8 @@
     border-color: #ccc;
     text-decoration: none
 }
+
+.ant-table-small table{
+    padding:0;
+}
+

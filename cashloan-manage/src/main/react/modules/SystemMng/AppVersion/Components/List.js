@@ -20,6 +20,7 @@ export default React.createClass({
       canEdit: true,
       visible: false,
       condition: [],
+      record: ''
     };
   },
   componentWillReceiveProps(nextProps, nextState) {
@@ -35,13 +36,16 @@ export default React.createClass({
   },
   //新增跟编辑弹窗
   showModal(title, record, canEdit) {
+    // console.log(canEdit);
     var record = record;
     Utils.ajaxData({
-      url: '/modules/manage/user/accessCode/listName.htm',
+      url: '/modules/manage/user/appVersion/find.htm',
       method: 'post',
+      data:{id:record.id},
       callback: (result) => {
+        // console.log(result);
         this.setState({
-          canEdit: canEdit,
+          canEdit: !canEdit,
           title: title,
           record: record,
           visible: true,
@@ -98,7 +102,7 @@ export default React.createClass({
         // };
         this.setState({
           loading: false,
-          data: [result.data],
+          data: result.data,
           // pagination,
         });
         this.clearList();
@@ -165,9 +169,9 @@ export default React.createClass({
       selectedRowKeys
     } = this.state;
     const rowSelection = {
-      // type: 'radio',
+      type: 'radio',
       selectedRowKeys,
-      //onChange: this.onSelectChange,
+      onChange: this.onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
     var columns = [{
@@ -188,7 +192,7 @@ export default React.createClass({
     }, {
       title: 'Down url',
       dataIndex: 'downUrl'
-    },{
+    }, {
       title: 'Google down url',
       dataIndex: "googleDownUrl"
     }, {
@@ -203,47 +207,53 @@ export default React.createClass({
     }, {
       title: 'Status',
       dataIndex: "status",
-      render:(text,record)=>{
-          // console.log(text);
-          // console.log(record.status);        
-          if(record.status=='1'){
-            return '正常'
-          }
-          else if(record.status=='-1'){
-            return '删除'
-          }
+      render: (text, record) => {
+        // console.log(text);
+        // console.log(record.status);        
+        if (record.status == '1') {
+          return '正常'
+        }
+        else if (record.status == '-1') {
+          return '删除'
+        }
       }
     },
-    // {
-    //   title: '操作',
-    //   dataIndex: "",
-    //   render(text, record) {
-    //     return (
-    //       <div style={{ textAlign: "left" }}>
-    //         {record.stateStr == "启用" ? <a href="#" onClick={me.changeStatus.bind(me, '禁用', record)}>禁用</a> : <a href="#" onClick={me.changeStatus.bind(me, '启用', record)}>启用</a>}
-    //       </div>
-    //     )
-    //   }
-    // }
-  ];
+    {
+      title: '操作',
+      dataIndex: "",
+      render:(text,record) => {
+        return(
+          <div style={{ textAlign: "left" }}>
+                  <a href="#" onClick={me.showModal.bind(me, 'Update',record, false)}>Update{/*更新数据*/}</a></div>
+          )
+    } 
+    }
+    ];
     var state = this.state;
     return (
       <div className="block-panel">
-        <div className="actionBtns" style={{ marginBottom: 16 }}>
+        {/* <div className="actionBtns" style={{ marginBottom: 16 }}>
           <button className="ant-btn" onClick={this.showModal.bind(this, '新增', null, true)}>
             新增
           </button>
-        </div>
-        <Table 
-        columns={columns} 
-        rowKey={this.rowKey} 
-        size="middle" 
-        params={this.props.params}
-          dataSource={this.state.data} 
+        </div> */}
+        {/* <Table columns={columns} rowKey={this.rowKey} ref="table" 
+                       onRowClick={this.onRowClick}
+                       dataSource={this.state.data}
+                       rowClassName={this.rowClassName}
+                       pagination={this.state.pagination}
+                       onChange={this.handleTableChange}
+                /> */}
+        <Table
+          columns={columns}
+          rowKey={this.rowKey}
+          size="middle"
+          // params={this.props.params}
+          dataSource={this.state.data}
           onRowClick={this.onRowClick}
           // pagination={this.state.pagination}
           pagination={false}
-          loading={this.state.loading}
+          // loading={this.state.loading}
           onChange={this.handleTableChange} />
         <AddWin ref="AddWin" visible={state.visible} condition={state.condition} title={state.title} hideModal={me.hideModal} record={state.record}
           canEdit={state.canEdit} />

@@ -23,6 +23,49 @@ var AddWin = React.createClass({
             formData: {}
         };
     },
+    componentWillReceiveProps(nextProps) {
+        this.fetch();
+        this.setState({
+          record: nextProps.record
+        });
+      },
+    componentDidMount(){
+        this.fetch();
+    },
+
+    fetch(params = {}) {
+        this.setState({
+          loading: true
+        });
+        if (!params.pageSize) {
+          var params = {};
+          params = {
+            pageSize: 10,
+            current: 1,
+            id:this.state.record?this.state.record.id:''
+          }
+        }
+        Utils.ajaxData({
+          url: '/modules/manage/user/appVersion/find.htm',
+          data: params,
+          method: 'post',
+          callback: (result) => {
+              console.log(result);
+            // const pagination = this.state.pagination;
+            // pagination.current = params.current;
+            // pagination.total = result.page.total;
+            // if (!pagination.current) {
+            //   pagination.current = 1
+            // };
+            this.setState({
+              loading: false,
+              data: result.data,
+              // pagination,
+            });
+          }
+        });
+      },
+
     handleCancel() {
         this.props.form.resetFields();
         this.props.hideModal();
@@ -36,7 +79,7 @@ var AddWin = React.createClass({
         //console.log(record)
         var url = "/modules/manage/user/appVersion/save.htm";
         this.props.form.validateFields((errors, values) => {
-                console.log(values);
+                // console.log(values);
             if (!!errors) {
                 // console.log(123);
                 //console.log('Errors in form!!!');
@@ -79,6 +122,12 @@ var AddWin = React.createClass({
         } = this.props.form;
         var props = this.props;
         var state = this.state;
+        // props.canEdit = true;
+        // console.log(props.canEdit);
+        if(state.data){
+            var state_data = state.data;
+        }
+
         var modalBtns = [
             <button key="back" className="ant-btn" onClick={this.handleCancel}>返 回</button>,
             <button key="button" className="ant-btn ant-btn-primary" onClick={this.handleOk}>
@@ -105,7 +154,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="App code：">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('appCode', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('appCode',  { initialValue: state_data ? state_data.appCode : '' },{ rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -113,7 +162,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="App name:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('appName', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('appName', { initialValue: state_data ? state_data.appName: '' },{ rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -121,7 +170,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="App type:">
-                                <Select disabled={!props.canEdit}  {...getFieldProps('appType', { rules: [{ required: true, message: '必填' }] })} >
+                                <Select disabled={!props.canEdit}  {...getFieldProps('appType', { initialValue: state_data ? state_data.appType+'': '' }, { rules: [{ required: true, message: '必填' }] })} >
                                     <Option value='10'>Android</Option>
                                     <Option value='11'>Android Pad</Option>
                                     <Option value='20'>IOS</Option>
@@ -134,7 +183,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Version code:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('versionCode', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionCode', { initialValue: state_data ? state_data.versionCode: '' },  { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -142,7 +191,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Version name:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('versionName', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionName', { initialValue: state_data ? state_data.versionName: '' }, { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -150,7 +199,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Force flag:">
-                                <Select disabled={!props.canEdit}  {...getFieldProps('forceFlag', { rules: [{ required: true, message: '必填' }] })} >
+                                <Select disabled={!props.canEdit}  {...getFieldProps('forceFlag', { initialValue: state_data ? state_data.forceFlag+'': '' }, { rules: [{ required: true, message: '必填' }] })} >
                                     <Option value='0'>不强制</Option>
                                     <Option value='1'>强制</Option>
                                 </Select>
@@ -161,7 +210,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Down url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('downUrl', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('downUrl', { initialValue: state_data ? state_data.downUrl: '' }, { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -169,7 +218,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Google down url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('googleDownUrl', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('googleDownUrl', { initialValue: state_data ? state_data.googleDownUrl: '' }, { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -177,7 +226,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Spread url:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('spreadUrl', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('spreadUrl',  { initialValue: state_data ? state_data.spreadUrl: '' },{ rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -185,7 +234,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Publish uid:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('publishUid', { rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('publishUid',  { initialValue: state_data ? state_data.publishUid: '' },{ rules: [{ required: true, message: '不能为空,且不超过百位', max: 100 }] })} type="text" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -197,11 +246,12 @@ var AddWin = React.createClass({
                             </FormItem>
                         </Col>
                     </Row> */}
+                    {/* http://www.jumbopesa.co/img/851e5afc.contact-us.jpg */}
                     {/*版本描述*/}
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Version text:">
-                                <Input disabled={!props.canEdit}  {...getFieldProps('versionText', { rules: [{ required: true, message: '不能为空,且不超过千位', max: 1000 }] })} type="textarea" />
+                                <Input disabled={!props.canEdit}  {...getFieldProps('versionText', { initialValue: state_data ? state_data.versionText: '' }, { rules: [{ required: true, message: '不能为空,且不超过千位', max: 1000 }] })} type="textarea" />
                             </FormItem>
                         </Col>
                     </Row>
@@ -209,7 +259,7 @@ var AddWin = React.createClass({
                     <Row>
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Status:">
-                                <Select disabled={!props.canEdit}  {...getFieldProps('status', { rules: [{ required: true, message: '必填' }] })} >
+                                <Select disabled={!props.canEdit}  {...getFieldProps('status', { initialValue: state_data ? state_data.status: '' }, { rules: [{ required: true, message: '必填' }] })} >
                                     <Option value='1'>正常</Option>
                                     <Option value='-1'>删除</Option>
                                 </Select>

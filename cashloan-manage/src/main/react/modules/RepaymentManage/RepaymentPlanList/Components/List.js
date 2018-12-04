@@ -111,12 +111,13 @@ export default React.createClass({
 
     //查看弹窗
     showModal(title,record, canEdit) {
-       console.log("list:"+record);
+    //    console.log("list:"+record);
+    //    console.log(record);
         this.setState({
             visible: true,
             canEdit: canEdit,
             record: record,
-            title: title,
+            title: title
         },()=>{
             this.refs.Lookdetails.setFieldsValue(record);
         })
@@ -146,6 +147,7 @@ export default React.createClass({
 
     //选择
     onSelectChange(selectedRowKeys) {
+        // console.log(selectedRowKeys);
         this.setState({
             selectedRowKeys
         });
@@ -293,7 +295,7 @@ export default React.createClass({
                         {/*下载模板*/}Download Template
                     </button>
                 </div>
-                <Table columns={columns} rowKey={this.rowKey} ref="table" 
+                <Table columns={columns} rowKey={this.rowKey} ref="table"
                        onRowClick={this.onRowClick}
                        dataSource={this.state.data}
                        rowClassName={this.rowClassName}
