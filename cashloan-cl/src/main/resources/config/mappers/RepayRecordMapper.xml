@@ -8,13 +8,13 @@
     <result column="loan_record_no" jdbcType="VARCHAR" property="loanRecordNo" />
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="way_code" jdbcType="VARCHAR" property="wayCode" />
-    <result column="completion_time" jdbcType="TIMESTAMP" property="completionTime" />
+    <result column="repay_time" jdbcType="TIMESTAMP" property="repayTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, indent_no, loan_record_id, loan_record_no, way_code, amount, completion_time,status,
+    id, indent_no, loan_record_id, loan_record_no, way_code, amount, repay_time,status,
     created_time, updated_time
   </sql>
   <!-- 基本的sql查询条件公共引用 -->
@@ -52,4 +52,44 @@
       </if>
     </trim>
   </sql>
+
+  <select id="findByLoanRecordId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_repay_record
+    where loan_record_id = #{loanRecordId}
+  </select>
+
+  <insert id="saveLoanRecord" parameterType="com.xindaibao.cashloan.cl.model.kenya.RepayRecord">
+        insert into k_repay_record(
+          indent_no,loan_record_id,loan_record_no,amount,way_code,repay_time,status,created_time,updated_time
+        )
+        values(
+        #{indentNo},
+        #{loanRecordId},
+        #{loanRecordNo},
+        #{amount},
+        #{wayCode},
+        #{repayTime},
+        #{status},
+        #{createdTime},
+        #{updatedTime}
+        )
+    </insert>
+
+  <update id="updateLoanRecord" parameterType="com.xindaibao.cashloan.cl.model.kenya.RepayRecord">
+    update k_repay_record
+    <set>
+      <if test="indentNo != null">indent_no = #{indentNo},</if>
+      <if test="loanRecordId != null">loan_record_id = #{loanRecordId},</if>
+      <if test="loanRecordNo != null">loan_record_no = #{loanRecordNo},</if>
+      <if test="amount != null">amount = #{amount},</if>
+      <if test="wayCode != null">way_code = #{wayCode},</if>
+      <if test="repayTime != null">repay_time = #{repayTime},</if>
+      <if test="status != null">status = #{status},</if>
+      <if test="createdTime != null">created_time = #{createdTime},</if>
+      <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+    </set>
+    where id = #{id}
+  </update>
 </mapper>

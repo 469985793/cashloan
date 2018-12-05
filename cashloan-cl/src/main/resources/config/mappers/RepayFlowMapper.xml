@@ -67,4 +67,23 @@
     from  k_repay_flow
     where loan_record_id= #{loanRecordId,jdbcType=BIGINT}
   </select>
+
+  <insert id="saveRepayRecord" parameterType="com.xindaibao.cashloan.cl.model.kenya.RepayFlow">
+        insert into k_repay_flow(
+          indent_no,loan_record_id,loan_record_no,repay_record_id,repay_record_no,amount,way_code,completion_time,status,created_time,updated_time
+        )
+        values(
+        #{indentNo},
+        #{loanRecordId},
+        #{loanRecordNo},
+        #{repayRecordId},
+        #{repayRecordNo},
+        #{amount},
+        #{wayCode},
+        #{completionTime},
+        #{status},
+        #{createdTime},
+        #{updatedTime}
+        )
+    </insert>
 </mapper>

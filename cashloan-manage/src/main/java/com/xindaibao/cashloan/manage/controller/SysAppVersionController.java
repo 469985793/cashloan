@@ -90,6 +90,7 @@ public class SysAppVersionController extends BaseController {
        appVersion.setStatus(sysAppVersion.getStatus());
        appVersion.setVersionName(sysAppVersion.getVersionName());
        appVersion.setVersionCode(sysAppVersion.getVersionCode());
+       appVersion.setAppClassification(sysAppVersion.getAppClassification());
        appVersion.setPublishTime(new Date());
        appVersion.setCreatedTime(new Date());
        appVersion.setUpdatedTime(new Date());
@@ -102,7 +103,8 @@ public class SysAppVersionController extends BaseController {
            result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
            result.put(Constant.RESPONSE_CODE_MSG, "删除失败");
        }
-       int msg = sysAppVersionService.save(sysAppVersion);
+       appVersion.setStatus(1);
+       int msg = sysAppVersionService.save(appVersion);
        if (msg>0) {
            result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
            result.put(Constant.RESPONSE_CODE_MSG, "添加成功");

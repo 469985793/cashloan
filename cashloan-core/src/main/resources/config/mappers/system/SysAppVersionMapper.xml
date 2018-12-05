@@ -18,6 +18,7 @@
 		<result column="publish_uid" property="publishUid" />
 		<result column="publish_time" property="publishTime" />
 		<result column="status" property="status" />
+		<result column="app_classification" property="appClassification" />
 		<result column="created_time" property="createdTime" />
 		<result column="updated_time" property="updatedTime" />
 	</resultMap>
@@ -36,14 +37,15 @@
 	<insert id="save"
 		parameterType="com.xindaibao.cashloan.system.domain.SysAppVersion">
 		insert into
-		k_sys_app_version(app_code,app_name,app_type,version_code,version_name,version_text,force_flag,down_url,google_down_url,spread_url,publish_uid,publish_time,status)
+		k_sys_app_version(app_code,app_name,app_type,version_code,version_name,version_text,force_flag,down_url,google_down_url,spread_url,publish_uid,publish_time,app_classification,status)
 		values(#{appCode},#{appName},#{appType},#{versionCode},#{versionName},#{versionText},#{forceFlag},#{downUrl},#{googleDownUrl},#{spreadUrl},
-		#{publishUid},#{publishTime},#{status})
+		#{publishUid},#{publishTime},#{appClassification},#{status})
 	</insert>
 
 	<update id="delete" parameterType="com.xindaibao.cashloan.system.domain.SysAppVersion">
 		update k_sys_app_version
 		set status= -1
+		where  id=#{id}
 	</update>
 
 </mapper>     

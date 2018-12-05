@@ -10,17 +10,22 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.alibaba.fastjson.JSON;
+import com.alipay.api.domain.Product;
+import com.xindaibao.cashloan.cl.Util.FlowNumber;
 import com.xindaibao.cashloan.cl.domain.BankCard;
 import com.xindaibao.cashloan.cl.domain.BorrowRepay;
 import com.xindaibao.cashloan.cl.domain.UrgeRepayOrder;
 import com.xindaibao.cashloan.cl.domain.UserInvite;
 import com.xindaibao.cashloan.cl.mapper.*;
+import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
+import com.xindaibao.cashloan.cl.model.kenya.RepayFlow;
+import com.xindaibao.cashloan.cl.model.kenya.RepayRecord;
 import com.xindaibao.cashloan.cl.model.pay.alipay.helper.AlipayHelper;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.constant.LianLianConstant;
 import com.xindaibao.cashloan.cl.model.pay.weixin.helper.WeixinPayHelper;
-import com.xindaibao.cashloan.cl.service.UrgeRepayOrderLogService;
-import com.xindaibao.cashloan.cl.service.UrgeRepayOrderService;
+import com.xindaibao.cashloan.cl.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -42,8 +47,6 @@ import com.xindaibao.cashloan.cl.model.RepayExcelModel;
 import com.xindaibao.cashloan.cl.model.UrgeRepayOrderModel;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.AuthApplyModel;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.util.LianLianHelper;
-import com.xindaibao.cashloan.cl.service.BorrowRepayService;
-import com.xindaibao.cashloan.cl.service.ProfitLogService;
 import com.xindaibao.cashloan.core.common.context.Constant;
 import com.xindaibao.cashloan.core.common.context.Global;
 import com.xindaibao.cashloan.core.common.exception.BussinessException;
@@ -98,6 +101,8 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 	@Resource
 	private UrgeRepayOrderService urgeRepayOrderService;
 	@Resource
+	private LoanProductMapper loanProductMapper ;
+	@Resource
 	private UrgeRepayOrderLogService urgeRepayOrderLogService;
 	@Resource
 	private ProfitLogService profitLogService;
@@ -107,6 +112,10 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 	private ProfitLogMapper profitLogMapper;
     @Resource
     private BankCardMapper bankCardMapper;
+	@Resource
+	private RepayRecordMapper repayRecordMapper;
+	@Resource
+	private RepayFlowMapper repayFlowMapper;
     @Resource
     private UserMapper userMapper;
 
@@ -174,8 +183,8 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
     /**
 	 * 调用连连支付 分期付 授权接口 为用户授权
 	 * 
-	 * @param borrow
-	 * @param date
+	 * @param
+	 * @param
 	 */
     private void authApply(final long userId, final String borrowOrderNo, final List<BorrowRepay> borrowRepayList) {
         // 查询用户信息及银行卡信息 用于授权
@@ -213,112 +222,315 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 	@Override
 	public void confirmRepay(Map<String, Object> param) {
 		Long id = (Long) param.get("id");
-		//BorrowRepay br = borrowRepayMapper.findByPrimary(id);
 		LoanRecord lr = loanRecordMapper.findByPrimary(id);
 		logger.info("进入确认还款...借款id=" + id);
-	
-		//Borrow borrow = clBorrowMapper.findByPrimary(lr.getId());
-
-//		// 判断还款是否逾期，若逾期 ,额度恢复到提额前
-//		if (BorrowModel.STATE_DELAY.equals(borrow.getState())) {
-//			Credit credit = creditMapper.findByConsumerNo(StringUtil.isNull(br.getUserId()));
-//			if (credit != null && credit.getCount() != null && NumberUtil.getInt(credit.getCount()) > 0) {// 存在提额情况
-//				double mentionAmount = BigDecimalUtil.mul(Credit.ONE_TIME_CREDIT, NumberUtil.getInt(credit.getCount()));
-//				Map<String, Object> params = new HashMap<String, Object>();// 封装提额参数
-//				params.put("consumerNo", br.getUserId());
-//				params.put("total", BigDecimalUtil.sub(credit.getTotal(), mentionAmount));// 总额度
-//				params.put("unuse", BigDecimalUtil.sub(credit.getUnuse(), mentionAmount));// 未使用额度
-//				params.put("count", "0");// 提额次数归零
-//				creditMapper.updateByUserId(params);
-//			}
-//		}
-		long percent = getPercent(lr.getCycle(),lr.getBalance());
-		boolean isReBorrow = true;
 		String state = (String) param.get("state");
-		
+		//查产品表中的利息费和管理费
+		LoanProduct loanProduct = loanProductMapper.findByPrimary(lr.getProductId());
 		if (BorrowRepayModel.NORMAL_REPAYMENT.equals(state)) {
-			state = BorrowModel.STATE_FINISH;
 			param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
-            double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("actualbackAmt")));
-            double penaltyAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("penaltyAmout")));
-            if (lr.getBalance() > repayAmount) {
-                throw new BussinessException("还款金额不能小于应还金额");
-            }
-            if (lr.getOverdueFee() > penaltyAmount) {
-                throw new BussinessException("逾期罚金不能小于原逾期罚金");
-            }
-		} else if (BorrowRepayModel.OVERDUE_RELIEF.equals(state)) {
-			state = BorrowModel.STATE_DELAY_REMISSION_FINISH;
-            param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
 			double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("actualbackAmt")));
-			double penaltyAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("penaltyAmout")));
-			if (lr.getBalance() > repayAmount) {
-				throw new BussinessException("还款金额不能小于应还金额");
+			RepayRecord repayRecord = repayRecordMapper.findByLoanRecordId(id);
+			BigDecimal totalRepayAmount = new BigDecimal(lr.getActualbackAmt()).add(new BigDecimal(repayAmount));
+			if(repayRecord!=null && repayRecord.getAmount()!=null){//有还款记录表
+				if(lr.getBalance()+loanProduct.getAccountManage()+loanProduct.getFee()>totalRepayAmount.longValue()) {
+					//分期还款，添加还款流水表
+					RepayFlow repayFlow = new RepayFlow();
+					repayFlow.setLoanRecordId(id);
+					String indentNo1 = FlowNumber.getNewFlowNumber("RR");
+					repayFlow.setIndentNo(indentNo1);
+					repayFlow.setLoanRecordNo(lr.getIndentNo());
+					repayFlow.setRepayRecordNo(repayRecord.getIndentNo());
+					repayFlow.setRepayRecordId(repayRecord.getId());
+					repayFlow.setAmount(new BigDecimal(repayAmount));
+					repayFlow.setCreatedTime(new Date());
+					repayFlow.setUpdatedTime(new Date());
+					byte a =3;
+					repayFlow.setStatus(a);
+					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
+					if(rs1<1){
+						throw new BussinessException("添加还款流水表出错" + repayFlow.getId());
+					}
+					//分期还款，更新还款记录表和贷款记录表的金额
+					repayRecord.setAmount(totalRepayAmount);
+					Integer rs = repayRecordMapper.updateLoanRecord(repayRecord);
+					if(rs<1){
+						throw new BussinessException("更新还款记录表出错" + repayRecord.getId());
+					}
+					long amount = totalRepayAmount.longValue();
+					lr.setActualbackAmt(amount);
+					Integer loanRs = loanRecordMapper.update(lr);
+					if(loanRs<1){
+						throw new BussinessException("更新贷款记录表出错" + repayRecord.getId());
+					}
+				}
+				else {
+					//一次性还清，修改贷款记录表还款状态
+					byte b =3;
+					repayRecord.setStatus(b);
+					Integer rs1 = repayRecordMapper.updateLoanRecord(repayRecord);
+					if(rs1<1){
+						throw new BussinessException("更新还款记录表出错" + repayRecord.getId());
+					}
+					//一次性还清，修改订单表还款状态
+					byte a =6;
+					lr.setStatus(a);
+					long amount = totalRepayAmount.longValue();
+					lr.setActualbackAmt(amount);
+					Integer rs = loanRecordMapper.update(lr);
+					if(rs<1){
+						throw new BussinessException("更新贷款记录表出错" + lr.getId());
+					}
+					//一次性还清，添加还款流水表
+					RepayFlow repayFlow = new RepayFlow();
+					repayFlow.setLoanRecordId(id);
+					String indentNo1 = FlowNumber.getNewFlowNumber("RR");
+					repayFlow.setIndentNo(indentNo1);
+					repayFlow.setLoanRecordNo(lr.getIndentNo());
+					repayFlow.setRepayRecordNo(repayRecord.getIndentNo());
+					repayFlow.setRepayRecordId(repayRecord.getId());
+					repayFlow.setAmount(new BigDecimal(repayAmount));
+					repayFlow.setCreatedTime(new Date());
+					repayFlow.setUpdatedTime(new Date());
+					byte c =3;
+					repayFlow.setStatus(c);
+					Integer repayRs = repayFlowMapper.saveRepayRecord(repayFlow);
+					if(repayRs<1){
+						throw new BussinessException("添加还款流水表出错" + repayFlow.getId());
+					}
+				}
 			}
-			if (lr.getOverdueFee() > penaltyAmount) {
-				throw new BussinessException("逾期罚金不能小于原逾期罚金");
+			else if(repayRecord==null){//没有还款记录表
+				if(lr.getBalance()+loanProduct.getAccountManage()+loanProduct.getFee()> repayAmount){
+					//分期还款，添加还款记录表
+					RepayRecord repayRecord1 = new RepayRecord();
+					repayRecord1.setLoanRecordId(id);
+					repayRecord1.setLoanRecordNo(lr.getIndentNo());
+					repayRecord1.setAmount(new BigDecimal(repayAmount));
+					repayRecord1.setRepayTime(new Date());
+					repayRecord1.setCreatedTime(new Date());
+					repayRecord1.setUpdatedTime(new Date());
+					String indentNo = FlowNumber.getNewFlowNumber("RR");
+					repayRecord1.setIndentNo(indentNo);
+					Integer rs = repayRecordMapper.saveLoanRecord(repayRecord1);
+					if(rs<1){
+						throw new BussinessException("添加还款记录表出错" + repayRecord1.getId());
+					}
+					//分期还款，添加流水表
+					RepayFlow repayFlow = new RepayFlow();
+					repayFlow.setLoanRecordId(id);
+					String indentNo1 = FlowNumber.getNewFlowNumber("RR");
+					repayFlow.setIndentNo(indentNo1);
+					repayFlow.setRepayRecordNo(repayRecord1.getIndentNo());
+					repayFlow.setLoanRecordNo(lr.getIndentNo());
+					repayFlow.setRepayRecordId(repayRecord1.getId());
+					repayFlow.setAmount(new BigDecimal(repayAmount));
+					repayFlow.setCreatedTime(new Date());
+					repayFlow.setUpdatedTime(new Date());
+					byte a =3;
+					repayFlow.setStatus(a);
+					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
+					if(rs1<1){
+						throw new BussinessException("添加还款流水表出错" + repayFlow.getId());
+					}
+				}
+				else {
+					//一次性还清，修改订单表还款状态
+					byte a =6;
+					lr.setStatus(a);
+					long amount = totalRepayAmount.longValue();
+					lr.setActualbackAmt(amount);
+					Integer rs = loanRecordMapper.update(lr);
+					if(rs<1){
+						throw new BussinessException("更新贷款记录表出错" + lr.getId());
+					}
+					//一次性还清，添加贷款记录表
+					RepayRecord repayRecord1 = new RepayRecord();
+					repayRecord1.setLoanRecordId(id);
+					repayRecord1.setLoanRecordNo(lr.getIndentNo());
+					repayRecord1.setAmount(new BigDecimal(repayAmount));
+					repayRecord1.setRepayTime(new Date());
+					repayRecord1.setCreatedTime(new Date());
+					repayRecord1.setUpdatedTime(new Date());
+					String indentNo = FlowNumber.getNewFlowNumber("RR");
+					repayRecord1.setIndentNo(indentNo);
+					Integer rs2 = repayRecordMapper.saveLoanRecord(repayRecord1);
+					if(rs2<1){
+						throw new BussinessException("添加还款记录表出错" + repayRecord1.getId());
+					}
+					//一次性还清，添加流水表
+					RepayFlow repayFlow = new RepayFlow();
+					repayFlow.setLoanRecordId(id);
+					String indentNo1 = FlowNumber.getNewFlowNumber("RR");
+					repayFlow.setIndentNo(indentNo1);
+					repayFlow.setRepayRecordNo(repayRecord1.getIndentNo());
+					repayFlow.setLoanRecordNo(lr.getIndentNo());
+					repayFlow.setRepayRecordId(repayRecord1.getId());
+					repayFlow.setAmount(new BigDecimal(repayAmount));
+					repayFlow.setCreatedTime(new Date());
+					repayFlow.setUpdatedTime(new Date());
+					byte r =3;
+					repayFlow.setStatus(r);
+					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
+					if(rs1<1){
+						throw new BussinessException("添加还款流水表出错" + repayFlow.getId());
+					}
+				}
 			}
-		}else if(BorrowRepayModel.OVERDUE_REPAYMENT.equals(state)){
-			state = BorrowModel.STATE_DELAY_FINISH;
+			state = BorrowModel.STATE_FINISH;
+		}else if (BorrowRepayModel.OVERDUE_REPAYMENT.equals(state)) {
 			param.put("penaltyAmout", StringUtil.isNull(lr.getOverdueFee()));
-            double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("actualbackAmt")));
-            double penaltyAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("penaltyAmout")));
-            if (lr.getBalance() > repayAmount) {
-                throw new BussinessException("还款金额不能小于应还金额");
-            }
-            if (lr.getOverdueFee() > penaltyAmount) {
-                throw new BussinessException("逾期罚金不能小于原逾期罚金");
-            }
+			double repayAmount = NumberUtil.getDouble(StringUtil.isNull(param.get("actualbackAmt")));
+			RepayRecord repayRecord = repayRecordMapper.findByLoanRecordId(id);
+			BigDecimal totalRepayAmount = new BigDecimal(lr.getActualbackAmt()).add(new BigDecimal(repayAmount));
+			if (repayRecord != null && repayRecord.getAmount() != null) {//有还款记录表
+				if (lr.getBalance() + loanProduct.getAccountManage() + loanProduct.getFee() + lr.getOverdueFee() > totalRepayAmount.longValue()) {
+					//分期还款，添加还款流水表
+					RepayFlow repayFlow = new RepayFlow();
+					repayFlow.setLoanRecordId(id);
+					String indentNo1 = FlowNumber.getNewFlowNumber("RR");
+					repayFlow.setIndentNo(indentNo1);
+					repayFlow.setLoanRecordNo(lr.getIndentNo());
+					repayFlow.setAmount(new BigDecimal(repayAmount));
+					repayFlow.setRepayRecordNo(repayRecord.getIndentNo());
+					repayFlow.setRepayRecordId(repayRecord.getId());
+					repayFlow.setCreatedTime(new Date());
+					repayFlow.setUpdatedTime(new Date());
+					byte a = 3;
+					repayFlow.setStatus(a);
+					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
+					if (rs1 < 1) {
+						throw new BussinessException("逾期还款，添加还款流水表出错" + repayFlow.getId());
+					}
+					//分期还款，更新还款记录表和贷款记录表的金额
+					repayRecord.setAmount(totalRepayAmount);
+					Integer rs = repayRecordMapper.updateLoanRecord(repayRecord);
+					if (rs < 1) {
+						throw new BussinessException("逾期还款，更新还款记录表出错" + repayRecord.getId());
+					}
+					long amount = totalRepayAmount.longValue();
+					lr.setActualbackAmt(amount);
+					Integer loanRs = loanRecordMapper.update(lr);
+					if (loanRs < 1) {
+						throw new BussinessException("逾期还款，更新贷款记录表出错" + repayRecord.getId());
+					}
+				} else {
+					//一次性还清，修改贷款记录表还款状态
+					byte b = 3;
+					repayRecord.setStatus(b);
+					Integer rs1 = repayRecordMapper.updateLoanRecord(repayRecord);
+					if (rs1 < 1) {
+						throw new BussinessException("逾期还款，更新还款记录表出错" + repayRecord.getId());
+					}
+					//一次性还清，修改订单表还款状态
+					byte a = 22;
+					lr.setStatus(a);
+					long amount = totalRepayAmount.longValue();
+					lr.setActualbackAmt(amount);
+					Integer rs = loanRecordMapper.update(lr);
+					if (rs < 1) {
+						throw new BussinessException("逾期还款，更新贷款记录表出错" + lr.getId());
+					}
+					//一次性还清，添加还款流水表
+					RepayFlow repayFlow = new RepayFlow();
+					repayFlow.setLoanRecordId(id);
+					String indentNo1 = FlowNumber.getNewFlowNumber("RR");
+					repayFlow.setIndentNo(indentNo1);
+					repayFlow.setLoanRecordNo(lr.getIndentNo());
+					repayFlow.setRepayRecordNo(repayRecord.getIndentNo());
+					repayFlow.setRepayRecordId(repayRecord.getId());
+					repayFlow.setAmount(new BigDecimal(repayAmount));
+					repayFlow.setCreatedTime(new Date());
+					repayFlow.setUpdatedTime(new Date());
+					byte c = 3;
+					repayFlow.setStatus(c);
+					Integer repayRs = repayFlowMapper.saveRepayRecord(repayFlow);
+					if (repayRs < 1) {
+						throw new BussinessException("逾期还款，添加还款流水表出错" + repayFlow.getId());
+					}
+				}
+			} else if (repayRecord == null) {//没有还款记录表
+				if (lr.getBalance() + loanProduct.getAccountManage() + loanProduct.getFee() + lr.getOverdueFee()> repayAmount) {
+					//分期还款，添加还款记录表
+					RepayRecord repayRecord1 = new RepayRecord();
+					repayRecord1.setLoanRecordId(id);
+					repayRecord1.setLoanRecordNo(lr.getIndentNo());
+					repayRecord1.setAmount(new BigDecimal(repayAmount));
+					repayRecord1.setRepayTime(new Date());
+					repayRecord1.setCreatedTime(new Date());
+					repayRecord1.setUpdatedTime(new Date());
+					String indentNo = FlowNumber.getNewFlowNumber("RR");
+					repayRecord1.setIndentNo(indentNo);
+					Integer rs = repayRecordMapper.saveLoanRecord(repayRecord1);
+					if (rs < 1) {
+						throw new BussinessException("逾期还款，添加还款记录表出错" + repayRecord1.getId());
+					}
+					//分期还款，添加流水表
+					RepayFlow repayFlow = new RepayFlow();
+					repayFlow.setLoanRecordId(id);
+					String indentNo1 = FlowNumber.getNewFlowNumber("RR");
+					repayFlow.setIndentNo(indentNo1);
+					repayFlow.setRepayRecordNo(repayRecord1.getIndentNo());
+					repayFlow.setLoanRecordNo(lr.getIndentNo());
+					repayFlow.setRepayRecordId(repayRecord1.getId());
+					repayFlow.setAmount(new BigDecimal(repayAmount));
+					repayFlow.setCreatedTime(new Date());
+					repayFlow.setUpdatedTime(new Date());
+					byte a = 3;
+					repayFlow.setStatus(a);
+					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
+					if (rs1 < 1) {
+						throw new BussinessException("逾期还款，添加还款流水表出错" + repayFlow.getId());
+					}
+				} else {
+					//一次性还清，修改订单表还款状态
+					byte a = 22;
+					lr.setStatus(a);
+					long amount = totalRepayAmount.longValue();
+					lr.setActualbackAmt(amount);
+					Integer rs = loanRecordMapper.update(lr);
+					if (rs < 1) {
+						throw new BussinessException("逾期还款，更新贷款记录表出错" + lr.getId());
+					}
+					//一次性还清，添加贷款记录表
+					RepayRecord repayRecord1 = new RepayRecord();
+					repayRecord1.setLoanRecordId(id);
+					repayRecord1.setLoanRecordNo(lr.getIndentNo());
+					repayRecord1.setAmount(new BigDecimal(repayAmount));
+					repayRecord1.setRepayTime(new Date());
+					repayRecord1.setCreatedTime(new Date());
+					repayRecord1.setUpdatedTime(new Date());
+					String indentNo = FlowNumber.getNewFlowNumber("RR");
+					repayRecord1.setIndentNo(indentNo);
+					Integer rs2 = repayRecordMapper.saveLoanRecord(repayRecord1);
+					if (rs2 < 1) {
+						throw new BussinessException("逾期还款，添加还款记录表出错" + repayRecord1.getId());
+					}
+					//一次性还清，添加流水表
+					RepayFlow repayFlow = new RepayFlow();
+					repayFlow.setLoanRecordId(id);
+					String indentNo1 = FlowNumber.getNewFlowNumber("RR");
+					repayFlow.setIndentNo(indentNo1);
+					repayFlow.setRepayRecordNo(repayRecord1.getIndentNo());
+					repayFlow.setLoanRecordNo(lr.getIndentNo());
+					repayFlow.setRepayRecordId(repayRecord1.getId());
+					repayFlow.setAmount(new BigDecimal(repayAmount));
+					repayFlow.setCreatedTime(new Date());
+					repayFlow.setUpdatedTime(new Date());
+					byte r = 3;
+					repayFlow.setStatus(r);
+					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
+					if (rs1 < 1) {
+						throw new BussinessException("逾期还款，添加还款流水表出错" + repayFlow.getId());
+					}
+					state = BorrowModel.STATE_DELAY_REMISSION_FINISH;
+				}
+			}
 		}
-//		else if (BorrowRepayModel.RENEW_APPLY_REPAYMENT.equals(state)) { // 续期申请-原订单还款
-//			isReBorrow = false;
-//			if (borrow.getRenewMark() != null && borrow.getRenewMark() > 0) {
-//				if (borrow.getState().equals(BorrowModel.STATE_DELAY)
-//						|| borrow.getState().equals(BorrowModel.STATE_BAD)) {
-//					state = BorrowModel.STATE_DELAY_FINISH;
-//				} else {
-//					state = BorrowModel.STATE_FINISH;
-//				}
-//			} else {
-//				state = BorrowModel.STATE_TO_RENEW;
-//			}
-//
-//		}
 		else {
-			throw new BussinessException("信息提交有误。");
+			throw new BussinessException("还款失败");
 		}
-		Date repayTime = (Date) param.get("repayTime");
-		// 更新还款信息
-		if(BorrowModel.STATE_DELAY.equals(lr.getStatus())){
-			state = BorrowModel.STATE_DELAY_FINISH;
-		}
-		param.put("state",state);
-		int msg = updateBorrowReplayForKaney(lr, repayTime, param);
-		if (msg <= 0) {
-			throw new BussinessException("更新还款信息出错" + lr.getId());
-		}
-		// 更新借款表和借款进度状态
 
-		// 续借订单还款，修改原订单状态
-//		if (borrow.getRenewMark() != null && borrow.getRenewMark() > 0) {
-//			Map<String, Object> paramMap = new HashMap<>();
-//			paramMap.put("id", borrow.getOriginalId());
-//			paramMap.put("renewState", state);
-//			clBorrowMapper.updateSelective(paramMap);
-//		}
-		
-		// 信用额度修改
-//		Credit credit = creditMapper.findByConsumerNo(StringUtil.isNull( br.getUserId()));
-//		if (credit != null) {
-//			if(isReBorrow){//续借不修改额度
-//				credit.setUnuse(credit.getUnuse() + borrow.getAmount());
-//				credit.setUsed(credit.getUsed() > borrow.getAmount() ? credit.getUsed() - borrow.getAmount() : 0);
-//				creditMapper.update(credit);
-//			}
-//		} else {
-//			throw new BussinessException("用户信用额度信息不存在" + br.getUserId());
-//		}
-		
 		// 更新催收订单中的状态
 		Map<String, Object> orderMap = new HashMap<>();
 		orderMap.put("borrowId", lr.getId());
@@ -332,38 +544,6 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 			orderLog.setState(UrgeRepayOrderModel.STATE_ORDER_SUCCESS);
 			urgeRepayOrderLogService.saveOrderInfo(orderLog, order);
 		}
-
-//		// 判断是否有邀请人,若有邀请人则更新借款人的代理商资金奖励
-//		Map<String, Object> inviteMap = new HashMap<>();
-//		inviteMap.put("inviteId", br.getUserId());
-//		UserInvite invite = userInviteMapper.findSelective(inviteMap);
-//		if (StringUtil.isNotBlank(invite)) {
-//			// 判断是否已分配奖金
-//			Map<String, Object> profitMap = new HashMap<>();
-//			profitMap.put("borrowId", br.getBorrowId());
-//			int count = profitLogMapper.count(profitMap);
-//			if (count == 0) {
-//				profitLogService.save(br.getBorrowId(), DateUtil.getNow());
-//			}
-//		}
-		// TODO：还款成功提额一次，一次50
-//		if(isReBorrow){//续借不提额
-//			Credit c = creditMapper.findByConsumerNo(StringUtil.isNull(br.getUserId()));
-//			Map<String, Object> map = new HashMap<String, Object>();// 封装提额参数
-//			map.put("consumerNo", br.getUserId());
-//			map.put("total", c.getTotal() + Credit.ONE_TIME_CREDIT);// 总额度
-//			map.put("unuse", c.getUnuse() + Credit.ONE_TIME_CREDIT);// 未使用额度
-//			map.put("count", Integer.parseInt(StringUtil.isNull(c.getCount()))+1);// 提额次数+1
-//
-//			int x = 1;
-//
-//			if ((Integer.parseInt(StringUtil.isNull(c.getCount()))+1) * Credit.ONE_TIME_CREDIT <= 500) {// 提额上线为500
-//				x = creditMapper.updateByUserId(map);
-//			}
-//			if (x < 1) {
-//				throw new BussinessException("自动提额失败");
-//			}
-//		}
 	}
 
 	/**
