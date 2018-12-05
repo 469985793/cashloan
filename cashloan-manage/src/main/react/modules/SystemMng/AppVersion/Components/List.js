@@ -204,6 +204,10 @@ export default React.createClass({
     }, {
       title: 'Publish time',
       dataIndex: "publishTime"
+    }, 
+    {
+      title: 'App classification',
+      dataIndex: "appClassification"
     }, {
       title: 'Status',
       dataIndex: "status",

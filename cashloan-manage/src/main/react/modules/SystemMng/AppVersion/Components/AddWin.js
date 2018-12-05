@@ -77,17 +77,18 @@ var AddWin = React.createClass({
         var record = props.record;
         var title = props.title;
         //console.log(record)
+        
         var url = "/modules/manage/user/appVersion/save.htm";
         this.props.form.validateFields((errors, values) => {
-                // console.log(values);
+            console.log(errors);
+                console.log(values);
             if (!!errors) {
-                // console.log(123);
                 //console.log('Errors in form!!!');
                 return;
             }
             
             var trueText = values.versionText.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
-        // console.log(123);
+        console.log(this.state.record);
             Utils.ajaxData({
                 url: '/modules/manage/user/appVersion/save.htm',
                 method: 'post',
@@ -95,6 +96,7 @@ var AddWin = React.createClass({
                     appCode: values.appCode,
                     appName: values.appName,
                     appType: values.appType,
+                    appClassification:values.appClassification,
                     versionCode:values.versionCode,
                     versionName:values.versionName,
                     versionText:trueText,
@@ -103,7 +105,8 @@ var AddWin = React.createClass({
                     googleDownUrl:values.googleDownUrl,
                     spreadUrl:values.spreadUrl,
                     publishUid:values.publishUid,
-                    status:values.status
+                    status:values.status,
+                    id:this.state.record.id
                 },
                 callback: (result) => {
                     console.log(result);
@@ -175,6 +178,17 @@ var AddWin = React.createClass({
                                     <Option value='11'>Android Pad</Option>
                                     <Option value='20'>IOS</Option>
                                     <Option value='21'>IOS Pad</Option>
+                                </Select>
+                            </FormItem>
+                        </Col>
+                    </Row>
+                    {/*app类别*/}
+                    <Row>
+                        <Col span="24">
+                            <FormItem  {...formItemLayout} label="App classification:">
+                                <Select disabled={!props.canEdit}  {...getFieldProps('appClassification', { initialValue: state_data ? state_data.appClassification+'': '' }, { rules: [{ required: true, message: '必填' }] })} >
+                                    <Option value='1'>Jumbopesa</Option>
+                                    <Option value='2'>Pesaplus</Option>
                                 </Select>
                             </FormItem>
                         </Col>
