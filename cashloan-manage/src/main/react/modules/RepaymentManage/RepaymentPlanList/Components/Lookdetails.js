@@ -26,6 +26,7 @@ const objectAssign = require('object-assign');
 var Lookdetails = React.createClass({
   getInitialState() {
     return {
+      selectedRowKeys: [], // 这里配置默认勾选列
       value: 1,
       startValue: null,
       data: [],
@@ -33,6 +34,8 @@ var Lookdetails = React.createClass({
         pageSize: 3,
         current: 1
       },
+      record: "",
+      loading: false
     };
   },
   handleCancel() {
@@ -48,10 +51,10 @@ var Lookdetails = React.createClass({
       record: nextProps.record
     })
     // console.log(nextProps);
-    
+
   },
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     // console.log(nextProps)
     this.fetch();
     []
@@ -60,62 +63,66 @@ var Lookdetails = React.createClass({
     this.setState({
       loading: true
     });
+
     if (!params.pageSize) {
-        var params = {};
-        params = {
-          pageSize: 1,
-          current: 1,
-          id:this.props.record.id
-        }
+      var params = {};
+      params = {
+        pageSize: 1,
+        current: 1,
+        id: this.props.record.id
+      }
+
     }
+    params.id = this.props.record.id;
+    console.log(params);
     Utils.ajaxData({
       url: '/modules/manage/borrow/repay/RepayFlow.htm',
       method: "post",
       data: params,
       callback: (result) => {
-        // console.log(result);
+        console.log(result);
         const pagination = this.state.pagination;
         pagination.current = params.current;
         pagination.pageSize = params.pageSize;
         pagination.total = result.page.total;
         if (result.data) {
-          for (var i = 0; i < result.data.length; i++) {
-            if (result.data[i].overdueFee) {
-              result.data[i].overdueFee = result.data[i].overdueFee / 100;
-            } else {
-              result.data[i].overdueFee == "";
-            }
-            if (result.data[i].balance) {
-              result.data[i].balance = result.data[i].balance / 100;
-            } else {
-              result.data[i].balance = "";
-            }
-            if (result.data[i].repayAmount) {
-              result.data[i].repayAmount = result.data[i].repayAmount / 100
-            } else {
-              result.data[i].repayAmount = "";
-            }
-            if (result.data[i].repayTotal) {
-              result.data[i].repayTotal = result.data[i].repayTotal / 100
-            } else {
-              result.data[i].repayTotal = "";
-            }
-            if (result.data[i].actualRepayment) {
-              result.data[i].actualRepayment = result.data[i].actualRepayment / 100
-            } else {
-              result.data[i].actualRepayment = "";
-            }
-            if (result.data[i].actualBalance) {
-              result.data[i].actualBalance = result.data[i].actualBalance / 100
-            } else {
-              result.data[i].actualBalance = "";
-            }
-            if (result.data[i].actualbackAmt) {
-              result.data[i].actualbackAmt = result.data[i].actualbackAmt / 100
-            } else {
-              result.data[i].actualbackAmt = "";
-            }
-          }
+          // for (var i = 0; i < result.data.length; i++) {
+          //   if (result.data[i].overdueFee) {
+          //     result.data[i].overdueFee = result.data[i].overdueFee / 100;
+          //   } else {
+          //     result.data[i].overdueFee == "";
+          //   }
+          //   if (result.data[i].balance) {
+          //     result.data[i].balance = result.data[i].balance / 100;
+          //   } else {
+          //     result.data[i].balance = "";
+          //   }
+          //   if (result.data[i].repayAmount) {
+          //     result.data[i].repayAmount = result.data[i].repayAmount / 100
+          //   } else {
+          //     result.data[i].repayAmount = "";
+          //   }
+          //   if (result.data[i].repayTotal) {
+          //     result.data[i].repayTotal = result.data[i].repayTotal / 100
+          //   } else {
+          //     result.data[i].repayTotal = "";
+          //   }
+          //   if (result.data[i].actualRepayment) {
+          //     result.data[i].actualRepayment = result.data[i].actualRepayment / 100
+          //   } else {
+          //     result.data[i].actualRepayment = "";
+          //   }
+          //   if (result.data[i].actualBalance) {
+          //     result.data[i].actualBalance = result.data[i].actualBalance / 100
+          //   } else {
+          //     result.data[i].actualBalance = "";
+          //   }
+          //   if (result.data[i].actualbackAmt) {
+          //     result.data[i].actualbackAmt = result.data[i].actualbackAmt / 100
+          //   } else {
+          //     result.data[i].actualbackAmt = "";
+          //   }
+          // }
         }
         if (!pagination.current) {
           pagination.current = 1
@@ -130,12 +137,20 @@ var Lookdetails = React.createClass({
       }
     });
   },
+  //选择
+  onSelectChange(selectedRowKeys) {
+    // console.log(selectedRowKeys);
+    this.setState({
+      selectedRowKeys
+    });
+  },
   //分页
   handleTableChange(pagination, filters, sorter) {
     const pager = this.state.pagination;
-    console.log(pager);
+    // console.log(pager);
+    // console.log(pagination);
     pager.current = pagination.current;
-    pager.total = pagination.total;
+    // pager.total = pagination.total;
     this.setState({
       pagination: pager,
     });
