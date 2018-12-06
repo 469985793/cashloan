@@ -531,7 +531,7 @@ public class ManageBorrowController extends ManageBaseController {
 		Map<String,Object> result = new HashMap<String,Object>();
 		try{
 		    //,null
-		    int msg =clBorrowService.manualVerifyBorrow(borrowId, unstate, remark);
+		    int msg =clBorrowService.manualVerifyBorrow(borrowId, unstate, remark,null);
 			if(msg==1){
 				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 				result.put(Constant.RESPONSE_CODE_MSG, "复审成功");
