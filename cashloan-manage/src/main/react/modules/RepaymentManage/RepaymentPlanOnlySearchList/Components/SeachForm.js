@@ -47,7 +47,7 @@ let SeachForm = React.createClass({
                     <Input  {...getFieldProps('orderNo') } />
                 </FormItem>
                 <FormItem label="Repayment Status:">{/*还款状态*/}
-                    <Select style={{ width: 150 }} {...getFieldProps('state', { initialValue: '' }) }>
+                    <Select style={{ width: 150 }} {...getFieldProps('state', { initialValue: '' })}>
                         <Option value="">All</Option>{/*全部*/}
                         <Option value="6">Repaid</Option>{/*已还款*/}
                         <Option value="5">Unpaid</Option>{/*未还款*/}
@@ -58,7 +58,7 @@ let SeachForm = React.createClass({
                 </FormItem>
                 <FormItem><Button type="primary" onClick={this.handleQuery}>Search{/*查询*/}</Button></FormItem>
                 <FormItem><Button type="reset" onClick={this.handleReset}>Reset{/*重置*/}</Button></FormItem>
-                <FormItem><Button onClick={this.handleOut}>导出</Button></FormItem>
+                <FormItem><Button onClick={this.handleOut}>{/*导出*/}Export</Button></FormItem>
             </Form>
         );
     }

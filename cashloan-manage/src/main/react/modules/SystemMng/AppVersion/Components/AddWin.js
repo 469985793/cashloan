@@ -80,15 +80,15 @@ var AddWin = React.createClass({
         
         var url = "/modules/manage/user/appVersion/save.htm";
         this.props.form.validateFields((errors, values) => {
-            console.log(errors);
-                console.log(values);
+            // console.log(errors);
+            //     console.log(values);
             if (!!errors) {
                 //console.log('Errors in form!!!');
                 return;
             }
             
             var trueText = values.versionText.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
-        console.log(this.state.record);
+        // console.log(this.state.record);
             Utils.ajaxData({
                 url: '/modules/manage/user/appVersion/save.htm',
                 method: 'post',
@@ -109,7 +109,7 @@ var AddWin = React.createClass({
                     id:this.state.record.id
                 },
                 callback: (result) => {
-                    console.log(result);
+                    // console.log(result);
                     Modal.success({
                         title: result.msg,
                     });

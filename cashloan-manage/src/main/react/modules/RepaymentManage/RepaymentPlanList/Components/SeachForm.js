@@ -58,7 +58,7 @@ let SeachForm = React.createClass({
                 </FormItem>
                 <FormItem><Button type="primary" onClick={this.handleQuery}>Search{/*查询*/}</Button></FormItem>
                 <FormItem><Button type="reset" onClick={this.handleReset}>Reset{/*重置*/}</Button></FormItem>
-                <FormItem><Button onClick={this.handleOut}>导出</Button></FormItem>
+                <FormItem><Button onClick={this.handleOut}>{/*导出*/}Export</Button></FormItem>
             </Form>
         );
     }
