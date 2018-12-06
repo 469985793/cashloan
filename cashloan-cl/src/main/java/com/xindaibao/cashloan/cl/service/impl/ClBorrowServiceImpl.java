@@ -1347,6 +1347,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
             map.put("id", loanRecord.getIndentNo());
             map.put("state", state);
             map.put("auditUserReson", remark);
+            code = clBorrowMapper.reviewStatus(map);
             Long amount = loanRecord.getBalance() / 100;
             if (state.equals(BorrowModel.STATE_REPAYING)) {
                 if (lineType != null && lineType.equals("online")) {
