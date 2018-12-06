@@ -49,25 +49,25 @@ var ReviewWin = React.createClass({
     return (
       <Modal title={props.title} visible={props.visible} onCancel={this.handleCancel} width="1200" footer={modalBtns} >
                 <Tabs defaultActiveKey="1" onTabClick={this.handleTabClick} activeKey={this.state.activekey}>
-                    <TabPane tab="基本信息" key="1">
+                    <TabPane tab="Basic Message" key="1">{/*基本信息*/}
                         <Tab1 record={props.record} ref="Tab1" canEdit={props.canEdit}  recordSoure={props.recordSoure} />
                     </TabPane>
-                    <TabPane tab="通讯录" key="2">
+                    <TabPane tab="Address Book" key="2">{/*通讯录*/}
                         <Tab2 record={props.record} ref="Tab2" canEdit={props.canEdit} activeKey={this.state.activekey}/>
                     </TabPane>
-                    <TabPane tab="通话记录" key="3">
+                    <TabPane tab="Call Records" key="3">{/*通话记录*/}
                         <Tab3 record={props.record} ref="Tab3" canEdit={props.canEdit} activeKey={this.state.activekey}/>
                     </TabPane>
                   { /* <TabPane tab="运营商通话记录" key="4">
                         <Tab4 record={props.record} ref="Tab4" canEdit={props.canEdit} activeKey={this.state.activekey}/>
                     </TabPane>*/}
-                    <TabPane tab="短信数据" key="5">
+                    <TabPane tab="SMS Data" key="5">{/*短信数据*/}
                         <Tab5 record={props.record} ref="Tab5" canEdit={props.canEdit} activeKey={this.state.activekey}/>
                     </TabPane>
-                    <TabPane tab="借款记录" key="6">
+                    <TabPane tab="Loan History" key="6">{/*借款记录*/}
                         <Tab6 record={props.record} ref="Tab6" canEdit={props.canEdit} activeKey={this.state.activekey}/>
                     </TabPane>
-                    <TabPane tab="邀请记录" key="7">
+                    <TabPane tab="Invitation Records" key="7">{/*邀请记录*/}
                         <Tab7 record={props.record} ref="Tab7" canEdit={props.canEdit} activeKey={this.state.activekey}/>
                     </TabPane>
                 </Tabs>

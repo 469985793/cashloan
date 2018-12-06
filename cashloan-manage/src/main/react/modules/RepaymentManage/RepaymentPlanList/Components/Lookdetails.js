@@ -74,7 +74,7 @@ var Lookdetails = React.createClass({
 
     }
     params.id = this.props.record.id;
-    console.log(params);
+    // console.log(params);
     Utils.ajaxData({
       url: '/modules/manage/borrow/repay/RepayFlow.htm',
       method: "post",
@@ -212,7 +212,7 @@ var Lookdetails = React.createClass({
       }
       var tips = "Are you sure to submit";//您是否确定提交
       if (this.props.title == "Manual Transfer") {//手动划款
-        console.log("commit:" + values);
+        // console.log("commit:" + values);
         if (values.repayMoney <= 1000) {
           Modal.error({
             title: "Batch repayment does not take manual payment",//分批还款不走手动划款
@@ -278,26 +278,38 @@ var Lookdetails = React.createClass({
     } = this.props.form;
     var props = this.props;
     var state = this.state;
-    // console.log(props.title);
+    // console.log('props',props);
     var columns = [{
-      title: 'Indent No',//真实姓名
-      dataIndex: 'indentNo',
+      title: 'Way Code',//支付渠道
+      dataIndex: 'wayCode',
       width: 25 + '%',
     }, {
-      title: 'Loan RecordNo',//手机号码
-      dataIndex: "loanRecordNo",
+      title: 'Created Time',//日期
+      dataIndex: "createdTime",
       width: 25 + '%',
 
     }, {
-      title: 'Repay RecordNo',//订单号
-      dataIndex: 'repayRecordNo',
-      width: 25 + '%',
-
-
-    }, {
-      title: 'Amount',//借款金额
+      title: 'Amount',//订单号
       dataIndex: 'amount',
       width: 25 + '%',
+    }, {
+      title: 'Status',//状态
+      dataIndex: 'status',
+      width: 25 + '%',
+      render:(text, record)=>{
+        if (record.status == '1') {
+          return '发起支付'
+        }
+        else if (record.status == '2') {
+          return '受理中'
+        }
+        else if (record.status == '3') {
+          return '支付成功'
+        }
+        else if (record.status == '4') {
+          return '支付失败'
+        }
+      }
 
 
     }]

@@ -123,25 +123,25 @@ var Lookdetails = React.createClass({
       <Modal title={props.title} visible={props.visible} onCancel={this.handleCancel} width="1200" footer={props.title == "查看" ? [modalBtnstwo] : [modalBtns]} maskClosable={false} >
 
         <Tabs defaultActiveKey="1"  >
-          <TabPane tab="人工复审" key='1'>
+          <TabPane tab="Manual Review" key='1'>{/*人工复审*/} 
             <RuleReport record={this.props.record} visible={props.visible} />
           </TabPane>
-          <TabPane tab="基本信息" key="2">
+          <TabPane tab="Basic Message" key="2">{/*基本信息*/}
             <Tab1 record={props.record} dataForm={props.dataForm} ref="Tab1" canEdit={props.canEdit} visible={props.visible} recordSoure={props.recordSoure} />
           </TabPane>
-          <TabPane tab="通讯录" key="3">
+          <TabPane tab="Address Book" key="3">{/*通讯录*/}
             <Tab2 record={props.record} ref="Tab2" canEdit={props.canEdit} visible={props.visible} />
           </TabPane>
-          <TabPane tab="通话记录" key="4">
+          <TabPane tab="Call Records" key="4">{/*通话记录*/}
             <Tab3 record={props.record} ref="Tab3" canEdit={props.canEdit} visible={props.visible} />
           </TabPane>
           {/*<TabPane tab="运营商通话记录" key="5">
             <Tab4 record={props.record} ref="Tab4" canEdit={props.canEdit} visible={props.visible} />
           </TabPane>*/}
-          <TabPane tab="短信记录" key="6">
+          <TabPane tab="SMS  Logs" key="6">{/*短信记录*/}
             <Tab5 record={props.record} ref="Tab5" canEdit={props.canEdit} visible={props.visible} />
           </TabPane>
-          <TabPane tab="借款记录" key="7">
+          <TabPane tab="Loan History" key="7">{/*借款记录*/}
             <Tab6 record={props.record} ref="Tab6" canEdit={props.canEdit} visible={props.visible} />
           </TabPane>
         </Tabs>

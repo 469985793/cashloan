@@ -52,7 +52,7 @@ var AddWin = React.createClass({
                 data:{
                     id: values.id,
                     state: values.state1,
-                    //lineType:values.lineType,
+                    lineType:values.lineType,
                     remark:values.remark,
                     indentNo:values.indentNo,
                     uid:values.uid,
@@ -181,11 +181,11 @@ var AddWin = React.createClass({
           <Row>   
             <Col span="12">
                <FormItem {...formItemLayout} label="Sources of funding:">
-               <Input  type="text" disabled={true} value="Offline lending"/>
-               {/* <Select type="text" {...getFieldProps('lineType') } >
+               {/* <Input  type="text" disabled={true} value="Offline lending"/> */}
+               <Select type="text" {...getFieldProps('lineType') } >
                               <Option value="offline">Offline lending</Option>
                               <Option value="online">Online lending</Option>
-                </Select> */}
+                </Select>
               </FormItem>
             </Col>
             <Col span="12">

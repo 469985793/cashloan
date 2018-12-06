@@ -64,28 +64,73 @@ var Tab6 = React.createClass({
   },
   render() {
     var columns = [{
-      title: '订单号',
+      title: 'IndentNo',//订单号
       dataIndex: "indentNo",
+      width:150
     }, {
-      title: '借款金额（元）',
+      title: 'LoanAmount(KES)',//借款金额(元)
       dataIndex: "balance",
+      width:130
     }, {
-      title: '借款期限（天）',
+      title: 'Cycle(DAY)',//借款期限(天)
       dataIndex: "cycle",
+      width:90
     }, {
-      title: '借款时间',
+      title: 'ApplyTime',//借款时间
       dataIndex: "createdTime",
     }, {
-      title: '综合费用（元）',
+      title: 'PreFee(KES)',//综合费用(元)
       dataIndex: "fee",
+      width:100
     }, {
-      title: '实际到账金额（元）',
+      title: 'ReceiveAmount(KES)',//实际到账金额(元)
       dataIndex: "actualBalance",
+      width:140
     }, {
-      title: '实际还款金额（元）',
+      title: 'ActualBackAmount(KES)',//实际还款金额（元）
       dataIndex: "actualbackAmt",
+      width:160
     }, {
-      title: '状态',
+      title: 'LoanReason',//借款原因
+      dataIndex: "loanReason",
+      width:100,
+      render:(text,record)=>{
+        if (record.status == '1') {
+          return 'Housing related'//住宅相关
+        }
+        else if (record.status == '2') {
+          return 'Vehicle related'//车辆相关
+        }
+        else if (record.status == '3') {
+          return 'Education related'//教育相关
+        }
+        else if (record.status == '4') {
+          return 'Debt consolidation'//债务合并
+        }
+        else if (record.status == '5') {
+          return 'Personal consumption'//个人消费
+        }
+        else if (record.status == '6') {
+          return 'Medical first aid'//医疗急救
+        }
+        else if (record.status == '7') {
+          return 'Funeral'//葬礼
+        }
+        else if (record.status == '8') {
+          return 'Micro enterprise'//微型企业
+        }
+        else if (record.status == '9') {
+          return 'Special events'//特殊事件
+        }
+        else if (record.status == '10') {
+          return 'Traditional ritual'//传统仪式
+        }
+        else if (record.status == '11') {
+          return 'Other'//其他
+        }
+      }
+    }, {
+      title: 'Status',//状态
       dataIndex: "status",
       render: (text, record) => {
         if (text == 1) {
@@ -124,7 +169,8 @@ var Tab6 = React.createClass({
     }
     }];
     return (<div className="block-panel">
-              <Table columns={columns} rowKey={this.rowKey}  
+              <Table 
+              columns={columns} rowKey={this.rowKey}  
               dataSource={this.state.data}
               pagination={this.state.pagination}
               loading={this.state.loading}
