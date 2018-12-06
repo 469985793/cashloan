@@ -1,10 +1,7 @@
 package com.xindaibao.cashloan.cl.service.impl;
 
-import com.xindaibao.cashloan.cl.mapper.KanyaPayFlowMapper;
 import com.xindaibao.cashloan.cl.mapper.KanyaPayRecordMapper;
-import com.xindaibao.cashloan.cl.model.kenya.KanyaPayFlow;
 import com.xindaibao.cashloan.cl.model.kenya.KanyaPayRecord;
-import com.xindaibao.cashloan.cl.service.KanyaPayFlowService;
 import com.xindaibao.cashloan.cl.service.KanyaPayRecordService;
 import com.xindaibao.cashloan.core.common.mapper.BaseMapper;
 import com.xindaibao.cashloan.core.common.service.impl.BaseServiceImpl;

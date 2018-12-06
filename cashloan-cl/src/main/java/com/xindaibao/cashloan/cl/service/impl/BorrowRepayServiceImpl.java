@@ -233,7 +233,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 			RepayRecord repayRecord = repayRecordMapper.findByLoanRecordId(id);
 			BigDecimal totalRepayAmount = new BigDecimal(lr.getActualbackAmt()).add(new BigDecimal(repayAmount));
 			if(repayRecord!=null && repayRecord.getAmount()!=null){//有还款记录表
-				if(lr.getBalance()+loanProduct.getAccountManage()+loanProduct.getFee()>totalRepayAmount.longValue()) {
+				if(lr.getBalance()+loanProduct.getAccountManage()+loanProduct.getProfit()>totalRepayAmount.longValue()) {
 					//分期还款，添加还款流水表
 					RepayFlow repayFlow = new RepayFlow();
 					repayFlow.setLoanRecordId(id);
@@ -301,7 +301,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 				}
 			}
 			else if(repayRecord==null){//没有还款记录表
-				if(lr.getBalance()+loanProduct.getAccountManage()+loanProduct.getFee()> repayAmount){
+				if(lr.getBalance()+loanProduct.getAccountManage()+loanProduct.getProfit()> repayAmount){
 					//分期还款，添加还款记录表
 					RepayRecord repayRecord1 = new RepayRecord();
 					repayRecord1.setLoanRecordId(id);
@@ -384,7 +384,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 			RepayRecord repayRecord = repayRecordMapper.findByLoanRecordId(id);
 			BigDecimal totalRepayAmount = new BigDecimal(lr.getActualbackAmt()).add(new BigDecimal(repayAmount));
 			if (repayRecord != null && repayRecord.getAmount() != null) {//有还款记录表
-				if (lr.getBalance() + loanProduct.getAccountManage() + loanProduct.getFee() + lr.getOverdueFee() > totalRepayAmount.longValue()) {
+				if (lr.getBalance() + loanProduct.getAccountManage() + loanProduct.getProfit() + lr.getOverdueFee() > totalRepayAmount.longValue()) {
 					//分期还款，添加还款流水表
 					RepayFlow repayFlow = new RepayFlow();
 					repayFlow.setLoanRecordId(id);
@@ -450,7 +450,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					}
 				}
 			} else if (repayRecord == null) {//没有还款记录表
-				if (lr.getBalance() + loanProduct.getAccountManage() + loanProduct.getFee() + lr.getOverdueFee()> repayAmount) {
+				if (lr.getBalance() + loanProduct.getAccountManage() + loanProduct.getProfit() + lr.getOverdueFee()> repayAmount) {
 					//分期还款，添加还款记录表
 					RepayRecord repayRecord1 = new RepayRecord();
 					repayRecord1.setLoanRecordId(id);
