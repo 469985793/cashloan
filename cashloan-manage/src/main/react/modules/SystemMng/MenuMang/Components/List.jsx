@@ -191,7 +191,9 @@ export default React.createClass({
       });
     }
   },  
-  onRowClick(record) { 
+  onRowClick(record) {
+    
+    console.log(record); 
     this.setState({
       selectedRowKeys: [record.value],
       selectedRows:[record]
