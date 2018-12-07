@@ -87,6 +87,7 @@ var AddWin = React.createClass({
                         data: params,
                         method: 'post',
                         callback: (result) => {
+                            // console.log(result);
                             if (result.code == 200) {
                                 me.handleCancel();
                                 Modal.success({
@@ -115,6 +116,7 @@ var AddWin = React.createClass({
             url: '/modules/manage/system/dict/findByTypeCode.htm',
             data: params,
             callback: (result) => {
+                // console.log(result);
                 var data = result.data;
                 var urgeArray = [];
                 data.forEach(item => {
