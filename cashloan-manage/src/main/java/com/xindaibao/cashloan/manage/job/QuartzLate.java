@@ -71,6 +71,7 @@ public class QuartzLate implements Job{
 			for (int i = 0; i < list.size(); i++) {
 				try {
 					long day = DateUtil.daysBetween(new Date(), list.get(i).getShouldbackTime());
+					String SMS="";
 					logger.info("-----------------------day:"+day);
 						if (day<0) {
 							double amout = list.get(i).getBalance();
@@ -123,7 +124,8 @@ public class QuartzLate implements Job{
 								UrgeRepayOrder uro =  urgeRepayOrderService.findByBorrowId(list.get(i).getId());
 								if (StringUtil.isBlank(uro)) {
 									urgeRepayOrderService.saveOrder(list.get(i).getId());
-									result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(), OverDueSMSModel.OVER_DUE_ONE);
+									SMS=OverDueSMSModel.OVER_DUE_ONE.replace("{$Name}",list.get(i).getLastName());
+									result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 								}else {
 									Map<String,Object> uroMap = new HashMap<>();
 									uroMap.put("penaltyAmout", Long.valueOf(new Double(overdueFee+1000l).longValue()));
@@ -140,19 +142,20 @@ public class QuartzLate implements Job{
 							logger.info("---------发送逾期start---------");
 							if(Math.abs(day)==1){
 								//clSmsService.overdue(list.get(i).getId(),"overdue1");//逾期第1天
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(), OverDueSMSModel.OVER_DUE_ONE);
+								SMS= OverDueSMSModel.OVER_DUE_ONE.replace("{$Name}",list.get(i).getLastName());
+								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 							}else if(Math.abs(day)==3){
 								//clSmsService.overdue(list.get(i).getId(),"overdue3");//逾期第3天
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),OverDueSMSModel.OVER_DUE_THREE);
+								SMS=OverDueSMSModel.OVER_DUE_THREE.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",amout+div(list.get(i).getAccountManage(),100,1)+div(list.get(i).getProfit(),100,1)+"");
+								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 							}else if(Math.abs(day)==7){
 								//clSmsService.overdue(list.get(i).getId(),"overdue7");//逾期第7天
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),OverDueSMSModel.OVER_DUE_SAVEN);
+								SMS=OverDueSMSModel.OVER_DUE_SAVEN.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",amout+div(list.get(i).getAccountManage(),100,1)+div(list.get(i).getProfit(),100,1)+"");
+								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 							}else if(Math.abs(day)==14){
 								//clSmsService.overdue(list.get(i).getId(),"overdue14");//逾期第14天
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),OverDueSMSModel.OVER_DUE_TWOWEEK);
-							} else if(Math.abs(day)==28){
-								//clSmsService.overdue(list.get(i).getId(),"overdue28");//逾期第14天
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),OverDueSMSModel.OVER_DUE_TWOWEEK);
+								SMS=OverDueSMSModel.OVER_DUE_TWOWEEK.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",amout+div(list.get(i).getAccountManage(),100,1)+div(list.get(i).getProfit(),100,1)+"");
+								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 							}
 							if(result == true){
 								logger.info("逾期短信发送成功。");
@@ -163,8 +166,8 @@ public class QuartzLate implements Job{
 						}
 
 					//还款日前一天发送提醒短信
-					String SMS = "Dear friend,tomorrow will be due date for the loan you applied for at   "+list.get(i).getShouldbackTime()+". Please confirm that your M-Pesa account is fully funded before 18:00PM  tomorrow to avoid additional charges for overdue repayment.[JumboPesa]";
 					if(day==1){
+						SMS=OverDueSMSModel.BEFOR_DUE_ONE.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(list.get(i).getBalance(),100,1)+div(list.get(i).getAccountManage(),100,1)+div(list.get(i).getProfit(),100,1)+"");
 						result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 					}
 					if(result == true){
@@ -234,5 +237,9 @@ public class QuartzLate implements Job{
 		BigDecimal balaces = new BigDecimal(new Double(balace).toString());
 		return new Double(amounts.add(balaces).doubleValue());
 	}
-	
+	public double div(double d1,double d2,int len) {// 进行除法运算
+		BigDecimal b1 = new BigDecimal(d1);
+		BigDecimal b2 = new BigDecimal(d2);
+		return b1.divide(b2,len,BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
 }
