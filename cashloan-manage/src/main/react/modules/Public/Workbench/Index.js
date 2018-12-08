@@ -129,14 +129,14 @@ export default React.createClass({
                                     <div className='blk-bottom'>
                                         <span className='workBench-icon icon3'> </span>
                                         <span className='blk-title'>待还款总余额</span>
-                                        <span className='blk-number'>{data.needRepay}</span>元
+                                        ksh<span className='blk-number'>{data.needRepay}</span>
                                     </div>
                                 </Col>
                                 <Col span='12'>
                                     <div className='blk-bottom'>
                                         <span className='workBench-icon icon4'> </span>
                                         <span className='blk-title'>逾期未还款本金</span>
-                                        <span className='blk-number'>{data.overdueRepay}</span>元
+                                        ksh<span className='blk-number'>{data.overdueRepay}</span>
                                     </div>
                                 </Col>
                             </Row>
