@@ -2015,38 +2015,38 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
 
     public List listBorrow(Map<String, Object> params) {
         List<ManageBorrowExportModel> list = clBorrowMapper.listExportModel(params);
-        for (ManageBorrowExportModel model : list) {
-            model.setState(BorrowModel.apiConvertBorrowState(model.getState()));
-            UserBaseInfo ubi = userBaseInfoMapper.findByUserId(model.getUserId());
-            if (ubi != null) {
-                model.setRealName(ubi.getRealName());
-                model.setPhone(ubi.getPhone());
-            }
-            Map<String, Object> params2 = new HashMap<>();
-            params2.put("borrowId", model.getId());
-            params2.put("state", BorrowModel.STATE_REPAY);
-            BorrowProgress bp = borrowProgressMapper.findSelective(params2);
-            if (bp != null) {
-                model.setLoanTime(bp.getCreateTime());
-            }
-            Map<String, Object> params3 = new HashMap<>();
-            params3.put("borrowId", model.getId());
-            BorrowRepay br = borrowRepayMapper.findSelective(params3);
-            if (br != null) {
-                model.setPenaltyDay(br.getPenaltyDay());
-                model.setPenaltyAmout(br.getPenaltyAmout());
-            }
-            BorrowRepayLog brl = borrowRepayLogMapper.findSelective(params3);
-            if (brl != null) {
-                model.setRepayAmount(brl.getAmount());
-                model.setRepayTime(brl.getRepayTime());
-            }
-            UrgeRepayOrder uro = urgeRepayOrderMapper.findSelective(params3);
-            if (uro != null) {
-                model.setLevel(uro.getLevel());
-            }
+//        for (ManageBorrowExportModel model : list) {
+//            model.setState(BorrowModel.apiConvertBorrowState(model.getState()));
+//            UserBaseInfo ubi = userBaseInfoMapper.findByUserId(model.getUserId());
+//            if (ubi != null) {
+//                model.setRealName(ubi.getRealName());
+//                model.setPhone(ubi.getPhone());
+//            }
+//            Map<String, Object> params2 = new HashMap<>();
+//            params2.put("borrowId", model.getId());
+//            params2.put("state", BorrowModel.STATE_REPAY);
+//            BorrowProgress bp = borrowProgressMapper.findSelective(params2);
+//            if (bp != null) {
+//                model.setLoanTime(bp.getCreateTime());
+//            }
+//            Map<String, Object> params3 = new HashMap<>();
+//            params3.put("borrowId", model.getId());
+//            BorrowRepay br = borrowRepayMapper.findSelective(params3);
+//            if (br != null) {
+//                model.setPenaltyDay(br.getPenaltyDay());
+//                model.setPenaltyAmout(br.getPenaltyAmout());
+//            }
+//            BorrowRepayLog brl = borrowRepayLogMapper.findSelective(params3);
+//            if (brl != null) {
+//                model.setRepayAmount(brl.getAmount());
+//                model.setRepayTime(brl.getRepayTime());
+//            }
+//            UrgeRepayOrder uro = urgeRepayOrderMapper.findSelective(params3);
+//            if (uro != null) {
+//                model.setLevel(uro.getLevel());
+//            }
 
-        }
+//        }
         return list;
     }
 

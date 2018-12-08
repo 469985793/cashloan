@@ -146,15 +146,15 @@ public class QuartzLate implements Job{
 								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 							}else if(Math.abs(day)==3){
 								//clSmsService.overdue(list.get(i).getId(),"overdue3");//逾期第3天
-								SMS=OverDueSMSModel.OVER_DUE_THREE.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",amout+div(list.get(i).getAccountManage(),100,1)+div(list.get(i).getProfit(),100,1)+"");
+								SMS=OverDueSMSModel.OVER_DUE_THREE.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
 								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 							}else if(Math.abs(day)==7){
 								//clSmsService.overdue(list.get(i).getId(),"overdue7");//逾期第7天
-								SMS=OverDueSMSModel.OVER_DUE_SAVEN.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",amout+div(list.get(i).getAccountManage(),100,1)+div(list.get(i).getProfit(),100,1)+"");
+								SMS=OverDueSMSModel.OVER_DUE_SAVEN.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
 								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 							}else if(Math.abs(day)==14){
 								//clSmsService.overdue(list.get(i).getId(),"overdue14");//逾期第14天
-								SMS=OverDueSMSModel.OVER_DUE_TWOWEEK.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",amout+div(list.get(i).getAccountManage(),100,1)+div(list.get(i).getProfit(),100,1)+"");
+								SMS=OverDueSMSModel.OVER_DUE_TWOWEEK.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
 								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 							}
 							if(result == true){
@@ -167,7 +167,7 @@ public class QuartzLate implements Job{
 
 					//还款日前一天发送提醒短信
 					if(day==1){
-						SMS=OverDueSMSModel.BEFOR_DUE_ONE.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(list.get(i).getBalance(),100,1)+div(list.get(i).getAccountManage(),100,1)+div(list.get(i).getProfit(),100,1)+"");
+						SMS=OverDueSMSModel.BEFOR_DUE_ONE.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(list.get(i).getBalance(),100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+"");
 						result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
 					}
 					if(result == true){
