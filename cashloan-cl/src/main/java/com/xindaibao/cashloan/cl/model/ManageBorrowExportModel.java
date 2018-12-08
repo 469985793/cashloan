@@ -3,25 +3,47 @@ package com.xindaibao.cashloan.cl.model;
 import java.util.Date;
 
 import com.xindaibao.cashloan.core.domain.Borrow;
+import org.activiti.rest.service.api.repository.BaseModelResource;
 
-public class ManageBorrowExportModel extends Borrow{
+public class ManageBorrowExportModel extends BaseModelResource {
 
 	private static final long serialVersionUID = 1L;
-	
 	/**
 	 * 用户名
 	 */
-	private String realName;
-	
+	private Integer id;
+	/**
+	 * 用户名
+	 */
+	private String firstName;
+	/**
+	 * 订单号
+	 */
+	private String indentNo;
+	/**
+	 * 借款金额
+	 */
+	private String balance;
+	/**
+	 * 借款期限
+	 */
+	private String cycle;
+	/**
+	 * 创建时间
+	 */
+	private Date createdTime;
+	/**
+	 * 订单状态
+	 */
+	private Integer state;
+	/**
+	 * 用户名
+	 */
+	private Date lastbackTime;
 	/**
 	 * 手机号
 	 */
-	private String phone;
-	
-	/**
-	 * 放款时间
-	 */
-	private Date loanTime;
+	private String mobile;
 	
 	/**
 	 * 逾期天数
@@ -31,7 +53,7 @@ public class ManageBorrowExportModel extends Borrow{
 	/**
 	 * 逾期罚金
 	 */
-	private double penaltyAmout;
+	private Integer overdueFee;
 	
 	/**
 	 * 还款时间
@@ -41,124 +63,122 @@ public class ManageBorrowExportModel extends Borrow{
 	/**
 	 * 还款金额
 	 */
-	private double repayAmount;
-	
+	private Integer actualbackAmt;
 	/**
-	 * 逾期等级
+	 * 还款金额
 	 */
-	private String level;
+	private Date exportTime;
 
-	/**
-	 * @return the realName
-	 */
-	public String getRealName() {
-		return realName;
+	public Integer getId() {
+		return id;
 	}
 
-	/**
-	 * @param realName the realName to set
-	 */
-	public void setRealName(String realName) {
-		this.realName = realName;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	/**
-	 * @return the phone
-	 */
-	public String getPhone() {
-		return phone;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	/**
-	 * @param phone the phone to set
-	 */
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	/**
-	 * @return the loanTime
-	 */
-	public Date getLoanTime() {
-		return loanTime;
+	public String getIndentNo() {
+		return indentNo;
 	}
 
-	/**
-	 * @param loanTime the loanTime to set
-	 */
-	public void setLoanTime(Date loanTime) {
-		this.loanTime = loanTime;
+	public void setIndentNo(String indentNo) {
+		this.indentNo = indentNo;
 	}
 
-	/**
-	 * @return the penaltyDay
-	 */
+	public String getBalance() {
+		return balance;
+	}
+
+	public void setBalance(String balance) {
+		this.balance = balance;
+	}
+
+	public String getCycle() {
+		return cycle;
+	}
+
+	public void setCycle(String cycle) {
+		this.cycle = cycle;
+	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
+	}
+
+	public Date getLastbackTime() {
+		return lastbackTime;
+	}
+
+	public void setLastbackTime(Date lastbackTime) {
+		this.lastbackTime = lastbackTime;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
 	public String getPenaltyDay() {
 		return penaltyDay;
 	}
 
-	/**
-	 * @param penaltyDay the penaltyDay to set
-	 */
 	public void setPenaltyDay(String penaltyDay) {
 		this.penaltyDay = penaltyDay;
 	}
 
-	/**
-	 * @return the penaltyAmout
-	 */
-	public double getPenaltyAmout() {
-		return penaltyAmout;
+	public Integer getOverdueFee() {
+		return overdueFee;
 	}
 
-	/**
-	 * @param penaltyAmout the penaltyAmout to set
-	 */
-	public void setPenaltyAmout(double penaltyAmout) {
-		this.penaltyAmout = penaltyAmout;
+	public void setOverdueFee(Integer overdueFee) {
+		this.overdueFee = overdueFee;
 	}
 
-	/**
-	 * @return the repayTime
-	 */
 	public Date getRepayTime() {
 		return repayTime;
 	}
 
-	/**
-	 * @param repayTime the repayTime to set
-	 */
 	public void setRepayTime(Date repayTime) {
 		this.repayTime = repayTime;
 	}
 
-	/**
-	 * @return the repayAmount
-	 */
-	public double getRepayAmount() {
-		return repayAmount;
+	public Integer getActualbackAmt() {
+		return actualbackAmt;
 	}
 
-	/**
-	 * @param repayAmount the repayAmount to set
-	 */
-	public void setRepayAmount(double repayAmount) {
-		this.repayAmount = repayAmount;
+	public void setActualbackAmt(Integer actualbackAmt) {
+		this.actualbackAmt = actualbackAmt;
 	}
 
-	/**
-	 * @return the level
-	 */
-	public String getLevel() {
-		return level;
+	public Date getExportTime() {
+		return exportTime;
 	}
 
-	/**
-	 * @param level the level to set
-	 */
-	public void setLevel(String level) {
-		this.level = level;
+	public void setExportTime(Date exportTime) {
+		this.exportTime = exportTime;
 	}
-
-	
 }

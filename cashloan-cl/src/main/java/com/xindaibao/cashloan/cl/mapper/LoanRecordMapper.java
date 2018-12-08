@@ -4,6 +4,7 @@ import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
 import com.xindaibao.cashloan.core.common.mapper.BaseMapper;
 import com.xindaibao.cashloan.core.common.mapper.RDBatisDao;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @RDBatisDao

@@ -242,7 +242,7 @@ export default React.createClass({
     this.fetch();
   },
   onRowClick(record) {
-    //console.log(record);
+    console.log(record);
     var button = this.state.button;
     var id = record.id;
     var selectedRows = this.state.selectedRows;

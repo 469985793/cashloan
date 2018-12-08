@@ -578,6 +578,9 @@ public class ManageBorrowController extends ManageBaseController {
 			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 			result.put(Constant.RESPONSE_CODE_MSG, "处理结束");
 		}
+		else {
+			result.put(Constant.RESPONSE_CODE_MSG, "处理失败");
+		}
 		ServletUtils.writeToResponse(response,result);
 	}
 	/**
