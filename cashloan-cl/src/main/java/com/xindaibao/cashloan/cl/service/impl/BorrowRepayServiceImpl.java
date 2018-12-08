@@ -255,6 +255,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					//分期还款，更新还款记录表和贷款记录表的金额
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer loanRs = loanRecordMapper.update(lr);
 					if(loanRs<1){
 						throw new BussinessException("更新贷款记录表出错" + repayRecord.getId());
@@ -273,6 +274,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					lr.setStatus(a);
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer rs = loanRecordMapper.update(lr);
 					if(rs<1){
 						throw new BussinessException("更新贷款记录表出错" + lr.getId());
@@ -307,6 +309,8 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayRecord1.setUpdatedTime(new Date());
 					String indentNo = FlowNumber.getNewFlowNumber("RR");
 					repayRecord1.setIndentNo(indentNo);
+					byte c = 0;
+					repayRecord1.setStatus(c);
 					Integer rs = repayRecordMapper.saveLoanRecord(repayRecord1);
 					if(rs<1){
 						throw new BussinessException("添加还款记录表出错" + repayRecord1.getId());
@@ -331,6 +335,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					//分期还款，更新还贷款记录表的金额
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer loanRs = loanRecordMapper.update(lr);
 					if(loanRs<1){
 						throw new BussinessException("更新贷款记录表出错" + repayRecord.getId());
@@ -340,6 +345,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					//一次性还清，修改订单表还款状态
 					byte a =6;
 					lr.setStatus(a);
+					lr.setLastbackTime(new Date());
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
 					Integer rs = loanRecordMapper.update(lr);
@@ -355,6 +361,8 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayRecord1.setUpdatedTime(new Date());
 					String indentNo = FlowNumber.getNewFlowNumber("RR");
 					repayRecord1.setIndentNo(indentNo);
+					byte c = 0;
+					repayRecord1.setStatus(c);
 					Integer rs2 = repayRecordMapper.saveLoanRecord(repayRecord1);
 					if(rs2<1){
 						throw new BussinessException("添加还款记录表出错" + repayRecord1.getId());
