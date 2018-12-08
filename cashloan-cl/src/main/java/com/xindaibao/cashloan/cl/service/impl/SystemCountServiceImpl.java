@@ -25,13 +25,13 @@ import java.util.*;
  * @date 2017年3月16日上午10:16:51
 
 
- * 
+ *
 
  */
 @SuppressWarnings("unchecked")
 @Service("systemCountService")
 public class SystemCountServiceImpl implements SystemCountService {
-	
+
 	@Resource
 	private SystemCountMapper systemCountMapper;
 	@Resource
@@ -41,7 +41,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 	@Override
 	public Map<String, Object> systemCount()throws Exception {
 		Map<String,Object> rtMap = new HashMap<String, Object>();
-		
+
 		Map<String,Object> param = new HashMap<String, Object>();
 		rtMap.put("todayTime", DateUtil.getNow());
 
@@ -58,15 +58,14 @@ public class SystemCountServiceImpl implements SystemCountService {
 		rtMap.put("borrowPass", borrowPass);
 
 		// 放款通过率
-		Double passApr = loanRecordMapper.loanPassThroughRate();
-		BigDecimal passAprs = new BigDecimal(passApr);
-		rtMap.put("passApr", passAprs.multiply(new BigDecimal(100)));
-		
-//		if(borrow>0 && register>0){
-//			rtMap.put("passApr", BigDecimalUtil.decimal(borrowPass/register*100,2));
-//		}else{
-//			rtMap.put("passApr", passApr);
-//		}
+
+		if(borrow>0 && borrowPass>0){
+            Double passApr = loanRecordMapper.loanPassThroughRate();
+            BigDecimal passAprs = new BigDecimal(passApr);
+            rtMap.put("passApr", passAprs.multiply(new BigDecimal(100)));
+		}else{
+			rtMap.put("passApr", 0);
+		}
 
 		//今日放款量
 		Integer borrowLoan = loanRecordMapper.loanAmount();
@@ -93,12 +92,12 @@ public class SystemCountServiceImpl implements SystemCountService {
 		//逾期未还款本金
 		Integer overdueRepay = loanRecordMapper.overdueAmountPrincipal();
 		rtMap.put("overdueRepay", overdueRepay);
-		
+
 		Map<String,Object> result = null;
 		List<Map<String,Object>> rtValue = null;
-		
+
 		this.monthCountDispose(result,rtValue,rtMap);
-		
+
 		rtValue = systemCountMapper.countRepaySource();
 		result = reBuildMap(rtValue);
 		String[] source = {"自动代扣","银行卡转账","支付宝转账","其它"};
@@ -113,7 +112,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 			sourceList.add(sm);
 		}
 		rtMap.put("repaySource", sourceList);
-		
+
 		List<String> days = new ArrayList<String>();
 		Date nowDate = DateUtil.getNow();
 		days.add(DateUtil.dateStr(nowDate, DateUtil.DATEFORMAT_STR_002));
@@ -125,7 +124,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 			String day = DateUtil.dateStr(nowDate, DateUtil.DATEFORMAT_STR_002);
 			days.add(day);
 		}
-		
+
 		systemCountMapper.countFifteenDaysNeedRepay();
 		List<Map<String,Object>> rtValue1 = systemCountMapper.countFifteenDaysNeedRepay();
 		List<Map<String,Object>> rtValue2 = systemCountMapper.countFifteenDaysRealRepay();
@@ -142,7 +141,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 			if(!result2.containsKey(day)){
 				result2.put(day, 0.00);
 			}
-			
+
 			String needStr = String.valueOf(result1.get(day));
 			needStr = (StringUtil.isNotBlank(needStr) && !"null".equals(needStr))?needStr:"0.00";
 			String realStr = String.valueOf(result2.get(day));
@@ -157,7 +156,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 			}else{
 				result3.put(day, 1.0);
 			}
-			
+
 			if(!result4.containsKey(day)){
 				result4.put(day, 0);
 			}
@@ -166,10 +165,10 @@ public class SystemCountServiceImpl implements SystemCountService {
 		rtMap.put("fifteenDaysRealRepay", result2);
 		rtMap.put("fifteenDaysOverdueApr", result3);
 		rtMap.put("fifteenDaysLoan", result4);
-		
+
 		return rtMap;
 	}
-	
+
 	public Map<String,Object> reBuildMap(List<Map<String,Object>> maps){
 		if(maps!=null){
 			Map<String,Object> result = new HashMap<String, Object>();
@@ -177,7 +176,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 				String key = String.valueOf(maps.get(i).get("key"));
 				if(StringUtil.isNotBlank(key)){
 					key = key==null?"":key;
-					
+
 				}else{
 					key = "未知地区";
 				}
@@ -199,49 +198,49 @@ public class SystemCountServiceImpl implements SystemCountService {
 	 * @throws ParseException
 	 */
 	private void monthCountDispose(Map<String, Object> result, List<Map<String, Object>> rtValue, Map<String, Object> rtMap) throws ParseException{
-		WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();    
+		WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
         ServletContext context = webApplicationContext.getServletContext();
-        
+
 		if (StringUtil.isNotBlank(context)) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Object t  = context.getAttribute("monthCountSelectTime");
 			int now = DateUtil.getDay(DateUtil.getNow());
 			if (t == null || DateUtil.getDay(sdf.parse(t.toString())) != now) {
-				
+
 				rtValue = MonthCount(1);
 				result = reBuildMap(rtValue);
 				rtMap.put("monthBorrowAmt", result);
 				context.setAttribute("monthBorrowAmt", rtValue);
-				
+
 				rtValue = MonthCount(2);
 				result = reBuildMap(rtValue);
 				rtMap.put("monthBorrowRepay", result);
 				context.setAttribute("monthBorrowRepay", rtValue);
-				
+
 				rtValue = MonthCount(3);
 				result = reBuildMap(rtValue);
 				rtMap.put("monthRegister", result);
 				context.setAttribute("monthRegister", rtValue);
-				
+
 				context.setAttribute("monthCountSelectTime", sdf.format(now));//保存时间
-				
+
 			}else {
-				
+
 				rtValue = (List<Map<String, Object>>) context.getAttribute("monthBorrowAmt");
 				result = reBuildMap(rtValue);
 				rtMap.put("monthBorrowAmt", result);
-				
+
 				rtValue = (List<Map<String, Object>>) context.getAttribute("monthBorrowRepay");
 				result = reBuildMap(rtValue);
 				rtMap.put("monthBorrowRepay", result);
-				
+
 				rtValue = (List<Map<String, Object>>) context.getAttribute("monthRegister");
 				result = reBuildMap(rtValue);
 				rtMap.put("monthRegister", result);
 			}
 		}
 	}
-	
+
 	//所有地区数组
 	private static String[] address = {"北京市","上海市","天津市","重庆市","内蒙古自治区","宁夏回族自治区","新疆维吾尔自治区","西藏自治区","广西壮族自治区"
 		,"香港特别行政区","澳门特别行政区","黑龙江省","辽宁省","吉林省","河北省","河南省","湖北省","湖南省","山东省","山西省","陕西省","安徽省","浙江省","江苏省","福建省",

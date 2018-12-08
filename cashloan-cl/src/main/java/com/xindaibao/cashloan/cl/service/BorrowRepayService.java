@@ -75,7 +75,7 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	 * @param param
 	 * @return
 	 */
-	void confirmRepay(Map<String, Object> param);
+	void  confirmRepay(Map<String, Object> param);
 
 	/**
 	 * 查询所有

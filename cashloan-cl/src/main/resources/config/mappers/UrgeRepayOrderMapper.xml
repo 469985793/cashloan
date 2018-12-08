@@ -211,7 +211,7 @@
 
     <select id="listItem" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
-        uro.borrow_name,lr.indent_no as order_no,uro.phone,uro.amount,uro.borrow_time,uro.repay_time,uro.time_limit,uro.penalty_day,uro.level,uro.penalty_amout,uro.user_name,uro.state
+        uro.id,uro.borrow_name,lr.indent_no as order_no,uro.phone,uro.amount,uro.borrow_time,uro.repay_time,uro.time_limit,uro.penalty_day,uro.level,uro.penalty_amout,uro.user_name,uro.state
         from cl_urge_repay_order uro
         left join k_loan_record lr on uro.order_no=lr.id
         <trim prefix="where" prefixOverrides="and|or">
