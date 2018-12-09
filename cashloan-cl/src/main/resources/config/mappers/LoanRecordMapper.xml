@@ -616,6 +616,15 @@
     where status in(5,21) and id = #{id ,jdbcType=BIGINT}
   </update>
 
+  <update id="updateStatus"  parameterType="java.util.HashMap">
+    update k_loan_record
+    <set>
+      status = #{state,jdbcType=VARCHAR} ,
+      updated_time = #{updatedTime,jdbcType=VARCHAR}
+    </set>
+    where id = #{id ,jdbcType=BIGINT}
+  </update>
+
   <select id="loanApplicationCount" resultType="Integer">
       select count(id)
       from k_loan_record

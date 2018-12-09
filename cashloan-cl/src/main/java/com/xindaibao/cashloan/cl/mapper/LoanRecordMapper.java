@@ -34,4 +34,6 @@ public interface LoanRecordMapper extends BaseMapper<LoanRecord, Long> {
     int totalAmountRepaid();
 
     int overdueAmountPrincipal();
+
+    int updateStatus(Map<String, Object> paramMap);
 }

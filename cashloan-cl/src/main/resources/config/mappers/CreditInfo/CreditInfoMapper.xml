@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rand.safc.dao.CreditInfo.CreditInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.rand.safc.model.CreditInfo.CreditInfoLog">
+        <id column="id" property="id" />
+        <result column="result_code" property="resultCode" />
+        <result column="credit_limit" property="creditLimit" />
+        <result column="subject_IDNumber" property="subjectIDNumber" />
+        <result column="CIP_grade" property="CIPRiskGrade" />
+        <result column="full_name" property="fullName" />
+        <result column="mobile_score_grade" property="mobileScoreGrade" />
+        <result column="mobile_score" property="mobileScore" />
+        <result column="CIP_score" property="CIPScore" />
+        <result column="message_id" property="messageId" />
+        <result column="remark" property="remark" />
+        <result column="status" property="status" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,result_code ,credit_limit,subject_IDNumber,CIP_grade,full_name,mobile_score_grade,mobile_score,CIP_score,message_id,remark,status, created_time, updated_time
+    </sql>
+
+
+</mapper>
