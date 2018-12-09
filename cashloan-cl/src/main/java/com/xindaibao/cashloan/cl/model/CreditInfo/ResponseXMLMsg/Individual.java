@@ -9,53 +9,53 @@ package com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg;
  */
 public class Individual {
 
-    private model.CreditInfo.ResponseXMLMsg._Individual.Contact contact;
+    private com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.Contact contact;
 
-    private model.CreditInfo.ResponseXMLMsg._Individual.General general;
+    private com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.General general;
 
-    private model.CreditInfo.ResponseXMLMsg._Individual.Identifications identifications;
+    private com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.Identifications identifications;
 
-    private model.CreditInfo.ResponseXMLMsg._Individual.MainAddress mainAddress;
+    private com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.MainAddress mainAddress;
 
-    private model.CreditInfo.ResponseXMLMsg._Individual.SecondaryAddress secondaryAddress;
+    private com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.SecondaryAddress secondaryAddress;
 
-    public model.CreditInfo.ResponseXMLMsg._Individual.Contact getContact() {
+    public com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.Contact getContact() {
         return contact;
     }
 
-    public void setContact(model.CreditInfo.ResponseXMLMsg._Individual.Contact contact) {
+    public void setContact(com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.Contact contact) {
         this.contact = contact;
     }
 
-    public model.CreditInfo.ResponseXMLMsg._Individual.General getGeneral() {
+    public com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.General getGeneral() {
         return general;
     }
 
-    public void setGeneral(model.CreditInfo.ResponseXMLMsg._Individual.General general) {
+    public void setGeneral(com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.General general) {
         this.general = general;
     }
 
-    public model.CreditInfo.ResponseXMLMsg._Individual.Identifications getIdentifications() {
+    public com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.Identifications getIdentifications() {
         return identifications;
     }
 
-    public void setIdentifications(model.CreditInfo.ResponseXMLMsg._Individual.Identifications identifications) {
+    public void setIdentifications(com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.Identifications identifications) {
         this.identifications = identifications;
     }
 
-    public model.CreditInfo.ResponseXMLMsg._Individual.MainAddress getMainAddress() {
+    public com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.MainAddress getMainAddress() {
         return mainAddress;
     }
 
-    public void setMainAddress(model.CreditInfo.ResponseXMLMsg._Individual.MainAddress mainAddress) {
+    public void setMainAddress(com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.MainAddress mainAddress) {
         this.mainAddress = mainAddress;
     }
 
-    public model.CreditInfo.ResponseXMLMsg._Individual.SecondaryAddress getSecondaryAddress() {
+    public com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.SecondaryAddress getSecondaryAddress() {
         return secondaryAddress;
     }
 
-    public void setSecondaryAddress(model.CreditInfo.ResponseXMLMsg._Individual.SecondaryAddress secondaryAddress) {
+    public void setSecondaryAddress(com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Individual.SecondaryAddress secondaryAddress) {
         this.secondaryAddress = secondaryAddress;
     }
 }

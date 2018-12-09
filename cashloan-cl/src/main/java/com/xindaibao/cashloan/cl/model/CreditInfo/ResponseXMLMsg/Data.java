@@ -19,13 +19,13 @@ import javax.xml.bind.annotation.XmlType;
 public class Data {
 
     @XmlElement(required = true)
-    private model.CreditInfo.ResponseXMLMsg.Response response;
+    private com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg.Response response;
 
-    public model.CreditInfo.ResponseXMLMsg.Response getResponse() {
+    public com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg.Response getResponse() {
         return response;
     }
 
-    public void setResponse(model.CreditInfo.ResponseXMLMsg.Response response) {
+    public void setResponse(com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg.Response response) {
         this.response = response;
     }
 }

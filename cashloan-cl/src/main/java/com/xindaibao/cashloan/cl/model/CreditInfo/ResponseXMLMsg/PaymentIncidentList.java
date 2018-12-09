@@ -1,6 +1,6 @@
 package com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg;
 
-import model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.Summary;
+import com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.Summary;
 
 /**
  * 【 】
@@ -11,19 +11,19 @@ import model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.Summary;
  */
 public class PaymentIncidentList {
 
-    private model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.PaymentIncidentList paymentIncidentList;
+    private com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.PaymentIncidentList paymentIncidentList;
 
-    private model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.Summary summary;
+    private com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.Summary summary;
 
-    public model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.PaymentIncidentList getPaymentIncidentList() {
+    public com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.PaymentIncidentList getPaymentIncidentList() {
         return paymentIncidentList;
     }
 
-    public void setPaymentIncidentList(model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.PaymentIncidentList paymentIncidentList) {
+    public void setPaymentIncidentList(com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.PaymentIncidentList paymentIncidentList) {
         this.paymentIncidentList = paymentIncidentList;
     }
 
-    public model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.Summary getSummary() {
+    public com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._PaymentIncidentList.Summary getSummary() {
         return summary;
     }
 

@@ -1,6 +1,6 @@
 package com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg;
 
-import model.CreditInfo.ResponseXMLMsg._Parameters.Sections;
+import com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Parameters.Sections;
 
 /**
  * 【 】

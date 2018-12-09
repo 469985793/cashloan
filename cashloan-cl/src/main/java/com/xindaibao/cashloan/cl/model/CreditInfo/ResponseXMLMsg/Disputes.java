@@ -1,6 +1,6 @@
 package com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg;
 
-import model.CreditInfo.ResponseXMLMsg._Disputes.Summary;
+import com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Disputes.Summary;
 
 /**
  * 【 】
@@ -11,9 +11,9 @@ import model.CreditInfo.ResponseXMLMsg._Disputes.Summary;
  */
 public class Disputes {
 
-    private model.CreditInfo.ResponseXMLMsg._Disputes.Summary summary;
+    private Summary summary;
 
-    public model.CreditInfo.ResponseXMLMsg._Disputes.Summary getSummary() {
+    public Summary getSummary() {
         return summary;
     }
 

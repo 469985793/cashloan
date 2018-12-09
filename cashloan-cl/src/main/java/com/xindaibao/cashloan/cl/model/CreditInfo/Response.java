@@ -1,6 +1,8 @@
 package com.xindaibao.cashloan.cl.model.CreditInfo;
 
-import model.CreditInfo.ResponseXMLMsg.Connector;
+
+
+import com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg.Connector;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

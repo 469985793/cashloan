@@ -1,8 +1,8 @@
 package com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg;
 
-import model.CreditInfo.ResponseXMLMsg._Dashboard.Collaterals;
-import model.CreditInfo.ResponseXMLMsg._Dashboard.PaymentsProfile;
-import model.CreditInfo.ResponseXMLMsg._Dashboard.Relations;
+import com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Dashboard.Collaterals;
+import com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Dashboard.PaymentsProfile;
+import com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg._Dashboard.Relations;
 
 /**
  * 【 】
