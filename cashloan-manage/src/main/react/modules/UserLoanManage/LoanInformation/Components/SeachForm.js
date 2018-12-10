@@ -13,6 +13,9 @@ let SeachForm = React.createClass({
     },
     handleQuery() {
         var params = this.props.form.getFieldsValue();
+        params.beforeTime=params.registTime[0];
+        params.afterTime=params.registTime[1];
+        console.log(params);
         this.props.passParams({
             searchParams: JSON.stringify(params),
             pageSize: 10,
@@ -28,7 +31,11 @@ let SeachForm = React.createClass({
     },
     handleOut() {
         var params = this.props.form.getFieldsValue();
+        console.log(params);
+        params.beforeTime=params.registTime[0];
+        params.afterTime=params.registTime[1]; 
         var json = JSON.stringify(params);
+        // console.log(json);
         window.open("/modules/manage/borrow/export.htm?searchParams=" + encodeURI(json));
 
     },
@@ -45,13 +52,13 @@ let SeachForm = React.createClass({
         return (
             <Form inline>
                 <FormItem label="Actual Name:">
-                    <Input  {...getFieldProps('realName', { initialValue: '' })} />
+                    <Input  {...getFieldProps('firstName', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Phone:">
-                    <Input  {...getFieldProps('phone', { initialValue: '' })} />
+                    <Input  {...getFieldProps('mobile', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Order Number:">
-                    <Input  {...getFieldProps('orderNo', { initialValue: '' })} />
+                    <Input  {...getFieldProps('indentNo', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Date：">
                     <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: [date,date] })} />
