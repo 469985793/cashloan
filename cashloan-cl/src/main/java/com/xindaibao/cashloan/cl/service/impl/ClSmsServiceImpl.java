@@ -166,13 +166,13 @@ public class ClSmsServiceImpl extends BaseServiceImpl<Sms, Long> implements ClSm
 						UrgeRepayOrder uro = urgeRepayOrderMapper.findById(ids[i]);
 						Map<String, Object> map = new HashMap<>();
 						map.put("platform", uro.getBorrowTime());
-						map.put("loan", div(uro.getAmount(),100,1));
+						map.put("loan", div(uro.getAmount(),100,0));
 						map.put("time", uro.getRepayTime());
 						map.put("overdueDay", uro.getPenaltyDay());
-						map.put("amercement", div(uro.getPenaltyAmout(),100,1));
+						map.put("amercement", div(uro.getPenaltyAmout(),100,0));
 						map.put("phone", uro.getPhone());
                         map.put("borrowTime", uro.getBorrowTime());
-                        map.put("amount",div(uro.getAmount(),100,1)+div(uro.getPenaltyAmout(),100,1)+div(uro.getAccountManage(),100,1)+div(uro.getProfit(),100,1));
+                        map.put("amount",div(uro.getAmount(),100,0)+div(uro.getPenaltyAmout(),100,0)+div(uro.getAccountManage(),100,0)+div(uro.getProfit(),100,0));
 
 						Map<String, Object> payload = new HashMap<>();
 						payload.put("mobile", uro.getPhone());
