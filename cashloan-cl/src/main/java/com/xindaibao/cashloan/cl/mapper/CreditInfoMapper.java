@@ -5,6 +5,8 @@ import com.xindaibao.cashloan.cl.model.CreditInfo.CreditInfoLog;
 import com.xindaibao.cashloan.core.common.mapper.BaseMapper;
 import com.xindaibao.cashloan.core.common.mapper.RDBatisDao;
 
+import java.util.List;
+
 /**
  * 【 】
  *
@@ -14,4 +16,7 @@ import com.xindaibao.cashloan.core.common.mapper.RDBatisDao;
  */
 @RDBatisDao
 public interface CreditInfoMapper extends BaseMapper<CreditInfoLog, Long> {
+
+    List<CreditInfoLog> findByUserNationalId(String nationalId);
+
 }

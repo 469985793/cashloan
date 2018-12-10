@@ -24,6 +24,11 @@
     <sql id="Base_Column_List">
         id,result_code ,credit_limit,subject_IDNumber,CIP_grade,full_name,mobile_score_grade,mobile_score,CIP_score,message_id,remark,status, created_time, updated_time
     </sql>
-
+    <select id="findByUserNationalId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from k_creditInfo_log
+        where subject_IDNumber = #{nationalId,jdbcType=BIGINT}
+    </select>
 
 </mapper>

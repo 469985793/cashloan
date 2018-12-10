@@ -13,6 +13,7 @@ import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
 import com.xindaibao.cashloan.cl.service.creditInfo.GetCreditInfoResponseService;
 import com.xindaibao.cashloan.core.common.mapper.BaseMapper;
 import com.xindaibao.cashloan.core.common.service.impl.BaseServiceImpl;
+import com.xindaibao.cashloan.core.common.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,32 +82,47 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
      */
     @Override
     public CreditInfoResponse getCreditInfoResponse(String nationalId, LoanRecord loanRecord)throws Exception {
-        MultiConnectorService_Service service = new MultiConnectorService_Service(new URL(serviceUrl));
-        service.setHandlerResolver(new HeaderHandlerResolver(username, password));
-        MultiConnectorService mcService = service.getBasicHttpBindingMultiConnectorService();
-
-        MultiConnectorRequest multiConnectorRequest = new MultiConnectorRequest();
-        multiConnectorRequest.setMessageId(UUID.randomUUID().toString());
-        multiConnectorRequest.setRequestXml(createRequestXmlIndividualIdm(nationalId));
-        MultiConnectorTicket beginQueryResponse = mcService.beginQuery(multiConnectorRequest);
-
-        logger.info("CreditInfo Response MessageID :" + beginQueryResponse.getMessageId());
-
-        MultiConnectorResponse endQueryResponse = getReport(mcService, beginQueryResponse);
-        MultiConnectorResponse.ResponseXml responseXml = endQueryResponse.getResponseXml();
-        com.creditinfo.schemas._2012._09.multiconnector.messages.response.Response response1 = (com.creditinfo.schemas._2012._09.multiconnector.messages.response.Response)responseXml.getAny();
-        com.creditinfo.schemas._2012._09.multiconnector.connectors._int.idmstrategy.response.Response response3 = (com.creditinfo.schemas._2012._09.multiconnector.connectors._int.idmstrategy.response.Response ) response1.getConnector().get(0).getData().getContent().get(0);
-
         CreditInfoResponse creditInfoResponse = new CreditInfoResponse();
-        creditInfoResponse.setCreditLimit(new BigDecimal(response3.getAny().get(3).getElementsByTagName("CreditLimit").item(0).getTextContent()));
-        creditInfoResponse.setResultCode(response3.getAny().get(3).getElementsByTagName("RecommendedDecision").item(0).getTextContent());
-        creditInfoResponse.setSubjectIDNumber(response3.getAny().get(3).getElementsByTagName("SubjectIDNumber").item(0).getTextContent());
-        creditInfoResponse.setFullName(response3.getAny().get(4).getElementsByTagName("FullName").item(0).getTextContent());
-        creditInfoResponse.setCIPRiskGrade(response3.getAny().get(5).getElementsByTagName("CIPRiskGrade").item(0).getTextContent());
-        creditInfoResponse.setMobileScoreRiskGrade(response3.getAny().get(5).getElementsByTagName("MobileScoreRiskGrade").item(0).getTextContent());
-        //保存征信接口请求日志
-        saveResponseLog(creditInfoResponse,beginQueryResponse.getMessageId(),response3.getAny());
 
+        List<CreditInfoLog> creditInfoLogs = creditInfoMapper.findByUserNationalId(nationalId);
+        Date created = creditInfoLogs.get((creditInfoLogs.size()-1)).getCreatedTime();
+        int day = DateUtil.daysBetween(new Date(),created);
+        if(creditInfoLogs.size() >= 0 && day > 30) {
+
+            MultiConnectorService_Service service = new MultiConnectorService_Service(new URL(serviceUrl));
+            service.setHandlerResolver(new HeaderHandlerResolver(username, password));
+            MultiConnectorService mcService = service.getBasicHttpBindingMultiConnectorService();
+
+            MultiConnectorRequest multiConnectorRequest = new MultiConnectorRequest();
+            multiConnectorRequest.setMessageId(UUID.randomUUID().toString());
+            multiConnectorRequest.setRequestXml(createRequestXmlIndividualIdm(nationalId));
+            MultiConnectorTicket beginQueryResponse = mcService.beginQuery(multiConnectorRequest);
+
+            logger.info("CreditInfo Response MessageID :" + beginQueryResponse.getMessageId());
+
+            MultiConnectorResponse endQueryResponse = getReport(mcService, beginQueryResponse);
+            MultiConnectorResponse.ResponseXml responseXml = endQueryResponse.getResponseXml();
+            com.creditinfo.schemas._2012._09.multiconnector.messages.response.Response response1 = (com.creditinfo.schemas._2012._09.multiconnector.messages.response.Response) responseXml.getAny();
+            com.creditinfo.schemas._2012._09.multiconnector.connectors._int.idmstrategy.response.Response response3 = (com.creditinfo.schemas._2012._09.multiconnector.connectors._int.idmstrategy.response.Response) response1.getConnector().get(0).getData().getContent().get(0);
+
+
+            creditInfoResponse.setCreditLimit(new BigDecimal(response3.getAny().get(3).getElementsByTagName("CreditLimit").item(0).getTextContent()));
+            creditInfoResponse.setResultCode(response3.getAny().get(3).getElementsByTagName("RecommendedDecision").item(0).getTextContent());
+            creditInfoResponse.setSubjectIDNumber(response3.getAny().get(3).getElementsByTagName("SubjectIDNumber").item(0).getTextContent());
+            creditInfoResponse.setFullName(response3.getAny().get(4).getElementsByTagName("FullName").item(0).getTextContent());
+            creditInfoResponse.setCIPRiskGrade(response3.getAny().get(5).getElementsByTagName("CIPRiskGrade").item(0).getTextContent());
+            creditInfoResponse.setMobileScoreRiskGrade(response3.getAny().get(5).getElementsByTagName("MobileScoreRiskGrade").item(0).getTextContent());
+            //保存征信接口请求日志
+            saveResponseLog(creditInfoResponse, beginQueryResponse.getMessageId(), response3.getAny());
+        }else {
+            creditInfoResponse.setCreditLimit(creditInfoLogs.get((creditInfoLogs.size()-1)).getCreditLimit());
+            creditInfoResponse.setResultCode(creditInfoLogs.get((creditInfoLogs.size()-1)).getResultCode());
+            creditInfoResponse.setSubjectIDNumber(creditInfoLogs.get((creditInfoLogs.size()-1)).getSubjectIDNumber());
+            creditInfoResponse.setFullName(creditInfoLogs.get((creditInfoLogs.size()-1)).getFullName());
+            creditInfoResponse.setCIPRiskGrade(creditInfoLogs.get((creditInfoLogs.size()-1)).getCIPRiskGrade());
+            creditInfoResponse.setMobileScoreRiskGrade(creditInfoLogs.get((creditInfoLogs.size()-1)).getCIPRiskGrade());
+
+        }
         //征信规则验证
         creditInfoRule(loanRecord,creditInfoResponse);
         return creditInfoResponse;
