@@ -246,6 +246,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte a =3;
 					repayFlow.setStatus(a);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -290,6 +291,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte c =3;
 					repayFlow.setStatus(c);
 					Integer repayRs = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -326,6 +328,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte a =3;
 					repayFlow.setStatus(a);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -378,6 +381,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte r =3;
 					repayFlow.setStatus(r);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -405,6 +409,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setRepayRecordId(repayRecord.getId());
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte a = 3;
 					repayFlow.setStatus(a);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -446,6 +451,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte c = 3;
 					repayFlow.setStatus(c);
 					Integer repayRs = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -479,6 +485,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte a = 3;
 					repayFlow.setStatus(a);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -526,6 +533,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte r = 3;
 					repayFlow.setStatus(r);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
