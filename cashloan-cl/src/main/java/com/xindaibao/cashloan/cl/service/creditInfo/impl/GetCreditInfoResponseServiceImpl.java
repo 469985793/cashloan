@@ -11,9 +11,12 @@ import com.xindaibao.cashloan.cl.model.CreditInfo.CreditInfoLog;
 import com.xindaibao.cashloan.cl.model.CreditInfo.ResponseXMLMsg.CreditInfoResponse;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
 import com.xindaibao.cashloan.cl.service.creditInfo.GetCreditInfoResponseService;
+import com.xindaibao.cashloan.core.common.mapper.BaseMapper;
+import com.xindaibao.cashloan.core.common.service.impl.BaseServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.tempuri.MultiConnectorService;
 import org.tempuri.MultiConnectorService_Service;
 import org.w3c.dom.Element;
@@ -42,7 +45,8 @@ import java.util.*;
  * @version V1.0
  * @date 18/12/2
  */
-public class GetCreditInfoResponseServiceImpl implements GetCreditInfoResponseService {
+@Service("getCreditInfoResponseService")
+public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfoLog, Long> implements GetCreditInfoResponseService {
 
     Logger logger = LoggerFactory.getLogger(GetCreditInfoResponseServiceImpl.class);
 
@@ -394,6 +398,11 @@ public class GetCreditInfoResponseServiceImpl implements GetCreditInfoResponseSe
         connector.setData(data);
         connector.setId(connectorId);
         return connector;
+    }
+
+    @Override
+    public BaseMapper<CreditInfoLog, Long> getMapper() {
+        return creditInfoMapper;
     }
 }
 
