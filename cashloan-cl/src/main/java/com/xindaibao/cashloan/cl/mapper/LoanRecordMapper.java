@@ -15,6 +15,7 @@ public interface LoanRecordMapper extends BaseMapper<LoanRecord, Long> {
 
     LoanRecord findByPrimary(long id);
 
+    List<LoanRecord> selectCreditLoan();
 
     int updateParam(Map<String, Object> paramMap);
 
@@ -38,5 +39,4 @@ public interface LoanRecordMapper extends BaseMapper<LoanRecord, Long> {
 
     int updateStatus(Map<String, Object> paramMap);
 
-    List<LoanRecord> selectCreditLoan();
 }

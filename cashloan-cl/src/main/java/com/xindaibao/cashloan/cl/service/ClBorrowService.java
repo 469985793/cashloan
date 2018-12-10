@@ -15,6 +15,7 @@ import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
 import com.xindaibao.cashloan.cl.model.kenya.LoanRecord;
 import com.xindaibao.cashloan.core.common.service.BaseService;
 import com.xindaibao.cashloan.core.domain.Borrow;
+import com.xindaibao.cashloan.core.model.KanyaUserInfo;
 
 /**
  * 借款信息表Service
@@ -403,6 +404,7 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 
 	List<LoanRecord> selectCreditLoan();
 
+    KanyaUserInfo selectUserInfo(Long uid);
 	/**
 	 * 查询用户借款信息
 	 */
