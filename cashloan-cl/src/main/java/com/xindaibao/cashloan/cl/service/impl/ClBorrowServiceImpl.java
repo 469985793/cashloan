@@ -1335,7 +1335,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
      */
     @Override
     //,String lineType
-    public int manualVerifyBorrow(Long borrowId, String state, String remark, String lineType) {
+    public int manualVerifyBorrow(Long userId,Long borrowId, String state, String remark, String lineType) {
         int code = 0;
         //Borrow borrow = clBorrowMapper.findByPrimary(borrowId);
         PayLog payLog = new PayLog();
@@ -1350,7 +1350,11 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
             Map<String, Object> map = new HashMap<>();
             map.put("id", loanRecord.getIndentNo());
             map.put("state", state);
-            map.put("auditUserReson", remark);
+            if(userId!=null){
+                map.put("auditUserId", userId);
+                map.put("auditUserReson", remark);
+                map.put("auditUserTime",new Date());
+            }
             code = clBorrowMapper.reviewStatus(map);
             Long amount = loanRecord.getBalance() / 100;
             if (state.equals(BorrowModel.STATE_REPAYING)) {

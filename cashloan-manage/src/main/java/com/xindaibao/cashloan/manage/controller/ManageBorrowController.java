@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
+import com.xindaibao.cashloan.system.domain.SysRole;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -524,14 +527,15 @@ public class ManageBorrowController extends ManageBaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/modules/manage/borrow/verifyBorrow.htm")
-	public void verifyBorrow(@RequestParam(value = "borrowId") Long borrowId,
-			@RequestParam(value = "state") String state,
-			@RequestParam(value = "unstate") String unstate,
-			@RequestParam(value = "remark") String remark) throws Exception {
+	public void verifyBorrow(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "borrowId") Long borrowId,
+							 @RequestParam(value = "state") String state,
+							 @RequestParam(value = "unstate") String unstate,
+							 @RequestParam(value = "remark") String remark) throws Exception {
 		Map<String,Object> result = new HashMap<String,Object>();
+		SysRole sysRole = getRoleForLoginUser(request);
 		try{
 		    //,null
-		    int msg =clBorrowService.manualVerifyBorrow(borrowId, unstate, remark,null);
+		    int msg =clBorrowService.manualVerifyBorrow(sysRole.getId(),borrowId, unstate, remark,null);
 			if(msg==1){
 				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 				result.put(Constant.RESPONSE_CODE_MSG, "复审成功");

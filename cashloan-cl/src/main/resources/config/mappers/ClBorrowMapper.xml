@@ -347,16 +347,22 @@
             <if test="state != null and state != '' ">
                 status = #{state,jdbcType=VARCHAR},
             </if>
-              <if test="arriveTime != null and state != '' ">
+            <if test="arriveTime != null and state != '' ">
                 arrive_time = #{arriveTime,jdbcType=TIMESTAMP},
             </if>
-              <if test="actualBalance != null and state != '' ">
+            <if test="actualBalance != null and state != '' ">
                   actual_balance = #{actualBalance,jdbcType=VARCHAR},
             </if>
-              <if test="auditUserReson != null and state != '' ">
+            <if test="auditUserReson != null and state != '' ">
                   audit_user_reson = #{auditUserReson,jdbcType=VARCHAR},
+            </if>
+              <if test="auditUserId != null and state != '' ">
+                  audit_user_id = #{auditUserId,jdbcType=BIGINT},
               </if>
-              <if test="shouldbackTime != null and state != '' ">
+              <if test="auditUserTime != null and state != '' ">
+                  audit_user_time = #{auditUserTime,jdbcType=TIMESTAMP},
+              </if>
+            <if test="shouldbackTime != null and state != '' ">
                   shouldback_time = #{shouldbackTime,jdbcType=TIMESTAMP},
             </if>
         </set>

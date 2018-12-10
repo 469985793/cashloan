@@ -186,7 +186,7 @@ public class ManagePayLogController extends ManageBaseController {
 		Map<String,Object> result = new HashMap<String,Object>();
 		try{
 			//,lineType
-			int msg =clBorrowService.manualVerifyBorrow(id, state,remark,lineType);
+			int msg =clBorrowService.manualVerifyBorrow(null,id, state,remark,lineType);
 			if(msg==1){
 				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 				result.put(Constant.RESPONSE_CODE_MSG, "放款成功");
