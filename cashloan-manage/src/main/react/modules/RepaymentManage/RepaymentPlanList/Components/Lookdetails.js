@@ -67,7 +67,7 @@ var Lookdetails = React.createClass({
     if (!params.pageSize) {
       var params = {};
       params = {
-        pageSize: 1,
+        pageSize: 4,
         current: 1,
         id: this.props.record.id
       }

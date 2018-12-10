@@ -21,9 +21,7 @@ import com.xindaibao.cashloan.cl.model.pay.lianlian.PaymentModel;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.constant.LianLianConstant;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.util.LianLianHelper;
 import com.xindaibao.cashloan.cl.monitor.BusinessExceptionMonitor;
-import com.xindaibao.cashloan.cl.sdk.operator.tongdun.model.UserInfo;
 import com.xindaibao.cashloan.cl.service.*;
-import com.xindaibao.cashloan.core.mapper.KanyaUserInfoMapper;
 import com.xindaibao.cashloan.core.model.KanyaUser;
 import org.apache.commons.collections.CollectionUtils;
 import com.xindaibao.cashloan.system.domain.SysConfig;
@@ -104,8 +102,7 @@ import com.xindaibao.cashloan.system.service.SysConfigService;
 import com.xindaibao.creditrank.cr.domain.Credit;
 import com.xindaibao.creditrank.cr.mapper.CreditMapper;
 import com.xindaibao.cashloan.core.mapper.KanyaUserMapper;
-import com.xindaibao.cashloan.core.model.KanyaUserInfo;
-import com.xindaibao.cashloan.core.model.KanyaUser;
+
 import static com.xindaibao.cashloan.cl.Util.HttpClientUtil.CONTENT_TYPE_JSON_URL;
 
 /**
@@ -128,8 +125,6 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     private ClBorrowMapper clBorrowMapper;
     @Resource
     private BorrowProgressMapper borrowProgressMapper;
-    @Resource
-    private KanyaUserInfoMapper kanyaUserInfoMapper;
     @Resource
     private BorrowRepayMapper borrowRepayMapper;
     @Resource

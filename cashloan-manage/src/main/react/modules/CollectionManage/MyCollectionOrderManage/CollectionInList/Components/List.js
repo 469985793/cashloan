@@ -36,7 +36,6 @@ export default React.createClass({
   //新增跟编辑弹窗
   showModal(title, record, canEdit) {
     var record = record;
-    // console.log(record);
     var me = this;
     if (title == '新增催收反馈') {
       me.setState({
@@ -76,7 +75,7 @@ export default React.createClass({
         },
         method: 'get',
         callback: (result) => {
-          // console.log(result);
+          //console.log(result);
           if(result.data.logs && result.data.logs.length >= 2){
             for(var i = 0; i < result.data.logs.length-1; i++){
               for(var j = i+1; j < result.data.logs.length; j++){
@@ -110,7 +109,6 @@ export default React.createClass({
       },
       method: 'post',
       callback: (result) => {
-        // console.log(result);
         if (result.code == 200) {
           Modal.success({
             title: result.msg,
@@ -126,7 +124,6 @@ export default React.createClass({
 
   },
   rowKey(record) {
-    // console.log(record);
     return record.id;
   },
 
@@ -159,7 +156,6 @@ export default React.createClass({
       data: params,
       method: 'post',
       callback: (result) => {
-        // console.log(result);
         if(result.data){
           for(var i = 0 ; i<result.data.length;i++){
             result.data[i].amount=result.data[i].amount/100;
@@ -246,13 +242,11 @@ export default React.createClass({
     this.fetch();
   },
   onRowClick(record) {
-    // console.log(record);
+    console.log(record);
     var button = this.state.button;
     var id = record.id;
-    // console.log(id);
     var selectedRows = this.state.selectedRows;
     var selectedRowKeys = this.state.selectedRowKeys;
-    // console.log(selectedRowKeys);
     if (selectedRowKeys.indexOf(id) < 0) {
       selectedRowKeys.push(id);
       selectedRows.push(record);
@@ -260,7 +254,7 @@ export default React.createClass({
       selectedRowKeys.remove(id);
       selectedRows.remove(record);
     }
-    // console.log(selectedRowKeys);
+    //console.log(selectedRowKeys);
     if (selectedRowKeys[0]) {
       button = true;
     } else {
@@ -293,7 +287,6 @@ export default React.createClass({
   },
 
   render() {
-    // console.log(this.onSelectAll);
     var me = this;
     const {
       loading,
