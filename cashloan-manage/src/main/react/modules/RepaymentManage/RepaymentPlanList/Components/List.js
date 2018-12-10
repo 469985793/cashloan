@@ -1,7 +1,7 @@
 import React from 'react'
-import {Table, Modal, Icon} from 'antd';
+import { Table, Modal, Icon } from 'antd';
 import Lookdetails from "./Lookdetails";
-var repaymentTypeText={'10':'待审核', '20': '审核中' ,'30': '通过','40' :'已拒绝' ,'50': '还款中', '60' :'还款完成', '70': '逾期'}
+var repaymentTypeText = { '10': '待审核', '20': '审核中', '30': '通过', '40': '已拒绝', '50': '还款中', '60': '还款完成', '70': '逾期' }
 const objectAssign = require('object-assign');
 import AddWin from "./AddWin";
 export default React.createClass({
@@ -20,9 +20,9 @@ export default React.createClass({
             visible2: false,
             pictureData: [],
             creditReportData: [],
-            rowRecord:[],
-            record:"",
-            visibleAdd:false,
+            rowRecord: [],
+            record: "",
+            visibleAdd: false,
 
         };
     },
@@ -57,44 +57,44 @@ export default React.createClass({
                 pagination.pageSize = params.pageSize;
                 pagination.total = result.page.total;
                 // console.log(result);
-                if(result.data){
+                if (result.data) {
                     for (var i = 0; i < result.data.length; i++) {
-                        if(result.data[i].overdueFee){
-                            result.data[i].overdueFee=result.data[i].overdueFee/100;
-                        }else{
-                            result.data[i].overdueFee=="";
+                        if (result.data[i].overdueFee) {
+                            result.data[i].overdueFee = result.data[i].overdueFee / 100;
+                        } else {
+                            result.data[i].overdueFee == "";
                         }
-                        if(result.data[i].balance){
-                            result.data[i].balance=result.data[i].balance/100;
-                        }else{
-                            result.data[i].balance="";
+                        if (result.data[i].balance) {
+                            result.data[i].balance = result.data[i].balance / 100;
+                        } else {
+                            result.data[i].balance = "";
                         }
-                        if(result.data[i].repayAmount){
-                            result.data[i].repayAmount=result.data[i].repayAmount/100
-                        }else{
-                            result.data[i].repayAmount="";
+                        if (result.data[i].repayAmount) {
+                            result.data[i].repayAmount = result.data[i].repayAmount / 100
+                        } else {
+                            result.data[i].repayAmount = "";
                         }
-                        if(result.data[i].repayTotal){
-                            result.data[i].repayTotal=result.data[i].repayTotal/100
-                        }else{
-                            result.data[i].repayTotal="";
+                        if (result.data[i].repayTotal) {
+                            result.data[i].repayTotal = result.data[i].repayTotal / 100
+                        } else {
+                            result.data[i].repayTotal = "";
                         }
-                        if(result.data[i].actualRepayment){
-                            result.data[i].actualRepayment=result.data[i].actualRepayment/100
-                        }else{
-                            result.data[i].actualRepayment="";
+                        if (result.data[i].actualRepayment) {
+                            result.data[i].actualRepayment = result.data[i].actualRepayment / 100
+                        } else {
+                            result.data[i].actualRepayment = "";
                         }
-                        if(result.data[i].actualBalance){
-                            result.data[i].actualBalance=result.data[i].actualBalance/100
-                        }else{
-                            result.data[i].actualBalance="";
+                        if (result.data[i].actualBalance) {
+                            result.data[i].actualBalance = result.data[i].actualBalance / 100
+                        } else {
+                            result.data[i].actualBalance = "";
                         }
-                        if(result.data[i].actualbackAmt){
-                            result.data[i].actualbackAmt=result.data[i].actualbackAmt/100
-                        }else{
-                            result.data[i].actualbackAmt="";
+                        if (result.data[i].actualbackAmt) {
+                            result.data[i].actualbackAmt = result.data[i].actualbackAmt / 100
+                        } else {
+                            result.data[i].actualbackAmt = "";
                         }
-                        }
+                    }
                 }
                 if (!pagination.current) {
                     pagination.current = 1
@@ -110,23 +110,23 @@ export default React.createClass({
     },
 
     //查看弹窗
-    showModal(title,record, canEdit) {
-    //    console.log("list:"+record);
-    //    console.log(record);
+    showModal(title, record, canEdit) {
+        //    console.log("list:"+record);
+        //    console.log(record);
         this.setState({
             visible: true,
             canEdit: canEdit,
             record: record,
             title: title
-        },()=>{
+        }, () => {
             this.refs.Lookdetails.setFieldsValue(record);
         })
     },
     //新增
-    addModal(title, record, canEdit){
+    addModal(title, record, canEdit) {
         this.setState({
-            visibleAdd:true,
-            title:title,  
+            visibleAdd: true,
+            title: title,
         })
     },
     //隐藏弹窗
@@ -137,7 +137,7 @@ export default React.createClass({
             visible2: false,
             selectedIndex: '',
             selectedRowKeys: [],
-            visibleAdd:false
+            visibleAdd: false
         });
         this.refreshList();
     },
@@ -178,8 +178,8 @@ export default React.createClass({
         this.setState({
             selectedRowKeys: [record.id],
             selectedRow: record,
-            rowRecord:record
-        },()=>{
+            rowRecord: record
+        }, () => {
             this
         });
     },
@@ -204,20 +204,20 @@ export default React.createClass({
             })
         }
     },
-    download(){
+    download() {
         window.open('/modules/manage/borrow/repay/downRepayByFile.htm');
     },
     render() {
         const {
             loading,
             selectedRowKeys
-            } = this.state;
+        } = this.state;
         const rowSelection = {
             //type: 'checkbox',
             selectedRowKeys,
             //onSelectAll: this.onSelectAll,
         };
-        let me=this;
+        let me = this;
         const hasSelected = selectedRowKeys.length > 0;
         let openEdit = true;
         if (hasSelected && selectedRowKeys.indexOf("0") === -1) {
@@ -250,61 +250,67 @@ export default React.createClass({
         }, {
             title: 'Actual Repayment Amount',//实际还款金额(新增)
             dataIndex: 'actualbackAmt'
-        },{
+        }, {
             title: 'Repayment Status',//还款状态
             dataIndex: "status",
-            render: (text, record)=>{
-                if(record.status==6){
+            render: (text, record) => {
+                if (record.status == 6) {
                     return "Repaid"//已还款
-                }else if(record.status==5){
+                } else if (record.status == 5) {
                     return "Unpaid"//未还款
-                }else if(record.status==21){
+                } else if (record.status == 21) {
                     return "Overdue"//已逾期
-                }else if(record.status==22){
+                } else if (record.status == 22) {
                     return "Overdue payment"//逾期还款
-                }else if(record.status==51){
-                     return "Bad debts"//坏账
+                } else if (record.status == 51) {
+                    return "Bad debts"//坏账
+                }
             }
-            }
-            },{
+        }, {
             title: 'Operating',
             dataIndex: "",
-            render: (text,record) => {
-                if(record.status == 6|record.status == 22){
-                    return "-"
-                }else{
-                    return(
-                    <div style={{ textAlign: "left" }}>
-                            <a href="#" onClick={me.showModal.bind(me, 'Confirm Repayment',record, false)}>Confirm Repayment{/*确认还款*/}</a>
+            render: (text, record) => {
+                // console.log(record.status);
+                if (record.status == 6 | record.status == 22) {
+                    // return "-"
+                    return (
+                        <div style={{ textAlign: "left" }}>
+                            <a href="#" onClick={me.showModal.bind(me, 'View', record, false)}>View{/*查看*/}</a>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div style={{ textAlign: "left" }}>
+                            <a href="#" onClick={me.showModal.bind(me, 'Confirm Repayment', record, false)}>Confirm Repayment{/*确认还款*/}</a>
                             <br />
-                            <a href="#" onClick={me.showModal.bind(me, 'Manual Transfer',record, false)}>Manual Transfer{/*手动划款*/}</a>
-                    </div>
+                            <a href="#" onClick={me.showModal.bind(me, 'Manual Transfer', record, false)}>Manual Transfer{/*手动划款*/}</a>
+                        </div>
                     )
                 }
-            } 
+            }
         }]
 
         var state = this.state;
         return (
             <div className="block-panel">
                 <div className="actionBtns" style={{ marginBottom: 16 }}>
-                    <button onClick={me.addModal.bind(me,'批量')} className="ant-btn"> 
+                    <button onClick={me.addModal.bind(me, '批量')} className="ant-btn">
                         {/*批量还款*/}Batch Repayment
                     </button>
-                    <button onClick={me.download.bind(me,'下载')} className="ant-btn"> 
+                    <button onClick={me.download.bind(me, '下载')} className="ant-btn">
                         {/*下载模板*/}Download Template
                     </button>
                 </div>
                 <Table columns={columns} rowKey={this.rowKey} ref="table"
-                       onRowClick={this.onRowClick}
-                       dataSource={this.state.data}
-                       rowClassName={this.rowClassName}
-                       pagination={this.state.pagination}
-                       onChange={this.handleTableChange}
+                    onRowClick={this.onRowClick}
+                    dataSource={this.state.data}
+                    rowClassName={this.rowClassName}
+                    pagination={this.state.pagination}
+                    onChange={this.handleTableChange}
                 />
                 <Lookdetails ref="Lookdetails" visible={state.visible} title={state.title} hideModal={me.hideModal} record={state.record}
-                canEdit={state.canEdit} />
-                <AddWin ref="AddWin"  visible={state.visibleAdd} hideModal={me.hideModal} title={state.title}/>
+                    canEdit={state.canEdit} />
+                <AddWin ref="AddWin" visible={state.visibleAdd} hideModal={me.hideModal} title={state.title} />
             </div>
         );
     }

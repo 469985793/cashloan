@@ -321,12 +321,17 @@ var Lookdetails = React.createClass({
         span: 24
       },
     };
-    var modalBtns = [
+    var modalBtns = props.title == "View" ? [
+      <Button key="back" className="ant-btn" onClick={this.handleCancel}>Back{/*返 回*/}</Button>
+    ]
+    :
+    [
       <Button key="back" className="ant-btn" onClick={this.handleCancel}>Back{/*返 回*/}</Button>,
-      <Button key="button" className="ant-btn ant-btn-primary" onClick={this.handleOk}>
+      <Button key="button" className="ant-btn ant-btn-primary" onClick={this.handleOk} >
         {/*提 交*/}Submit
             </Button>
-    ];
+    ]
+    ;
     return (
       <Modal title={props.title} visible={props.visible} onCancel={this.handleCancel} width="800" footer={modalBtns} maskClosable={false} >{/*手动划款*/}
         {props.title == "Manual Transfer" ? (
@@ -340,9 +345,7 @@ var Lookdetails = React.createClass({
                 </FormItem>
               </Col>
             </Row></Form>)
-
           :
-
           (<Form horizontal form={this.props.form}>
             <Input  {...getFieldProps('id', { initialValue: '' })} type="hidden" />
             <Input  {...getFieldProps('status', { initialValue: '' })} type="hidden" />
@@ -426,7 +429,6 @@ var Lookdetails = React.createClass({
               </Col>
             </Row>
           </Form>
-
           )
         }
 

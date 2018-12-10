@@ -32,9 +32,15 @@ let SeachForm = React.createClass({
         window.open("/modules/manage/borrow/export.htm?searchParams=" + encodeURI(json));
 
     },
+    disabledDate(startValue){
+        var today = new Date();
+        return startValue.getTime() > today.getTime();
+        // return current && current < moment().endOf('day');
+    },
     render() {
 
         const { getFieldProps } = this.props.form;
+        var date = new Date();
 
         return (
             <Form inline>
@@ -48,7 +54,7 @@ let SeachForm = React.createClass({
                     <Input  {...getFieldProps('orderNo', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Date：">
-                    <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: '' })} />
+                    <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: [date,date] })} />
                 </FormItem>
                 <FormItem label="Order Status:">
                     <Select style={{ width: 350 }} {...getFieldProps('state', { initialValue: '' })}>
