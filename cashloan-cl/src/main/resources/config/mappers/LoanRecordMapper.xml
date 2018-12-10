@@ -662,6 +662,12 @@
       where status in(6,22)
   </select>
 
+  <select id="findByIndentNo" resultType="com.xindaibao.cashloan.cl.model.kenya.LoanRecord">
+      select *
+      from k_loan_record
+      where indent_no = #{indentNo}
+  </select>
+
   <select id="totalAmountRepaid" resultType="Integer">
       select distinct((select sum(balance)
       from k_loan_record

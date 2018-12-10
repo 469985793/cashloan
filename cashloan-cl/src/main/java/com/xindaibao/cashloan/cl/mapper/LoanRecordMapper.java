@@ -14,6 +14,8 @@ public interface LoanRecordMapper extends BaseMapper<LoanRecord, Long> {
 
     LoanRecord findByPrimary(long id);
 
+    LoanRecord findByIndentNo(String indentNo);
+
 
     int updateParam(Map<String, Object> paramMap);
 

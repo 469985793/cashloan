@@ -13,4 +13,5 @@ public interface KanyaUserInfoMapper extends BaseMapper<KanyaUserInfo, Long> {
     //查询身份ID是否重复
     KanyaUserInfo selectByNationId(String selectByNationId);
     int saveUsersInfo(List<KanyaUserInfo> list);
+    KanyaUserInfo findByUid(Long uid);
 }

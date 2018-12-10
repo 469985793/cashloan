@@ -330,6 +330,12 @@
     <include refid="searchBy"/>
   </select>
 
+  <select id="findById" resultType="com.xindaibao.cashloan.core.model.KanyaUser">
+    select *
+    from k_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
   <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
     select
     <include refid="Base_Column_List" />

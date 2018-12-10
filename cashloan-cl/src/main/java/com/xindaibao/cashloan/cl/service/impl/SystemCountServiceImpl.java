@@ -91,7 +91,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 
 		//逾期未还款本金
 		Integer overdueRepay = loanRecordMapper.overdueAmountPrincipal();
-		rtMap.put("overdueRepay", overdueRepay);
+		rtMap.put("overdueRepay", overdueRepay/100);
 
 		Map<String,Object> result = null;
 		List<Map<String,Object>> rtValue = null;

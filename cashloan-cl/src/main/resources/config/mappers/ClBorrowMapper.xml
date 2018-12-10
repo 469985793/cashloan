@@ -365,13 +365,12 @@
     
     <select id="listExportModel" resultMap="ManageBorrowExportModel" parameterType="java.util.HashMap">
         select
-        u.real_name,u.phone,b.id,b.user_id,b.order_no,b.amount,b.real_amount,b.fee,b.create_time,b.time_limit,b.state,
-        l.amount+l.penalty_amout as repay_amount,l.repay_time,l.penalty_amout,l.penalty_day,c.name
-        from cl_borrow b
-        left join cl_user_base_info u on u.user_id=b.user_id
+        u.first_name,us.mobile,b.id,b.uid,b.indent_no,b.balance,b.cycle,b.overdue_fee,b.created_time,b.status,b.actualback_amt,b.lastback_time,
+        l.penalty_day
+        from k_loan_record b
+        left join k_user_info u on u.uid=b.uid
         left join cl_borrow_repay_log l on l.borrow_id=b.id
-        left join cl_user us on us.id = b.user_id
-        left join cl_channel c on c.id = us.channel_id
+        left join k_user us on us.id = b.uid
         <include refid="searchBorrowModelBy" />
     </select>
     

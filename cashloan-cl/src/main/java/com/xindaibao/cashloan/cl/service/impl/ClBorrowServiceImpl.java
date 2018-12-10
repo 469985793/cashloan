@@ -21,7 +21,9 @@ import com.xindaibao.cashloan.cl.model.pay.lianlian.PaymentModel;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.constant.LianLianConstant;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.util.LianLianHelper;
 import com.xindaibao.cashloan.cl.monitor.BusinessExceptionMonitor;
+import com.xindaibao.cashloan.cl.sdk.operator.tongdun.model.UserInfo;
 import com.xindaibao.cashloan.cl.service.*;
+import com.xindaibao.cashloan.core.mapper.KanyaUserInfoMapper;
 import com.xindaibao.cashloan.core.model.KanyaUser;
 import org.apache.commons.collections.CollectionUtils;
 import com.xindaibao.cashloan.system.domain.SysConfig;
@@ -102,7 +104,8 @@ import com.xindaibao.cashloan.system.service.SysConfigService;
 import com.xindaibao.creditrank.cr.domain.Credit;
 import com.xindaibao.creditrank.cr.mapper.CreditMapper;
 import com.xindaibao.cashloan.core.mapper.KanyaUserMapper;
-
+import com.xindaibao.cashloan.core.model.KanyaUserInfo;
+import com.xindaibao.cashloan.core.model.KanyaUser;
 import static com.xindaibao.cashloan.cl.Util.HttpClientUtil.CONTENT_TYPE_JSON_URL;
 
 /**
@@ -125,6 +128,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     private ClBorrowMapper clBorrowMapper;
     @Resource
     private BorrowProgressMapper borrowProgressMapper;
+    @Resource
+    private KanyaUserInfoMapper kanyaUserInfoMapper;
     @Resource
     private BorrowRepayMapper borrowRepayMapper;
     @Resource
@@ -2016,36 +2021,33 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     public List listBorrow(Map<String, Object> params) {
         List<ManageBorrowExportModel> list = clBorrowMapper.listExportModel(params);
         for (ManageBorrowExportModel model : list) {
-            model.setState(BorrowModel.apiConvertBorrowState(model.getState()));
-            UserBaseInfo ubi = userBaseInfoMapper.findByUserId(model.getUserId());
+            KanyaUserInfo ubi = kanyaUserInfoMapper.findByUid(model.getUid());
             if (ubi != null) {
-                model.setRealName(ubi.getRealName());
-                model.setPhone(ubi.getPhone());
+                model.setFirstName(ubi.getFirstName());
             }
-            Map<String, Object> params2 = new HashMap<>();
-            params2.put("borrowId", model.getId());
-            params2.put("state", BorrowModel.STATE_REPAY);
-            BorrowProgress bp = borrowProgressMapper.findSelective(params2);
-            if (bp != null) {
-                model.setLoanTime(bp.getCreateTime());
+            Long id = model.getUid();
+            KanyaUser user = kanyaUserMapper.findById(id);
+            if (user != null) {
+                model.setMobile(user.getMobile());
             }
             Map<String, Object> params3 = new HashMap<>();
             params3.put("borrowId", model.getId());
             BorrowRepay br = borrowRepayMapper.findSelective(params3);
             if (br != null) {
                 model.setPenaltyDay(br.getPenaltyDay());
-                model.setPenaltyAmout(br.getPenaltyAmout());
             }
-            BorrowRepayLog brl = borrowRepayLogMapper.findSelective(params3);
-            if (brl != null) {
-                model.setRepayAmount(brl.getAmount());
-                model.setRepayTime(brl.getRepayTime());
+            LoanRecord lr = loanRecordMapper.findByIndentNo(model.getIndentNo());
+            if (lr != null) {
+                model.setActualbackAmt(lr.getActualbackAmt());
+                model.setRepayTime(lr.getLastbackTime());
+                model.setCreatedTime(lr.getCreatedTime());
+                model.setOverdueFee(lr.getOverdueFee());
+                model.setIndentNo(lr.getIndentNo());
+                model.setBalance(lr.getBalance());
+                model.setCycle(lr.getCycle());
+                model.setStatus(lr.getStatus());
             }
-            UrgeRepayOrder uro = urgeRepayOrderMapper.findSelective(params3);
-            if (uro != null) {
-                model.setLevel(uro.getLevel());
-            }
-
+            model.setExportTime(new Date());
         }
         return list;
     }
