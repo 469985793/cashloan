@@ -152,6 +152,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     @Resource
     private UserAuthService userAuthService;
     @Resource
+    private LoanProductMapper loanProductMapper;
+    @Resource
     private BorrowRuleEngineMapper borrowRuleEngineMapper;
     @Resource
     private RuleEngineConfigMapper ruleEngineConfigMapper;
@@ -171,6 +173,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     private UrgeRepayOrderMapper urgeRepayOrderMapper;
     @Resource
     private RuleEngineMapper ruleEngineMapper;
+    @Resource
+    private RepayRecordMapper repayRecordMapper;
     @Resource
     private ClSmsService clSmsService;
     @Resource
@@ -2017,7 +2021,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
         }
     }
 
-    public List listBorrow(Map<String, Object> params) {
+    public List  listBorrow(Map<String, Object> params) {
         List<ManageBorrowExportModel> list = clBorrowMapper.listExportModel(params);
         for (ManageBorrowExportModel model : list) {
             KanyaUserInfo ubi = kanyaUserInfoMapper.findByUid(model.getUid());
@@ -2029,24 +2033,93 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
             if (user != null) {
                 model.setMobile(user.getMobile());
             }
-            Map<String, Object> params3 = new HashMap<>();
-            params3.put("borrowId", model.getId());
-            BorrowRepay br = borrowRepayMapper.findSelective(params3);
-            if (br != null) {
-                model.setPenaltyDay(br.getPenaltyDay());
-            }
             LoanRecord lr = loanRecordMapper.findByIndentNo(model.getIndentNo());
             if (lr != null) {
-                model.setActualbackAmt(lr.getActualbackAmt());
+                model.setActualbackAmt(lr.getActualbackAmt()/100);
                 model.setRepayTime(lr.getLastbackTime());
                 model.setCreatedTime(lr.getCreatedTime());
-                model.setOverdueFee(lr.getOverdueFee());
+                model.setOverdueFee(lr.getOverdueFee()/100);
                 model.setIndentNo(lr.getIndentNo());
-                model.setBalance(lr.getBalance());
+                model.setBalance(lr.getBalance()/100);
                 model.setCycle(lr.getCycle());
                 model.setStatus(lr.getStatus());
+                model.setArriveTime(lr.getArriveTime());
+                long startTimeLong = lr.getShouldbackTime().getTime();
+                long endTimeLong = new Date().getTime();
+                long day = (endTimeLong-startTimeLong)/(24*60*60*1000);
+                if(day>0){
+                    model.setPenaltyDay(day);
+                }
+                else {
+                    model.setPenaltyDay(0L);
+                }
+            }
+            Long productId = model.getProductId();
+            LoanProduct loanProduct = loanProductMapper.findByPrimary(productId);
+            if(loanProduct!=null){
+                model.setProfit(loanProduct.getProfit()/100);
+                model.setAccountManage(loanProduct.getAccountManage()/100);
+            }
+            RepayRecord repayRecord = repayRecordMapper.findByLoanRecordId(model.getId());
+            if(repayRecord!=null&&repayRecord.getRepayTime()!=null){
+                model.setRepayTime(repayRecord.getRepayTime());
             }
             model.setExportTime(new Date());
+            Integer status = model.getStatus().intValue();
+            switch (status){
+                case 1:
+                    model.setState("申请，待风控审核");
+                    break;
+                case 2:
+                    model.setState("风控审核通过，待复审");
+                    break;
+                case 3:
+                    model.setState("复审通过，待放款");
+                    break;
+                case 4:
+                    model.setState("放款中");
+                    break;
+                case 5:
+                    model.setState("已放款，待还款");
+                    break;
+                case 6:
+                    model.setState("正常还款");
+                    break;
+                case 21:
+                    model.setState("已逾期");
+                    break;
+                case 22:
+                    model.setState("逾期还款");
+                    break;
+                case 31:
+                    model.setState("风控审核不通过");
+                    break;
+                case 32:
+                    model.setState("复审不通过，15天后可再次申请");
+                    break;
+                case 33:
+                    model.setState("拒绝可以立即申请");
+                    break;
+                case 34:
+                    model.setState("拒绝并加入黑名单");
+                    break;
+                case 41:
+                    model.setState("放款失败");
+                    break;
+                case 42:
+                    model.setState("放款被拒");
+                    break;
+                case 51:
+                    model.setState("坏账");
+                    break;
+                case 61:
+                    model.setState("还款中");
+                    break;
+                case 62:
+                    model.setState("还款失败");
+                    break;
+            }
+
         }
         return list;
     }

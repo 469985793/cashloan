@@ -41,9 +41,17 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	 */
 	private Byte status;
 	/**
-	 * 用户名
+	 * 还款时间
 	 */
 	private Date lastbackTime;
+	/**
+	 * 放款时间
+	 */
+	private Date arriveTime;
+	/**
+	 * 产品ID
+	 */
+	private Long productId;
 	/**
 	 * 手机号
 	 */
@@ -52,7 +60,7 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	/**
 	 * 逾期天数
 	 */
-	private String penaltyDay;
+	private long penaltyDay;
 	
 	/**
 	 * 逾期罚金
@@ -72,6 +80,18 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	 * 导出日期
 	 */
 	private Date exportTime;
+    /**
+     * 利息费
+     */
+    private Integer profit;
+    /**
+     * 管理费
+     */
+    private Integer accountManage;
+	/**
+	 * 状态
+	 */
+	private String state;
 
 	public Long getId() {
 		return id;
@@ -95,6 +115,22 @@ public class ManageBorrowExportModel extends BaseModelResource {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public Date getArriveTime() {
+		return arriveTime;
+	}
+
+	public void setArriveTime(Date arriveTime) {
+		this.arriveTime = arriveTime;
 	}
 
 	public String getIndentNo() {
@@ -129,7 +165,15 @@ public class ManageBorrowExportModel extends BaseModelResource {
 		this.createdTime = createdTime;
 	}
 
-    public Byte getStatus() {
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Byte getStatus() {
         return status;
     }
 
@@ -153,15 +197,31 @@ public class ManageBorrowExportModel extends BaseModelResource {
 		this.mobile = mobile;
 	}
 
-	public String getPenaltyDay() {
+	public long getPenaltyDay() {
 		return penaltyDay;
 	}
 
-	public void setPenaltyDay(String penaltyDay) {
+	public void setPenaltyDay(long penaltyDay) {
 		this.penaltyDay = penaltyDay;
 	}
 
-    public Long getOverdueFee() {
+	public Integer getProfit() {
+		return profit;
+	}
+
+	public void setProfit(Integer profit) {
+		this.profit = profit;
+	}
+
+	public Integer getAccountManage() {
+		return accountManage;
+	}
+
+	public void setAccountManage(Integer accountManage) {
+		this.accountManage = accountManage;
+	}
+
+	public Long getOverdueFee() {
         return overdueFee;
     }
 
