@@ -401,6 +401,8 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 
 	LoanRecord findByPrimaryforKenya(long id);
 
+	List<LoanRecord> selectCreditLoan();
+
 	/**
 	 * 查询用户借款信息
 	 */

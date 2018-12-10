@@ -2379,6 +2379,13 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     }
 
     @Override
+    public List<LoanRecord> selectCreditLoan() {
+        return loanRecordMapper.selectCreditLoan();
+    }
+
+
+
+    @Override
     public ClBorrowModel findBorrow(Long borrowId) {
         Map<String, Object> params = Maps.newHashMap();
         params.put("id", borrowId);
