@@ -22,7 +22,9 @@ import com.xindaibao.cashloan.cl.model.pay.lianlian.constant.LianLianConstant;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.util.LianLianHelper;
 import com.xindaibao.cashloan.cl.monitor.BusinessExceptionMonitor;
 import com.xindaibao.cashloan.cl.service.*;
+import com.xindaibao.cashloan.core.mapper.KanyaUserInfoMapper;
 import com.xindaibao.cashloan.core.model.KanyaUser;
+import com.xindaibao.cashloan.core.model.KanyaUserInfo;
 import org.apache.commons.collections.CollectionUtils;
 import com.xindaibao.cashloan.system.domain.SysConfig;
 import org.jfree.base.config.SystemPropertyConfiguration;
@@ -135,6 +137,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     private BankCardMapper bankCardMapper;
     @Resource
     private UserInviteMapper userInviteMapper;
+    @Resource
+    private KanyaUserInfoMapper kanyaUserInfoMapper;
     @Resource
     private ProfitAgentMapper profitAgentMapper;
     @Resource
