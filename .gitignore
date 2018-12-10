@@ -30,5 +30,5 @@ build/
 out/
 target/
 111
-
+node_modules/
 

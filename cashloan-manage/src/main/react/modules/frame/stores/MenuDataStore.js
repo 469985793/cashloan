@@ -15,6 +15,7 @@ export default Reflux.createStore({
             method: 'get',
             type: 'json',
             callback: (result) => {
+                console.log(result);
                 this.menuData = result.data;
                 this.update();
             }

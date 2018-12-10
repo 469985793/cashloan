@@ -12,6 +12,7 @@ var UserMessageStore = Reflux.createStore({
             url: '/modules/manage/system/user/find.htm',
             method: 'get',
             callback: (result) => {
+                // console.log(result);
                 this.userMessage = result;
                 this.update();
             }
