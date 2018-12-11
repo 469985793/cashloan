@@ -49,6 +49,10 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	 */
 	private Date arriveTime;
 	/**
+	 * 应该还款时间时间
+	 */
+	private Date shouldbackTime;
+	/**
 	 * 产品ID
 	 */
 	private Long productId;
@@ -131,6 +135,14 @@ public class ManageBorrowExportModel extends BaseModelResource {
 
 	public void setArriveTime(Date arriveTime) {
 		this.arriveTime = arriveTime;
+	}
+
+	public Date getShouldbackTime() {
+		return shouldbackTime;
+	}
+
+	public void setShouldbackTime(Date shouldbackTime) {
+		this.shouldbackTime = shouldbackTime;
 	}
 
 	public String getIndentNo() {

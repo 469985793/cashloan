@@ -371,14 +371,14 @@
     
     <select id="listExportModel" resultMap="ManageBorrowExportModel" parameterType="java.util.HashMap">
         select
-        u.first_name,us.mobile,b.id,b.uid,b.indent_no,b.product_id,b.balance,b.cycle,b.overdue_fee,b.created_time,b.status,b.actualback_amt,b.lastback_time,
-        p.profit,p.account_manage,r.repay_time,b.arrive_time
-        from k_loan_record b
-        left join k_user_info u on u.uid=b.uid
-        left join k_loan_product p on b.product_id=p.id
-        left join k_repay_record r on r.loan_record_id=b.id
-        left join k_user us on us.id = b.uid
-        <include refid="searchBorrowModelBy" />
+        u.first_name,us.mobile,r.id,r.uid,r.indent_no,r.product_id,r.balance,r.cycle,r.overdue_fee,r.created_time,r.status,r.actualback_amt,r.lastback_time,
+        r.shouldback_time,p.profit,p.account_manage,a.repay_time,r.arrive_time
+        from k_loan_record r
+        left join k_user_info u on u.uid=r.uid
+        left join k_loan_product p on r.product_id=p.id
+        left join k_repay_record a on a.loan_record_id=r.id
+        left join k_user us on us.id = r.uid
+        <include refid="searchBorrowModelByKenya" />
     </select>
     
     <select id="findLast" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -480,32 +480,32 @@
 	<sql id="searchBorrowModelBy">
         <trim prefix="where" prefixOverrides="and|or">
         	<if test="userId !='' and userId !=null">
-                and u.user_id = #{userId,jdbcType=BIGINT} 
+                and u.user_id = #{userId,jdbcType=BIGINT}
             </if>
             <if test="realName !='' and realName !=null">
-                and u.real_name like  concat("%",#{realName,jdbcType=VARCHAR},"%") 
+                and u.real_name like  concat("%",#{realName,jdbcType=VARCHAR},"%")
             </if>
              <if test="phone !='' and phone !=null">
-                and u.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%") 
+                and u.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%")
             </if>
             <if test="orderNo !='' and orderNo !=null">
-                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")  
+                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")
             </if>
-            <if test="state != null and state != '' and renewState == null ">        
-            	and b.state = #{state,jdbcType=VARCHAR}                
+            <if test="state != null and state != '' and renewState == null ">
+            	and b.state = #{state,jdbcType=VARCHAR}
             </if>
             <if test="stateList !=null">
             	and b.state  in
-             	<foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">  
-			    	#{item}  
-             	</foreach> 
+             	<foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">
+			    	#{item}
+             	</foreach>
             </if>
-            <if test="remark != null and remark != ''">        
-            	and b.remark like concat("%",#{remark,jdbcType=VARCHAR},"%")  
+            <if test="remark != null and remark != ''">
+            	and b.remark like concat("%",#{remark,jdbcType=VARCHAR},"%")
             </if>
-            <if test="state == '33' and renewState != null ">        
+            <if test="state == '33' and renewState != null ">
             	and b.original_id IN (  select t.id from cl_borrow t where t.state=#{state,jdbcType=VARCHAR} and t.renew_state=#{renewState,jdbcType=VARCHAR}  )
-            	 or b.id IN (select t.id from cl_borrow t where t.state=#{state,jdbcType=VARCHAR} and t.renew_state=#{renewState,jdbcType=VARCHAR}  )             
+            	 or b.id IN (select t.id from cl_borrow t where t.state=#{state,jdbcType=VARCHAR} and t.renew_state=#{renewState,jdbcType=VARCHAR}  )
             </if>
             <if test="channelList !=null">
                 and c.code  in
@@ -520,20 +520,20 @@
     <!-- 借款列表（新增续借条件）查询条件公共引用 -->
     <sql id="searchBorrowModelByKenya">
         <trim prefix="where" prefixOverrides="and|or">
-            <if test="userId !='' and userId !=null">
-                and r.uid = #{userId,jdbcType=BIGINT}
+            <if test="uid !='' and uid !=null">
+                and r.uid = #{uid,jdbcType=BIGINT}
             </if>
-            <if test="realName !='' and realName !=null">
-                and r.last_name like  concat("%",#{realName,jdbcType=VARCHAR},"%")
+            <if test="firstName !='' and firstName !=null">
+                and r.first_name like  concat("%",#{firstName,jdbcType=VARCHAR},"%")
             </if>
-            <if test="phone !='' and phone !=null">
-                and r.mobile like  concat("%",#{phone,jdbcType=VARCHAR},"%")
+            <if test="mobile !='' and mobile !=null">
+                and r.mobile like  concat("%",#{mobile,jdbcType=VARCHAR},"%")
             </if>
-            <if test="orderNo !='' and orderNo !=null">
-                and r.indent_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")
+            <if test="indentNo !='' and indentNo !=null">
+                and r.indent_no like  concat("%",#{indentNo,jdbcType=VARCHAR},"%")
             </if>
-            <if test="state != null and state != '' and renewState == null ">
-                and r.status = #{state,jdbcType=VARCHAR}
+            <if test="status != null and status != '' and renewState == null ">
+                and r.status = #{status,jdbcType=VARCHAR}
             </if>
             <if test=" beforeTime !=null ">
                 and date_format(r.created_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP}
@@ -578,8 +578,8 @@
             <if test="orderNo !='' and orderNo !=null">
                 and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")  
             </if>
-            <if test="state != null and state != '' ">        
-            	and p.state = #{state,jdbcType=VARCHAR}                
+            <if test="state != null and state != '' ">
+            	and p.state = #{state,jdbcType=VARCHAR}
             </if>
         </trim>
 		ORDER BY b.create_time DESC

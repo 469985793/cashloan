@@ -2047,6 +2047,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
                 model.setBalance(lr.getBalance()/100);
                 model.setCycle(lr.getCycle());
                 model.setStatus(lr.getStatus());
+                model.setShouldbackTime(lr.getShouldbackTime());
                 model.setArriveTime(lr.getArriveTime());
                 long startTimeLong = lr.getShouldbackTime().getTime();
                 long endTimeLong = new Date().getTime();
@@ -2115,12 +2116,6 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
                     break;
                 case 51:
                     model.setState("坏账");
-                    break;
-                case 61:
-                    model.setState("还款中");
-                    break;
-                case 62:
-                    model.setState("还款失败");
                     break;
             }
 

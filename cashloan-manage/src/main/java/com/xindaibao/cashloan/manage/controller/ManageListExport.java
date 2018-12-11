@@ -189,7 +189,7 @@ public class ManageListExport extends ManageBaseController{
 		Map<String, Object> params = JsonUtil.parse(searchParams, Map.class);
 		List list = clBorrowService.listBorrow(params);
 		SysUser user = (SysUser) request.getSession().getAttribute("SysUser");
-		response.setContentType("application/msexcel;charset=UTF-8");
+		response.setContentType("application/msexcel;charset=UTF-8");   
 		// 记录取得
 		String title = "借款订单Excel表";
 		String[] hearders =  ExportConstant.EXPORT_BORROW_LIST_HEARDERS;
