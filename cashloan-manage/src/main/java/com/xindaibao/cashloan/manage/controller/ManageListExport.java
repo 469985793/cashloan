@@ -177,7 +177,7 @@ public class ManageListExport extends ManageBaseController{
 		SysUser user = (SysUser) request.getSession().getAttribute("SysUser");
 		response.setContentType("application/msexcel;charset=UTF-8");   
 		// 记录取得
-		String title = "借款订单Excel表";
+		String title = "Loan Order Excel Sheet";
 		String[] hearders =  ExportConstant.EXPORT_BORROW_LIST_HEARDERS;
 		String[] fields = ExportConstant.EXPORT_BORROW_LIST_FIELDS;
 		JsGridReportBase report = new JsGridReportBase(request, response);

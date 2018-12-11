@@ -52,7 +52,7 @@ let SeachForm = React.createClass({
         return (
             <Form inline>
                 <FormItem label="Actual Name:">
-                    <Input  {...getFieldProps('firstName', { initialValue: '' })} />
+                    <Input  {...getFieldProps('lastName', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Phone:">
                     <Input  {...getFieldProps('mobile', { initialValue: '' })} />

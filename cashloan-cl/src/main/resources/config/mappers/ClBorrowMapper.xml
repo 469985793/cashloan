@@ -371,7 +371,7 @@
     
     <select id="listExportModel" resultMap="ManageBorrowExportModel" parameterType="java.util.HashMap">
         select
-        u.first_name,us.mobile,r.id,r.uid,r.indent_no,r.product_id,r.balance,r.cycle,r.overdue_fee,r.created_time,r.status,r.actualback_amt,r.lastback_time,
+        u.last_name,us.mobile,r.id,r.uid,r.indent_no,r.product_id,r.balance,r.cycle,r.overdue_fee,r.created_time,r.status,r.actualback_amt,r.lastback_time,
         r.shouldback_time,p.profit,p.account_manage,a.repay_time,r.arrive_time
         from k_loan_record r
         left join k_user_info u on u.uid=r.uid
@@ -523,8 +523,8 @@
             <if test="uid !='' and uid !=null">
                 and r.uid = #{uid,jdbcType=BIGINT}
             </if>
-            <if test="firstName !='' and firstName !=null">
-                and r.first_name like  concat("%",#{firstName,jdbcType=VARCHAR},"%")
+            <if test="lastName !='' and lastName !=null">
+                and r.last_name like  concat("%",#{lastName,jdbcType=VARCHAR},"%")
             </if>
             <if test="mobile !='' and mobile !=null">
                 and r.mobile like  concat("%",#{mobile,jdbcType=VARCHAR},"%")
@@ -536,10 +536,10 @@
                 and r.status = #{status,jdbcType=VARCHAR}
             </if>
             <if test=" beforeTime !=null ">
-                and date_format(r.created_time, '%Y-%m-%d')  &gt;=  #{beforeTime,jdbcType=TIMESTAMP}
+                and date_format(r.created_time, '%Y-%m-%d')  &gt;=  date_format(#{beforeTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
             </if>
             <if test=" afterTime !=null ">
-                and  date_format(r.created_time, '%Y-%m-%d')  &lt;= #{afterTime,jdbcType=TIMESTAMP}
+                and  date_format(r.created_time, '%Y-%m-%d')  &lt;= date_format(#{afterTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
             </if>
             <if test="stateList !=null">
                 and r.status  in

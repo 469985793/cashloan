@@ -35,10 +35,10 @@ public final class ExportConstant {
 
 
 	/** 借款订单导出 表头*/
-	public static final String[] EXPORT_BORROW_LIST_HEARDERS = {"用户姓名","手机号","订单号","借款金额(ksh)","借款期限","订单生成时间","管理费用","利息费",
-		"订单状态","放款时间","应该还款时间","实际还款时间","实际还款金额(ksh)","逾期天数","逾期罚金(ksh)","导出时间"};
+	public static final String[] EXPORT_BORROW_LIST_HEARDERS = {"Actual name","Mobile","Indent Number","Balance(ksh)","Cycle","Created Time","Account Manage","Profit",
+		"State","Loan time","Should Back Time","Repay Time","Actual Back Amount(ksh)","Penalty Day","Overdue Fee(ksh)","Export Time"};
 	/** 借款订单导出 属性数组*/
-	public static final String[] EXPORT_BORROW_LIST_FIELDS = {"firstName", "mobile", "indentNo", "balance","cycle","createdTime", "accountManage",
+	public static final String[] EXPORT_BORROW_LIST_FIELDS = {"lastName", "mobile", "indentNo", "balance","cycle","createdTime", "accountManage",
 		"profit", "state","arriveTime", "shouldbackTime","repayTime", "actualbackAmt","penaltyDay","overdueFee","exportTime"};
 	
 	/** 支付记录导出 表头*/

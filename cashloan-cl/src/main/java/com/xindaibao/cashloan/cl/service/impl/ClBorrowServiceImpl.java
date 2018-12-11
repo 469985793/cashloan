@@ -2030,7 +2030,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
         for (ManageBorrowExportModel model : list) {
             KanyaUserInfo ubi = kanyaUserInfoMapper.findByUid(model.getUid());
             if (ubi != null) {
-                model.setFirstName(ubi.getFirstName());
+                model.setLastName(ubi.getLastName());
             }
             Long id = model.getUid();
             KanyaUser user = kanyaUserMapper.findById(id);
@@ -2062,7 +2062,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
             Long productId = model.getProductId();
             LoanProduct loanProduct = loanProductMapper.findByPrimary(productId);
             if(loanProduct!=null){
-                model.setProfit(loanProduct.getProfit()/100);
+                model.setProfit(loanProduct.getProfit().doubleValue()/100);
                 model.setAccountManage(loanProduct.getAccountManage()/100);
             }
             RepayRecord repayRecord = repayRecordMapper.findByLoanRecordId(model.getId());
@@ -2073,49 +2073,49 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
             Integer status = model.getStatus().intValue();
             switch (status){
                 case 1:
-                    model.setState("申请，待风控审核");
+                    model.setState("In the application, pending risk control review");
                     break;
                 case 2:
-                    model.setState("风控审核通过，待复审");
+                    model.setState("Wind control audit passed, pending review");
                     break;
                 case 3:
-                    model.setState("复审通过，待放款");
+                    model.setState("Review and approval, pending payment");
                     break;
                 case 4:
-                    model.setState("放款中");
+                    model.setState("In the lending");
                     break;
                 case 5:
-                    model.setState("已放款，待还款");
+                    model.setState("Loaned, pending payment");
                     break;
                 case 6:
-                    model.setState("正常还款");
+                    model.setState("Normal reimbursement");
                     break;
                 case 21:
-                    model.setState("已逾期");
+                    model.setState("Overdue");
                     break;
                 case 22:
-                    model.setState("逾期还款");
+                    model.setState("Overdue payment");
                     break;
                 case 31:
-                    model.setState("风控审核不通过");
+                    model.setState("Risk control audit did not pass");
                     break;
                 case 32:
-                    model.setState("复审不通过，15天后可再次申请");
+                    model.setState("Review not approved,Reapply In 15 Days");
                     break;
                 case 33:
-                    model.setState("拒绝可以立即申请");
+                    model.setState("Review not approved,Reapply Immediately");
                     break;
                 case 34:
-                    model.setState("拒绝并加入黑名单");
+                    model.setState("Review not approved,Blacklist");
                     break;
                 case 41:
-                    model.setState("放款失败");
+                    model.setState("Loan failure");
                     break;
                 case 42:
-                    model.setState("放款被拒");
+                    model.setState("Lending was rejected");
                     break;
                 case 51:
-                    model.setState("坏账");
+                    model.setState("Bad debt");
                     break;
             }
 

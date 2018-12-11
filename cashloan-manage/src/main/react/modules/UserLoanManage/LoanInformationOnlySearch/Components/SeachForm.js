@@ -28,7 +28,7 @@ let SeachForm = React.createClass({
     handleOut() {
         var params = this.props.form.getFieldsValue();
         var json = JSON.stringify(params);
-        window.open("?searchParams="+encodeURI(json));
+        window.open("/modules/manage/borrow/export.htm?searchParams="+encodeURI(json));
 
     },
     render() {

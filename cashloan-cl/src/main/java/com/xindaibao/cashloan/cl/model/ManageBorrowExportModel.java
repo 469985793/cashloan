@@ -19,7 +19,7 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	/**
 	 * 用户名
 	 */
-	private String firstName;
+	private String lastName;
 	/**
 	 * 订单号
 	 */
@@ -87,7 +87,7 @@ public class ManageBorrowExportModel extends BaseModelResource {
     /**
      * 利息费
      */
-    private Integer profit;
+    private Double profit;
     /**
      * 管理费
      */
@@ -113,12 +113,12 @@ public class ManageBorrowExportModel extends BaseModelResource {
 		this.uid = uid;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Long getProductId() {
@@ -217,11 +217,11 @@ public class ManageBorrowExportModel extends BaseModelResource {
 		this.penaltyDay = penaltyDay;
 	}
 
-	public Integer getProfit() {
+	public Double getProfit() {
 		return profit;
 	}
 
-	public void setProfit(Integer profit) {
+	public void setProfit(Double profit) {
 		this.profit = profit;
 	}
 
