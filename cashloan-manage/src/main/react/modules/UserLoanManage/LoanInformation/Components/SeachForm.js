@@ -61,7 +61,7 @@ let SeachForm = React.createClass({
                     <Input  {...getFieldProps('indentNo', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Date：">
-                    <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: [date,date] })} />
+                    <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: "" })} />
                 </FormItem>
                 <FormItem label="Order Status:">
                     <Select style={{ width: 350 }} {...getFieldProps('status', { initialValue: '' })}>

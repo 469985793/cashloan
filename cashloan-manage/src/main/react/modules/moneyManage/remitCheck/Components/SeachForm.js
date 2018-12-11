@@ -68,7 +68,7 @@ let SeachForm = React.createClass({
             <Form inline>
                 <Input type="hidden" {...getFieldProps('state', { initialValue: '15' })} />
                 <FormItem label="Date:">{/*收款人姓名*/}
-                    <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('registTime', {initialValue: [date,date]}) } />
+                    <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('registTime', {initialValue: ""}) } />
                 </FormItem>
                 <FormItem label="Payee Name:">{/*收款人姓名*/}
                     <Input  {...getFieldProps('realName', { initialValue: '' })} />

@@ -535,17 +535,14 @@
             <if test="status != null and status != '' and renewState == null ">
                 and r.status = #{status,jdbcType=VARCHAR}
             </if>
+            <if test="state != null and state != ''">
+                and r.status = #{state,jdbcType=VARCHAR}
+            </if>
             <if test=" beforeTime !=null ">
-                and date_format(r.created_time, '%Y-%m-%d')  &gt;=  date_format(#{beforeTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+                and date_format(r.lastback_time, '%Y-%m-%d')  &gt;=  date_format(#{beforeTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
             </if>
             <if test=" afterTime !=null ">
-                and  date_format(r.created_time, '%Y-%m-%d')  &lt;= date_format(#{afterTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
-            </if>
-            <if test=" beforeRepaymentTime !=null ">
-                and date_format(r.lastback_time, '%Y-%m-%d')  &gt;=  date_format(#{beforeRepaymentTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
-            </if>
-            <if test=" afterRepaymentTime !=null ">
-                and  date_format(r.lastback_time, '%Y-%m-%d')  &lt;= date_format(#{afterRepaymentTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+                and  date_format(r.lastback_time, '%Y-%m-%d')  &lt;= date_format(#{afterTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
             </if>
             <if test="stateList !=null">
                 and r.status  in

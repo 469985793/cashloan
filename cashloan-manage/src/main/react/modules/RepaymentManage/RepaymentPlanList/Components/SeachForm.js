@@ -29,8 +29,8 @@ let SeachForm = React.createClass({
     },
     handleOut() {
         var params = this.props.form.getFieldsValue();
-        params.beforeRepaymentTime=params.registTime[0];
-        params.afterRepaymentTime=params.registTime[1]; 
+        params.beforeTime=params.registTime[0];
+        params.afterTime=params.registTime[1]; 
         var json = JSON.stringify(params);
         window.open("/modules/manage/repaymentPlanList/export.htm?searchParams="+encodeURI(json));
 
@@ -56,7 +56,7 @@ let SeachForm = React.createClass({
                     <Input  {...getFieldProps('orderNo') } />
                 </FormItem>
                 <FormItem label="Date：">
-                    <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: [date,date] })} />
+                    <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: "" })} />
                 </FormItem>
                 <FormItem label="Repayment Status:">{/*还款状态*/}
                     <Select style={{ width: 150 }} {...getFieldProps('state', { initialValue: '' }) }>
