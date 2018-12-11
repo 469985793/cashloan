@@ -243,9 +243,12 @@ export default React.createClass({
             title: 'Total Amount Of Repayment(KSh)',//应还款总额
             dataIndex: 'repayTotal'
         }, {
-            title: 'Repayment Date',//应还款日期
+            title: 'Due Time',//应还款日期
             dataIndex: 'shouldbackTime'
         }, {
+            title: 'Repayment Date',//应还款日期
+            dataIndex: 'lastbackTime'
+        },{
             title: 'Actual Repayment Amount',//实际还款金额(新增)
             dataIndex: 'actualbackAmt'
         },{
