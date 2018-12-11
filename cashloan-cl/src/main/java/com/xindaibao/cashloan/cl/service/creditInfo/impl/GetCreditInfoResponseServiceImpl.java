@@ -51,7 +51,7 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
 
     Logger logger = LoggerFactory.getLogger(GetCreditInfoResponseServiceImpl.class);
 
-    @Autowired
+    @Resource
     private CreditInfoMapper creditInfoMapper;
 
     @Resource
@@ -83,11 +83,13 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
     @Override
     public CreditInfoResponse getCreditInfoResponse(String nationalId, LoanRecord loanRecord)throws Exception {
         CreditInfoResponse creditInfoResponse = new CreditInfoResponse();
-
+        Date created = new Date();
         List<CreditInfoLog> creditInfoLogs = creditInfoMapper.findByUserNationalId(nationalId);
-        Date created = creditInfoLogs.get((creditInfoLogs.size()-1)).getCreatedTime();
+        if(creditInfoLogs.size() > 0){
+            created = creditInfoLogs.get((creditInfoLogs.size()-1)).getCreatedTime();
+        }
         int day = DateUtil.daysBetween(new Date(),created);
-        if(creditInfoLogs.size() >= 0 && day > 30) {
+        if(creditInfoLogs.size() == 0 || (creditInfoLogs.size()>0 && day > 30)) {
 
             MultiConnectorService_Service service = new MultiConnectorService_Service(new URL(serviceUrl));
             service.setHandlerResolver(new HeaderHandlerResolver(username, password));
@@ -105,13 +107,22 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
             com.creditinfo.schemas._2012._09.multiconnector.messages.response.Response response1 = (com.creditinfo.schemas._2012._09.multiconnector.messages.response.Response) responseXml.getAny();
             com.creditinfo.schemas._2012._09.multiconnector.connectors._int.idmstrategy.response.Response response3 = (com.creditinfo.schemas._2012._09.multiconnector.connectors._int.idmstrategy.response.Response) response1.getConnector().get(0).getData().getContent().get(0);
 
+            if(response3.getAny().get(3).getElementsByTagName("CreditLimit").item(0) == null){
+                creditInfoResponse.setCreditLimit(new BigDecimal(0.0));
+                creditInfoResponse.setResultCode("Reject");
+                creditInfoResponse.setSubjectIDNumber(nationalId);
+                creditInfoResponse.setFullName("");
+                creditInfoResponse.setCIPRiskGrade("");
+                creditInfoResponse.setMobileScoreRiskGrade("");
 
-            creditInfoResponse.setCreditLimit(new BigDecimal(response3.getAny().get(3).getElementsByTagName("CreditLimit").item(0).getTextContent()));
-            creditInfoResponse.setResultCode(response3.getAny().get(3).getElementsByTagName("RecommendedDecision").item(0).getTextContent());
-            creditInfoResponse.setSubjectIDNumber(response3.getAny().get(3).getElementsByTagName("SubjectIDNumber").item(0).getTextContent());
-            creditInfoResponse.setFullName(response3.getAny().get(4).getElementsByTagName("FullName").item(0).getTextContent());
-            creditInfoResponse.setCIPRiskGrade(response3.getAny().get(5).getElementsByTagName("CIPRiskGrade").item(0).getTextContent());
-            creditInfoResponse.setMobileScoreRiskGrade(response3.getAny().get(5).getElementsByTagName("MobileScoreRiskGrade").item(0).getTextContent());
+            }else {
+                creditInfoResponse.setCreditLimit(new BigDecimal(response3.getAny().get(3).getElementsByTagName("CreditLimit").item(0).getTextContent()));
+                creditInfoResponse.setResultCode(response3.getAny().get(3).getElementsByTagName("RecommendedDecision").item(0).getTextContent());
+                creditInfoResponse.setSubjectIDNumber(response3.getAny().get(3).getElementsByTagName("SubjectIDNumber").item(0).getTextContent());
+                creditInfoResponse.setFullName(response3.getAny().get(4).getElementsByTagName("FullName").item(0).getTextContent());
+                creditInfoResponse.setCIPRiskGrade(response3.getAny().get(5).getElementsByTagName("CIPRiskGrade").item(0).getTextContent());
+                creditInfoResponse.setMobileScoreRiskGrade(response3.getAny().get(5).getElementsByTagName("MobileScoreRiskGrade").item(0).getTextContent());
+            }
             //保存征信接口请求日志
             saveResponseLog(creditInfoResponse, beginQueryResponse.getMessageId(), response3.getAny());
         }else {
@@ -144,7 +155,8 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
         creditInfoLog.setMessageId(messageId);
         creditInfoLog.setMobileScoreGrade(creditInfoResponse.getMobileScoreRiskGrade());
         creditInfoLog.setCreditLimit(creditInfoResponse.getCreditLimit());
-        creditInfoLog.setRemark(objectResponse.toString());
+        //creditInfoLog.setRemark(objectResponse.toString());
+        creditInfoLog.setRemark("");
         creditInfoLog.setStatus("1");
         creditInfoLog.setCreatedTime(new Date());
         creditInfoLog.setUpdatedTime(new Date());
@@ -215,9 +227,10 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
         paramMap.put("updatedTime",new Date());
 
         Integer i = loanRecordMapper.updateStatus(paramMap);
-        if(i > 0){
+        if(i < 0){
             logger.error("修改单号为{}的订单异常", loanRecord.getIndentNo());
         }else{
+            logger.info("修改成功，调放款service");
 //            if(loan.getStatus() ==4){
 //                loanRecord.setStatus((byte) 4);
 //                paymentService.createPayOrderNo(loanRecord, 2); // 自动放款

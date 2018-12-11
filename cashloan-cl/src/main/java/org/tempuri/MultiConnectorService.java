@@ -1,8 +1,32 @@
 
 package org.tempuri;
 
-import com.creditinfo.schemas._2012._09.multiconnector.*;
-
+import com.creditinfo.schemas._2012._09.multiconnector.ConnectorSchemaRequest;
+import com.creditinfo.schemas._2012._09.multiconnector.ConnectorSchemaResponse;
+import com.creditinfo.schemas._2012._09.multiconnector.ConnectorsListRequest;
+import com.creditinfo.schemas._2012._09.multiconnector.ConnectorsListResponse;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorRequest;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorResponse;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceBeginQueryErrorFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceBeginQueryFailedAuthenticationFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceBeginQueryUnsupportedSecurityTokenFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceEndQueryErrorFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceEndQueryFailedAuthenticationFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceEndQueryInProgressFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceEndQueryUnsupportedSecurityTokenFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceListConnectorsErrorFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceListConnectorsFailedAuthenticationFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceListConnectorsTimeoutFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceListConnectorsUnsupportedSecurityTokenFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceQueryErrorFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceQueryFailedAuthenticationFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceQueryTimeoutFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceQueryUnsupportedSecurityTokenFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceSchemaErrorFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceSchemaFailedAuthenticationFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceSchemaTimeoutFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorServiceSchemaUnsupportedSecurityTokenFaultFaultMessage;
+import com.creditinfo.schemas._2012._09.multiconnector.MultiConnectorTicket;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
