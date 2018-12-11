@@ -541,6 +541,12 @@
             <if test=" afterTime !=null ">
                 and  date_format(r.created_time, '%Y-%m-%d')  &lt;= date_format(#{afterTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
             </if>
+            <if test=" beforeRepaymentTime !=null ">
+                and date_format(r.lastback_time, '%Y-%m-%d')  &gt;=  date_format(#{beforeRepaymentTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+            </if>
+            <if test=" afterRepaymentTime !=null ">
+                and  date_format(r.lastback_time, '%Y-%m-%d')  &lt;= date_format(#{afterRepaymentTime,jdbcType=TIMESTAMP}, '%Y-%m-%d')
+            </if>
             <if test="stateList !=null">
                 and r.status  in
                 <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">

@@ -31,8 +31,8 @@ let SeachForm = React.createClass({
     },
     handleOut() {
         var params = this.props.form.getFieldsValue();
-        params.beforeTime=params.registTime[0];
-        params.afterTime=params.registTime[1]; 
+        params.beforeRepaymentTime=params.registTime[0];
+        params.afterRepaymentTime=params.registTime[1]; 
         var json = JSON.stringify(params);
         window.open("/modules/manage/repaymentPlanList/export.htm?searchParams="+encodeURI(json));
 
