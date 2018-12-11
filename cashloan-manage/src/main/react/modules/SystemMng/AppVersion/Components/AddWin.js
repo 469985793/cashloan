@@ -18,22 +18,28 @@ let treeData = [];
 
 var AddWin = React.createClass({
     getInitialState() {
+        // console.log(nextProps);
         return {
             status: {},
             formData: {}
         };
     },
-    componentWillReceiveProps(nextProps) {
-        this.fetch();
-        this.setState({
-          record: nextProps.record
-        });
+    componentWillReceiveProps(nextProps,nextState) {
+        // console.log(nextProps);
+        if(nextProps.record){
+            this.fetch(nextProps.record);
+            this.setState({
+              record: nextProps.record
+            });
+        }
       },
     componentDidMount(){
-        this.fetch();
+        // console.log('componentDidMount');
+        // this.fetch();
+        // console.log(this.props)
     },
 
-    fetch(params = {}) {
+    fetch(params={}) {
         this.setState({
           loading: true
         });
@@ -50,7 +56,7 @@ var AddWin = React.createClass({
           data: params,
           method: 'post',
           callback: (result) => {
-              console.log(result);
+            //   console.log(result);
             // const pagination = this.state.pagination;
             // pagination.current = params.current;
             // pagination.total = result.page.total;
@@ -67,6 +73,7 @@ var AddWin = React.createClass({
       },
 
     handleCancel() {
+        // console.log(this.props);
         this.props.form.resetFields();
         this.props.hideModal();
     },
@@ -120,13 +127,14 @@ var AddWin = React.createClass({
         })
     },
     render() {
+        // console.log('render');
         const {
             getFieldProps
         } = this.props.form;
         var props = this.props;
         var state = this.state;
         // props.canEdit = true;
-        // console.log(props.canEdit);
+        // console.log(state.data);
         if(state.data){
             var state_data = state.data;
         }
@@ -174,10 +182,10 @@ var AddWin = React.createClass({
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="App type:">
                                 <Select disabled={!props.canEdit}  {...getFieldProps('appType', { initialValue: state_data ? state_data.appType+'': '' }, { rules: [{ required: true, message: '必填' }] })} >
-                                    <Option value='10'>Android</Option>
-                                    <Option value='11'>Android Pad</Option>
-                                    <Option value='20'>IOS</Option>
-                                    <Option value='21'>IOS Pad</Option>
+                                    <Option value={10}>Android</Option>
+                                    <Option value={11}>Android Pad</Option>
+                                    <Option value={20}>IOS</Option>
+                                    <Option value={21}>IOS Pad</Option>
                                 </Select>
                             </FormItem>
                         </Col>
@@ -187,8 +195,8 @@ var AddWin = React.createClass({
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="App classification:">
                                 <Select disabled={!props.canEdit}  {...getFieldProps('appClassification', { initialValue: state_data ? state_data.appClassification+'': '' }, { rules: [{ required: true, message: '必填' }] })} >
-                                    <Option value='1'>Jumbopesa</Option>
-                                    <Option value='2'>Pesaplus</Option>
+                                    <Option value={1}>Jumbopesa</Option>
+                                    <Option value={2}>Pesaplus</Option>
                                 </Select>
                             </FormItem>
                         </Col>
@@ -214,8 +222,8 @@ var AddWin = React.createClass({
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Force flag:">
                                 <Select disabled={!props.canEdit}  {...getFieldProps('forceFlag', { initialValue: state_data ? state_data.forceFlag+'': '' }, { rules: [{ required: true, message: '必填' }] })} >
-                                    <Option value='0'>不强制</Option>
-                                    <Option value='1'>强制</Option>
+                                    <Option value={0}>不强制</Option>
+                                    <Option value={1}>强制</Option>
                                 </Select>
                             </FormItem>
                         </Col>
@@ -274,8 +282,8 @@ var AddWin = React.createClass({
                         <Col span="24">
                             <FormItem  {...formItemLayout} label="Status:">
                                 <Select disabled={!props.canEdit}  {...getFieldProps('status', { initialValue: state_data ? state_data.status: '' }, { rules: [{ required: true, message: '必填' }] })} >
-                                    <Option value='1'>正常</Option>
-                                    <Option value='-1'>删除</Option>
+                                    <Option value={1}>正常</Option>
+                                    <Option value={-1}>删除</Option>
                                 </Select>
                             </FormItem>
                         </Col>

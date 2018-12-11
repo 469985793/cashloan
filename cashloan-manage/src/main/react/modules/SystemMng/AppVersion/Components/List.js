@@ -37,18 +37,20 @@ export default React.createClass({
   //新增跟编辑弹窗
   showModal(title, record, canEdit) {
     // console.log(canEdit);
-    var record = record;
+    this.setState({
+      canEdit: !canEdit,
+      title: title,
+      record: record,
+      visible: true,
+    });
     Utils.ajaxData({
       url: '/modules/manage/user/appVersion/find.htm',
       method: 'post',
       data:{id:record.id},
       callback: (result) => {
         // console.log(result);
+        this.refs.AddWin.setFieldsValue(result.data);
         this.setState({
-          canEdit: !canEdit,
-          title: title,
-          record: record,
-          visible: true,
           condition: result.data,
         });
       }
@@ -180,6 +182,20 @@ export default React.createClass({
     }, {
       title: 'App type',
       dataIndex: "appType",
+      render:(index,text)=>{
+        if(index==10){
+          return 'Android'
+        }
+        else if(index==11){
+          return 'Android Pad'
+        }
+        else if(index==20){
+          return 'IOS'
+        }
+        else if(index==21){
+          return 'IOS Pad'
+        }
+      }
     }, {
       title: 'Version code',
       dataIndex: 'versionCode'
@@ -188,7 +204,15 @@ export default React.createClass({
       dataIndex: "versionName"
     }, {
       title: 'Force flag',
-      dataIndex: 'forceFlag'
+      dataIndex: 'forceFlag',
+      render:(index,text)=>{
+        if(index==0){
+          return '不强制'
+        }
+        else if(index==1){
+          return '强制'
+        }
+      }
     }, {
       title: 'Down url',
       dataIndex: 'downUrl'
