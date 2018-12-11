@@ -419,6 +419,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					//分期还款，更新贷款记录表的金额
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer loanRs = loanRecordMapper.update(lr);
 					if (loanRs < 1) {
 						throw new BussinessException("逾期还款，更新贷款记录表出错" + repayRecord.getId());
@@ -436,6 +437,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					lr.setStatus(a);
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer rs = loanRecordMapper.update(lr);
 					if (rs < 1) {
 						throw new BussinessException("逾期还款，更新贷款记录表出错" + lr.getId());
@@ -495,6 +497,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					//分期还款，更新还贷款记录表的金额
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer loanRs = loanRecordMapper.update(lr);
 					if(loanRs<1){
 						throw new BussinessException("更新贷款记录表出错" + repayRecord.getId());
@@ -505,6 +508,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					lr.setStatus(a);
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer rs = loanRecordMapper.update(lr);
 					if (rs < 1) {
 						throw new BussinessException("逾期还款，更新贷款记录表出错" + lr.getId());

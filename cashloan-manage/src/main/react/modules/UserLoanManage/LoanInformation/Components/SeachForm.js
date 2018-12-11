@@ -64,7 +64,7 @@ let SeachForm = React.createClass({
                     <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: [date,date] })} />
                 </FormItem>
                 <FormItem label="Order Status:">
-                    <Select style={{ width: 350 }} {...getFieldProps('state', { initialValue: '' })}>
+                    <Select style={{ width: 350 }} {...getFieldProps('status', { initialValue: '' })}>
                         <Option value="">All</Option>
                         <Option value="1">In the application, pending risk control review</Option>
                         <Option value="2">Wind control audit passed, pending review</Option>
