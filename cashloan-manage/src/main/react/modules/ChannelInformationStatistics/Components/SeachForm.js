@@ -52,7 +52,7 @@ let SeachForm = React.createClass({
     return (
       <Form inline >
         <FormItem label="Date：">
-            <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('registTime', {initialValue: [date,date]}) } />
+            <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('registTime', {initialValue: ''}) } />
         </FormItem>
         <FormItem label="Channel supplier：">
           <Input  {...getFieldProps('linker') } />
