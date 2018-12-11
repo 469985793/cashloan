@@ -56,7 +56,7 @@ var Tab6 = React.createClass({
         };
         this.setState({
           loading: false,
-          data: result.data.list,
+          data: result.data,
           pagination
         });
       }

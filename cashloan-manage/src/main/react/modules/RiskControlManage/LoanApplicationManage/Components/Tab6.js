@@ -48,6 +48,7 @@ var Tab6 = React.createClass({
       url: '/modules/manage/borrow/listBorrowLog.htm',
       data: params,
       callback: (result) => {
+        console.log(123);
         console.log(result);
         const pagination = this.state.pagination;
         pagination.current = params.current;
@@ -58,7 +59,7 @@ var Tab6 = React.createClass({
         };
         this.setState({
           loading: false,
-          data: result.data.list,
+          data: result.data,
           pagination
         });
       }

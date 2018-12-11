@@ -1523,6 +1523,13 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     }
 
     @Override
+    public Page<LoanProduct> searchBorrowModelByUid(Map<String, Object> params, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<LoanProduct> list = clBorrowMapper.searchBorrowModelByUid(params);
+        return (Page<LoanProduct>) list;
+    }
+
+    @Override
     public List<LoanProduct> remitCheckLog(Map<String, Object> params) {
         params.put("state", BorrowModel.STATE_PASS);
         List<LoanProduct> list = clBorrowMapper.searchBorrowModelByKenya(params);

@@ -198,7 +198,15 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	Page<LoanProduct> listBorrowModel(Map<String, Object> params,
 									  int currentPage, int pageSize);
 
-
+	/**
+	 * 用户还款信息
+	 * @param params
+	 * @param currentPage
+	 * @param pageSize
+	 * @return
+	 */
+	Page<LoanProduct> searchBorrowModelByUid(Map<String, Object> params,
+									  int currentPage, int pageSize);
 
 	/**
 	 * 支付审核信息

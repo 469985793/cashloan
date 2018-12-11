@@ -507,13 +507,10 @@ public class ManageBorrowController extends ManageBaseController {
 			@RequestParam(value = "current") int current,
 			@RequestParam(value = "pageSize") int pageSize) throws Exception {
 		Map<String,Object> params = new HashMap<>();
-		params.put("userId", userId);
-		Page<LoanProduct> page = clBorrowService.listBorrowModel(params, current, pageSize);
-		
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("list", page.getResult());
+		params.put("uid", userId);
+		Page<LoanProduct> page = clBorrowService.searchBorrowModelByUid(params, current, pageSize);
 		Map<String,Object> result = new HashMap<String,Object>();
-		result.put(Constant.RESPONSE_DATA, data);
+		result.put(Constant.RESPONSE_DATA, page);
 		result.put(Constant.RESPONSE_DATA_PAGE, new RdPage(page));
 		result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 		result.put(Constant.RESPONSE_CODE_MSG, "查询成功");

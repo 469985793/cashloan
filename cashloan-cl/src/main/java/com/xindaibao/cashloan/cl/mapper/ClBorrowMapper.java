@@ -3,6 +3,7 @@ package com.xindaibao.cashloan.cl.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.Page;
 import com.xindaibao.cashloan.cl.model.ClBorrowModel;
 import com.xindaibao.cashloan.cl.model.ManageBorrowModel;
 import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
@@ -245,4 +246,11 @@ public interface ClBorrowMapper extends BaseMapper<Borrow, Long> {
 
 	List<Borrow> findNotInTongdunBorrow();
 
+
+	/**
+	 * 用户还款信息
+	 * @param params
+	 * @return
+	 */
+	Page<LoanProduct> searchBorrowModelByUid(Map<String, Object> params);
 }
