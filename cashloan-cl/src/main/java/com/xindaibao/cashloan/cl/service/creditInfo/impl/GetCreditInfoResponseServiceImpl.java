@@ -178,7 +178,7 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
         if (loan == null || loan.getId() == null) {
             logger.error("未找到单号为{}的订单记录", loanRecord.getIndentNo());
         }
-
+        loan.setStatus((byte) 2);//默认转人工
         StringBuilder stringBuilder = new StringBuilder();
         logger.info("CIPCode 验证： code :" +creditInfoResponse.getCIPRiskGrade());
         String name = stringBuilder.append(loanRecord.getFirstName().toLowerCase()).append(" ").append(loanRecord.getLastName().toLowerCase()).toString();
@@ -188,7 +188,9 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
             if (creditInfoResponse.getResultCode().equals("Approve") && boolResultLimit(creditInfoResponse.getCreditLimit(), loanRecord.getBalance())) {
                 logger.info("name 验证：  :" +boolResultName(creditInfoResponse.getFullName().toLowerCase(), name) +" "+name +"   "+creditInfoResponse.getFullName().toLowerCase());
                 if (boolResultName(creditInfoResponse.getFullName().toLowerCase(), name)) {
-                    loan.setStatus((byte) 4);
+
+                   //没有接放款之前，状态先改为人工放款 loan.setStatus((byte) 4);
+                    loan.setStatus((byte) 3);
                 }else{
                     loan.setStatus((byte)2);
                 }
@@ -269,7 +271,7 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
      */
     private boolean boolResultLimit(BigDecimal resultLimit, Long balance){
         boolean result = false;
-        BigDecimal balances = new BigDecimal(balance);
+        BigDecimal balances = new BigDecimal(balance/100);
         if(resultLimit.compareTo(balances)== 0 || resultLimit.compareTo(balances) > 0){
             result = true;
         }
@@ -279,7 +281,7 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
     /**
      * 姓名验证
      */
-    private boolean boolResultName(String name, String  fullName){
+    private static boolean boolResultName(String name, String fullName){
         boolean result = false;
 
         String[] chrstr = fullName.split(" ");
@@ -299,10 +301,10 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
                 }
             }
             result = true;
-        }else if(names.size() > names1.size()){
-            if(!names.get(0).equals(names1.get(0))){
+        }else if(names1.size() > names.size()){
+            if(!names1.get(0).equals(names.get(0))){
                 return result;
-            }else if(!names.get(names.size()-1).equals(names1.get(names1.size()-1))){
+            }else if(!names1.get(names1.size()-1).equals(names.get(names.size()-1))){
                 return result;
             }
             result = true;
