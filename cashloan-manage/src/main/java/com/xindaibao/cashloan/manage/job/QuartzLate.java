@@ -40,11 +40,11 @@ import com.xindaibao.cashloan.manage.service.QuartzLogService;
 @Component
 @Lazy(value = false)
 public class QuartzLate implements Job{
-	
+
 	private static final Logger logger = Logger.getLogger(QuartzLate.class);
 	/**
 	 * 定时计算逾期
-	 * @throws ServiceException 
+	 * @throws ServiceException
 	 */
 	public String late() throws ServiceException {
 		BorrowRepayService borrowRepayService = (BorrowRepayService)BeanUtil.getBean("borrowRepayService");
@@ -73,97 +73,100 @@ public class QuartzLate implements Job{
 					long day = DateUtil.daysBetween(new Date(), list.get(i).getShouldbackTime());
 					String SMS="";
 					logger.info("-----------------------day:"+day);
-						if (day<0) {
-							double amout = list.get(i).getBalance();
-							double percent = 0;
-							Map<String,Object> data = new HashMap<>();
-							if(Math.abs(day) <= 15){
-								percent = 0.01;
-							}else if(Math.abs(day) <= 30 && Math.abs(day) >= 15){
-								percent = 0.02;
-							}else if(Math.abs(day)>30){
-								percent = 0.5;
+					if (day<0) {
+						double amout = list.get(i).getBalance();
+						double percent = 0;
+						double overdueFee =0;
+						Map<String,Object> data = new HashMap<>();
+						if(Math.abs(day) <= 15){
+							percent = 0.01;
+							overdueFee=penaltyFee(amout,percent,Math.abs(day));
+						}else if(Math.abs(day) > 15){
+							percent = 0.02;
+							overdueFee=penaltyFee(amout,0.01,15l)+penaltyFee(amout,percent,Math.abs(day)-15);
+							if(overdueFee>=div(amout,2,0)){
+								overdueFee=div(amout,2,0);
 							}
-							double overdueFee = penaltyFee(amout,percent,list.get(i).getOverdueFee());
-							amout = repaymentAmount(amout,overdueFee);
-							LoanRecord br = new LoanRecord();
-							br.setId(list.get(i).getId());
-							br.setStatus((byte)21);//修改状态为逾期
-							br.setOverdueFee(Long.valueOf(new Double(overdueFee+1000l).longValue()));
-							Integer per=(int)penaltyFee(percent,100.00,0);
-							br.setOverduePercent(per);
-							br.setUpdatedTime(new Date());
-							logger.info("id--" + list.get(i).getId() + " ==> 已经逾期 " + Math.abs(day) + " 天,逾期费用 " + amout + "元");
-							int msg  = borrowRepayService.updateLate(br);
-
-							if (msg>0) {
-								KanyaUserState kanyaUserState=new KanyaUserState();
-                                kanyaUserState.setUid(list.get(i).getUid());
-								kanyaUserState.setCurrentState((byte)6);
-								//更改userCurrentState为逾期
-								kanyaUserStateService.updateCurrentState(kanyaUserState);
-
-								//保存逾期进度
-								logger.info("---------添加逾期进度---------");
-								BorrowProgress bp = new BorrowProgress();
-								bp.setBorrowId(list.get(i).getId());
-								bp.setCreateTime(new Date());
-								bp.setRemark("您已逾期,请尽快还款");
-								bp.setState(BorrowModel.STATE_DELAY);
-								bp.setUserId(list.get(i).getUid());
-								borrowProgressService.save(bp);
-
-								data = new HashMap<>();
-								data.put("id", list.get(i).getId());
-								data.put("state", BorrowModel.STATE_DELAY);
-								msg = clBorrowService.updateSelective(data);
-								logger.info("---------添加逾期结束---------");
-
-								//催收计划
-								logger.info("---------修改催收计划start-------");
-								UrgeRepayOrder uro =  urgeRepayOrderService.findByBorrowId(list.get(i).getId());
-								if (StringUtil.isBlank(uro)) {
-									urgeRepayOrderService.saveOrder(list.get(i).getId());
-									SMS=OverDueSMSModel.OVER_DUE_ONE.replace("{$Name}",list.get(i).getLastName());
-									result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
-								}else {
-									Map<String,Object> uroMap = new HashMap<>();
-									uroMap.put("penaltyAmout", Long.valueOf(new Double(overdueFee+1000l).longValue()));
-									uroMap.put("penaltyDay", Math.abs(day));
-									uroMap.put("id", uro.getId());
-									uroMap.put("level", UrgeRepayOrderModel.getLevelByDay(Long.valueOf(Math.abs(day))));
-									msg = urgeRepayOrderService.updateLate(uroMap);
-								}
-								logger.info("---------修改催收计划end-------");
-							}else {
-								logger.error("定时计算逾期任务修改数据失败");
-							}
-							//发送逾期短信
-							logger.info("---------发送逾期start---------");
-							if(Math.abs(day)==1){
-								//clSmsService.overdue(list.get(i).getId(),"overdue1");//逾期第1天
-								SMS= OverDueSMSModel.OVER_DUE_ONE.replace("{$Name}",list.get(i).getLastName());
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
-							}else if(Math.abs(day)==3){
-								//clSmsService.overdue(list.get(i).getId(),"overdue3");//逾期第3天
-								SMS=OverDueSMSModel.OVER_DUE_THREE.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
-							}else if(Math.abs(day)==7){
-								//clSmsService.overdue(list.get(i).getId(),"overdue7");//逾期第7天
-								SMS=OverDueSMSModel.OVER_DUE_SAVEN.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
-							}else if(Math.abs(day)==14){
-								//clSmsService.overdue(list.get(i).getId(),"overdue14");//逾期第14天
-								SMS=OverDueSMSModel.OVER_DUE_TWOWEEK.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
-								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
-							}
-							if(result == true){
-								logger.info("逾期短信发送成功。");
-							}else{
-								logger.error("短信发送失败。请联系管理员!");
-							}
-							logger.info("---------发送逾期end---------");
 						}
+						amout = repaymentAmount(amout,overdueFee);
+						LoanRecord br = new LoanRecord();
+						br.setId(list.get(i).getId());
+						br.setStatus((byte)21);//修改状态为逾期
+						br.setOverdueFee(Long.valueOf(new Double(overdueFee+1000l).longValue()));
+						Integer per=(int)penaltyFee(percent,100.00,1l);
+						br.setOverduePercent(per);
+						br.setUpdatedTime(new Date());
+						logger.info("id--" + list.get(i).getId() + " ==> 已经逾期 " + Math.abs(day) + " 天,逾期费用 " + amout + "元");
+						int msg  = borrowRepayService.updateLate(br);
+
+						if (msg>0) {
+							KanyaUserState kanyaUserState=new KanyaUserState();
+							kanyaUserState.setUid(list.get(i).getUid());
+							kanyaUserState.setCurrentState((byte)6);
+							//更改userCurrentState为逾期
+							kanyaUserStateService.updateCurrentState(kanyaUserState);
+
+							//保存逾期进度
+							logger.info("---------添加逾期进度---------");
+							BorrowProgress bp = new BorrowProgress();
+							bp.setBorrowId(list.get(i).getId());
+							bp.setCreateTime(new Date());
+							bp.setRemark("您已逾期,请尽快还款");
+							bp.setState(BorrowModel.STATE_DELAY);
+							bp.setUserId(list.get(i).getUid());
+							borrowProgressService.save(bp);
+
+							data = new HashMap<>();
+							data.put("id", list.get(i).getId());
+							data.put("state", BorrowModel.STATE_DELAY);
+							msg = clBorrowService.updateSelective(data);
+							logger.info("---------添加逾期结束---------");
+
+							//催收计划
+							logger.info("---------修改催收计划start-------");
+							UrgeRepayOrder uro =  urgeRepayOrderService.findByBorrowId(list.get(i).getId());
+							if (StringUtil.isBlank(uro)) {
+								urgeRepayOrderService.saveOrder(list.get(i).getId());
+								SMS=OverDueSMSModel.OVER_DUE_ONE.replace("{$Name}",list.get(i).getLastName());
+								result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
+							}else {
+								Map<String,Object> uroMap = new HashMap<>();
+								uroMap.put("penaltyAmout", Long.valueOf(new Double(overdueFee+1000l).longValue()));
+								uroMap.put("penaltyDay", Math.abs(day));
+								uroMap.put("id", uro.getId());
+								uroMap.put("level", UrgeRepayOrderModel.getLevelByDay(Long.valueOf(Math.abs(day))));
+								msg = urgeRepayOrderService.updateLate(uroMap);
+							}
+							logger.info("---------修改催收计划end-------");
+						}else {
+							logger.error("定时计算逾期任务修改数据失败");
+						}
+						//发送逾期短信
+						logger.info("---------发送逾期start---------");
+						if(Math.abs(day)==1){
+							//clSmsService.overdue(list.get(i).getId(),"overdue1");//逾期第1天
+							SMS= OverDueSMSModel.OVER_DUE_ONE.replace("{$Name}",list.get(i).getLastName());
+							result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
+						}else if(Math.abs(day)==3){
+							//clSmsService.overdue(list.get(i).getId(),"overdue3");//逾期第3天
+							SMS=OverDueSMSModel.OVER_DUE_THREE.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
+							result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
+						}else if(Math.abs(day)==7){
+							//clSmsService.overdue(list.get(i).getId(),"overdue7");//逾期第7天
+							SMS=OverDueSMSModel.OVER_DUE_SAVEN.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
+							result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
+						}else if(Math.abs(day)==14){
+							//clSmsService.overdue(list.get(i).getId(),"overdue14");//逾期第14天
+							SMS=OverDueSMSModel.OVER_DUE_TWOWEEK.replace("{$Name}",list.get(i).getLastName()).replace("{$amount}",div(amout,100,0)+div(list.get(i).getAccountManage(),100,0)+div(list.get(i).getProfit(),100,0)+10+"");
+							result = SmsCmSendUtil.getInstance().send(list.get(i).getMobile(),SMS);
+						}
+						if(result == true){
+							logger.info("逾期短信发送成功。");
+						}else{
+							logger.error("短信发送失败。请联系管理员!");
+						}
+						logger.info("---------发送逾期end---------");
+					}
 
 					//还款日前一天发送提醒短信
 					if(day==1){
@@ -184,7 +187,7 @@ public class QuartzLate implements Job{
 				}
 			}
 		}
-			
+
 		logger.info("逾期计算结束...");
 		quartzRemark = "执行总次数"+total+",成功"+succeed+"次,失败"+fail+"次";
 		return quartzRemark;
@@ -201,14 +204,14 @@ public class QuartzLate implements Job{
 			qiData.put("id", qi.getId());
 			ql.setQuartzId(qi.getId());
 			ql.setStartTime(DateUtil.getNow());
-			
+
 			String remark = late();
-			
+
 			ql.setTime(DateUtil.getNow().getTime()-ql.getStartTime().getTime());
 			ql.setResult("10");
 			ql.setRemark(remark);
 			qiData.put("succeed", qi.getSucceed()+1);
-			
+
 		}catch (Exception e) {
 			ql.setResult("20");
 			qiData.put("fail", qi.getFail()+1);
@@ -221,14 +224,11 @@ public class QuartzLate implements Job{
 	}
 
 	//逾期费计算
-	public double penaltyFee(double amount,double percent,double overdue){
+	public double penaltyFee(double amount,double percent,Long day){
 		BigDecimal amounts = new BigDecimal(new Double(amount).toString());
 		BigDecimal percents = new BigDecimal(new Double(percent).toString());
-		BigDecimal overdues = new BigDecimal(new Double(overdue).toString());
-		if(overdue != 0){
-			return new Double((amounts.multiply(percents)).add((overdues.subtract(new BigDecimal(1000)))).doubleValue());
-		}
-		return new Double(amounts.multiply(percents).doubleValue());
+		BigDecimal days = new BigDecimal(new Double(day).toString());
+		return new Double(amounts.multiply(percents).multiply(days).doubleValue());
 	}
 
 	//应还总额计算
