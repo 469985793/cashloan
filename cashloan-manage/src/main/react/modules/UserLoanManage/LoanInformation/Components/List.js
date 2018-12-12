@@ -109,6 +109,7 @@ export default React.createClass({
                         // result.data[0].actualBalance = result.data[0].actualBalance / 100;
                         // result.data[0].actualbackAmt = result.data[0].actualbackAmt / 100;
                     }
+                    
                     this.refs.Lookdetails.setFieldsValue(result.data);
                     this.setState({
                         dataRecord: result.data,
