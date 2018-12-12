@@ -28,18 +28,18 @@ public final class ExportConstant {
 	public static final String[] EXPORT_REMITCHECKLOG_LIST_FIELDS = {"lastName","mobile","balance", "createdTime","cycle","scenesStr", "statusStr"};
 
 	/** 还款计划导出 表头*/
-	public static final String[] EXPORT_REPAYLOGPLAN_LIST_HEARDERS = {"Real Name","Phone","Order Number", "Loan Amount","Overdue Fine","Actual Amount Received(KSh)","Total Amount Of Repayment(KSh)", "Repayment Date",  "Actual Repayment Amount",
+	public static final String[] EXPORT_REPAYLOGPLAN_LIST_HEARDERS = {"Real Name","Phone","Order Number", "Loan Amount","Overdue Fine","Actual Amount Received(KSh)","Total Amount Of Repayment(KSh)", "Due Time","Repayment Date",  "Actual Repayment Amount",
 			"Repayment Status"};
 	/** 还款计划导出 属性数组*/
-	public static final String[] EXPORT_REPAYLOGPLAN_LIST_FIELDS = {"lastName","mobile","indentNo", "balance","overdueFee","actualBalance", "repayTotal","shouldbackTime","actualbackAmt","status"};
+	public static final String[] EXPORT_REPAYLOGPLAN_LIST_FIELDS = {"lastName","mobile","indentNo", "balanceBD","overdueFeeBD","actualBalanceBD", "repayTotalBD","shouldbackTime","lastbackTime","actualbackAmtBD","statusStr"};
 
 
 	/** 借款订单导出 表头*/
-	public static final String[] EXPORT_BORROW_LIST_HEARDERS = {"真实姓名","手机号","订单号","借款金额(元)","借款期限","订单生成时间","综合费用","居间服务费","信息认证费","利息",
-		"实际到账金额","订单状态","借款地址","放款时间","实际还款时间","实际还款金额(元)","逾期天数","逾期罚金(元)"};
+	public static final String[] EXPORT_BORROW_LIST_HEARDERS = {"Actual name","Mobile","Indent Number","Balance(ksh)","Cycle","Created Time","Account Manage","Profit",
+		"State","Loan time","Should Back Time","Repay Time","Actual Back Amount(ksh)","Penalty Day","Overdue Fee(ksh)","Export Time"};
 	/** 借款订单导出 属性数组*/
-	public static final String[] EXPORT_BORROW_LIST_FIELDS = {"realName", "phone", "orderNo", "amount","timeLimit","createTime", "fee",
-		"serviceFee","infoAuthFee","interest","realAmount", "state", "address", "loanTime", "repayTime", "repayAmount","penaltyDay","penaltyAmout"};
+	public static final String[] EXPORT_BORROW_LIST_FIELDS = {"lastName", "mobile", "indentNo", "balance","cycle","createdTime", "accountManage",
+		"profit", "state","arriveTime", "shouldbackTime","repayTime", "actualbackAmt","penaltyDay","overdueFee","exportTime"};
 	
 	/** 支付记录导出 表头*/
 	public static final String[] EXPORT_PAYLOG_LIST_HEARDERS = {"收款人姓名","手机号码","金额","收款银行卡","借款时间","打款时间","业务","状态"};

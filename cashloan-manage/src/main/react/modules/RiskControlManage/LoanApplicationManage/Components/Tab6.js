@@ -12,7 +12,8 @@ var Tab6 = React.createClass({
     };
   },
   rowKey(record) {
-    return record.uid;
+    // console.log(record);
+    return record.id;
   },
   componentWillReceiveProps(nextProps){
     if(nextProps.activeKey == '7'){
@@ -32,7 +33,7 @@ var Tab6 = React.createClass({
     this.fetch(pager);
   },
   fetch(params = {}) {
-    console.log(123);
+    // console.log(123);
     this.setState({
       loading: true
     });
@@ -48,7 +49,8 @@ var Tab6 = React.createClass({
       url: '/modules/manage/borrow/listBorrowLog.htm',
       data: params,
       callback: (result) => {
-        console.log(result);
+        // console.log(123);
+        // console.log(result);
         const pagination = this.state.pagination;
         pagination.current = params.current;
         pagination.pageSize = params.pageSize;
@@ -58,7 +60,7 @@ var Tab6 = React.createClass({
         };
         this.setState({
           loading: false,
-          data: result.data.list,
+          data: result.data,
           pagination
         });
       }

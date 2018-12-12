@@ -330,6 +330,12 @@
     <include refid="searchBy"/>
   </select>
 
+  <select id="findById" resultType="com.xindaibao.cashloan.core.model.KanyaUser">
+    select *
+    from k_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
   <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
     select
     <include refid="Base_Column_List" />
@@ -338,14 +344,15 @@
   </select>
 
   <select id="getBaseModelByUserId" resultMap="KanyaUserLocationMap" parameterType="java.lang.Long">
-    select
+    select max(m.id),
       u.id,u.user_name,u.mobile,u.email,u.icon_imgcode,u.channel_code,u.invite_code,u.register_code,u.status,u.created_time,u.updated_time,
       i.first_name,i.last_name,i.national_id,i.birthday,i.gender,i.marry_status,i.children_number,
       j.education1,j.company_name,j.company_email,j.office_address,j.job_status,j.position,j.start_time,j.job_month_income,
-      l.live_belong,l.live_address,l.live_state,l.live_city,l.rent_year,l.live_time,
+      l.live_belong,l.live_address,l.live_state,l.live_city,l.rent_year,l.live_time,r.loan_reason,m.path,
       c.family_member,c.family_member_name,c.family_mobile_phone,c.othe_contact,c.other_contact_name,c.other_contact_mobile
     from  k_user u left join k_user_info i on u.id=i.uid left join k_user_job j on u.id=j.uid left join k_user_live l on u.id=l.uid left join k_user_contact_info c on u.id=c.uid
-    where u.id = #{userId,jdbcType=BIGINT} and i.status=1 and j.status=1 and l.status=1 and c.status=1
+    left join k_loan_record r on u.id=r.uid left join k_sys_res_img m on u.id=m.upload_id
+    where u.id = #{userId,jdbcType=BIGINT} and i.status=1 and j.status=1 and l.status=1 and c.status=1 and m.type=2 and m.status=1
   </select>
 
 

@@ -1,5 +1,6 @@
 package com.xindaibao.cashloan.cl.model.kenya;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class LoanProduct extends LoanRecord{
@@ -52,6 +53,52 @@ public class LoanProduct extends LoanRecord{
     private Date createdTime;
 
     private Date updatedTime;
+    private BigDecimal balanceBD;
+    private BigDecimal overdueFeeBD;
+    private BigDecimal actualBalanceBD;
+    private BigDecimal actualbackAmtBD;
+    private BigDecimal repayTotalBD;
+
+    public BigDecimal getBalanceBD() {
+        return balanceBD;
+    }
+
+    public void setBalanceBD(BigDecimal balanceBD) {
+        this.balanceBD = balanceBD;
+    }
+
+    public BigDecimal getOverdueFeeBD() {
+        return overdueFeeBD;
+    }
+
+    public void setOverdueFeeBD(BigDecimal overdueFeeBD) {
+        this.overdueFeeBD = overdueFeeBD;
+    }
+
+    public BigDecimal getActualBalanceBD() {
+        return actualBalanceBD;
+    }
+
+    public void setActualBalanceBD(BigDecimal actualBalanceBD) {
+        this.actualBalanceBD = actualBalanceBD;
+    }
+
+    public BigDecimal getActualbackAmtBD() {
+        return actualbackAmtBD;
+    }
+
+    public void setActualbackAmtBD(BigDecimal actualbackAmtBD) {
+        this.actualbackAmtBD = actualbackAmtBD;
+    }
+
+    public BigDecimal getRepayTotalBD() {
+        return repayTotalBD;
+    }
+
+    public void setRepayTotalBD(BigDecimal repayTotalBD) {
+        this.repayTotalBD = repayTotalBD;
+    }
+
 
     public Long getId() {
         return id;

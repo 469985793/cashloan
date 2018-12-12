@@ -26,6 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.math.BigDecimal.ROUND_UP;
+
 @Scope("prototype")
 @Controller
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -139,20 +141,32 @@ public class ManageListExport extends ManageBaseController{
 			}
 		}
 		List<Object> list = clBorrowService.repayLogPlanExport(params);
-//		for(int i=0;i<list.size();i++){
-//			LoanProduct p=(LoanProduct)list.get(i);
-//			Long balance=Math.round(div(p.getBalance()==null?0:p.getBalance(),100,3));
-//			Long overdueFee=Math.round(div(p.getOverdueFee()==null?0:p.getOverdueFee(),100,3));
-//			Long actualBalance=Math.round(div(p.getActualBalance()==null?0:p.getActualBalance(),100,3));
-//			Long actualbackAmt=Math.round(div(p.getActualbackAmt()==null?0:p.getActualbackAmt(),100,3));
-//			Long repayTotal=Math.round(div(p.getRepayTotal()==null?0:p.getRepayTotal(),100,3));
-//			p.setBalance(balance);
-//			p.setOverdueFee(overdueFee);
-//			p.setActualBalance(actualBalance);
-//			p.setActualbackAmt(actualbackAmt);
-//			p.setRepayTotal(repayTotal);
-//			list.set(i,p);
-//		}
+		for(int i=0;i<list.size();i++){
+			LoanProduct p=(LoanProduct)list.get(i);
+			p.setBalanceBD(p.getRepayTotal()!=null?new BigDecimal(p.getBalance()).divide(new BigDecimal(100),2,ROUND_UP):new BigDecimal(0));
+			p.setOverdueFeeBD(p.getRepayTotal()!=null?new BigDecimal(p.getOverdueFee()).divide(new BigDecimal(100),2,ROUND_UP):new BigDecimal(0));
+			p.setActualBalanceBD(p.getRepayTotal()!=null?new BigDecimal(p.getActualBalance()).divide(new BigDecimal(100),2,ROUND_UP):new BigDecimal(0));
+			p.setActualbackAmtBD(p.getRepayTotal()!=null?new BigDecimal(p.getActualbackAmt()).divide(new BigDecimal(100),2,ROUND_UP):new BigDecimal(0));
+			p.setRepayTotalBD(p.getRepayTotal()!=null?new BigDecimal(p.getRepayTotal()).divide(new BigDecimal(100),2,ROUND_UP):new BigDecimal(0));
+			switch (p.getStatus()){
+				case 5:
+					p.setStatusStr("Unpaid");//未还款
+					break;
+				case 6:
+					p.setStatusStr("Repaid");//已还款
+					break;
+				case 21:
+					p.setStatusStr("Overdue");//已逾期
+					break;
+				case 22:
+					p.setStatusStr("Overdue payment");//逾期还款
+					break;
+				case 51:
+					p.setStatusStr("Bad debts");//坏账
+					break;
+			}
+			list.set(i,p);
+		}
 		SysUser user = (SysUser) request.getSession().getAttribute("SysUser");
 		response.setContentType("application/msexcel;charset=UTF-8");
 		// 记录取得
@@ -175,9 +189,9 @@ public class ManageListExport extends ManageBaseController{
 		Map<String, Object> params = JsonUtil.parse(searchParams, Map.class);
 		List list = clBorrowService.listBorrow(params);
 		SysUser user = (SysUser) request.getSession().getAttribute("SysUser");
-		response.setContentType("application/msexcel;charset=UTF-8");
+		response.setContentType("application/msexcel;charset=UTF-8");   
 		// 记录取得
-		String title = "借款订单Excel表";
+		String title = "LoanOrderExcelSheet";
 		String[] hearders =  ExportConstant.EXPORT_BORROW_LIST_HEARDERS;
 		String[] fields = ExportConstant.EXPORT_BORROW_LIST_FIELDS;
 		JsGridReportBase report = new JsGridReportBase(request, response);
@@ -331,10 +345,5 @@ public class ManageListExport extends ManageBaseController{
 		sysDownloadLog.setUser_name(userName);
 		sysDownloadLog.setDownload_menu(menuName);
 		sysDownloadLogService.insert(sysDownloadLog);
-	}
-	public double div(double d1,double d2,int len) {// 进行除法运算
-		BigDecimal b1 = new BigDecimal(d1);
-		BigDecimal b2 = new BigDecimal(d2);
-		return b1.divide(b2,len,BigDecimal.ROUND_HALF_UP).doubleValue();
 	}
 }

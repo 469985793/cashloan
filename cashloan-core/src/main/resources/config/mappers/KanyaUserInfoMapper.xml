@@ -74,6 +74,12 @@
     from k_user_info
     where national_id = #{nationalId,jdbcType=BIGINT}
   </select>
+  <select id="findByUid"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from k_user_info
+    where uid = #{uid,jdbcType=BIGINT}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from k_user_info
     where id = #{id,jdbcType=BIGINT}

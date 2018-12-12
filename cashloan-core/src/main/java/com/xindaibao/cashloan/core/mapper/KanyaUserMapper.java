@@ -15,6 +15,8 @@ public interface KanyaUserMapper extends BaseMapper<KanyaUser, Long> {
 
     List<KanyaUser> findByPrimary(Map<String, Object> params);
 
+    KanyaUser findById(Long id);
+
     int updateUserState(Map<String, Object> params);
 
     int selectRegisteredCount();

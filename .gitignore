@@ -29,6 +29,9 @@ hs_err_pid*
 build/
 out/
 target/
-111
-
+node_modules/
+.project
+.settings
+.classpath
+.svn
 

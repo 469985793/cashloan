@@ -246,6 +246,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte a =3;
 					repayFlow.setStatus(a);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -290,6 +291,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte c =3;
 					repayFlow.setStatus(c);
 					Integer repayRs = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -326,6 +328,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte a =3;
 					repayFlow.setStatus(a);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -378,6 +381,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte r =3;
 					repayFlow.setStatus(r);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -405,6 +409,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setRepayRecordId(repayRecord.getId());
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte a = 3;
 					repayFlow.setStatus(a);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -414,6 +419,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					//分期还款，更新贷款记录表的金额
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer loanRs = loanRecordMapper.update(lr);
 					if (loanRs < 1) {
 						throw new BussinessException("逾期还款，更新贷款记录表出错" + repayRecord.getId());
@@ -431,6 +437,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					lr.setStatus(a);
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer rs = loanRecordMapper.update(lr);
 					if (rs < 1) {
 						throw new BussinessException("逾期还款，更新贷款记录表出错" + lr.getId());
@@ -446,6 +453,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte c = 3;
 					repayFlow.setStatus(c);
 					Integer repayRs = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -479,6 +487,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte a = 3;
 					repayFlow.setStatus(a);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);
@@ -488,6 +497,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					//分期还款，更新还贷款记录表的金额
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer loanRs = loanRecordMapper.update(lr);
 					if(loanRs<1){
 						throw new BussinessException("更新贷款记录表出错" + repayRecord.getId());
@@ -498,6 +508,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					lr.setStatus(a);
 					long amount = totalRepayAmount.longValue();
 					lr.setActualbackAmt(amount);
+					lr.setLastbackTime(new Date());
 					Integer rs = loanRecordMapper.update(lr);
 					if (rs < 1) {
 						throw new BussinessException("逾期还款，更新贷款记录表出错" + lr.getId());
@@ -526,6 +537,7 @@ public class BorrowRepayServiceImpl extends BaseServiceImpl<BorrowRepay, Long> i
 					repayFlow.setAmount(new BigDecimal(repayAmount).divide(new BigDecimal(100),2,RoundingMode.HALF_UP));
 					repayFlow.setCreatedTime(new Date());
 					repayFlow.setUpdatedTime(new Date());
+					repayFlow.setWayCode("Offline repayment");
 					byte r = 3;
 					repayFlow.setStatus(r);
 					Integer rs1 = repayFlowMapper.saveRepayRecord(repayFlow);

@@ -13,6 +13,9 @@ let SeachForm = React.createClass({
     },
     handleQuery() {
         var params = this.props.form.getFieldsValue();
+        params.beforeTime=params.registTime[0];
+        params.afterTime=params.registTime[1];
+        console.log(params);
         this.props.passParams({
             searchParams: JSON.stringify(params),
             pageSize: 10,
@@ -28,30 +31,40 @@ let SeachForm = React.createClass({
     },
     handleOut() {
         var params = this.props.form.getFieldsValue();
+        console.log(params);
+        params.beforeTime=params.registTime[0];
+        params.afterTime=params.registTime[1]; 
         var json = JSON.stringify(params);
+        // console.log(json);
         window.open("/modules/manage/borrow/export.htm?searchParams=" + encodeURI(json));
 
+    },
+    disabledDate(startValue){
+        var today = new Date();
+        return startValue.getTime() > today.getTime();
+        // return current && current < moment().endOf('day');
     },
     render() {
 
         const { getFieldProps } = this.props.form;
+        var date = new Date();
 
         return (
             <Form inline>
                 <FormItem label="Actual Name:">
-                    <Input  {...getFieldProps('realName', { initialValue: '' })} />
+                    <Input  {...getFieldProps('lastName', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Phone:">
-                    <Input  {...getFieldProps('phone', { initialValue: '' })} />
+                    <Input  {...getFieldProps('mobile', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Order Number:">
-                    <Input  {...getFieldProps('orderNo', { initialValue: '' })} />
+                    <Input  {...getFieldProps('indentNo', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Date：">
-                    <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: '' })} />
+                    <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: "" })} />
                 </FormItem>
                 <FormItem label="Order Status:">
-                    <Select style={{ width: 350 }} {...getFieldProps('state', { initialValue: '' })}>
+                    <Select style={{ width: 350 }} {...getFieldProps('status', { initialValue: '' })}>
                         <Option value="">All</Option>
                         <Option value="1">In the application, pending risk control review</Option>
                         <Option value="2">Wind control audit passed, pending review</Option>

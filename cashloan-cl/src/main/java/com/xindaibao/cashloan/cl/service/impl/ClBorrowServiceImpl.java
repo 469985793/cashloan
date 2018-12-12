@@ -140,6 +140,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     @Resource
     private UserInviteMapper userInviteMapper;
     @Resource
+    private KanyaUserInfoMapper kanyaUserInfoMapper;
+    @Resource
     private ProfitAgentMapper profitAgentMapper;
     @Resource
     private KanyaPayFlowMapper kanyaPayFlowMapper;
@@ -151,6 +153,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     private KanyaUserStateMapper kanyaUserStateMapper;
     @Resource
     private UserAuthService userAuthService;
+    @Resource
+    private LoanProductMapper loanProductMapper;
     @Resource
     private BorrowRuleEngineMapper borrowRuleEngineMapper;
     @Resource
@@ -171,6 +175,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     private UrgeRepayOrderMapper urgeRepayOrderMapper;
     @Resource
     private RuleEngineMapper ruleEngineMapper;
+    @Resource
+    private RepayRecordMapper repayRecordMapper;
     @Resource
     private ClSmsService clSmsService;
     @Resource
@@ -1335,7 +1341,7 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
      */
     @Override
     //,String lineType
-    public int manualVerifyBorrow(Long borrowId, String state, String remark, String lineType) {
+    public int manualVerifyBorrow(Long userId,Long borrowId, String state, String remark, String lineType) {
         int code = 0;
         //Borrow borrow = clBorrowMapper.findByPrimary(borrowId);
         PayLog payLog = new PayLog();
@@ -1350,7 +1356,11 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
             Map<String, Object> map = new HashMap<>();
             map.put("id", loanRecord.getIndentNo());
             map.put("state", state);
-            map.put("auditUserReson", remark);
+            if(userId!=null){
+                map.put("auditUserId", userId);
+                map.put("auditUserReson", remark);
+                map.put("auditUserTime",new Date());
+            }
             code = clBorrowMapper.reviewStatus(map);
             Long amount = loanRecord.getBalance() / 100;
             if (state.equals(BorrowModel.STATE_REPAYING)) {
@@ -1511,6 +1521,13 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     public Page<LoanProduct> listBorrowModel(Map<String, Object> params, int currentPage, int pageSize) {
         PageHelper.startPage(currentPage, pageSize);
         List<LoanProduct> list = clBorrowMapper.searchBorrowModelByKenya(params);
+        return (Page<LoanProduct>) list;
+    }
+
+    @Override
+    public Page<LoanProduct> searchBorrowModelByUid(Map<String, Object> params, int currentPage, int pageSize) {
+        PageHelper.startPage(currentPage, pageSize);
+        List<LoanProduct> list = clBorrowMapper.searchBorrowModelByUid(params);
         return (Page<LoanProduct>) list;
     }
 
@@ -2017,40 +2034,101 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
         }
     }
 
-    public List listBorrow(Map<String, Object> params) {
+    public List  listBorrow(Map<String, Object> params) {
         List<ManageBorrowExportModel> list = clBorrowMapper.listExportModel(params);
-//        for (ManageBorrowExportModel model : list) {
-//            model.setState(BorrowModel.apiConvertBorrowState(model.getState()));
-//            UserBaseInfo ubi = userBaseInfoMapper.findByUserId(model.getUserId());
-//            if (ubi != null) {
-//                model.setRealName(ubi.getRealName());
-//                model.setPhone(ubi.getPhone());
-//            }
-//            Map<String, Object> params2 = new HashMap<>();
-//            params2.put("borrowId", model.getId());
-//            params2.put("state", BorrowModel.STATE_REPAY);
-//            BorrowProgress bp = borrowProgressMapper.findSelective(params2);
-//            if (bp != null) {
-//                model.setLoanTime(bp.getCreateTime());
-//            }
-//            Map<String, Object> params3 = new HashMap<>();
-//            params3.put("borrowId", model.getId());
-//            BorrowRepay br = borrowRepayMapper.findSelective(params3);
-//            if (br != null) {
-//                model.setPenaltyDay(br.getPenaltyDay());
-//                model.setPenaltyAmout(br.getPenaltyAmout());
-//            }
-//            BorrowRepayLog brl = borrowRepayLogMapper.findSelective(params3);
-//            if (brl != null) {
-//                model.setRepayAmount(brl.getAmount());
-//                model.setRepayTime(brl.getRepayTime());
-//            }
-//            UrgeRepayOrder uro = urgeRepayOrderMapper.findSelective(params3);
-//            if (uro != null) {
-//                model.setLevel(uro.getLevel());
-//            }
+        for (ManageBorrowExportModel model : list) {
+            KanyaUserInfo ubi = kanyaUserInfoMapper.findByUid(model.getUid());
+            if (ubi != null) {
+                model.setLastName(ubi.getLastName());
+            }
+            Long id = model.getUid();
+            KanyaUser user = kanyaUserMapper.findById(id);
+            if (user != null) {
+                model.setMobile(user.getMobile());
+            }
+            LoanRecord lr = loanRecordMapper.findByIndentNo(model.getIndentNo());
+            if (lr != null) {
+                model.setActualbackAmt(lr.getActualbackAmt()/100);
+                model.setRepayTime(lr.getLastbackTime());
+                model.setCreatedTime(lr.getCreatedTime());
+                model.setOverdueFee(lr.getOverdueFee()/100);
+                model.setIndentNo(lr.getIndentNo());
+                model.setBalance(lr.getBalance()/100);
+                model.setCycle(lr.getCycle());
+                model.setStatus(lr.getStatus());
+                model.setShouldbackTime(lr.getShouldbackTime());
+                model.setArriveTime(lr.getArriveTime());
+                long startTimeLong = lr.getShouldbackTime().getTime();
+                long endTimeLong = new Date().getTime();
+                long day = (endTimeLong-startTimeLong)/(24*60*60*1000);
+                if(day>0){
+                    model.setPenaltyDay(day);
+                }
+                else {
+                    model.setPenaltyDay(0L);
+                }
+            }
+            Long productId = model.getProductId();
+            LoanProduct loanProduct = loanProductMapper.findByPrimary(productId);
+            if(loanProduct!=null){
+                model.setProfit(loanProduct.getProfit().doubleValue()/100);
+                model.setAccountManage(loanProduct.getAccountManage()/100);
+            }
+            RepayRecord repayRecord = repayRecordMapper.findByLoanRecordId(model.getId());
+            if(repayRecord!=null&&repayRecord.getRepayTime()!=null){
+                model.setRepayTime(repayRecord.getRepayTime());
+            }
+            model.setExportTime(new Date());
+            Integer status = model.getStatus().intValue();
+            switch (status){
+                case 1:
+                    model.setState("In the application, pending risk control review");
+                    break;
+                case 2:
+                    model.setState("Wind control audit passed, pending review");
+                    break;
+                case 3:
+                    model.setState("Review and approval, pending payment");
+                    break;
+                case 4:
+                    model.setState("In the lending");
+                    break;
+                case 5:
+                    model.setState("Loaned, pending payment");
+                    break;
+                case 6:
+                    model.setState("Normal reimbursement");
+                    break;
+                case 21:
+                    model.setState("Overdue");
+                    break;
+                case 22:
+                    model.setState("Overdue payment");
+                    break;
+                case 31:
+                    model.setState("Risk control audit did not pass");
+                    break;
+                case 32:
+                    model.setState("Review not approved,Reapply In 15 Days");
+                    break;
+                case 33:
+                    model.setState("Review not approved,Reapply Immediately");
+                    break;
+                case 34:
+                    model.setState("Review not approved,Blacklist");
+                    break;
+                case 41:
+                    model.setState("Loan failure");
+                    break;
+                case 42:
+                    model.setState("Lending was rejected");
+                    break;
+                case 51:
+                    model.setState("Bad debt");
+                    break;
+            }
 
-//        }
+        }
         return list;
     }
 

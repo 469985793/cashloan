@@ -9,13 +9,17 @@ public class ManageBorrowExportModel extends BaseModelResource {
 
 	private static final long serialVersionUID = 1L;
 	/**
-	 * 用户名
+	 * ID
 	 */
-	private Integer id;
+	private Long id;
+	/**
+	 * 用户ID
+	 */
+	private Long uid;
 	/**
 	 * 用户名
 	 */
-	private String firstName;
+	private String lastName;
 	/**
 	 * 订单号
 	 */
@@ -23,11 +27,11 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	/**
 	 * 借款金额
 	 */
-	private String balance;
+	private Long balance;
 	/**
 	 * 借款期限
 	 */
-	private String cycle;
+	private Integer cycle;
 	/**
 	 * 创建时间
 	 */
@@ -35,11 +39,23 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	/**
 	 * 订单状态
 	 */
-	private Integer state;
+	private Byte status;
 	/**
-	 * 用户名
+	 * 还款时间
 	 */
 	private Date lastbackTime;
+	/**
+	 * 放款时间
+	 */
+	private Date arriveTime;
+	/**
+	 * 应该还款时间时间
+	 */
+	private Date shouldbackTime;
+	/**
+	 * 产品ID
+	 */
+	private Long productId;
 	/**
 	 * 手机号
 	 */
@@ -48,12 +64,12 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	/**
 	 * 逾期天数
 	 */
-	private String penaltyDay;
+	private long penaltyDay;
 	
 	/**
 	 * 逾期罚金
 	 */
-	private Integer overdueFee;
+	private Long overdueFee;
 	
 	/**
 	 * 还款时间
@@ -63,26 +79,70 @@ public class ManageBorrowExportModel extends BaseModelResource {
 	/**
 	 * 还款金额
 	 */
-	private Integer actualbackAmt;
+	private Long actualbackAmt;
 	/**
-	 * 还款金额
+	 * 导出日期
 	 */
 	private Date exportTime;
+    /**
+     * 利息费
+     */
+    private Double profit;
+    /**
+     * 管理费
+     */
+    private Integer accountManage;
+	/**
+	 * 状态
+	 */
+	private String state;
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public Long getUid() {
+		return uid;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setUid(Long uid) {
+		this.uid = uid;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	public Date getArriveTime() {
+		return arriveTime;
+	}
+
+	public void setArriveTime(Date arriveTime) {
+		this.arriveTime = arriveTime;
+	}
+
+	public Date getShouldbackTime() {
+		return shouldbackTime;
+	}
+
+	public void setShouldbackTime(Date shouldbackTime) {
+		this.shouldbackTime = shouldbackTime;
 	}
 
 	public String getIndentNo() {
@@ -93,23 +153,23 @@ public class ManageBorrowExportModel extends BaseModelResource {
 		this.indentNo = indentNo;
 	}
 
-	public String getBalance() {
-		return balance;
-	}
+    public Long getBalance() {
+        return balance;
+    }
 
-	public void setBalance(String balance) {
-		this.balance = balance;
-	}
+    public void setBalance(Long balance) {
+        this.balance = balance;
+    }
 
-	public String getCycle() {
-		return cycle;
-	}
+    public Integer getCycle() {
+        return cycle;
+    }
 
-	public void setCycle(String cycle) {
-		this.cycle = cycle;
-	}
+    public void setCycle(Integer cycle) {
+        this.cycle = cycle;
+    }
 
-	public Date getCreatedTime() {
+    public Date getCreatedTime() {
 		return createdTime;
 	}
 
@@ -117,16 +177,23 @@ public class ManageBorrowExportModel extends BaseModelResource {
 		this.createdTime = createdTime;
 	}
 
-
-	public Integer getState() {
+	public String getState() {
 		return state;
 	}
 
-	public void setState(Integer state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
-	public Date getLastbackTime() {
+	public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Date getLastbackTime() {
 		return lastbackTime;
 	}
 
@@ -142,23 +209,39 @@ public class ManageBorrowExportModel extends BaseModelResource {
 		this.mobile = mobile;
 	}
 
-	public String getPenaltyDay() {
+	public long getPenaltyDay() {
 		return penaltyDay;
 	}
 
-	public void setPenaltyDay(String penaltyDay) {
+	public void setPenaltyDay(long penaltyDay) {
 		this.penaltyDay = penaltyDay;
 	}
 
-	public Integer getOverdueFee() {
-		return overdueFee;
+	public Double getProfit() {
+		return profit;
 	}
 
-	public void setOverdueFee(Integer overdueFee) {
-		this.overdueFee = overdueFee;
+	public void setProfit(Double profit) {
+		this.profit = profit;
 	}
 
-	public Date getRepayTime() {
+	public Integer getAccountManage() {
+		return accountManage;
+	}
+
+	public void setAccountManage(Integer accountManage) {
+		this.accountManage = accountManage;
+	}
+
+	public Long getOverdueFee() {
+        return overdueFee;
+    }
+
+    public void setOverdueFee(Long overdueFee) {
+        this.overdueFee = overdueFee;
+    }
+
+    public Date getRepayTime() {
 		return repayTime;
 	}
 
@@ -166,15 +249,15 @@ public class ManageBorrowExportModel extends BaseModelResource {
 		this.repayTime = repayTime;
 	}
 
-	public Integer getActualbackAmt() {
-		return actualbackAmt;
-	}
+    public Long getActualbackAmt() {
+        return actualbackAmt;
+    }
 
-	public void setActualbackAmt(Integer actualbackAmt) {
-		this.actualbackAmt = actualbackAmt;
-	}
+    public void setActualbackAmt(Long actualbackAmt) {
+        this.actualbackAmt = actualbackAmt;
+    }
 
-	public Date getExportTime() {
+    public Date getExportTime() {
 		return exportTime;
 	}
 

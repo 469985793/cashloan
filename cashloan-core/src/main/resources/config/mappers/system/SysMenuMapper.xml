@@ -370,7 +370,8 @@
 		    icon_cls,
 		    scriptid,
 		    sort,
-		    controller_name 
+		    controller_name,
+			remark
 		FROM
 		    arc_sys_menu
 		WHERE

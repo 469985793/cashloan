@@ -62,7 +62,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 		if(borrow>0 && borrowPass>0){
             Double passApr = loanRecordMapper.loanPassThroughRate();
             BigDecimal passAprs = new BigDecimal(passApr);
-            rtMap.put("passApr", passAprs.multiply(new BigDecimal(100)));
+            rtMap.put("passApr", passAprs.multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP));
 		}else{
 			rtMap.put("passApr", 0);
 		}
@@ -91,7 +91,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 
 		//逾期未还款本金
 		Integer overdueRepay = loanRecordMapper.overdueAmountPrincipal();
-		rtMap.put("overdueRepay", overdueRepay);
+		rtMap.put("overdueRepay", overdueRepay/100);
 
 		Map<String,Object> result = null;
 		List<Map<String,Object>> rtValue = null;

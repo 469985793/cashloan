@@ -14,4 +14,5 @@ public interface KanyaUserInfoMapper extends BaseMapper<KanyaUserInfo, Long> {
     KanyaUserInfo selectByNationId(String selectByNationId);
     KanyaUserInfo selectByPrimaryKey(Long uid);
     int saveUsersInfo(List<KanyaUserInfo> list);
+    KanyaUserInfo findByUid(Long uid);
 }

@@ -97,6 +97,7 @@ export default React.createClass({
                     userId: record.uid
                 },
                 callback: (result) => {
+                    // console.log(result);
                     if (result.code == 200) {
                         var dataForm = {};
                         dataForm.realName = result.data.userbase.firstName + ' ' + result.data.userbase.lastName;
@@ -269,7 +270,95 @@ export default React.createClass({
                         dataForm.qq = result.data.userOtherInfo != null ? result.data.userOtherInfo.qq : '';
                         dataForm.wechat = result.data.userOtherInfo != null ? result.data.userOtherInfo.wechat : '';
                         dataForm.registerCoordinate = result.data.userbase.registerCoordinate;
+                        dataForm.age = result.data.userbase != null ? result.data.userbase.age : '';
+                        if(result.data.userbase.position==1){
+                            dataForm.position = "programmer";
+                        }else if(result.data.userbase.position==2){
+                            dataForm.position = "designer";
 
+                        }else if(result.data.userbase.position==3){
+                            dataForm.position = "cook";
+                            
+                        }else if(result.data.userbase.position==4){
+                            dataForm.position = "teacher";
+                            
+                        }else if(result.data.userbase.position==5){
+                            dataForm.position = "customer service";
+                            
+                        }else if(result.data.userbase.position==6){
+                            dataForm.position = "translator";
+                            
+                        }else if(result.data.userbase.position==7){
+                            dataForm.position = "waiter";
+                            
+                        }else if(result.data.userbase.position==8){
+                            dataForm.position = "driver";
+                            
+                        }else if(result.data.userbase.position==9){
+                            dataForm.position = "hair designer";
+                            
+                        }else if(result.data.userbase.position==10){
+                            dataForm.position = "engineer";
+                            
+                        }else if(result.data.userbase.position==11){
+                            dataForm.position = "editor";
+                            
+                        }else if(result.data.userbase.position==12){
+                            dataForm.position = "carrier";
+                            
+                        }else if(result.data.userbase.position==13){
+                            dataForm.position = "buyer";
+                            
+                        }else if(result.data.userbase.position==14){
+                            dataForm.position = "shop assistant";
+                            
+                        }else if(result.data.userbase.position==15){
+                            dataForm.position = "coach";
+                            
+                        }else if(result.data.userbase.position==16){
+                            dataForm.position = "sales";
+                            
+                        }else if(result.data.userbase.position==17){
+                            dataForm.position = "lawer";
+                            
+                        }else if(result.data.userbase.position==18){
+                            dataForm.position = "account";
+                            
+                        }else if(result.data.userbase.position==19){
+                            dataForm.position = "doctor";
+                            
+                        }else if(result.data.userbase.position==20){
+                            dataForm.position = "other";
+                            
+                        }
+                        if(result.data.userbase.loanReason == 0){
+                            dataForm.loanReason = "";
+                        }else if(result.data.userbase.loanReason == 1){
+                            dataForm.loanReason = "住宅相关";
+                        }else if(result.data.userbase.loanReason == 2){
+                            dataForm.loanReason = "车辆相关";
+                        }else if(result.data.userbase.loanReason == 3){
+                            dataForm.loanReason = "教育相关";
+                        }else if(result.data.userbase.loanReason == 4){
+                            dataForm.loanReason = "债务合并";
+                        }else if(result.data.userbase.loanReason == 5){
+                            dataForm.loanReason = "个人消费";
+                        }else if(result.data.userbase.loanReason == 6){
+                            dataForm.loanReason = "医疗急救";
+                        }else if(result.data.userbase.loanReason == 7){
+                            dataForm.loanReason = "葬礼";
+                        }else if(result.data.userbase.loanReason == 8){
+                            dataForm.loanReason = "微型企业";
+                        }else if(result.data.userbase.loanReason == 9){
+                            dataForm.loanReason = "特殊事件";
+                        }else if(result.data.userbase.loanReason == 10){
+                            dataForm.loanReason = "传统仪式";
+                        }else if(result.data.userbase.loanReason == 1){
+                            dataForm.loanReason = "1：住宅相关";
+                        }else if(result.data.userbase.loanReason == 11){
+                            dataForm.loanReason = "其他";
+                        }
+                        
                         me.setState({
                             recordSoure: result.data,
                             dataForm: dataForm
