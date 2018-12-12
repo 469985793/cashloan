@@ -50,13 +50,13 @@ let SeachForm = React.createClass({
         return (
             <Form inline>
                 <FormItem label="Real Name:">{/*真实姓名*/}
-                    <Input  {...getFieldProps('realName') } />
+                    <Input  {...getFieldProps('lastName') } />
                 </FormItem>
                 <FormItem label="Phone:">{/*手机号码*/}
-                    <Input  {...getFieldProps('phone') } />
+                    <Input  {...getFieldProps('mobile') } />
                 </FormItem>
                 <FormItem label="Order Number:">{/*订单号*/}
-                    <Input  {...getFieldProps('orderNo') } />
+                    <Input  {...getFieldProps('indentNo') } />
                 </FormItem>
                 <FormItem label="Repayment Date：">
                     <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: "" })} />
