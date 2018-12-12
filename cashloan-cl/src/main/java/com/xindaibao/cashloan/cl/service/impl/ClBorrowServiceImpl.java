@@ -140,8 +140,6 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     @Resource
     private UserInviteMapper userInviteMapper;
     @Resource
-    private KanyaUserInfoMapper kanyaUserInfoMapper;
-    @Resource
     private ProfitAgentMapper profitAgentMapper;
     @Resource
     private KanyaPayFlowMapper kanyaPayFlowMapper;
