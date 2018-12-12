@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xindaibao.cashloan.cl.mapper.CreditInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.cl.model.CreditInfo.CreditInfoLog">
+        <id column="id" jdbcType="BIGINT"  property="id" />
+        <result column="result_code" jdbcType="VARCHAR" property="resultCode" />
+        <result column="credit_limit" jdbcType="DECIMAL" property="creditLimit" />
+        <result column="subject_IDNumber" jdbcType="VARCHAR" property="subjectIDNumber" />
+        <result column="CIP_grade" jdbcType="VARCHAR" property="CIPRiskGrade" />
+        <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+        <result column="mobile_score_grade" jdbcType="VARCHAR" property="mobileScoreGrade" />
+        <result column="mobile_score" jdbcType="VARCHAR" property="mobileScore" />
+        <result column="CIP_score" jdbcType="VARCHAR" property="CIPScore" />
+        <result column="message_id" jdbcType="VARCHAR" property="messageId" />
+        <result column="remark" jdbcType="VARCHAR" property="remark" />
+        <result column="status" jdbcType="VARCHAR" property="status" />
+        <result column="created_time" jdbcType="TIMESTAMP"  property="createdTime" />
+        <result column="updated_time" jdbcType="TIMESTAMP"  property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,result_code ,credit_limit,subject_IDNumber,CIP_grade,full_name,mobile_score_grade,mobile_score,CIP_score,message_id,remark,status, created_time, updated_time
+    </sql>
+
+    <!-- 基本的sql查询条件公共引用 -->
+    <sql id="searchBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test=" id != null and id != '' ">
+                id  = #{id,jdbcType=BIGINT}
+            </if>
+            <if test="result_code != null and result_code != '' ">
+                and result_code = #{resultCode,jdbcType=VARCHAR}
+            </if>
+            <if test="credit_limit != null and credit_limit != '' ">
+                and credit_limit = #{creditLimit,jdbcType=VARCHAR}
+            </if>
+            <if test="subject_IDNumber != null and subject_IDNumber != '' ">
+                and subject_IDNumber = #{subjectIDNumber,jdbcType=INTEGER}
+            </if>
+            <if test="CIP_grade != null and CIP_grade != '' ">
+                and CIP_grade = #{CIPRiskGrade,jdbcType=INTEGER}
+            </if>
+            <if test="full_name != null and full_name != '' ">
+                and full_name = #{fullName,jdbcType=INTEGER}
+            </if>
+            <if test="mobile_score_grade != null and mobile_score_grade != '' ">
+                and mobile_score_grade = #{mobileScoreGrade,jdbcType=INTEGER}
+            </if>
+            <if test="mobile_score != null and mobile_score != '' ">
+                and mobile_score = #{mobileScore,jdbcType=INTEGER}
+            </if>
+            <if test="CIP_score != null and CIP_score != '' ">
+                and CIP_score = #{CIPScore,jdbcType=INTEGER}
+            </if>
+            <if test="message_id != null and message_id != '' ">
+                and message_id = #{messageId,jdbcType=INTEGER}
+            </if>
+            <if test="remark != null and remark != '' ">
+                and remark = #{remark,jdbcType=INTEGER}
+            </if>
+            <if test="status != null and status != '' ">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+            <if test="createdTime != null and createdTime != '' ">
+                and createdTime = #{created_time,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updatedTime != null and updatedTime != '' ">
+                and updatedTime = #{updated_time,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </sql>
+    <insert id="save" parameterType="com.xindaibao.cashloan.cl.model.CreditInfo.CreditInfoLog">
+        insert into k_creditInfo_log (id,result_code ,credit_limit,
+        subject_IDNumber,CIP_grade,full_name,
+        mobile_score_grade,mobile_score,CIP_score,
+        message_id,remark,status, created_time, updated_time )
+        values (#{id,jdbcType=BIGINT}, #{resultCode,jdbcType=VARCHAR}, #{creditLimit,jdbcType=VARCHAR},
+        #{subjectIDNumber,jdbcType=INTEGER}, #{CIPRiskGrade,jdbcType=INTEGER},  #{fullName,jdbcType=INTEGER},
+        #{mobileScoreGrade,jdbcType=INTEGER}, #{mobileScore,jdbcType=INTEGER}, #{CIPScore,jdbcType=INTEGER},
+        #{messageId,jdbcType=INTEGER},
+        #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP},
+        #{updatedTime,jdbcType=TIMESTAMP})
+    </insert>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from k_creditInfo_log
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findByPrimary" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from k_creditInfo_log
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from k_creditInfo_log
+        <include refid="searchBy"/>
+    </select>
+
+    <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+        select
+        <include refid="Base_Column_List" />
+        from k_creditInfo_log
+        <include refid="searchBy"/>
+    </select>
+
+
+    <select id="findByUserNationalId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from k_creditInfo_log
+        where subject_IDNumber = #{nationalId,jdbcType=BIGINT}
+    </select>
+
+
+</mapper>

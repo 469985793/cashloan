@@ -616,6 +616,15 @@
     where status in(5,21) and id = #{id ,jdbcType=BIGINT}
   </update>
 
+  <update id="updateStatus"  parameterType="java.util.HashMap">
+    update k_loan_record
+    <set>
+      status = #{state,jdbcType=VARCHAR} ,
+      updated_time = #{updatedTime,jdbcType=VARCHAR}
+    </set>
+    where id = #{id ,jdbcType=BIGINT}
+  </update>
+
   <select id="loanApplicationCount" resultType="Integer">
       select count(id)
       from k_loan_record
@@ -688,5 +697,12 @@
       select sum(actual_balance)
       from k_loan_record
       where status in(21,51)
+  </select>
+
+  <select id="selectCreditLoan" resultMap="BaseResultMap"	parameterType="java.util.HashMap">
+    select  r.id,r.uid,r.indent_no,r.first_name,r.last_name,r.mobile,r.apply_terminal,r.loan_reason,r.balance,r.product_id,r.cycle,r.fee_type,r.fee_percent,r.overdue_percent,r.fee,r.fee_getway,
+    r.overdue_fee,r.arrive_time,r.actual_balance,r.shouldback_time,r.lastback_time,r.actualback_amt,r.bank_card_no,r.bankacc_name,r.bank_no,r.bank_name,r.audit_risk_time,r.audit_risk_reson,
+    r.audit_user_id,r.audit_user_time,r.audit_user_reson,r.pay_user_id,r.trade_mode,r.apply_city,r.coupons_id,r.image_code,r.status,r.created_time,r.updated_time
+    from k_loan_record r where r.status = 1 order by r.created_time desc limit 20;
   </select>
 </mapper>

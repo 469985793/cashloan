@@ -5,6 +5,7 @@ import com.xindaibao.cashloan.core.common.mapper.BaseMapper;
 import com.xindaibao.cashloan.core.common.mapper.RDBatisDao;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 @RDBatisDao
@@ -16,6 +17,7 @@ public interface LoanRecordMapper extends BaseMapper<LoanRecord, Long> {
 
     LoanRecord findByIndentNo(String indentNo);
 
+    List<LoanRecord> selectCreditLoan();
 
     int updateParam(Map<String, Object> paramMap);
 
@@ -36,4 +38,7 @@ public interface LoanRecordMapper extends BaseMapper<LoanRecord, Long> {
     int totalAmountRepaid();
 
     int overdueAmountPrincipal();
+
+    int updateStatus(Map<String, Object> paramMap);
+
 }

@@ -124,6 +124,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     @Resource
     private KanyaUserMapper kanyaUserMapper;
     @Resource
+    private KanyaUserInfoMapper kanyaUserInfoMapper;
+    @Resource
     private ClBorrowMapper clBorrowMapper;
     @Resource
     private BorrowProgressMapper borrowProgressMapper;
@@ -2456,6 +2458,16 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     @Override
     public LoanRecord findByPrimaryforKenya(long id) {
         return loanRecordMapper.findByPrimary(id);
+    }
+
+    @Override
+    public List<LoanRecord> selectCreditLoan() {
+        return loanRecordMapper.selectCreditLoan();
+    }
+
+    @Override
+    public KanyaUserInfo selectUserInfo(Long uid) {
+        return kanyaUserInfoMapper.selectByPrimaryKey(uid);
     }
 
     @Override
