@@ -32,13 +32,17 @@ var Tab1 = React.createClass({
   componentDidMount() {
     //this.props.form.resetFields();
     this.props.form.setFieldsValue(this.props.dataForm);
+
+    // console.log(this.props.dataForm);
   },
   render() {
     var props = this.props;
     var state = this.state;
+    console.log(props);
     const {
         getFieldProps
     } = this.props.form;
+    // console.log(this.props.form);
     const formItemLayout = {
       labelCol: {
         span: 9
@@ -63,6 +67,14 @@ var Tab1 = React.createClass({
         span: 9
       },
     };
+    const formItemLayout4 = {
+      labelCol: {
+        span: 12
+      },
+      wrapperCol: {
+        span: 10
+      },
+    };
     var aItem = [];
     if (props.recordSoure && props.recordSoure.workImgArr) {
       aItem = [];
@@ -79,7 +91,7 @@ var Tab1 = React.createClass({
             <div className="uploadFile" style={{ paddingLeft: '20' }}>
               <div className="img" style={{ height: '210' }}>
                 <span style={userbaseTit}>Face Image</span>
-                {props.recordSoure.userbase.livingImg ? <a href={props.recordSoure.userbase.livingImg} target="_blank"><img src={props.recordSoure.userbase.livingImg} style={{ width: 150, height: 150 }} /></a> : <span>暂无</span>}
+                {props.recordSoure.userbase.path ? <a href={props.recordSoure.userbase.path} target="_blank"><img src={props.recordSoure.userbase.path} style={{ width: 150, height: 150 }} /></a> : <span>暂无</span>}
               </div>
         {/*<div className="img" style={{ height: '210' }}>
                 <span style={userbaseTit}>身份证正面</span>
@@ -150,11 +162,21 @@ var Tab1 = React.createClass({
                     <Input {...getFieldProps('registTime', { initialValue: '' }) } disabled={true} />
                   </FormItem>
                 </Col>
+                <Col span="8">
+                  <FormItem {...formItemLayout} label="Age: ">
+                    <Input {...getFieldProps('age', { initialValue: '' }) } disabled={true} />
+                  </FormItem>
+                </Col>
               </Row>
               <Row>
-                <Col span="14">
+                <Col span="15">
                   <FormItem {...formItemLayout2} label="LiveAddress：">
                     <Input {...getFieldProps('liveAddr', { initialValue: '' }) } disabled={true} />
+                  </FormItem>
+                </Col>
+                <Col span="8">
+                  <FormItem {...formItemLayout4} label="Loan Reason: ">
+                    <Input {...getFieldProps('loanReason', { initialValue: '' }) } disabled={true} />
                   </FormItem>
                 </Col>
               </Row>
@@ -253,9 +275,14 @@ var Tab1 = React.createClass({
                 </Col>
               </Row>
               <Row>
-                <Col span="14">
+                <Col span="15">
                   <FormItem {...formItemLayout2} label="CompanyAddress：">
                     <Input {...getFieldProps('companyAddr', { initialValue: '' }) } disabled={true} />
+                  </FormItem>
+                </Col>
+                <Col span="8">
+                  <FormItem {...formItemLayout4} label="Job Position: ">
+                    <Input {...getFieldProps('position', { initialValue: '' }) } disabled={true} />
                   </FormItem>
                 </Col>
               </Row>

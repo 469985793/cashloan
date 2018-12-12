@@ -70,6 +70,7 @@ var Tab1 = React.createClass({
       aItem.push(<span key={'none'}>暂无</span>)
     }
 
+    console.log(state.recordSoure);
     return (
       <Form horizontal form={this.props.form} style={{ marginTop: '20' }}>
         {state.recordSoure ?
@@ -148,11 +149,21 @@ var Tab1 = React.createClass({
                 <Input {...getFieldProps('registTime', { initialValue: '' })} disabled={props.canEdit} />
               </FormItem>
             </Col>
+            <Col span="8">
+              <FormItem {...formItemLayout} label="Age: ">
+                <Input {...getFieldProps('age', { initialValue: '' })} disabled={props.canEdit} />
+              </FormItem>
+            </Col>
           </Row>
           <Row>
-            <Col span="14">
+            <Col span="16">
               <FormItem {...formItemLayout2} label="LiveAddress：">
                 <Input {...getFieldProps('liveAddr', { initialValue: '' })} disabled={props.canEdit} />
+              </FormItem>
+            </Col>
+            <Col span="8">
+              <FormItem {...formItemLayout} label="LoanReason: ">
+                <Input {...getFieldProps('loanReason', { initialValue: '' })} disabled={props.canEdit} />
               </FormItem>
             </Col>
           </Row>
@@ -247,6 +258,11 @@ var Tab1 = React.createClass({
             <Col span="8">
               <FormItem {...formItemLayout} label="Wage Range：">
                 <Input {...getFieldProps('jobMonthIncome', { initialValue: '' })} disabled={props.canEdit} />
+              </FormItem>
+            </Col>
+            <Col span="8">
+              <FormItem {...formItemLayout} label="Loan Reason：">
+                <Input {...getFieldProps('loanReason', { initialValue: '' })} disabled={props.canEdit} />
               </FormItem>
             </Col>
           </Row>
