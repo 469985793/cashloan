@@ -189,8 +189,7 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
                 logger.info("name 验证：  :" +boolResultName(creditInfoResponse.getFullName().toLowerCase(), name) +" "+name +"   "+creditInfoResponse.getFullName().toLowerCase());
                 if (boolResultName(creditInfoResponse.getFullName().toLowerCase(), name)) {
 
-                   //没有接放款之前，状态先改为人工放款 loan.setStatus((byte) 4);
-                    loan.setStatus((byte) 3);
+                    loan.setStatus((byte) 4);
                 }else{
                     loan.setStatus((byte)2);
                 }
@@ -216,8 +215,13 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
             loan.setStatus((byte)32);
         }
         if (boolResultCode(creditInfoResponse.getCIPRiskGrade(), ruleX)) {
-            if (creditInfoResponse.getResultCode().equals("Approve") && boolResultLimit(creditInfoResponse.getCreditLimit(),  loanRecord.getBalance())) {
-                loan.setStatus((byte)4);
+            if (creditInfoResponse.getResultCode().equals("Approve") && boolResultLimit(new BigDecimal(500),  loanRecord.getBalance())) {
+                if (boolResultName(creditInfoResponse.getFullName().toLowerCase(), name)) {
+                   // loan.setStatus((byte) 4);
+                    loan.setStatus((byte) 3);
+                }else{
+                    loan.setStatus((byte)32);
+                }
             } else {
                 loan.setStatus((byte)32);
             }
@@ -232,11 +236,12 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
         if(i < 0){
             logger.error("修改单号为{}的订单异常", loanRecord.getIndentNo());
         }else{
-            logger.info("修改成功，调放款service");
-//            if(loan.getStatus() ==4){
-//                loanRecord.setStatus((byte) 4);
-//                paymentService.createPayOrderNo(loanRecord, 2); // 自动放款
-//            }
+            logger.info("修改成功，满足条件将调用放款Service");
+            //if(loan.getStatus() ==4){
+              //  logger.info("调放款service");
+               // loanRecord.setStatus((byte) 4);
+                //paymentService.createPayOrderNo(loanRecord, 2); // 自动放款
+            //}
 
         }
 
