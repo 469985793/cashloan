@@ -15,6 +15,14 @@ public class KanyaUserLocation extends KanyaUserContactInfo{
 
     private Date updatedTime;
 
+    private String path;
+
+    private Integer loanReason;
+
+    private Integer age;
+
+    private Date birthday;
+
     public Long getId() {
         return id;
     }
@@ -61,5 +69,39 @@ public class KanyaUserLocation extends KanyaUserContactInfo{
 
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Integer getLoanReason() {
+        return loanReason;
+    }
+
+    public void setLoanReason(Integer loanReason) {
+        this.loanReason = loanReason;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    @Override
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    @Override
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }

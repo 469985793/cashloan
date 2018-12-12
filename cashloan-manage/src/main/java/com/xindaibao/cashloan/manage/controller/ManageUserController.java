@@ -61,7 +61,9 @@ import java.text.DecimalFormat;
 import credit.CreditRequest;
 import credit.Header;
 
- /**
+import static com.xindaibao.cashloan.core.common.util.DateUtil.getAgeByBirthday;
+
+/**
  * 用户记录Controller
  * 
  * @author
@@ -319,9 +321,13 @@ public class ManageUserController extends ManageBaseController{
 //		if (user != null && user.getId() != null) {
 			//用户基本信息
 			KanyaUserLocation model = userBaseInfoService.getBaseModelByUserId(userId);
+			model.setPath("http://www.pesaplus.co/randimg/"+model.getPath());
+			if(model.getBirthday()!=null){
+				Integer age = getAgeByBirthday(model.getBirthday());
+				model.setAge(age);
+			}
 
 			//计算工作年限
-
 		if(model.getStartTime()!=null){
 			try {
 				int day = new Date().getDay()
@@ -330,11 +336,9 @@ public class ManageUserController extends ManageBaseController{
 						- model.getStartTime().getMonth();
 				int year = new Date().getYear()
 						- model.getStartTime().getYear();
-
 				if (day > 15) {
 					month++;
 				}
-
 				if (month > 6) {
 					year++;
 				}
@@ -345,43 +349,6 @@ public class ManageUserController extends ManageBaseController{
 				e.printStackTrace();
 			}
 		}
-
-
-
-
-			//model.setLivingImg(model.getLivingImg()!=null?serverHost +"/readFile.htm?path="+ model.getLivingImg():"");
-			//model.setFrontImg(model.getFrontImg()!=null?serverHost +"/readFile.htm?path="+ model.getFrontImg():"");
-			//model.setBackImg(model.getBackImg()!=null?serverHost +"/readFile.htm?path="+ model.getBackImg():"");
-			//model.setOcrImg(model.getOcrImg()!=null?serverHost +"/readFile.htm?path="+ model.getOcrImg():"");
-			
-//			if (StringUtil.isNotBlank(model.getWorkingImg())) {
-//				String workImgStr = model.getWorkingImg();
-//				List<String> workImgList = Arrays.asList(workImgStr.split(";"));
-//				for (int i = 0; i < workImgList.size(); i++) {
-//					String workImg = workImgList.get(i);
-//					workImgList.set(i, serverHost +"/readFile.htm?path="+ workImg);
-//				}
-//				map.put("workImgArr", workImgList);
-//			}
-			
-			//银行卡信息
-//			BankCard bankCard=bankCardService.getBankCardByUserId(user.getId());
-//			if (null != bankCard) {
-//				model.setBank(bankCard.getBank());
-//				model.setCardNo(bankCard.getCardNo());
-//				model.setBankPhone(bankCard.getPhone());
-//			}
-			
-//			Channel cl = channelService.getById(user.getChannelCode());
-//			if (cl!=null) {
-//				model.setChannelCode(cl.getName());
-//			}
-			
-			//芝麻分
-//			Zhima zm = zhimaService.findByUserId(userId);
-//			if (zm!=null&&zm.getScore()>0) {
-//				model.setScore(zm.getScore().toString());
-//			}
 			map.put("userbase", model);
 			
 			// 构造查询条件Map
@@ -407,7 +374,8 @@ public class ManageUserController extends ManageBaseController{
 		result.put(Constant.RESPONSE_CODE_MSG, "获取成功");
 		ServletUtils.writeToResponse(response,result);
 	}
-	
+
+
 	/**
 	 * 用户认证信息列表
 	 * @param search
