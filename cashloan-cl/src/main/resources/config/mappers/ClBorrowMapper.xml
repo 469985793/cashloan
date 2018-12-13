@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- cl_borrow表:借款信息表模块 -->
 <mapper namespace="com.xindaibao.cashloan.cl.mapper.ClBorrowMapper">
-<!--返回Map-->        
+    <!--返回Map-->
     <resultMap id="BaseResultMap" type="com.xindaibao.cashloan.core.domain.Borrow">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="user_id" property="userId" jdbcType="BIGINT" />
@@ -98,13 +98,13 @@
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
 
     </resultMap>
-    
+
     <!--基本的sql查询字段 公共引用...-->
     <sql id="Base_Column_List">
         id,user_id,order_no,amount,real_amount,fee,time_limit,state,card_id,service_fee,info_auth_fee,interest,original_id,original_order_no,renew_state,renew_mark,renew_amount,remark,client,address,coordinate,ip,create_time 
     </sql>
-    
-    
+
+
     <!-- 基本的sql查询条件公共引用 -->
     <sql id="searchBy">
         <trim prefix="where" prefixOverrides="and|or">
@@ -179,31 +179,31 @@
             </if>
         </trim>
     </sql>
-    
+
     <resultMap id="IndexModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.IndexModel">
-    	
+
     </resultMap>
-    
+
     <resultMap id="ClBorrowModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ClBorrowModel">
-    	
+
     </resultMap>
-    
+
     <resultMap id="repayModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.RepayModel">
-    	
+
     </resultMap>
-    
+
     <resultMap id="ManageBorrowTestModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageBorrowTestModel">
-    	
+
     </resultMap>
-    
+
     <resultMap id="ManageBorrowExportModel" extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageBorrowExportModel">
-    	
+
     </resultMap>
-    
-<insert id="save" parameterType="com.xindaibao.cashloan.core.domain.Borrow" keyProperty="id" useGeneratedKeys="true">
+
+    <insert id="save" parameterType="com.xindaibao.cashloan.core.domain.Borrow" keyProperty="id" useGeneratedKeys="true">
 		insert into cl_borrow(user_id,order_no,amount,real_amount,fee,time_limit,state,card_id,service_fee,info_auth_fee,interest,original_id,original_order_no,renew_state,renew_mark,renew_amount,remark,client,address,coordinate,ip,create_time)values(#{userId,jdbcType=BIGINT},#{orderNo,jdbcType=VARCHAR},#{amount,jdbcType=DECIMAL},#{realAmount,jdbcType=DECIMAL},#{fee,jdbcType=DECIMAL},#{timeLimit,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{cardId,jdbcType=BIGINT},#{serviceFee,jdbcType=DECIMAL},#{infoAuthFee,jdbcType=DECIMAL},#{interest,jdbcType=DECIMAL},#{originalId,jdbcType=BIGINT},#{originalOrderNo,jdbcType=VARCHAR},#{renewState,jdbcType=VARCHAR},#{renewMark,jdbcType=INTEGER}, #{renewAmount,jdbcType=DECIMAL},#{remark,jdbcType=VARCHAR},#{client,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{coordinate,jdbcType=VARCHAR},#{ip,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
 	</insert>
-    
+
     <update id="update" parameterType="com.xindaibao.cashloan.core.domain.Borrow">
         update cl_borrow set 
             user_id = #{userId,jdbcType=BIGINT},
@@ -234,21 +234,21 @@
 
     <update id="updateSelective"  parameterType="java.util.HashMap">
         update cl_borrow
-          <set>
+        <set>
             <if test="userId != null">
-                user_id = #{userId,jdbcType=BIGINT},                
+                user_id = #{userId,jdbcType=BIGINT},
             </if>
             <if test="orderNo != null and orderNo != ''">
                 order_no = #{orderNo,jdbcType=VARCHAR},
             </if>
             <if test="amount != null">
-                amount = #{amount,jdbcType=DECIMAL},                
+                amount = #{amount,jdbcType=DECIMAL},
             </if>
             <if test="realAmount != null">
-                real_amount = #{realAmount,jdbcType=DECIMAL},                
+                real_amount = #{realAmount,jdbcType=DECIMAL},
             </if>
             <if test="fee != null">
-                fee = #{fee,jdbcType=DECIMAL},                
+                fee = #{fee,jdbcType=DECIMAL},
             </if>
             <if test="timeLimit != null and timeLimit != ''">
                 time_limit = #{timeLimit,jdbcType=VARCHAR},
@@ -257,19 +257,19 @@
                 state = #{state,jdbcType=VARCHAR},
             </if>
             <if test="cardId != null">
-                card_id = #{cardId,jdbcType=BIGINT},                
+                card_id = #{cardId,jdbcType=BIGINT},
             </if>
             <if test="serviceFee != null">
-                service_fee = #{serviceFee,jdbcType=DECIMAL},                
+                service_fee = #{serviceFee,jdbcType=DECIMAL},
             </if>
             <if test="infoAuthFee != null">
-                info_auth_fee = #{infoAuthFee,jdbcType=DECIMAL},                
+                info_auth_fee = #{infoAuthFee,jdbcType=DECIMAL},
             </if>
             <if test="interest != null">
-                interest = #{interest,jdbcType=DECIMAL},                
+                interest = #{interest,jdbcType=DECIMAL},
             </if>
             <if test="originalId != null">
-                original_id = #{originalId,jdbcType=BIGINT},                
+                original_id = #{originalId,jdbcType=BIGINT},
             </if>
             <if test="originalOrderNo != null and originalOrderNo != ''">
                 original_order_no = #{originalOrderNo,jdbcType=VARCHAR},
@@ -278,9 +278,9 @@
                 renew_state = #{renewState,jdbcType=VARCHAR},
             </if>
             <if test="renewMark != null">
-                renew_mark = #{renewMark,jdbcType=INTEGER},                
+                renew_mark = #{renewMark,jdbcType=INTEGER},
             </if>
-             <if test="renewAmount != null">
+            <if test="renewAmount != null">
                 renew_amount = #{renewAmount,jdbcType=DECIMAL},
             </if>
             <if test="remark != null and remark != ''">
@@ -299,9 +299,9 @@
                 ip = #{ip,jdbcType=VARCHAR},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime,jdbcType=TIMESTAMP}              
+                create_time = #{createTime,jdbcType=TIMESTAMP}
             </if>
-        </set>    
+        </set>
         where id = #{id ,jdbcType=BIGINT}
     </update>
 
@@ -314,36 +314,36 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-	<select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+    <select id="findSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
         <include refid="Base_Column_List" />
         from cl_borrow
         <include refid="searchBy"/>
     </select>
-    
+
     <select id="listSelective" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
         <include refid="Base_Column_List" />
         from cl_borrow
         <include refid="searchBy"/>
     </select>
-    
+
     <update id="reviewState"  parameterType="java.util.HashMap">
         update cl_borrow
-          <set>
-            <if test="state != null and state != '' ">        
+        <set>
+            <if test="state != null and state != '' ">
                 state = #{state,jdbcType=VARCHAR},
             </if>
-            <if test="remark != null and remark != '' ">        
+            <if test="remark != null and remark != '' ">
                 remark = #{remark,jdbcType=VARCHAR}
             </if>
-        </set>    
+        </set>
         where id = #{id ,jdbcType=BIGINT} AND state = 220
     </update>
 
     <update id="reviewStatus"  parameterType="java.util.HashMap">
         update k_loan_record
-          <set>
+        <set>
             <if test="state != null and state != '' ">
                 status = #{state,jdbcType=VARCHAR},
             </if>
@@ -351,24 +351,24 @@
                 arrive_time = #{arriveTime,jdbcType=TIMESTAMP},
             </if>
             <if test="actualBalance != null and state != '' ">
-                  actual_balance = #{actualBalance,jdbcType=VARCHAR},
+                actual_balance = #{actualBalance,jdbcType=VARCHAR},
             </if>
             <if test="auditUserReson != null and state != '' ">
-                  audit_user_reson = #{auditUserReson,jdbcType=VARCHAR},
+                audit_user_reson = #{auditUserReson,jdbcType=VARCHAR},
             </if>
-              <if test="auditUserId != null and state != '' ">
-                  audit_user_id = #{auditUserId,jdbcType=BIGINT},
-              </if>
-              <if test="auditUserTime != null and state != '' ">
-                  audit_user_time = #{auditUserTime,jdbcType=TIMESTAMP},
-              </if>
+            <if test="auditUserId != null and state != '' ">
+                audit_user_id = #{auditUserId,jdbcType=BIGINT},
+            </if>
+            <if test="auditUserTime != null and state != '' ">
+                audit_user_time = #{auditUserTime,jdbcType=TIMESTAMP},
+            </if>
             <if test="shouldbackTime != null and state != '' ">
-                  shouldback_time = #{shouldbackTime,jdbcType=TIMESTAMP},
+                shouldback_time = #{shouldbackTime,jdbcType=TIMESTAMP},
             </if>
         </set>
         where indent_no = #{id ,jdbcType=BIGINT}
     </update>
-    
+
     <select id="listExportModel" resultMap="ManageBorrowExportModel" parameterType="java.util.HashMap">
         select
         u.last_name,us.mobile,r.id,r.uid,r.indent_no,r.product_id,r.balance,r.cycle,r.overdue_fee,r.created_time,r.status,r.actualback_amt,r.lastback_time,
@@ -380,7 +380,7 @@
         left join k_user us on us.id = r.uid
         <include refid="searchBorrowModelByKenya" />
     </select>
-    
+
     <select id="findLast" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List" />
@@ -388,7 +388,7 @@
         where user_id = #{userId,jdbcType=BIGINT}
         AND state IN ('21','27') ORDER BY id DESC LIMIT 0,1
     </select>
-    
+
     <select id="findLastBorrow" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List" />
@@ -396,7 +396,7 @@
         where user_id = #{userId,jdbcType=BIGINT}
         ORDER BY id DESC LIMIT 0,1
     </select>
-    
+
     <select id="findRepayBorrow" resultMap="BaseResultMap" parameterType="java.util.HashMap">
         select
         <include refid="Base_Column_List" />
@@ -404,7 +404,7 @@
         WHERE user_id = #{userId,jdbcType=BIGINT}
         ORDER BY id DESC LIMIT 0,1
     </select>
-    
+
     <select id="listAll" resultMap="ClBorrowModel" parameterType="java.util.HashMap">
         select
         <include refid="Base_Column_List" />
@@ -412,16 +412,16 @@
         <include refid="searchBy"/>
         ORDER BY id DESC
     </select>
-               
+
     <select id="findBorrow" resultMap="ClBorrowModel" parameterType="java.util.HashMap">
         SELECT cb.*,
-		(SELECT card_no FROM cl_bank_card WHERE id = cb.card_id)AS cardNo,
-		(SELECT bank FROM cl_bank_card WHERE id = cb.card_id)AS bank
-		FROM cl_borrow AS cb
-		<!-- WHERE cb.id = #{id,jdbcType=BIGINT} -->
-		<include refid="searchBy"/>
+        (SELECT card_no FROM cl_bank_card WHERE id = cb.card_id)AS cardNo,
+        (SELECT bank FROM cl_bank_card WHERE id = cb.card_id)AS bank
+        FROM cl_borrow AS cb
+        <!-- WHERE cb.id = #{id,jdbcType=BIGINT} -->
+        <include refid="searchBy"/>
     </select>
-    
+
     <select id="listIndex" resultMap="IndexModel" parameterType="java.util.HashMap">
         SELECT cb.id,cb.create_time AS createTime,cb.amount,
 		(SELECT card_no FROM cl_bank_card WHERE id = cb.card_id)AS cardNo,
@@ -429,9 +429,9 @@
 		FROM `cl_borrow` AS cb WHERE state = 30
 		ORDER BY cb.id DESC LIMIT 0,10
     </select>
-    
-   
-    
+
+
+
     <select id="findRepay" resultMap="repayModel" parameterType="java.util.HashMap">
         SELECT cbr.id, cbr.borrow_id AS borrowId,cbr.repay_time,cbr.penalty_amout AS penaltyAmout,cbr.penalty_day AS penaltyDay,
         cb.amount,cb.real_amount,cb.fee,cb.state
@@ -439,73 +439,73 @@
 		WHERE cbr.borrow_id = cb.id AND cbr.state = 20 AND cb.user_id = #{userId,jdbcType=BIGINT}
 		ORDER BY cb.id DESC
     </select>
-    
+
     <select id="compute" resultMap="repayModel" parameterType="java.util.HashMap">
         SELECT cbr.repay_time,cb.amount,cbr.id AS id
 		FROM cl_borrow_repay AS cbr,cl_borrow AS cb
 		WHERE cbr.borrow_id = cb.id AND cbr.state = 20
     </select>
-    
-      <!-- 用户借款sql查询条件公共引用 -->
+
+    <!-- 用户借款sql查询条件公共引用 -->
     <sql id="searchModelBy">
         <trim prefix="where" prefixOverrides="and|or">
-        	<if test="userId !='' and userId !=null">
-                and u.user_id = #{userId,jdbcType=BIGINT} 
-            </if>
-            <if test="realName !='' and realName !=null">
-                and u.real_name like  concat("%",#{realName,jdbcType=VARCHAR},"%") 
-            </if>
-             <if test="phone !='' and phone !=null">
-                and u.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%") 
-            </if>
-            <if test="orderNo !='' and orderNo !=null">
-                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")  
-            </if>
-            <if test="state != null and state != '' ">        
-            	and b.state = #{state,jdbcType=VARCHAR}                
-            </if>
-            <if test="stateList !=null">
-            	and b.state  in
-             	<foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">  
-			    	#{item}  
-             	</foreach> 
-            </if>
-            <if test="remark != null and remark != ''">        
-            	and b.remark like concat("%",#{remark,jdbcType=VARCHAR},"%")  
-            </if>
-        </trim>
-    </sql>
-    
-    <!-- 借款列表（新增续借条件）查询条件公共引用 -->
-	<sql id="searchBorrowModelBy">
-        <trim prefix="where" prefixOverrides="and|or">
-        	<if test="userId !='' and userId !=null">
+            <if test="userId !='' and userId !=null">
                 and u.user_id = #{userId,jdbcType=BIGINT}
             </if>
             <if test="realName !='' and realName !=null">
                 and u.real_name like  concat("%",#{realName,jdbcType=VARCHAR},"%")
             </if>
-             <if test="phone !='' and phone !=null">
+            <if test="phone !='' and phone !=null">
+                and u.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%")
+            </if>
+            <if test="orderNo !='' and orderNo !=null">
+                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")
+            </if>
+            <if test="state != null and state != '' ">
+                and b.state = #{state,jdbcType=VARCHAR}
+            </if>
+            <if test="stateList !=null">
+                and b.state  in
+                <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="remark != null and remark != ''">
+                and b.remark like concat("%",#{remark,jdbcType=VARCHAR},"%")
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 借款列表（新增续借条件）查询条件公共引用 -->
+    <sql id="searchBorrowModelBy">
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="userId !='' and userId !=null">
+                and u.user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="realName !='' and realName !=null">
+                and u.real_name like  concat("%",#{realName,jdbcType=VARCHAR},"%")
+            </if>
+            <if test="phone !='' and phone !=null">
                 and u.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%")
             </if>
             <if test="orderNo !='' and orderNo !=null">
                 and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")
             </if>
             <if test="state != null and state != '' and renewState == null ">
-            	and b.state = #{state,jdbcType=VARCHAR}
+                and b.state = #{state,jdbcType=VARCHAR}
             </if>
             <if test="stateList !=null">
-            	and b.state  in
-             	<foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">
-			    	#{item}
-             	</foreach>
+                and b.state  in
+                <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
             </if>
             <if test="remark != null and remark != ''">
-            	and b.remark like concat("%",#{remark,jdbcType=VARCHAR},"%")
+                and b.remark like concat("%",#{remark,jdbcType=VARCHAR},"%")
             </if>
             <if test="state == '33' and renewState != null ">
-            	and b.original_id IN (  select t.id from cl_borrow t where t.state=#{state,jdbcType=VARCHAR} and t.renew_state=#{renewState,jdbcType=VARCHAR}  )
-            	 or b.id IN (select t.id from cl_borrow t where t.state=#{state,jdbcType=VARCHAR} and t.renew_state=#{renewState,jdbcType=VARCHAR}  )
+                and b.original_id IN (  select t.id from cl_borrow t where t.state=#{state,jdbcType=VARCHAR} and t.renew_state=#{renewState,jdbcType=VARCHAR}  )
+                or b.id IN (select t.id from cl_borrow t where t.state=#{state,jdbcType=VARCHAR} and t.renew_state=#{renewState,jdbcType=VARCHAR}  )
             </if>
             <if test="channelList !=null">
                 and c.code  in
@@ -523,14 +523,14 @@
             <if test="uid !='' and uid !=null">
                 and r.uid = #{uid,jdbcType=BIGINT}
             </if>
-            <if test="lastName !='' and lastName !=null">
-                and r.last_name like  concat("%",#{lastName,jdbcType=VARCHAR},"%")
+            <if test="realName !='' and realName !=null">
+                and r.last_name like  concat("%",#{realName,jdbcType=VARCHAR},"%")
             </if>
-            <if test="mobile !='' and mobile !=null">
-                and r.mobile like  concat("%",#{mobile,jdbcType=VARCHAR},"%")
+            <if test="phone !='' and phone !=null">
+                and r.mobile like  concat("%",#{phone,jdbcType=VARCHAR},"%")
             </if>
-            <if test="indentNo !='' and indentNo !=null">
-                and r.indent_no like  concat("%",#{indentNo,jdbcType=VARCHAR},"%")
+            <if test="orderNo !='' and orderNo !=null">
+                and r.indent_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")
             </if>
             <if test="status != null and status != '' and renewState == null ">
                 and r.status = #{status,jdbcType=VARCHAR}
@@ -552,64 +552,64 @@
             </if>
         </trim>
     </sql>
-    
-     <resultMap id="userBorrowMap"  extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageBorrowModel">
-         <result column="real_name" property="realName" jdbcType="VARCHAR" />
-         <result column="phone" property="phone" jdbcType="VARCHAR" />
-         <result column="repay_amount" property="repayAmount" jdbcType="DECIMAL" />
-         <result column="repay_time" property="repayTime" jdbcType="VARCHAR" />
-         <result column="name" property="channelName" jdbcType="VARCHAR" />
+
+    <resultMap id="userBorrowMap"  extends="BaseResultMap" type="com.xindaibao.cashloan.cl.model.ManageBorrowModel">
+        <result column="real_name" property="realName" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="repay_amount" property="repayAmount" jdbcType="DECIMAL" />
+        <result column="repay_time" property="repayTime" jdbcType="VARCHAR" />
+        <result column="name" property="channelName" jdbcType="VARCHAR" />
     </resultMap>
-    
+
     <select id="listReview" resultMap="userBorrowMap" parameterType="java.util.HashMap">
-		select
-			u.real_name,u.phone,b.id,b.user_id,b.order_no,b.amount,b.real_amount,b.fee,b.create_time,
-			b.time_limit,p.state,b.card_id,b.service_fee,b.info_auth_fee,b.interest,b.client,b.remark
-		from cl_borrow b 
-		left join cl_user_base_info u on u.user_id=b.user_id
-		LEFT JOIN cl_borrow_progress p on p.borrow_id = b.id
-		<trim prefix="where" prefixOverrides="and|or">
-        	<if test="userId !='' and userId !=null">
-                and b.user_id = #{userId,jdbcType=BIGINT} 
+        select
+        u.real_name,u.phone,b.id,b.user_id,b.order_no,b.amount,b.real_amount,b.fee,b.create_time,
+        b.time_limit,p.state,b.card_id,b.service_fee,b.info_auth_fee,b.interest,b.client,b.remark
+        from cl_borrow b
+        left join cl_user_base_info u on u.user_id=b.user_id
+        LEFT JOIN cl_borrow_progress p on p.borrow_id = b.id
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="userId !='' and userId !=null">
+                and b.user_id = #{userId,jdbcType=BIGINT}
             </if>
             <if test="realName !='' and realName !=null">
-                and u.real_name like  concat("%",#{realName,jdbcType=VARCHAR},"%") 
+                and u.real_name like  concat("%",#{realName,jdbcType=VARCHAR},"%")
             </if>
-             <if test="phone !='' and phone !=null">
-                and u.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%") 
+            <if test="phone !='' and phone !=null">
+                and u.phone like  concat("%",#{phone,jdbcType=VARCHAR},"%")
             </if>
             <if test="orderNo !='' and orderNo !=null">
-                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")  
+                and b.order_no like  concat("%",#{orderNo,jdbcType=VARCHAR},"%")
             </if>
             <if test="state != null and state != '' ">
-            	and p.state = #{state,jdbcType=VARCHAR}
+                and p.state = #{state,jdbcType=VARCHAR}
             </if>
         </trim>
-		ORDER BY b.create_time DESC
-	</select>
+        ORDER BY b.create_time DESC
+    </select>
 
-	<select id="listModel" resultMap="userBorrowMap" parameterType="java.util.HashMap">
-		select
-			u.real_name,u.phone,b.id,b.user_id,b.order_no,b.amount,b.real_amount,b.fee,b.create_time,
-			b.time_limit,b.state,b.card_id,b.service_fee,b.info_auth_fee,b.interest,b.client,b.remark
-		from cl_borrow b 
-		left join cl_user_base_info u on u.user_id=b.user_id
-		<include refid="searchModelBy" />
-		ORDER BY b.create_time DESC
-	</select>
+    <select id="listModel" resultMap="userBorrowMap" parameterType="java.util.HashMap">
+        select
+        u.real_name,u.phone,b.id,b.user_id,b.order_no,b.amount,b.real_amount,b.fee,b.create_time,
+        b.time_limit,b.state,b.card_id,b.service_fee,b.info_auth_fee,b.interest,b.client,b.remark
+        from cl_borrow b
+        left join cl_user_base_info u on u.user_id=b.user_id
+        <include refid="searchModelBy" />
+        ORDER BY b.create_time DESC
+    </select>
 
-	<!--<select id="listBorrowModel" resultMap="userBorrowMap"	parameterType="java.util.HashMap">-->
-		<!--select-->
-			<!--u.real_name,u.phone,b.id,b.user_id,b.order_no,b.amount,b.real_amount,b.fee,b.create_time,b.time_limit,b.state,-->
-			<!--l.amount+l.penalty_amout as repay_amount,l.repay_time,l.penalty_amout,l.penalty_day,c.name-->
-		<!--from cl_borrow b-->
-		<!--left join cl_user_base_info u on u.user_id=b.user_id -->
-		<!--left join cl_borrow_repay_log l on l.borrow_id=b.id-->
-        <!--left join cl_user us on us.id = b.user_id-->
-        <!--left join cl_channel c on c.id = us.channel_id-->
-		<!--<include refid="searchBorrowModelBy" />-->
-		<!--ORDER BY b.create_time DESC-->
-	<!--</select>-->
+    <!--<select id="listBorrowModel" resultMap="userBorrowMap"	parameterType="java.util.HashMap">-->
+    <!--select-->
+    <!--u.real_name,u.phone,b.id,b.user_id,b.order_no,b.amount,b.real_amount,b.fee,b.create_time,b.time_limit,b.state,-->
+    <!--l.amount+l.penalty_amout as repay_amount,l.repay_time,l.penalty_amout,l.penalty_day,c.name-->
+    <!--from cl_borrow b-->
+    <!--left join cl_user_base_info u on u.user_id=b.user_id -->
+    <!--left join cl_borrow_repay_log l on l.borrow_id=b.id-->
+    <!--left join cl_user us on us.id = b.user_id-->
+    <!--left join cl_channel c on c.id = us.channel_id-->
+    <!--<include refid="searchBorrowModelBy" />-->
+    <!--ORDER BY b.create_time DESC-->
+    <!--</select>-->
     <select id="searchBorrowModelByKenya" resultMap="BaseResultMapForKenya"	parameterType="java.util.HashMap">
         select
         r.id,r.uid,r.indent_no,r.first_name,r.last_name,r.mobile,r.apply_terminal,r.loan_reason,r.balance,r.product_id,r.cycle,r.fee_type,r.fee_percent,r.overdue_percent,r.fee,r.fee_getway,
@@ -645,46 +645,46 @@
         <include refid="searchBorrowModelByKenya" />
         ORDER BY r.created_time DESC
     </select>
-    
-	<select id="seleteUser" resultMap="ManageBorrowTestModel" parameterType="java.util.HashMap">
+
+    <select id="seleteUser" resultMap="ManageBorrowTestModel" parameterType="java.util.HashMap">
         SELECT cu.id AS userId,cu.login_name AS phone,cbc.id AS cardId,cbc.card_no AS cardNo FROM cl_bank_card AS cbc 
 		LEFT JOIN `cl_user` AS cu ON cbc.user_id = cu.id WHERE cu.id IN (SELECT cua.user_id FROM cl_user_auth AS cua
 		WHERE cua.id_state = '30' AND cua.contact_state = '30' AND cua.bank_card_state = '30' AND cua.phone_state = '30')
 	</select>
-	
-	<update id="updateState">
+
+    <update id="updateState">
     	update cl_borrow set state = #{state,jdbcType=VARCHAR} where id = #{id ,jdbcType=BIGINT} 
     </update>
-    
+
     <select id="findByUserIdAndState" resultMap="BaseResultMap" parameterType="java.util.HashMap">
-    	select
-        	 id,user_id,order_no,amount,real_amount,fee,create_time,time_limit,state,card_id,service_fee,info_auth_fee,interest,client,address,coordinate,remark
+        select
+        id,user_id,order_no,amount,real_amount,fee,create_time,time_limit,state,card_id,service_fee,info_auth_fee,interest,client,address,coordinate,remark
         from cl_borrow
-	        <trim prefix="where" prefixOverrides="and|or">
-	            <if test="userId !='' and userId !=null">
-	                and user_id = #{userId,jdbcType=BIGINT}
-	            </if>
-	             <if test="stateList !=null">
-                 	and state  in
-		         	<foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">  
-						#{item}  
-		            </foreach> 
-	            </if>
-	        </trim>
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="userId !='' and userId !=null">
+                and user_id = #{userId,jdbcType=BIGINT}
+            </if>
+            <if test="stateList !=null">
+                and state  in
+                <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </trim>
         order by id desc limit 0,1
     </select>
-    
-      
+
+
     <!-- 查询用户未完成的借款 -->
     <select id="findUserUnFinishedBorrow"  resultMap="BaseResultMap" parameterType="java.util.HashMap">
-    	select
-    		<include refid="Base_Column_List" />
-    	from cl_borrow  
-    	where state not in 
-    	<foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">  
-			#{item}  
-		</foreach>
-    	and user_id = #{userId,jdbcType=BIGINT}
+        select
+        <include refid="Base_Column_List" />
+        from cl_borrow
+        where state not in
+        <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and user_id = #{userId,jdbcType=BIGINT}
     </select>
 
 
@@ -696,44 +696,44 @@
         from cl_borrow
         where id not in (SELECT borrow_id FROM cl_tongdun_req_log)
     </select>
-    
-     <update id="updatePayState"  parameterType="java.util.HashMap">
+
+    <update id="updatePayState"  parameterType="java.util.HashMap">
         update cl_borrow set state = #{state,jdbcType=VARCHAR} where id = #{id ,jdbcType=BIGINT} and state IN(211,221,31)
     </update>
-    
+
     <select id="countBorrow" resultType="java.lang.Long" parameterType="java.lang.Long">
         SELECT count(*) AS count 
         FROM `cl_borrow` 
         WHERE state IN (30,40,50) AND user_id = #{userId,jdbcType=BIGINT}
     </select>
-    
+
     <select id="borrowAmountSum" resultType="java.lang.Double">
 		SELECT 	IFNULL(SUM(cb.amount),0) FROM cl_borrow as cb left join cl_borrow_progress as cbp ON cb.id=cbp.borrow_id
 		WHERE DATE(cbp.create_time) = CURDATE() and cbp.state IN(211,221)
     </select>
-    
+
     <select id="userBorrowCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
     	select count(*) from cl_borrow where user_id=#{userId} and (state = 40 or state = 41)
     </select>
-    
-      <update id="loanState"  parameterType="java.util.HashMap">
+
+    <update id="loanState"  parameterType="java.util.HashMap">
         update cl_borrow
-          <set>
-            <if test="state != null and state != '' ">        
+        <set>
+            <if test="state != null and state != '' ">
                 state = #{state,jdbcType=VARCHAR},
             </if>
-            <if test="remark != null and remark != '' ">        
+            <if test="remark != null and remark != '' ">
                 remark = #{remark,jdbcType=VARCHAR}
             </if>
-        </set>    
+        </set>
         where id = #{id ,jdbcType=BIGINT} AND state = 301
     </update>
-    
+
     <update id="syncUpdateState"  parameterType="java.util.HashMap">
-        update cl_borrow set state = #{state,jdbcType=VARCHAR} where id = #{id ,jdbcType=BIGINT} and state in 
-        <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">  
-				#{item}  
-		 </foreach> 
+        update cl_borrow set state = #{state,jdbcType=VARCHAR} where id = #{id ,jdbcType=BIGINT} and state in
+        <foreach item="item" index="index" collection="stateList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </update>
 
 </mapper>

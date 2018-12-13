@@ -71,30 +71,43 @@ var Tab6 = React.createClass({
       title: 'IndentNo',//订单号
       dataIndex: "indentNo",
       width:150
-    }, {
+  }, {
       title: 'LoanAmount(KES)',//借款金额(元)
       dataIndex: "balance",
-      width:130
-    }, {
+      width:130,
+      render(index,text){
+          return index/100
+      }
+  }, {
       title: 'Cycle(DAY)',//借款期限(天)
       dataIndex: "cycle",
       width:90
-    }, {
+  }, {
       title: 'ApplyTime',//借款时间
       dataIndex: "createdTime",
-    }, {
+  }, {
       title: 'PreFee(KES)',//综合费用(元)
       dataIndex: "fee",
-      width:100
-    }, {
+      width:100,
+      render(index,text){
+          return index/100
+      }
+
+  }, {
       title: 'ReceiveAmount(KES)',//实际到账金额(元)
       dataIndex: "actualBalance",
-      width:140
-    }, {
+      width:140,
+      render(index,text){
+          return index/100
+      }
+  }, {
       title: 'ActualBackAmount(KES)',//实际还款金额（元）
       dataIndex: "actualbackAmt",
-      width:160
-    }, {
+      width:160,
+      render(index,text){
+          return index/100
+      }
+  }, {
       title: 'LoanReason',//借款原因
       dataIndex: "loanReason",
       width:100,

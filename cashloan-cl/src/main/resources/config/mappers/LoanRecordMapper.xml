@@ -125,7 +125,7 @@
     </trim>
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from k_loan_record
     where id = #{id,jdbcType=BIGINT}
@@ -650,13 +650,13 @@
   <select id="loanAmount" resultType="Integer">
       select count(id)
       from k_loan_record
-      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and status in (5,6,41,42,61,62)
+      where DATE_FORMAT(arrive_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and status in (5,6)
   </select>
 
   <select id="reimbursementAmount" resultType="Integer">
       select count(id)
       from k_loan_record
-      where DATE_FORMAT(created_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and status in(6,22)
+      where DATE_FORMAT(lastback_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and status in(6,22)
   </select>
 
   <select id="totalHistoricalLoan" resultType="Integer">
