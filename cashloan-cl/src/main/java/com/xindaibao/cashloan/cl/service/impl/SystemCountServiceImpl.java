@@ -60,9 +60,9 @@ public class SystemCountServiceImpl implements SystemCountService {
 		// 放款通过率
 
 		if(borrow>0 && borrowPass>0){
-            Double passApr = loanRecordMapper.loanPassThroughRate();
-            BigDecimal passAprs = new BigDecimal(passApr);
-            rtMap.put("passApr", passAprs.multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP));
+			Double passApr = loanRecordMapper.loanPassThroughRate();
+			BigDecimal passAprs = new BigDecimal(passApr);
+			rtMap.put("passApr", passAprs.multiply(new BigDecimal(100)).setScale(2,BigDecimal.ROUND_HALF_UP));
 		}else{
 			rtMap.put("passApr", 0);
 		}
@@ -86,12 +86,13 @@ public class SystemCountServiceImpl implements SystemCountService {
 
 		//待还款总金额
 		Integer needRepay  = loanRecordMapper.totalAmountRepaid();
-		BigDecimal needsRepay = new BigDecimal(needRepay);
+		BigDecimal needsRepay = new BigDecimal(needRepay!=null?needRepay:0);
 		rtMap.put("needRepay", needsRepay.divide(new BigDecimal(100)));
 
 		//逾期未还款本金
 		Integer overdueRepay = loanRecordMapper.overdueAmountPrincipal();
-		rtMap.put("overdueRepay", overdueRepay/100);
+		BigDecimal oversdueRepay=new BigDecimal(overdueRepay!=null?overdueRepay:0);
+		rtMap.put("overdueRepay", oversdueRepay.divide(new BigDecimal(100)));
 
 		Map<String,Object> result = null;
 		List<Map<String,Object>> rtValue = null;
@@ -199,7 +200,7 @@ public class SystemCountServiceImpl implements SystemCountService {
 	 */
 	private void monthCountDispose(Map<String, Object> result, List<Map<String, Object>> rtValue, Map<String, Object> rtMap) throws ParseException{
 		WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
-        ServletContext context = webApplicationContext.getServletContext();
+		ServletContext context = webApplicationContext.getServletContext();
 
 		if (StringUtil.isNotBlank(context)) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -243,8 +244,8 @@ public class SystemCountServiceImpl implements SystemCountService {
 
 	//所有地区数组
 	private static String[] address = {"北京市","上海市","天津市","重庆市","内蒙古自治区","宁夏回族自治区","新疆维吾尔自治区","西藏自治区","广西壮族自治区"
-		,"香港特别行政区","澳门特别行政区","黑龙江省","辽宁省","吉林省","河北省","河南省","湖北省","湖南省","山东省","山西省","陕西省","安徽省","浙江省","江苏省","福建省",
-		"广东省","海南省","四川省","云南省","贵州省","青海省","甘肃省","江西省","台湾省"};
+			,"香港特别行政区","澳门特别行政区","黑龙江省","辽宁省","吉林省","河北省","河南省","湖北省","湖南省","山东省","山西省","陕西省","安徽省","浙江省","江苏省","福建省",
+			"广东省","海南省","四川省","云南省","贵州省","青海省","甘肃省","江西省","台湾省"};
 	//地区显示处理
 	private String changeAdd(String address){
 		address = address.replace("省", "").replace("市", "").replace("自治区", "").replace("回族", "").replace("维吾尔", "")
@@ -255,33 +256,33 @@ public class SystemCountServiceImpl implements SystemCountService {
 	private List<Map<String, Object>> MonthCount(int type){
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		switch (type) {
-		case 1:
-			for (int i = 0; i < address.length; i++) {
-				Map<String, Object> map = new HashMap<>();
-				map.put("key",changeAdd(address[i]));
-				map.put("value", systemCountMapper.sumBorrowAmtByProvince(address[i]+"%"));
-				list.add(map);
-			}
-			break;
-		case 2:
-			for (int i = 0; i < address.length; i++) {
-				Map<String, Object> map = new HashMap<>();
-				map.put("key",changeAdd(address[i]));
-				map.put("value", systemCountMapper.sumBorrowRepayByProvince(address[i]+"%"));
-				list.add(map);
-			}
-			break;
-		default:
-			for (int i = 0; i < address.length; i++) {
-				Map<String, Object> map = new HashMap<>();
-				String userCount = systemCountMapper.countRegisterByProvince(address[i]+"%");
-				if (Integer.valueOf(userCount)>0) {
+			case 1:
+				for (int i = 0; i < address.length; i++) {
+					Map<String, Object> map = new HashMap<>();
 					map.put("key",changeAdd(address[i]));
-					map.put("value", userCount);
+					map.put("value", systemCountMapper.sumBorrowAmtByProvince(address[i]+"%"));
+					list.add(map);
 				}
-				list.add(map);
-			}
-			break;
+				break;
+			case 2:
+				for (int i = 0; i < address.length; i++) {
+					Map<String, Object> map = new HashMap<>();
+					map.put("key",changeAdd(address[i]));
+					map.put("value", systemCountMapper.sumBorrowRepayByProvince(address[i]+"%"));
+					list.add(map);
+				}
+				break;
+			default:
+				for (int i = 0; i < address.length; i++) {
+					Map<String, Object> map = new HashMap<>();
+					String userCount = systemCountMapper.countRegisterByProvince(address[i]+"%");
+					if (Integer.valueOf(userCount)>0) {
+						map.put("key",changeAdd(address[i]));
+						map.put("value", userCount);
+					}
+					list.add(map);
+				}
+				break;
 		}
 		return list;
 	}

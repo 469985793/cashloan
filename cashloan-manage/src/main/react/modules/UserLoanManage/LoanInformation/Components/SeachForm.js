@@ -52,13 +52,13 @@ let SeachForm = React.createClass({
         return (
             <Form inline>
                 <FormItem label="Actual Name:">
-                    <Input  {...getFieldProps('lastName', { initialValue: '' })} />
+                    <Input  {...getFieldProps('realName', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Phone:">
-                    <Input  {...getFieldProps('mobile', { initialValue: '' })} />
+                    <Input  {...getFieldProps('phone', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Order Number:">
-                    <Input  {...getFieldProps('indentNo', { initialValue: '' })} />
+                    <Input  {...getFieldProps('orderNo', { initialValue: '' })} />
                 </FormItem>
                 <FormItem label="Date：">
                     <RangePicker disabledDate={this.disabledDate} style={{ width: "310" }} {...getFieldProps('registTime', { initialValue: "" })} />
