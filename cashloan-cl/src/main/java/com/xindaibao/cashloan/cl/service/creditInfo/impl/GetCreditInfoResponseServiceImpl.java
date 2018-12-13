@@ -188,14 +188,16 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
             if (creditInfoResponse.getResultCode().equals("Approve") && boolResultLimit(creditInfoResponse.getCreditLimit(), loanRecord.getBalance())) {
                 logger.info("name 验证：  :" +boolResultName(creditInfoResponse.getFullName().toLowerCase(), name) +" "+name +"   "+creditInfoResponse.getFullName().toLowerCase());
                 if (boolResultName(creditInfoResponse.getFullName().toLowerCase(), name)) {
-
-                    loan.setStatus((byte) 4);
+// loan.setStatus((byte) 4);
+                    loan.setStatus((byte) 3);
                 }else{
                     loan.setStatus((byte)2);
                 }
             } else {
                 if (!boolResultLimit(creditInfoResponse.getCreditLimit(), loanRecord.getBalance())) {
                     loan.setStatus((byte)33);
+                }else{
+                    loan.setStatus((byte)32);
                 }
 
             }
@@ -208,6 +210,8 @@ public class GetCreditInfoResponseServiceImpl extends BaseServiceImpl<CreditInfo
             } else {
                 if (!boolResultLimit(creditInfoResponse.getCreditLimit(), loanRecord.getBalance())) {
                     loan.setStatus((byte)33);
+                }else{
+                    loan.setStatus((byte)32);
                 }
             }
         }
