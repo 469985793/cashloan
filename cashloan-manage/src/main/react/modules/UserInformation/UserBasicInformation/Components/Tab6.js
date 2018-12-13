@@ -99,7 +99,10 @@ var Tab6 = React.createClass({
         }, {
             title: 'ActualBackAmount(KES)',//实际还款金额（元）
             dataIndex: "actualbackAmt",
-            width:160
+            width:160,
+            render(index,text){
+                return index/100
+            }
         }, {
             title: 'LoanReason',//借款原因
             dataIndex: "loanReason",
