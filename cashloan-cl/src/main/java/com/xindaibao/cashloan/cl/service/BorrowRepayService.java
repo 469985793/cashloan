@@ -18,13 +18,13 @@ import com.xindaibao.cashloan.core.domain.Borrow;
 
 /**
  * 还款计划Service
- * 
+ *
  * @author
  * @version 1.0.0
  * @date 2017-02-14 13:42:32
 
 
- * 
+ *
 
  */
 public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
@@ -35,17 +35,17 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	 * @return
 	 */
 	int save(BorrowRepay borrowRepay);
-	
+
 //	/**
 //	 * 生成还款计划
 //	 * @param borrow
 //	 * @return
 //	 */
 //	boolean genRepayPlan(Borrow borrow);
-	
+
 	/**
 	 * 生成还款计划
-	 * 
+	 *
 	 * @param borrow
 	 * @param calcStartTime
 	 *            计算开始时间
@@ -54,28 +54,28 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	boolean genRepayPlan(Borrow borrow, Date calcStartTime);
 	/**
 	 * 还款计划 放款 成功之后 银行卡授权
-	 * 
+	 *
 	 * @param userId
 	 */
 	void authSignApply(Long userId);
-	
-	
-	 /**
-	  * 后台列表
-	  * @param params
-	  * @param currentPage
-	  * @param pageSize
-	  * @return
-	  */
+
+
+	/**
+	 * 后台列表
+	 * @param params
+	 * @param currentPage
+	 * @param pageSize
+	 * @return
+	 */
 	Page<ManageBRepayModel> listModel(Map<String, Object> params, int currentPage,
-                                      int pageSize);
+									  int pageSize);
 
 	/**
 	 * 确认还款生产还款记录
 	 * @param param
 	 * @return
 	 */
-	void  confirmRepay(Map<String, Object> param);
+	int  confirmRepay(Map<String, Object> param);
 
 	/**
 	 * 查询所有
@@ -90,14 +90,14 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	 * @return
 	 */
 	int updateLate(LoanRecord data);
-	
+
 	/**
 	 * 条件更新还款计划数据
 	 * @param br
 	 * @return
 	 */
 	int updateSelective(Map<String, Object> paramMap);
-	
+
 
 	/**
 	 * 催收借款信息接口
@@ -107,7 +107,7 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	 * @return
 	 */
 	Page<ManageBorrowModel> listRepayModel(Map<String, Object> params,
-                                           int currentPage, int pageSize);
+										   int currentPage, int pageSize);
 
 	/**
 	 * 逾期未入催
@@ -117,20 +117,20 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	 * @return
 	 */
 	Page<ManageBorrowModel> listModelNotUrge(Map<String, Object> params,
-			int currentPage, int pageSize);
+											 int currentPage, int pageSize);
 
 	/**
 	 * 查询未还款列表
-	 * 
+	 *
 	 * @param params
 	 * @return
 	 */
 	List<BorrowRepay> findUnRepay(Map<String, Object> paramMap);
-	
-	
+
+
 	/**
 	 * 查询还款计划
-	 * 
+	 *
 	 * @param paramMap
 	 * @return
 	 */
@@ -146,13 +146,13 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	 * 文件解析批量还款
 	 * @param repayFile
 	 * @param type
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	List<List<String>> fileBatchRepay(MultipartFile repayFile, String type) throws Exception;
-	
+
 	/**
 	 * 主动支付 参数封装
-	 * 
+	 *
 	 * @param type
 	 * @param amount
 	 * @param ip
@@ -161,20 +161,20 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	 * @return
 	 */
 	Map<String, String> paySdkParams(Long userId,String type, double amount, String ip, String body, String orderNo);
-	
+
 	/**
 	 * 还款回调
-	 * 
+	 *
 	 * @param payLog
 	 * @param tradeStatus
 	 * @param amount
 	 * @param payType
 	 */
 	void repaymentNotify(PayLog payLog, String logState, String amount, String repayWay, String repayAccount);
-	
+
 	/**
 	 * 还款（SDK参数封装）
-	 * 
+	 *
 	 * @param type：支付类型：50，微信APP；51，支付宝APP；52，连连认证支付
 	 * @param borrowId
 	 * @param userId
@@ -182,11 +182,11 @@ public interface BorrowRepayService extends BaseService<BorrowRepay, Long>{
 	 * @return
 	 */
 	Map<String, String> repayment(String type, Long borrowId, Long userId, String ip);
-	
+
 
 	/**
 	 * 还款同步处理
-	 * 
+	 *
 	 * @param payType
 	 * @param payResult
 	 * @param payOrderNo

@@ -28,19 +28,21 @@ let SeachForm = React.createClass({
         });
     },
     handleReset() {
-        // console.log(this.props);
         var date = new Date();
+        var jsonReset = { afterTime: '', beforeTime: '', realName: '', phone: '' };
         date=DateFormat.formatDate(date);
+        console.log(date);
         this.props.form.resetFields();
         this.props.passParams({
-            search: JSON.stringify({
-                beforeTime:date.substring(0,10),
-                afterTime:date.substring(0,10),
-                // state: '15', 
-                // type: '10',
-                realName: '',
-                phone:''
-            }),
+            // search: JSON.stringify({
+            //     beforeTime:date.substring(0,10),
+            //     afterTime:date.substring(0,10),
+            //     // state: '',
+            //     // type: '',
+            //     realName: '',
+            //     phone:''
+            // }),
+            search:JSON.stringify(jsonReset),
             pageSize: 10,
             current: 1,
         });
@@ -49,7 +51,7 @@ let SeachForm = React.createClass({
         var params = this.props.form.getFieldsValue();
         var jsonParams = { afterTime: '',beforeTime: '', realName: params.realName, phone: params.phone };
         if (params.registTime[0]) {
-        // console.log(params.registTime);
+            // console.log(params.registTime);
             jsonParams.beforeTime = (DateFormat.formatDate(params.registTime[0])).substring(0, 10);
             jsonParams.afterTime = (DateFormat.formatDate(params.registTime[1])).substring(0, 10);
         }
@@ -66,21 +68,21 @@ let SeachForm = React.createClass({
         var date = new Date();
         return (
             <Form inline>
-                <Input type="hidden" {...getFieldProps('state', { initialValue: '15' })} />
-                <FormItem label="Date:">{/*收款人姓名*/}
-                    <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('registTime', {initialValue: ""}) } />
-                </FormItem>
-                <FormItem label="Payee Name:">{/*收款人姓名*/}
-                    <Input  {...getFieldProps('realName', { initialValue: '' })} />
-                </FormItem>
-                <FormItem label="Phone:">{/*手机号码*/}
-                    <Input  {...getFieldProps('phone', { initialValue: '' })} />
-                </FormItem>
-                <FormItem><Button type="primary" onClick={this.handleQuery}>{/*查询*/}Search</Button></FormItem>
-                <FormItem><Button type="reset" onClick={this.handleReset}>{/*重置*/}Reset</Button></FormItem>
-                <FormItem><Button onClick={this.handleOut}>导出</Button></FormItem>            
-            </Form>
-        );
+        <Input type="hidden" {...getFieldProps('state', { initialValue: '15' })} />
+        <FormItem label="Date:">{/*收款人姓名*/}
+            <RangePicker disabledDate={this.disabledDate} style={{width:"310"}} {...getFieldProps('registTime', {initialValue: ""}) } />
+        </FormItem>
+        <FormItem label="Payee Name:">{/*收款人姓名*/}
+            <Input  {...getFieldProps('realName', { initialValue: '' })} />
+        </FormItem>
+        <FormItem label="Phone:">{/*手机号码*/}
+            <Input  {...getFieldProps('phone', { initialValue: '' })} />
+        </FormItem>
+        <FormItem><Button type="primary" onClick={this.handleQuery}>{/*查询*/}Search</Button></FormItem>
+        <FormItem><Button type="reset" onClick={this.handleReset}>{/*重置*/}Reset</Button></FormItem>
+        <FormItem><Button onClick={this.handleOut}>Export{/*导出*/}</Button></FormItem>
+        </Form>
+    );
     }
 });
 

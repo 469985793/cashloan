@@ -19,17 +19,17 @@ import com.xindaibao.cashloan.core.model.KanyaUserInfo;
 
 /**
  * 借款信息表Service
- * 
+ *
  * @author
  * @version 1.0.0
  * @date 2017-02-14 10:13:31
 
 
- * 
+ *
 
  */
 public interface ClBorrowService extends BaseService<Borrow, Long>{
-	
+
 	/**
 	 * 借款规则审核
 	 * @param borrow
@@ -37,14 +37,14 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	String verifyBorrow(Borrow borrow, String adaptedId);
-	
+
 	/**
 	 * 保存浅橙返回信息
 	 * @param qcRsMsg
 	 * @param borrow
 	 */
 	void saveQcResult(String qcRsMsg,Borrow borrow);
-	
+
 	/**
 	 * 判断是否可以借款
 	 * @param borrow
@@ -56,14 +56,14 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 
 	/**
 	 * 保存借款申请
-	 * 
+	 *
 	 * @param borrow
-	 * @param orderNo 订单号  
+	 * @param orderNo 订单号
 	 * @param renewMark 续借标位
 	 * @return
 	 */
 	Borrow saveBorrow(Borrow borrow, String orderNo, Integer renewMark ,double renewAmount);
-	
+
 	/**
 	 * 修改借款状态
 	 * @param id
@@ -74,7 +74,7 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 
 	/**
 	 * 添加借款进度
-	 * 
+	 *
 	 * @param borrow
 	 * @param state
 	 */
@@ -82,7 +82,7 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 
 	/**
 	 * 信用额度修改
-	 * 
+	 *
 	 * @param borrow
 	 * @param state
 	 */
@@ -90,11 +90,11 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 
 	/**
 	 * 首页信息查询
-	 * @param userId 
+	 * @param userId
 	 * @return
 	 */
 	Map<String,Object> findIndex(String userId);
-	
+
 	/**
 	 * 选择借款金额和期限
 	 * app里选择借款金额和期限，返回实际到账金额、服务费、服务费明细
@@ -103,13 +103,13 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	Map<String, Object> choice(double amount, String timeLimit);
-	
+
 	/**
 	 * 查询所有借款费用信息
 	 * @return
 	 */
 	List<Map<String,Object>> choices();
-	
+
 	/**
 	 * 查询
 	 * @param searchMap
@@ -138,8 +138,8 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	Page<ClBorrowModel> page(Map<String, Object> searchMap, int current,
-                             int pageSize);
-	
+							 int pageSize);
+
 	/**
 	 * 关联用户的借款分页查询后台列表显示
 	 * @param params
@@ -148,7 +148,7 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	Page<ManageBorrowModel> listModel(Map<String, Object> params,
-                                      int currentPage, int pageSize);
+									  int currentPage, int pageSize);
 
 	/**
 	 * 修改数据
@@ -163,11 +163,11 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	Map<String, Object> findResult(long borrowId);
-    
-    /**
-     * 查询可借款用户
-     * @return
-     */
+
+	/**
+	 * 查询可借款用户
+	 * @return
+	 */
 	List<ManageBorrowTestModel> seleteUser();
 
 	/**
@@ -175,20 +175,30 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @param borrow
 	 * @param date
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	void borrowLoan(Borrow borrow,Date date) ;
-	
+
 	/**
 	 * 后台人工复审功能
 	 * @param borrowId
 	 * @param state
 	 * @param remark
-	 * @return 
+	 * @return
 	 */
 	//,String lineType
 	int manualVerifyBorrow(Long userId,Long borrowId, String state, String remark,String lineType);
-	
+
+	/**
+	 * 肯尼亚放款功能
+	 * @param borrowId
+	 * @param state
+	 * @param userId
+	 * @return
+	 */
+
+	int KanyaBorrow(Long userId, Long borrowId, String state,String thirdFlowNo, String remark, String lineType);
+
 	/**
 	 * 借款部分还款信息
 	 * @param params
@@ -207,7 +217,7 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	Page<LoanProduct> searchBorrowModelByUid(Map<String, Object> params,
-									  int currentPage, int pageSize);
+											 int currentPage, int pageSize);
 
 	/**
 	 * 支付审核信息
@@ -223,11 +233,11 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	List<Object> repayLogPlanExport(Map<String, Object> params);
 
 	LoanProduct getBorrowModelForIndentNo(Map<String, Object> params);
-	 /**
-	  * 借款详细信息
-	  * @param borrowId
-	  * @return
-	  */
+	/**
+	 * 借款详细信息
+	 * @param borrowId
+	 * @return
+	 */
 	ManageBorrowModel getModelByBorrowId(long borrowId);
 
 	/**
@@ -244,10 +254,10 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	List<BorrowProgressModel> borrowProgress(long borrowId);
-	
+
 	/**
 	 * 支付时更新状态
-	 * @return 
+	 * @return
 	 * @return
 	 */
 	void updatePayState(Map<String, Object> paramMap);
@@ -258,20 +268,20 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	Borrow findByPrimary(Long borrowId);
-	
+
 	/**
 	 * 新增借款申请业务处理
 	 * @param borrow
 	 * @return
 	 */
 	Borrow rcBorrowApply(Borrow borrow,String tradePwd,String mobileType) throws Exception;
-	
+
 	/**
 	 * 借款规则审核
 	 * @param borrowId
 	 */
 	void rcBorrowRuleVerify(Long borrowId);
-	
+
 	/**
 	 * 统计接口接口审核结果
 	 * @param state
@@ -281,7 +291,7 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	void syncSceneBusinessLog(Long borrowId,String nid,int count);
-	
+
 	/**
 	 * 接口异步通知时更新
 	 * @param state
@@ -298,13 +308,13 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 */
 	@SuppressWarnings("rawtypes")
 	List listBorrow(Map<String, Object> params);
-	
+
 	/**
 	 * 获取风控数据并审核
 	 * @param borrowId
 	 */
 	void verifyBorrowData(long borrowId,String mobileType);
-	
+
 	/**
 	 * 重新获取风控数据并审核
 	 * @param borrowId
@@ -332,9 +342,9 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @return
 	 */
 	Borrow findLastBorrow(Map<String, Object> borrowMap);
-	
+
 	/**
-	 * 
+	 *
 	 * @description 审核放款
 	 * @param borrowId
 	 * @param state
@@ -344,9 +354,9 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 * @since  1.0.0
 	 */
 	int auditBorrowLoan(Long borrowId, String state, String remark,Long userId);
-	
+
 	/**
-	 * 
+	 *
 	 * @param borrow
 	 * @return
 	 */
@@ -354,34 +364,34 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 
 	/**
 	 * 更新借款表、添加借款进度状态
-	 * 
+	 *
 	 * @param borrowId
 	 * @param userId
 	 * @param state
 	 * @return
 	 */
 	int updateBorrow(long borrowId, long userId, String state);
-	
+
 	/**
 	 * 支付同步返回
-	 * 
+	 *
 	 * @param payType
 	 * @param payResult
 	 * @param payOrderNo
 	 */
 	boolean renewReturn(String payType, String payResult, String payOrderNo);
-	
+
 	/**
 	 * 条件查询
 	 * @param paramMap
 	 * @return
 	 */
 	List<Borrow> listSelective(Map<String, Object> paramMap);
-	
-	
+
+
 	/**
 	 * 支付服务费成功，生成续借订单
-	 * 
+	 *
 	 * @param borrowId
 	 *            原订单borrowId]
 	 * @param payState
@@ -396,23 +406,20 @@ public interface ClBorrowService extends BaseService<Borrow, Long>{
 	 *            服务费金额
 	 */
 	void renewNotify(Long borrowId, String payState, String repayOrderNo, String payType, String repayAccount,
-			String repayAmount);
-	
+					 String repayAmount);
+
 	/**
-     * 查询续借列表
-     * 
-     * @param paramMap
-     * @param current
-     * @param pageSize
-     * @return
-     */
-    Page<Borrow> findRenewBorrowPage(Map<String, Object> paramMap, int current, int pageSize);
+	 * 查询续借列表
+	 *
+	 * @param paramMap
+	 * @param current
+	 * @param pageSize
+	 * @return
+	 */
+	Page<Borrow> findRenewBorrowPage(Map<String, Object> paramMap, int current, int pageSize);
 
 	LoanRecord findByPrimaryforKenya(long id);
 
-	List<LoanRecord> selectCreditLoan();
-
-    KanyaUserInfo selectUserInfo(Long uid);
 	/**
 	 * 查询用户借款信息
 	 */

@@ -26,6 +26,7 @@ import com.xindaibao.cashloan.cl.service.*;
 import com.xindaibao.cashloan.core.common.context.ExportConstant;
 import com.xindaibao.cashloan.core.common.util.excel.JsGridReportBase;
 import com.xindaibao.cashloan.system.domain.SysDownloadLog;
+import com.xindaibao.cashloan.system.domain.SysRole;
 import com.xindaibao.cashloan.system.domain.SysUser;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -62,7 +63,7 @@ import com.xindaibao.cashloan.system.permission.annotation.RequiresPermission;
 @Scope("prototype")
 @SuppressWarnings({ "unchecked" })
 public class ManageBorrowRepayController extends ManageBaseController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ManageBorrowRepayController.class);
 	@Resource
 	private BorrowRepayService borrowRepayService;
@@ -77,7 +78,7 @@ public class ManageBorrowRepayController extends ManageBaseController {
 
 	/**
 	 * 还款计划列表
-	 * 
+	 *
 	 * @param search
 	 * @param currentPage
 	 * @param pageSize
@@ -190,56 +191,49 @@ public class ManageBorrowRepayController extends ManageBaseController {
 	/**
 	 * 确认还款
 	 * @param id  还款计划id
-	 * @param amount  还款金额
 	 * @param penaltyAmout   逾期罚息
 	 * @param repayTime  还款时间
 	 * @param repayWay   还款方式
 	 * @param serialNumber 流水号
 	 * @param repayAccount 还款账号
-	 * @param state 正常还款  10  ，金额减免 20
-	 * @throws  
+	 * @param state 正常还款  10
+	 * @throws
 	 */
 	@RequestMapping(value = "/modules/manage/borrow/repay/confirmRepay.htm", method = {RequestMethod.POST })
 	@RequiresPermission(code = "modules:manage:borrow:repay:confirmRepay", name = "确认还款")
-	public void confirmRepay(
-			@RequestParam(value = "id") Long id,
-			@RequestParam(value = "actualbackAmt") String actualbackAmt,
-			@RequestParam(value = "penaltyAmout", required = false) String penaltyAmout,
-			@RequestParam(value = "repayTime") String repayTime,
-			@RequestParam(value = "repayWay") String repayWay,
-			@RequestParam(value = "serialNumber") String serialNumber,
-			@RequestParam(value = "repayAccount") String repayAccount,
-			@RequestParam(value = "state") String state) {
+	public void confirmRepay(HttpServletRequest request, HttpServletResponse response,
+							 @RequestParam(value = "id") Long id,
+							 @RequestParam(value = "actualbackAmt") int actualbackAmt,
+							 @RequestParam(value = "penaltyAmout", required = false) String penaltyAmout,
+							 @RequestParam(value = "repayTime") String repayTime,
+							 @RequestParam(value = "thirdFlowNo") String thirdFlowNo,
+							 @RequestParam(value = "remark") String remark,
+							 @RequestParam(value = "state") String state) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Map<String, Object> result = new HashMap<String, Object>();
-		KanyaUserState kanyaUserState=new KanyaUserState();
+		SysRole sysRole = getRoleForLoginUser(request);
+		Long operatorId = sysRole.getId();
 		try{
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("id", id);
-			param.put("repayTime",DateUtil.valueOf(repayTime, DateUtil.DATEFORMAT_STR_001));
-			param.put("repayWay", repayWay);
-			param.put("repayAccount", repayAccount);
-			BigDecimal actualbackAmtBD =new BigDecimal(actualbackAmt).multiply(new BigDecimal(100));
+			param.put("sysRole",operatorId);
+			BigDecimal actualbackAmtBD =new BigDecimal(actualbackAmt);
 			param.put("actualbackAmt",String.valueOf(actualbackAmtBD));
-			param.put("serialNumber", serialNumber);
-			param.put("penaltyAmout", penaltyAmout);
-			param.put("state", state);
+			param.put("thirdFlowNo",thirdFlowNo);
+			param.put("remark",remark);
+			param.put("repayTime",repayTime);
 			LoanRecord lr = clBorrowService.findByPrimaryforKenya(id);
 			if (lr != null) {
 				if (!lr.getStatus().equals(BorrowRepayModel.STATE_REPAY_YES)) {
-					borrowRepayService.confirmRepay(param);
-					kanyaUserState.setUid(lr.getUid());
-					kanyaUserState.setCurrentState((byte)5);
-					kanyaUserStateService.updateCurrentState(kanyaUserState);
-					resultMap.put("Code", Constant.SUCCEED_CODE_VALUE);
-					resultMap.put("Msg", "还款成功");
-				} else {
-					resultMap.put("Code", Constant.FAIL_CODE_VALUE);
-					resultMap.put("Msg", "该还款计划已还款");
+					int msg = borrowRepayService.confirmRepay(param);
+					if(msg==1){
+						resultMap.put("Code", Constant.SUCCEED_CODE_VALUE);
+						resultMap.put("Msg", "还款成功");
+					}else {
+						resultMap.put("Code", Constant.FAIL_CODE_VALUE);
+						resultMap.put("Msg", "还款失败");
+					}
 				}
-			} else {
-				resultMap.put("Code", Constant.FAIL_CODE_VALUE);
-				resultMap.put("Msg", "还款计划不存在");
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage(),e);
@@ -251,9 +245,65 @@ public class ManageBorrowRepayController extends ManageBaseController {
 		ServletUtils.writeToResponse(response, result);
 	}
 
+//    /**
+//     * 减免还款
+//     * @param id  还款计划id
+//     * @param penaltyAmout   逾期罚息
+//     * @param state 正常还款  10  ，金额减免 20
+//     * @throws
+//     */
+//    @RequestMapping(value = "/modules/manage/borrow/repay/confirmRepay.htm", method = {RequestMethod.POST })
+//    @RequiresPermission(code = "modules:manage:borrow:repay:confirmRepay", name = "确认还款")
+//    public void confirmRepay(HttpServletRequest request, HttpServletResponse response,
+//                             @RequestParam(value = "id") Long id,
+//                             @RequestParam(value = "actualbackAmt") String actualbackAmt,
+//                             @RequestParam(value = "penaltyAmout", required = false) String penaltyAmout,
+//                             @RequestParam(value = "repayTime") String repayTime,
+//                             @RequestParam(value = "repayWay") String repayWay,
+//                             @RequestParam(value = "serialNumber") String serialNumber,
+//                             @RequestParam(value = "repayAccount") String repayAccount,
+//                             @RequestParam(value = "thirdFlowNo") String thirdFlowNo,
+//                             @RequestParam(value = "remark") String remark,
+//                             @RequestParam(value = "state") String state) throws Exception {
+//        Map<String, Object> resultMap = new HashMap<String, Object>();
+//        Map<String, Object> result = new HashMap<String, Object>();
+//        SysRole sysRole = getRoleForLoginUser(request);
+//        Long operatorId = sysRole.getId();
+//        try{
+//            Map<String, Object> param = new HashMap<String, Object>();
+//            param.put("id", id);
+//            param.put("sysRole",operatorId);
+//            BigDecimal actualbackAmtBD =new BigDecimal(actualbackAmt).multiply(new BigDecimal(100));
+//            param.put("actualbackAmt",String.valueOf(actualbackAmtBD));
+//            param.put("thirdFlowNo",thirdFlowNo);
+//            param.put("remark",remark);
+//            param.put("repayTime",repayTime);
+//            LoanRecord lr = clBorrowService.findByPrimaryforKenya(id);
+//            if (lr != null) {
+//                if (!lr.getStatus().equals(BorrowRepayModel.STATE_REPAY_YES)) {
+//                    int msg = borrowRepayService.confirmRepay(param);
+//                    if(msg==1){
+//                        resultMap.put("Code", Constant.SUCCEED_CODE_VALUE);
+//                        resultMap.put("Msg", "还款成功");
+//                    }else {
+//                        resultMap.put("Code", Constant.FAIL_CODE_VALUE);
+//                        resultMap.put("Msg", "还款失败");
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            logger.info(e.getMessage(),e);
+//            resultMap.put("Code", Constant.FAIL_CODE_VALUE);
+//            resultMap.put("Msg", "还款失败");
+//        }
+//        result.put(Constant.RESPONSE_CODE, resultMap.get("Code"));
+//        result.put(Constant.RESPONSE_CODE_MSG, resultMap.get("Msg"));
+//        ServletUtils.writeToResponse(response, result);
+//    }
+
 	/**
 	 * 后台催收管理列表
-	 * 
+	 *
 	 * @param search
 	 * @param currentPage
 	 * @param pageSize
@@ -305,13 +355,13 @@ public class ManageBorrowRepayController extends ManageBaseController {
 			@RequestParam(value = "type") String type) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		List<List<String>> list=new ArrayList<List<String>>();
-	    try {
-	    	list=borrowRepayService.fileBatchRepay(repayFile,type);
-	    	String title = "批量还款匹配结果";
-	    	RepayExcelModel report = new RepayExcelModel();
-	    	String fileName=report.saveExcelByList(list, title, repayFile.getOriginalFilename(),request);
-	    	result.put(Constant.RESPONSE_DATA, "/modules/manage/borrow/repay/downRepayByFile.htm?path="+fileName);
-	    	result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
+		try {
+			list=borrowRepayService.fileBatchRepay(repayFile,type);
+			String title = "批量还款匹配结果";
+			RepayExcelModel report = new RepayExcelModel();
+			String fileName=report.saveExcelByList(list, title, repayFile.getOriginalFilename(),request);
+			result.put(Constant.RESPONSE_DATA, "/modules/manage/borrow/repay/downRepayByFile.htm?path="+fileName);
+			result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 			result.put(Constant.RESPONSE_CODE_MSG, "获取成功");
 		} catch (BussinessException e) {
 			logger.error(e.getMessage(),e);
@@ -322,8 +372,8 @@ public class ManageBorrowRepayController extends ManageBaseController {
 			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
 			result.put(Constant.RESPONSE_CODE_MSG, "批量还款失败");
 		}
-	    ServletUtils.writeToResponse(response, result);
-	    
+		ServletUtils.writeToResponse(response, result);
+
 	}
 	/**
 	 * 下载批量确认还款模板
@@ -334,21 +384,21 @@ public class ManageBorrowRepayController extends ManageBaseController {
 	@RequiresPermission(code = "modules:manage:borrow:repay:downRepayByFile", name = "下载批量确认还款模板")
 	public void fileBatchRepay(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
 		response.setCharacterEncoding("UTF-8");
-        String fileBatchRepay = "批量确认还款模板.rar";
-        InputStream input = null;
-		
+		String fileBatchRepay = "批量确认还款模板.rar";
+		InputStream input = null;
+
 		try {
 			request.setCharacterEncoding("UTF-8");
 			String url = session.getServletContext().getRealPath("/")+"/excel/批量确认还款模板.rar";
 			File file = new File(url);
 			input = FileUtils.openInputStream(file);
-            byte[] data = IOUtils.toByteArray(input);
-            response.reset();
-            response.setHeader("content-disposition", "attachment;fileName=" + URLEncoder.encode(fileBatchRepay, "UTF-8"));
-            response.addHeader("Content-Length", "" + data.length);
-            
-            response.setContentType("text/html;charset=UTF-8");
-            IOUtils.write(data, response.getOutputStream());
+			byte[] data = IOUtils.toByteArray(input);
+			response.reset();
+			response.setHeader("content-disposition", "attachment;fileName=" + URLEncoder.encode(fileBatchRepay, "UTF-8"));
+			response.addHeader("Content-Length", "" + data.length);
+
+			response.setContentType("text/html;charset=UTF-8");
+			IOUtils.write(data, response.getOutputStream());
 		} catch(Exception e){
 			logger.error(e.getMessage(),e);
 		}
@@ -374,5 +424,5 @@ public class ManageBorrowRepayController extends ManageBaseController {
 		result.put(Constant.RESPONSE_CODE_MSG, "获取成功");
 		ServletUtils.writeToResponse(response, result);
 	}
-	
+
 }

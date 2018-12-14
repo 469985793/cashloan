@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.xindaibao.cashloan.cl.model.kenya.LoanProduct;
+import com.xindaibao.cashloan.system.domain.SysRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -38,15 +41,15 @@ import com.xindaibao.cashloan.core.common.util.ServletUtils;
 import com.xindaibao.cashloan.core.domain.Borrow;
 import com.xindaibao.cashloan.core.model.BorrowModel;
 
- /**
+/**
  * 支付记录Controller
  */
 @Scope("prototype")
 @Controller
 public class ManagePayLogController extends ManageBaseController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ManagePayLogController.class);
-	
+
 	@Resource
 	private PayLogService payLogService;
 	@Resource
@@ -61,7 +64,7 @@ public class ManagePayLogController extends ManageBaseController {
 
 	/**
 	 * 支付记录列表页查看
-	 * 
+	 *
 	 * @param searchParams
 	 * @param current
 	 * @param pageSize
@@ -99,7 +102,7 @@ public class ManagePayLogController extends ManageBaseController {
 //		result.put(Constant.RESPONSE_CODE_MSG, "查询成功");
 //		ServletUtils.writeToResponse(response, result);
 //	}
-	 /**
+	/**
 	 * 放款记录列表页查看
 	 *
 	 * @param searchParams
@@ -126,7 +129,7 @@ public class ManagePayLogController extends ManageBaseController {
 
 	/**
 	 * 支付记录详情查看
-	 * 
+	 *
 	 * @param id
 	 * @throws Exception
 	 */
@@ -171,22 +174,54 @@ public class ManagePayLogController extends ManageBaseController {
 //		ServletUtils.writeToResponse(response, result);
 //
 //	}
-	/**
-	 * 审核
-	 *
-	 * @param id
-	 */
-	//@RequestParam(value = "lineType") String lineType,
-	@RequestMapping(value = "/modules/manage/pay/log/auditPay.htm", method = RequestMethod.POST)
-	public void audit(@RequestParam(value = "id") Long id,
-					  @RequestParam(value = "state") String state,
-					  @RequestParam(value = "lineType") String lineType,
-					  @RequestParam(value = "remark") String remark) throws Exception {
+//	/**
+//	 * 审核
+//	 *
+//	 * @param id
+//	 */
+//	//@RequestParam(value = "lineType") String lineType,
+//	@RequestMapping(value = "/modules/manage/pay/log/auditPay.htm", method = RequestMethod.POST)
+//	public void audit(@RequestParam(value = "id") Long id,
+//					  @RequestParam(value = "state") String state,
+//					  @RequestParam(value = "lineType") String lineType,
+//					  @RequestParam(value = "remark") String remark) throws Exception {
+//
+//		Map<String,Object> result = new HashMap<String,Object>();
+//		try{
+//			//,lineType
+//			int msg =clBorrowService.manualVerifyBorrow(null,id, state,remark,lineType);
+//			if(msg==1){
+//				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
+//				result.put(Constant.RESPONSE_CODE_MSG, "放款成功");
+//			}else{
+//				result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
+//				result.put(Constant.RESPONSE_CODE_MSG, "放款失败");
+//			}
+//		} catch (Exception e) {
+//			logger.error(e.getMessage());
+//			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
+//			result.put(Constant.RESPONSE_CODE_MSG, e.getMessage());
+//		}
+//		ServletUtils.writeToResponse(response, result);
+//
+//	}
 
+	/**
+	 * 放款
+	 * @param id
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/modules/manage/pay/log/auditPay.htm", method = RequestMethod.POST)
+	public void verifyBorrow(HttpServletRequest request, HttpServletResponse response,
+							 @RequestParam(value = "id") Long id,
+							 @RequestParam(value = "state") String state,
+							 @RequestParam(value = "lineType") String lineType,
+							 @RequestParam(value = "thirdFlowNo") String thirdFlowNo,
+							 @RequestParam(value = "remark") String remark) throws Exception {
 		Map<String,Object> result = new HashMap<String,Object>();
+		SysRole sysRole = getRoleForLoginUser(request);
 		try{
-			//,lineType
-			int msg =clBorrowService.manualVerifyBorrow(null,id, state,remark,lineType);
+			int msg =clBorrowService.KanyaBorrow(sysRole.getId(),id,state,thirdFlowNo,remark,lineType);
 			if(msg==1){
 				result.put(Constant.RESPONSE_CODE, Constant.SUCCEED_CODE_VALUE);
 				result.put(Constant.RESPONSE_CODE_MSG, "放款成功");
@@ -199,11 +234,10 @@ public class ManagePayLogController extends ManageBaseController {
 			result.put(Constant.RESPONSE_CODE, Constant.FAIL_CODE_VALUE);
 			result.put(Constant.RESPONSE_CODE_MSG, e.getMessage());
 		}
-		ServletUtils.writeToResponse(response, result);
-
+		ServletUtils.writeToResponse(response,result);
 	}
 
-	
+
 	/**
 	 * 模拟付款成功 - 异步回调
 	 * @param request
@@ -219,48 +253,48 @@ public class ManagePayLogController extends ManageBaseController {
 			codeMsg ="未查询到对应的支付订单";
 			return ;
 		}
-		if (PayLogModel.STATE_PAYMENT_WAIT.equals(payLog.getState()) || 
-				PayLogModel.STATE_AUDIT_PASSED.equals(payLog.getState()) || 
+		if (PayLogModel.STATE_PAYMENT_WAIT.equals(payLog.getState()) ||
+				PayLogModel.STATE_AUDIT_PASSED.equals(payLog.getState()) ||
 				PayLogModel.STATE_PAYMENT_FAILED.equals(payLog.getState())) {
-				if(PayLogModel.SCENES_LOANS.equals(payLog.getScenes())){
-					// 修改借款状态
-					Map<String, Object> map = new HashMap<>();
-					map.put("id", payLog.getBorrowId());
-					map.put("state", BorrowModel.STATE_REPAY);
-					clBorrowService.updatePayState(map);
-	
-					// 放款进度添加
-					BorrowProgress bp = new BorrowProgress();
-					bp.setUserId(payLog.getUserId());
-					bp.setBorrowId(payLog.getBorrowId());
-					bp.setState(BorrowModel.STATE_REPAY);
-					bp.setRemark(BorrowModel.convertBorrowRemark(bp.getState()));
-					bp.setCreateTime(DateUtil.getNow());
-					borrowProgressService.save(bp);
-	
-					Borrow borrow = clBorrowService.getById(payLog.getBorrowId());
-					
-					// 生成还款计划并授权
-					borrowRepayService.genRepayPlan(borrow, new Date());
-					// 更新订单状态
-					Map<String,Object> paramMap = new HashMap<String, Object>();
-					paramMap.put("state", PayLogModel.STATE_PAYMENT_SUCCESS);
-					paramMap.put("updateTime",DateUtil.getNow());
-					paramMap.put("id",payLog.getId());
-					payLogService.updateSelective(paramMap);
-	
-				}else if(PayLogModel.SCENES_PROFIT.equals(payLog.getScenes())){
-					// 更新取现金额， 添加取现记录
-					profitAmountService.cash(payLog.getUserId(), payLog.getAmount());
+			if(PayLogModel.SCENES_LOANS.equals(payLog.getScenes())){
+				// 修改借款状态
+				Map<String, Object> map = new HashMap<>();
+				map.put("id", payLog.getBorrowId());
+				map.put("state", BorrowModel.STATE_REPAY);
+				clBorrowService.updatePayState(map);
 
-					// 更新订单状态
-					Map<String,Object> paramMap = new HashMap<String, Object>();
-					paramMap.put("state", PayLogModel.STATE_PAYMENT_SUCCESS);
-					paramMap.put("updateTime",DateUtil.getNow());
-					paramMap.put("id",payLog.getId());
-					payLogService.updateSelective(paramMap);
-				} 
-				
+				// 放款进度添加
+				BorrowProgress bp = new BorrowProgress();
+				bp.setUserId(payLog.getUserId());
+				bp.setBorrowId(payLog.getBorrowId());
+				bp.setState(BorrowModel.STATE_REPAY);
+				bp.setRemark(BorrowModel.convertBorrowRemark(bp.getState()));
+				bp.setCreateTime(DateUtil.getNow());
+				borrowProgressService.save(bp);
+
+				Borrow borrow = clBorrowService.getById(payLog.getBorrowId());
+
+				// 生成还款计划并授权
+				borrowRepayService.genRepayPlan(borrow, new Date());
+				// 更新订单状态
+				Map<String,Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("state", PayLogModel.STATE_PAYMENT_SUCCESS);
+				paramMap.put("updateTime",DateUtil.getNow());
+				paramMap.put("id",payLog.getId());
+				payLogService.updateSelective(paramMap);
+
+			}else if(PayLogModel.SCENES_PROFIT.equals(payLog.getScenes())){
+				// 更新取现金额， 添加取现记录
+				profitAmountService.cash(payLog.getUserId(), payLog.getAmount());
+
+				// 更新订单状态
+				Map<String,Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("state", PayLogModel.STATE_PAYMENT_SUCCESS);
+				paramMap.put("updateTime",DateUtil.getNow());
+				paramMap.put("id",payLog.getId());
+				payLogService.updateSelective(paramMap);
+			}
+
 		}else{
 			codeMsg = "订单状态错误";
 		}
@@ -275,19 +309,19 @@ public class ManagePayLogController extends ManageBaseController {
 		}
 		ServletUtils.writeToResponse(response, result);
 	}
-	
+
 	/**
 	 * 再次放款
-	 * 
+	 *
 	 * @param borrowId
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/modules/manage/pay/borrowLoan.htm", method = RequestMethod.POST)
 	public void borrowLoan(@RequestParam(value = "id") Long id)throws Exception {
 		PayLog payLog  = payLogService.getById(id);
-		
+
 		Map<String, Object> result = new HashMap<String, Object>();
-		
+
 		// 放款失败的记录 允许再次放款
 		if (null != payLog
 				&& PayLogModel.STATE_PAYMENT_FAILED.equals(payLog.getState())

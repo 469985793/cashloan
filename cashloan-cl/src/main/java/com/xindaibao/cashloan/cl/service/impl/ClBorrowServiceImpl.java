@@ -8,8 +8,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.prefs.BackingStoreException;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.google.common.collect.Maps;
 import com.xindaibao.cashloan.cl.Util.FlowNumber;
@@ -22,9 +25,12 @@ import com.xindaibao.cashloan.cl.model.pay.lianlian.constant.LianLianConstant;
 import com.xindaibao.cashloan.cl.model.pay.lianlian.util.LianLianHelper;
 import com.xindaibao.cashloan.cl.monitor.BusinessExceptionMonitor;
 import com.xindaibao.cashloan.cl.service.*;
+import com.xindaibao.cashloan.core.common.exception.ServiceException;
 import com.xindaibao.cashloan.core.mapper.KanyaUserInfoMapper;
 import com.xindaibao.cashloan.core.model.KanyaUser;
 import com.xindaibao.cashloan.core.model.KanyaUserInfo;
+import com.xindaibao.cashloan.system.domain.SysRole;
+import com.xindaibao.cashloan.system.service.SysRoleService;
 import org.apache.commons.collections.CollectionUtils;
 import com.xindaibao.cashloan.system.domain.SysConfig;
 import org.jfree.base.config.SystemPropertyConfiguration;
@@ -106,6 +112,7 @@ import com.xindaibao.creditrank.cr.mapper.CreditMapper;
 import com.xindaibao.cashloan.core.mapper.KanyaUserMapper;
 
 import static com.xindaibao.cashloan.cl.Util.HttpClientUtil.CONTENT_TYPE_JSON_URL;
+import static org.apache.batik.svggen.font.table.Table.post;
 
 /**
  * 借款信息表ServiceImpl
@@ -131,6 +138,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     private BorrowProgressMapper borrowProgressMapper;
     @Resource
     private BorrowRepayMapper borrowRepayMapper;
+    @Resource
+    private SysRoleService roleService;
     @Resource
     private CreditMapper creditMapper;
     @Resource
@@ -1369,7 +1378,8 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
                     code = loanRecordMapper.update(loanRecord);
                     Map<String, Object> params = new HashMap<>();
                     params.put("indentNo", loanRecord.getIndentNo());
-                    HttpUtil.post("http://localhost:6081/mpesa/b2c/send", params);
+                    String returnBack =  HttpUtil.post("http://localhost:6081/mpesa/b2c/send", params);
+                    logger.info("回调结果：",returnBack);
                 } else {
                     map.put("arriveTime", new Date());
                     map.put("actualBalance", (loanRecord.getBalance() - loanRecord.getFee()));
@@ -1418,6 +1428,72 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
         } else {
             logger.error("复审失败，当前标不存在");
             throw new BussinessException("复审失败，当前标不存在");
+        }
+        return code;
+    }
+
+    /**
+     * 肯尼亚放款
+     */
+    @Override
+    public synchronized int KanyaBorrow(Long userId, Long borrowId, String state,String thirdFlowNo, String remark, String lineType) {
+        int returnCode = 0;
+        int code =0;
+        LoanRecord loanRecord = loanRecordMapper.findByPrimary(borrowId);
+        System.out.println("进入状态"+loanRecord.getStatus());
+        if (loanRecord != null) {
+            if (loanRecord.getStatus().equals(BorrowModel.STATE_PASS)) {
+                logger.info("放款失败,当前状态不是待放款");
+                throw new BussinessException("放款失败,当前状态不是待放款");
+            }
+            if (state.equals(BorrowModel.STATE_REPAYING)) {
+                if (lineType != null && lineType.equals("online")) {
+                    //保存线上放款记录
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("indentNo", loanRecord.getIndentNo());
+                    params.put("type", 1);//线上打款状态
+                    String returnBack =  HttpUtil.post("http://localhost:6081/mpesa/b2c/send", params);
+                    logger.info("回调结果:{}",returnBack);
+                    JSONObject object = JSONObject.parseObject(returnBack);
+                    returnCode = object.getInteger("code");
+                    if(returnCode==1){
+                        code = 1;
+                    }
+                } else {
+                    //保存线下放款记录
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("indentNo", loanRecord.getIndentNo());
+                    params.put("operatorId",userId);
+                    params.put("transactionNo",thirdFlowNo);
+                    params.put("remark",remark);
+                    params.put("type",3);//线下打款状态
+                    String returnBack =  HttpUtil.post("http://localhost:6081/mpesa/b2c/send", params);
+                    logger.info("回调结果：",returnBack);
+                    JSONObject object = JSONObject.parseObject(returnBack);
+                    returnCode = object.getInteger("code");
+                    if(returnCode==1){
+                        code = 1;
+                    }
+                }
+                //如果放款成功，改变用户的当前状态
+                KanyaUserState kanyaUserState = new KanyaUserState();
+                if (1 == 1) {
+                    kanyaUserState.setUid(loanRecord.getUid());
+                    kanyaUserState.setCurrentState((byte) 4);
+                    kanyaUserStateMapper.updateCurrentState(kanyaUserState);
+                }
+            }else if("42".equals(state)){//放款被拒
+                byte a = 42;
+                loanRecord.setStatus(a);
+                code = loanRecordMapper.update(loanRecord);
+                if(code<1){
+                    logger.error("更新贷款表失败");
+                    throw new BussinessException("更新贷款表失败");
+                }
+            }
+        } else {
+            logger.error("放款失败，当前标不存在");
+            throw new BussinessException("放款失败，当前标不存在");
         }
         return code;
     }
@@ -1592,6 +1668,35 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
             throw new BussinessException("借款失败");
         }
         return realBorrow;
+    }
+
+    /**
+     * 从自定义session 中获取角色
+     *
+     * @param request
+     * @return
+     */
+    public List<Long> getRole(HttpServletRequest request) {
+
+        List<Long> roles = new ArrayList<Long>();
+        HttpSession session = request.getSession();
+        Long role = (Long) session.getAttribute(Constant.ROLEID);
+        roles.add(role);
+
+        return roles;
+
+    }
+
+    public SysRole getRoleForLoginUser(HttpServletRequest request) throws ServiceException {
+        HttpSession session = request.getSession();
+        Long roleId = (Long) session.getAttribute(Constant.ROLEID);
+        if (null==roleId) {
+            return new SysRole();
+        }
+        SysRole role = roleService.getRoleById(roleId);
+
+        return role;
+
     }
 
     /**
@@ -2456,16 +2561,6 @@ public class ClBorrowServiceImpl extends BaseServiceImpl<Borrow, Long> implement
     @Override
     public LoanRecord findByPrimaryforKenya(long id) {
         return loanRecordMapper.findByPrimary(id);
-    }
-
-    @Override
-    public List<LoanRecord> selectCreditLoan() {
-        return loanRecordMapper.selectCreditLoan();
-    }
-
-    @Override
-    public KanyaUserInfo selectUserInfo(Long uid) {
-        return kanyaUserInfoMapper.selectByPrimaryKey(uid);
     }
 
     @Override

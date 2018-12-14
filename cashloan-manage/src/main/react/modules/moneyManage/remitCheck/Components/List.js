@@ -56,29 +56,29 @@ export default React.createClass({
             method: "post",
             data: params,
             callback: (result) => {
-                const pagination = this.state.pagination;
-                pagination.current = params.current;
-                pagination.pageSize = params.pageSize;
-                pagination.total = result.page.total;
-                if(result.data){
+            const pagination = this.state.pagination;
+        pagination.current = params.current;
+        pagination.pageSize = params.pageSize;
+        pagination.total = result.page.total;
+        if(result.data){
 
-                    for(let i = 0 ; i < result.data.length;i++){
-                        result.data[i].balance = result.data[i].balance / 100;
-                    }
-                }
-                if (!pagination.current) {
-                    pagination.current = 1
-                }
-                ;
-                // console.log(result.data);
-                // console.log(result.data);
-                this.setState({
-                    loading: false,
-                    data: result.data,
-                    pagination
-                });
+            for(let i = 0 ; i < result.data.length;i++){
+                result.data[i].balance = result.data[i].balance / 100;
             }
+        }
+        if (!pagination.current) {
+            pagination.current = 1
+        }
+        ;
+        // console.log(result.data);
+        // console.log(result.data);
+        this.setState({
+            loading: false,
+            data: result.data,
+            pagination
         });
+    }
+    });
     },
 
     //查看弹窗
@@ -91,7 +91,7 @@ export default React.createClass({
         }, () => {
 
             this.refs.AddWin.setFieldsValue(record);
-        })
+    })
     },
     //新增
     addModal(title, record, canEdit) {
@@ -131,6 +131,8 @@ export default React.createClass({
         this.setState({
             pagination: pager,
         });
+
+        // console.log(this.props);
         this.refreshList();
     },
 
@@ -139,6 +141,7 @@ export default React.createClass({
         var params = objectAssign({}, this.props.params, {
             current: pagination.current,
             pageSize: pagination.pageSize,
+            // search : this.props.params
             // search: JSON.stringify({state: '15',type: '10'})
         });
         this.fetch(params);
@@ -212,16 +215,16 @@ export default React.createClass({
             title: 'scenes',//背景
             dataIndex: "scenesStr",
             render: (text, record) => {
-                if (text == 10) {
-                    return "Blacklist"//黑名单
-                } else {
-                    return "Under line"
-                }
-            }
-        }, {
+            if (text == 10) {
+            return "Blacklist"//黑名单
+        } else {
+            return "Under line"
+        }
+    }
+    }, {
             title: 'status',
-            dataIndex: 'status',
-            render: (text, record) => {
+                dataIndex: 'status',
+                render: (text, record) => {
                 if (text == 1) {
                     return "In the application, pending risk control review"//申请中,待风控审核
                 } else if (text == 2) {
@@ -258,30 +261,30 @@ export default React.createClass({
             }
         }, {
             title: 'operation',
-            dataIndex: "",
-            render: (value, record) => {
+                dataIndex: "",
+                render: (value, record) => {
                 return (
                     <div style={{ textAlign: "left" }}>
-                        <a href="#" onClick={me.showModal.bind(me, '审核', record, true)}>Review{/*审核*/}</a>
-                    </div>
-                )
+            <a href="#" onClick={me.showModal.bind(me, '审核', record, true)}>Review{/*审核*/}</a>
+                </div>
+            )
             }
         }];
 
         var state = this.state;
         return (
             <div className="block-panel">
-                <Table columns={columns} rowKey={this.rowKey} ref="table"
-                    onRowClick={this.onRowClick}
-                    dataSource={this.state.data}
-                    rowClassName={this.rowClassName}
-                    pagination={this.state.pagination}
-                    onChange={this.handleTableChange}
-                />
-                <Lookdetails ref="Lookdetails" visible={state.visible} title={state.title} hideModal={me.hideModal} record={state.record}
-                    canEdit={state.canEdit} />
-                <AddWin ref="AddWin" record={state.record} visible={state.visibleAdd} hideModal={me.hideModal} title={state.title} />
-            </div>
-        );
+            <Table columns={columns} rowKey={this.rowKey} ref="table"
+        onRowClick={this.onRowClick}
+        dataSource={this.state.data}
+        rowClassName={this.rowClassName}
+        pagination={this.state.pagination}
+        onChange={this.handleTableChange}
+        />
+        <Lookdetails ref="Lookdetails" visible={state.visible} title={state.title} hideModal={me.hideModal} record={state.record}
+        canEdit={state.canEdit} />
+        <AddWin ref="AddWin" record={state.record} visible={state.visibleAdd} hideModal={me.hideModal} title={state.title} />
+        </div>
+    );
     }
 })
